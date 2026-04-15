@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities, SERVICE_MAP } from '../../data/helpers';
+
+const services = Object.entries(SERVICE_MAP).map(([key, svc]) => ({
+  key,
+  ...svc,
+  count: facilities.filter(f => f.services[key]).length,
+})).sort((a, b) => b.count - a.count);
+---
+<Base
+  title="Services at Public Clinics — Clinic Finder SA"
+  description="Find public clinics by service: ARVs, TB treatment, maternity care, emergency, dental, mental health, chronic medication, and more."
+>
+  <div class="container" style="padding: 32px 0;">
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Find Clinics by Service</h1>
+    <p style="color: var(--text-muted); margin-bottom: 24px;">Select a service to find public facilities that offer it.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px;">
+      {services.map(s => (
+        <a href={`/services/${s.slug}`} class="card" style="text-decoration: none; color: var(--text);">
+          <strong style="font-size: 1.05rem;">{s.plain}</strong>
+          <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
+            {s.count} facilities nationwide
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,113 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  jsonLd?: object;
+}
+
+const { title, description, canonical, jsonLd } = Astro.props;
+const url = canonical || Astro.url.href;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={url} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="theme-color" content="#1a7a4c" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={url} />
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  <style is:global>
+    :root {
+      --green: #1a7a4c;
+      --green-dark: #145f3b;
+      --green-light: #e8f5ee;
+      --text: #1a1a1a;
+      --text-muted: #555;
+      --bg: #fff;
+      --bg-alt: #f7f9f8;
+      --border: #e0e0e0;
+      --radius: 8px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-text-size-adjust: 100%;
+    }
+    a { color: var(--green); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+    .chip {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      background: var(--green-light);
+      color: var(--green-dark);
+      margin: 2px;
+    }
+    .chip--type {
+      background: var(--green);
+      color: #fff;
+      font-weight: 600;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn--primary { background: var(--green); color: #fff; }
+    .btn--primary:hover { background: var(--green-dark); text-decoration: none; }
+    .btn--outline { background: transparent; border: 2px solid var(--green); color: var(--green); }
+    .btn--wa { background: #25D366; color: #fff; }
+    .btn--wa:hover { background: #1da851; text-decoration: none; }
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      transition: box-shadow 0.15s;
+    }
+    .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body>
+  <header style="background: var(--green); color: #fff; padding: 12px 0;">
+    <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
+      <a href="/" style="color: #fff; font-weight: 700; font-size: 1.1rem;">Clinic Finder SA</a>
+      <nav style="display: flex; gap: 16px; font-size: 0.9rem;">
+        <a href="/clinics" style="color: #fff;">Provinces</a>
+        <a href="/services" style="color: #fff;">Services</a>
+        <a href="/search" style="color: #fff;">Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <slot />
+  </main>
+  <footer style="background: var(--bg-alt); border-top: 1px solid var(--border); padding: 24px 0; margin-top: 48px; font-size: 0.85rem; color: var(--text-muted);">
+    <div class="container">
+      <p>Clinic Finder SA — Free directory of South Africa's public health facilities.</p>
+      <p style="margin-top: 8px;">Data sourced from OpenStreetMap and HOTOSM. Last updated April 2026. Not an official government site.</p>
+      <p style="margin-top: 8px;">If information is incorrect, <a href="mailto:hello@clinicfinder.co.za">let us know</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,128 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { facilities, PROVINCES, SERVICE_MAP, provinceSlug, typeLabel, nearbyFacilities, mapsUrl, whatsappShareUrl } from '../../../data/helpers';
+
+export function getStaticPaths() {
+  return facilities
+    .filter(f => PROVINCES.includes(f.province as any))
+    .map(f => ({
+      params: { province: provinceSlug(f.province), slug: f.slug },
+      props: { facility: f },
+    }));
+}
+
+const { facility } = Astro.props;
+const nearby = nearbyFacilities(facility, 3);
+const activeServices = Object.entries(facility.services)
+  .filter(([, v]) => v)
+  .map(([k]) => ({ key: k, ...SERVICE_MAP[k] }))
+  .filter(s => s.plain);
+
+const directionsUrl = mapsUrl(facility.coordinates.lat, facility.coordinates.lng, facility.name);
+const shareUrl = whatsappShareUrl(facility);
+
+const addressParts = [facility.address.street, facility.address.suburb, facility.address.city, facility.address.postal_code].filter(Boolean);
+const addressStr = addressParts.length > 0 ? addressParts.join(', ') : `${facility.province}${facility.district ? ', ' + facility.district : ''}`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['MedicalClinic', 'LocalBusiness'],
+  name: facility.name,
+  description: `${typeLabel(facility.type)} in ${facility.province}, South Africa. Services: ${activeServices.map(s => s.plain).join(', ')}.`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: facility.address.street || undefined,
+    addressLocality: facility.address.city || facility.district || facility.province,
+    addressRegion: facility.province,
+    addressCountry: 'ZA',
+    postalCode: facility.address.postal_code || undefined,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: facility.coordinates.lat,
+    longitude: facility.coordinates.lng,
+  },
+  url: `https://clinicfinder.co.za${facility.url_path}`,
+  ...(facility.contact.phone && { telephone: facility.contact.phone }),
+  ...(facility.operating_hours.is_24_hour && { openingHours: 'Mo-Su 00:00-23:59' }),
+  isAccessibleForFree: true,
+  medicalSpecialty: activeServices.map(s => s.label),
+};
+---
+<Base
+  title={`${facility.name} — ${typeLabel(facility.type)} in ${facility.province}`}
+  description={`${facility.name} is a ${typeLabel(facility.type).toLowerCase()} in ${facility.province}. Services: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}. Get directions and contact details.`}
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo;
+      <a href="/clinics">Provinces</a> &rsaquo;
+      <a href={`/clinics/${provinceSlug(facility.province)}`}>{facility.province}</a> &rsaquo;
+      {facility.name}
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap;">
+      <h1 style="font-size: 1.4rem;">{facility.name}</h1>
+      <span class="chip chip--type">{typeLabel(facility.type)}</span>
+      {facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">24 hours</span>}
+    </div>
+
+    <p style="color: var(--text-muted); margin-bottom: 24px;">
+      {addressStr}
+    </p>
+
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px;">
+      <a href={directionsUrl} target="_blank" rel="noopener" class="btn btn--primary">
+        Get directions
+      </a>
+      <a href={shareUrl} target="_blank" rel="noopener" class="btn btn--wa">
+        Share on WhatsApp
+      </a>
+    </div>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Services available</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        {activeServices.map(s => (
+          <a href={`/services/${s.slug}`} class="chip" style="text-decoration: none;">{s.plain}</a>
+        ))}
+      </div>
+      {activeServices.length === 0 && <p style="color: var(--text-muted); font-size: 0.9rem;">Service details not yet verified for this facility.</p>}
+    </section>
+
+    {facility.contact.phone && (
+      <section style="margin-bottom: 32px;">
+        <h2 style="font-size: 1.1rem; margin-bottom: 8px;">Contact</h2>
+        <p><a href={`tel:${facility.contact.phone}`}>{facility.contact.phone}</a></p>
+      </section>
+    )}
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px;">Location</h2>
+      <p style="font-size: 0.9rem; color: var(--text-muted);">
+        GPS: {facility.coordinates.lat.toFixed(4)}, {facility.coordinates.lng.toFixed(4)}
+        {facility.district && ` · District: ${facility.district}`}
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Nearby facilities</h2>
+      <div style="display: grid; gap: 10px;">
+        {nearby.map(n => (
+          <a href={n.url_path} class="card" style="text-decoration: none; color: var(--text);">
+            <strong>{n.name}</strong>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">
+              {typeLabel(n.type)} · {n.province}
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <div style="font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 16px;">
+      <p>Last verified: {facility.last_verified} · Data quality: {facility.data_quality_score}/5 · Source: {facility.data_source}</p>
+      <p style="margin-top: 4px;">Information may be outdated. Call the facility to confirm before visiting.</p>
+    </div>
+  </div>
+</Base>

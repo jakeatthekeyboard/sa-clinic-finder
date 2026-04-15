@@ -1,0 +1,74 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities, PROVINCES, SERVICE_MAP, provinceSlug, typeLabel } from '../../data/helpers';
+
+export function getStaticPaths() {
+  return PROVINCES.map(p => ({
+    params: { province: provinceSlug(p) },
+    props: { provinceName: p },
+  }));
+}
+
+const { provinceName } = Astro.props;
+const provFacilities = facilities
+  .filter(f => f.province === provinceName)
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+const typeBreakdown = provFacilities.reduce((acc, f) => {
+  acc[f.type] = (acc[f.type] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+const serviceBreakdown = Object.keys(SERVICE_MAP).map(key => ({
+  key,
+  label: SERVICE_MAP[key].plain,
+  count: provFacilities.filter(f => f.services[key]).length,
+})).filter(s => s.count > 0).sort((a, b) => b.count - a.count);
+---
+<Base
+  title={`Public Clinics in ${provinceName} — Clinic Finder SA`}
+  description={`Find ${provFacilities.length} public clinics and hospitals in ${provinceName}, South Africa. Filter by ARVs, maternity, TB treatment, emergency services.`}
+>
+  <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/clinics">Provinces</a> &rsaquo; {provinceName}
+    </nav>
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Public Clinics in {provinceName}</h1>
+    <p style="color: var(--text-muted); margin-bottom: 24px;">{provFacilities.length} government health facilities</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;">
+      {Object.entries(typeBreakdown).map(([type, count]) => (
+        <span class="chip chip--type">{typeLabel(type)} ({count})</span>
+      ))}
+    </div>
+
+    <details style="margin-bottom: 24px;">
+      <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem;">Services available in {provinceName}</summary>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;">
+        {serviceBreakdown.map(s => (
+          <span class="chip">{s.label} ({s.count})</span>
+        ))}
+      </div>
+    </details>
+
+    <div style="display: grid; gap: 12px;">
+      {provFacilities.map(f => (
+        <a href={f.url_path} class="card" style="text-decoration: none; color: var(--text); display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong>{f.name}</strong>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
+              {typeLabel(f.type)}
+              {f.district && ` · ${f.district}`}
+              {f.operating_hours.is_24_hour && ' · 24h'}
+            </div>
+          </div>
+          <div style="display: flex; gap: 4px; flex-shrink: 0;">
+            {Object.entries(f.services).filter(([,v]) => v).slice(0, 3).map(([k]) => (
+              <span class="chip" style="font-size: 0.7rem; padding: 2px 6px;">{SERVICE_MAP[k]?.plain || k}</span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

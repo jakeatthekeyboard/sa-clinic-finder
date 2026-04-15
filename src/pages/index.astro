@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import { facilities, PROVINCES, SERVICE_MAP, provinceSlug } from '../data/helpers';
+
+const totalFacilities = facilities.filter(f => f.province !== '').length;
+const provinceStats = PROVINCES.map(p => ({
+  name: p,
+  slug: provinceSlug(p),
+  count: facilities.filter(f => f.province === p).length,
+}));
+---
+<Base
+  title="Clinic Finder SA — Find Your Nearest Public Clinic or Hospital"
+  description={`Search ${totalFacilities} public clinics and hospitals across South Africa. Filter by province, services like ARVs, maternity, TB treatment, and get directions.`}
+>
+  <section style="background: var(--green); color: #fff; padding: 48px 0 40px;">
+    <div class="container" style="text-align: center;">
+      <h1 style="font-size: 1.8rem; margin-bottom: 8px;">Find a Public Clinic Near You</h1>
+      <p style="font-size: 1.1rem; opacity: 0.9; max-width: 540px; margin: 0 auto 24px;">
+        Search {totalFacilities.toLocaleString()} government clinics and hospitals across South Africa. Free. No sign-up.
+      </p>
+      <a href="/search" class="btn" style="background: #fff; color: var(--green); font-size: 1rem; padding: 12px 32px;">
+        Search clinics
+      </a>
+    </div>
+  </section>
+
+  <section class="container" style="padding: 40px 0;">
+    <h2 style="font-size: 1.3rem; margin-bottom: 20px;">Browse by Province</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px;">
+      {provinceStats.map(p => (
+        <a href={`/clinics/${p.slug}`} class="card" style="text-decoration: none; color: var(--text);">
+          <strong>{p.name}</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+            {p.count} facilities
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container" style="padding: 0 0 40px;">
+    <h2 style="font-size: 1.3rem; margin-bottom: 20px;">Find by Service</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      {Object.entries(SERVICE_MAP).map(([key, svc]) => (
+        <a href={`/services/${svc.slug}`} class="chip" style="font-size: 0.9rem; padding: 8px 16px; text-decoration: none;">
+          {svc.plain}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section style="background: var(--bg-alt); padding: 40px 0;">
+    <div class="container">
+      <h2 style="font-size: 1.3rem; margin-bottom: 16px;">About Clinic Finder SA</h2>
+      <div style="max-width: 640px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.7;">
+        <p>84% of South Africans rely on the public health system. Finding the right clinic should not be hard.</p>
+        <p style="margin-top: 12px;">Clinic Finder SA is a free, independent directory of public clinics and hospitals. We show you what services are available, where the facility is, and how to get there — on any phone, using minimal data.</p>
+        <p style="margin-top: 12px;">We are not affiliated with any government department. Our data comes from OpenStreetMap and the Humanitarian Data Exchange, verified against official sources where possible.</p>
+      </div>
+    </div>
+  </section>
+</Base>

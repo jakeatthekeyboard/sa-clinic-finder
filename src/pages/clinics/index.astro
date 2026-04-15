@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities, PROVINCES, provinceSlug } from '../../data/helpers';
+
+const provinceStats = PROVINCES.map(p => ({
+  name: p,
+  slug: provinceSlug(p),
+  count: facilities.filter(f => f.province === p).length,
+}));
+---
+<Base
+  title="Public Clinics by Province — Clinic Finder SA"
+  description="Browse public clinics and hospitals in all 9 South African provinces. Find facilities near you with services like ARVs, maternity, TB treatment."
+>
+  <div class="container" style="padding: 32px 0;">
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Public Clinics by Province</h1>
+    <p style="color: var(--text-muted); margin-bottom: 24px;">Select a province to see all public health facilities.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px;">
+      {provinceStats.map(p => (
+        <a href={`/clinics/${p.slug}`} class="card" style="text-decoration: none; color: var(--text);">
+          <strong style="font-size: 1.1rem;">{p.name}</strong>
+          <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
+            {p.count} clinics and hospitals
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>
