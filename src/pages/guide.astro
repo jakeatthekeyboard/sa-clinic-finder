@@ -1,0 +1,114 @@
+---
+import Base from '../layouts/Base.astro';
+import { facilities, PROVINCES } from '../data/helpers';
+
+const totalFacilities = facilities.filter(f => f.province !== '').length;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to find a public clinic using Clinic Finder SA',
+  description: `Use Clinic Finder SA to search ${totalFacilities} public health facilities across South Africa by province, service, or location.`,
+  step: [
+    {
+      '@type': 'HowToStep',
+      name: 'Search by name',
+      text: 'Go to the Search page and type a clinic or hospital name. Results filter as you type.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Browse by province',
+      text: 'Select a province from the homepage or Provinces page to see all facilities in that area.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Filter by service',
+      text: 'Use the Services page or the service dropdown on Search to find clinics offering ARVs, maternity, dental, and other services.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Get directions',
+      text: 'On any facility page, tap "Get directions" to open Google Maps with driving directions from your current location.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Share via WhatsApp',
+      text: 'Tap the WhatsApp button on any facility page to send the clinic details and link to a friend or family member.',
+    },
+  ],
+};
+---
+<Base
+  title="How to Use Clinic Finder SA — Guide"
+  description={`Learn how to search ${totalFacilities} public clinics and hospitals across South Africa. Find facilities by name, province, service, or GPS location.`}
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; Guide
+    </nav>
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">How to Use Clinic Finder SA</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      This site helps you find the right public clinic or hospital, check what services it offers, get directions, and share the information with someone who needs it. Everything works on any phone, uses minimal data, and requires no sign-up.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">1. Search by clinic name</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Go to the <a href="/search">Search page</a> and start typing a clinic or hospital name. Results filter instantly as you type — no need to press Enter or wait for a page to load. The search checks against all {totalFacilities.toLocaleString()} facilities in our database.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">2. Browse by province</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        From the <a href="/">homepage</a> or the <a href="/clinics">Provinces page</a>, select your province. Each province page lists every public facility in that area, sorted alphabetically. You will also see a breakdown of facility types (clinics, district hospitals, community health centres) and available services. Province pages include local health tips and a checklist of what to bring to your visit.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">3. Filter by service</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Need a specific service — ARVs, maternity care, dental, mental health? Use the <a href="/services">Services page</a> to see only facilities that offer what you need. On the Search page, the service dropdown lets you combine a text search with a service filter. For example, search for "Soweto" and filter by "TB treatment" to find TB-treating facilities in Soweto.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">4. Find clinics near you (GPS)</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        On the <a href="/search">Search page</a>, tap the <strong>"Near me"</strong> button. Your browser will ask for location permission — this is handled entirely on your device and your location is never sent to us or stored. Once granted, results are sorted by distance so you can see the closest facility first. This works on mobile phones, tablets, and laptops with location services enabled.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">5. Get directions to a facility</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Every facility page has a "Get directions" link that opens Google Maps with the facility as the destination. Google Maps will calculate the route from wherever you are. If you do not have data for Google Maps, note down the facility address from the page — most facilities show a street address and suburb.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">6. Share a clinic via WhatsApp</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Found the right clinic for a friend or family member? Tap the green <strong>"Share on WhatsApp"</strong> button on any facility page. This creates a pre-written message with the clinic name, key services, and a direct link. The recipient can open the link on any phone to see the full details and get directions — they do not need to install anything.
+      </p>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 24px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--green-dark);">Tips for low-data users</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li>This site is built to be lightweight. A typical page uses less than 100 KB of data.</li>
+        <li>Save a facility page as a bookmark or add it to your home screen for offline access.</li>
+        <li>WhatsApp sharing sends a text link, not an image — it costs almost nothing in data.</li>
+        <li>If you are on a limited data plan, use the province pages rather than search — they load once and show everything.</li>
+      </ol>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 24px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--green-dark);">About our data</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7;">
+        Clinic Finder SA draws from OpenStreetMap and the Humanitarian Data Exchange (HOTOSM). We verify against official Department of Health listings where possible, but we are not a government site and cannot guarantee 100% accuracy. If a facility has moved, changed its hours, or added new services, <a href="mailto:hello@clinicfinder.co.za">email us</a> and we will update it.
+      </p>
+    </section>
+  </div>
+</Base>

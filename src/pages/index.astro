@@ -8,10 +8,51 @@ const provinceStats = PROVINCES.map(p => ({
   slug: provinceSlug(p),
   count: facilities.filter(f => f.province === p).length,
 }));
+
+const faqs = [
+  {
+    question: 'Are public clinics in South Africa free?',
+    answer: 'Yes. All primary healthcare services at public clinics are free for South African citizens and permanent residents. This includes consultations, basic medication, HIV testing, TB treatment, immunisations, family planning, and antenatal care. You do not need medical aid. Hospital visits may charge a means-tested fee, but emergency treatment is never refused.',
+  },
+  {
+    question: 'What services do public clinics offer?',
+    answer: 'Public clinics provide primary healthcare including chronic medication (blood pressure, diabetes, epilepsy), HIV testing and ARV treatment, TB screening and treatment, maternity and antenatal care, immunisations for children, family planning, dental care, mental health services, and child health (growth monitoring, nutrition support). Not every clinic offers every service — use Clinic Finder SA to check what is available at a specific facility.',
+  },
+  {
+    question: 'Do I need an appointment to visit a public clinic?',
+    answer: 'Most public clinics operate on a walk-in basis — no appointment needed. Arrive early (before 07:00 if possible) to avoid long queues. Some services like dental care and mental health counselling may require an appointment or referral. Chronic medication patients can sometimes book specific collection times through the CCMDD programme.',
+  },
+  {
+    question: 'What are the operating hours of public clinics?',
+    answer: 'Standard clinic hours are Monday to Friday, 07:00 to 16:00. Some clinics extend hours to 19:00. Community health centres and district hospitals typically offer 24-hour services including emergency care. Check the specific facility page on Clinic Finder SA to see if it is open 24 hours.',
+  },
+  {
+    question: 'Can foreign nationals use public clinics in South Africa?',
+    answer: 'Yes. Emergency medical treatment cannot be refused regardless of nationality or documentation status. Children under 6, pregnant women, and people with notifiable conditions (like TB) are entitled to free treatment. Other non-emergency services may require payment based on the hospital tariff. Bring your passport, asylum permit, or refugee status documentation.',
+  },
+  {
+    question: 'What should I bring to a clinic visit?',
+    answer: 'Bring your South African ID or passport, your green clinic card (patient-held record), and any current medication you are taking. For children under 5, bring the Road to Health booklet. If you are visiting a hospital rather than a primary clinic, you will usually need a referral letter from a clinic. Pregnant women should bring their maternity case record after the first antenatal visit.',
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(faq => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
 ---
 <Base
   title="Clinic Finder SA — Find Your Nearest Public Clinic or Hospital"
   description={`Search ${totalFacilities} public clinics and hospitals across South Africa. Filter by province, services like ARVs, maternity, TB treatment, and get directions.`}
+  jsonLd={faqJsonLd}
 >
   <section style="background: var(--green); color: #fff; padding: 48px 0 40px;">
     <div class="container" style="text-align: center;">
@@ -52,11 +93,31 @@ const provinceStats = PROVINCES.map(p => ({
 
   <section style="background: var(--bg-alt); padding: 40px 0;">
     <div class="container">
+      <h2 style="font-size: 1.3rem; margin-bottom: 24px;">Frequently Asked Questions</h2>
+      <div style="max-width: 720px; display: grid; gap: 20px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius); padding: 0;">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 16px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="font-size: 1.2rem; color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 16px 16px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 40px 0;">
+    <div class="container">
       <h2 style="font-size: 1.3rem; margin-bottom: 16px;">About Clinic Finder SA</h2>
       <div style="max-width: 640px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.7;">
         <p>84% of South Africans rely on the public health system. Finding the right clinic should not be hard.</p>
         <p style="margin-top: 12px;">Clinic Finder SA is a free, independent directory of public clinics and hospitals. We show you what services are available, where the facility is, and how to get there — on any phone, using minimal data.</p>
         <p style="margin-top: 12px;">We are not affiliated with any government department. Our data comes from OpenStreetMap and the Humanitarian Data Exchange, verified against official sources where possible.</p>
+        <p style="margin-top: 12px;"><a href="/guide">Learn how to use this site</a> — search, browse, filter, get directions, and share on WhatsApp.</p>
       </div>
     </div>
   </section>
