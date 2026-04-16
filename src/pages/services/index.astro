@@ -1,29 +1,89 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { facilities, SERVICE_MAP } from '../../data/helpers';
+import { SERVICE_EDITORIAL } from '../../data/service-editorial';
 
 const services = Object.entries(SERVICE_MAP).map(([key, svc]) => ({
   key,
   ...svc,
   count: facilities.filter(f => f.services[key]).length,
+  hasEditorial: !!SERVICE_EDITORIAL[key],
+  guideSlug: SERVICE_EDITORIAL[key]?.guideSlug,
 })).sort((a, b) => b.count - a.count);
+
+const SERVICE_DESCRIPTIONS: Record<string, string> = {
+  arv_treatment: 'Antiretroviral treatment for HIV. Same-day initiation available at all clinics since 2017.',
+  tb_treatment: 'Tuberculosis screening, GeneXpert testing, and DOTS treatment. Free 6-month regimen.',
+  maternity_antenatal: 'Free antenatal care, delivery, and postnatal check-ups. No medical aid required.',
+  chronic_medication: 'Hypertension, diabetes, epilepsy, asthma, depression. Free lifelong medication.',
+  emergency_24h: '24-hour casualty and emergency stabilisation. Constitutional right — no one turned away.',
+  dental: 'Extractions, fillings, dentures, emergency pain relief. Walk-in for emergencies.',
+  mental_health: 'Depression, anxiety, PTSD, substance abuse. Screening, medication, counselling referral.',
+  child_health: 'Growth monitoring, nutrition support, IMCI assessment. Free for all under-6s.',
+  family_planning: 'Injectables, implant, pill, IUD, condoms. Free for all. Age 12+ without parental consent.',
+  immunisation: 'Full EPI-SA schedule: birth to 12 years, 13 diseases. Catch-up doses at any age.',
+  hiv_testing: 'Rapid finger-prick test (15 min). Free, confidential, anonymous. Self-test kits available.',
+};
+
+const totalFacilities = facilities.filter(f => f.province !== '').length;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Health Services at Public Clinics — Clinic Finder SA',
+  description: `Find public clinics by service across ${totalFacilities} facilities in South Africa.`,
+  url: 'https://clinicfinder.co.za/services',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: services.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `https://clinicfinder.co.za/services/${s.slug}`,
+      name: s.plain,
+    })),
+  },
+};
 ---
 <Base
   title="Services at Public Clinics — Clinic Finder SA"
-  description="Find public clinics by service: ARVs, TB treatment, maternity care, emergency, dental, mental health, chronic medication, and more."
+  description="Find public clinics by service: ARVs, TB treatment, maternity care, emergency, dental, mental health, chronic medication, immunisation, and more."
+  jsonLd={jsonLd}
 >
   <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; Services
+    </nav>
     <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Find Clinics by Service</h1>
-    <p style="color: var(--text-muted); margin-bottom: 24px;">Select a service to find public facilities that offer it.</p>
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px;">
+    <p style="color: var(--text-muted); margin-bottom: 32px; max-width: 640px; line-height: 1.6;">
+      All primary healthcare services at public clinics are free for South African residents. Select a service below to find facilities that offer it, with details on what to expect and who is eligible.
+    </p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;">
       {services.map(s => (
         <a href={`/services/${s.slug}`} class="card" style="text-decoration: none; color: var(--text);">
-          <strong style="font-size: 1.05rem;">{s.plain}</strong>
-          <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
-            {s.count} facilities nationwide
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+            <div>
+              <strong style="font-size: 1.05rem;">{s.plain}</strong>
+              {SERVICE_DESCRIPTIONS[s.key] && (
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">{SERVICE_DESCRIPTIONS[s.key]}</p>
+              )}
+              <div style="font-size: 0.85rem; color: var(--green-dark); margin-top: 8px; font-weight: 600;">
+                {s.count} facilities &rarr;
+              </div>
+            </div>
           </div>
         </a>
       ))}
     </div>
+
+    <section style="margin-top: 40px; background: var(--bg-alt); border-radius: var(--radius); padding: 24px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--green-dark);">Not sure what service you need?</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 16px;">
+        Walk into any public clinic and tell the nurse your symptoms. They will assess you, decide what care you need, and either treat you on-site or refer you to the right facility. You do not need to know the "service name" — just describe what is wrong.
+      </p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="/search" class="btn btn--primary" style="font-size: 0.9rem;">Find your nearest clinic</a>
+        <a href="/guides" class="btn btn--outline" style="font-size: 0.9rem;">Browse health guides</a>
+      </div>
+    </section>
   </div>
 </Base>

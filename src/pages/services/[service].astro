@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { facilities, PROVINCES, SERVICE_MAP, SERVICE_SLUGS, provinceSlug, typeLabel } from '../../data/helpers';
+import { SERVICE_EDITORIAL } from '../../data/service-editorial';
 
 export function getStaticPaths() {
   return Object.entries(SERVICE_MAP).map(([key, svc]) => ({
@@ -10,6 +11,7 @@ export function getStaticPaths() {
 }
 
 const { serviceKey, serviceName, serviceLabel } = Astro.props;
+const editorial = SERVICE_EDITORIAL[serviceKey];
 const serviceFacilities = facilities
   .filter(f => f.services[serviceKey] && f.province !== '')
   .sort((a, b) => a.province.localeCompare(b.province) || a.name.localeCompare(b.name));
@@ -19,10 +21,29 @@ const byProvince = PROVINCES.map(p => ({
   slug: provinceSlug(p),
   facilities: serviceFacilities.filter(f => f.province === p),
 })).filter(p => p.facilities.length > 0);
+
+const jsonLd = editorial ? [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: `${serviceName} at Public Clinics in South Africa`,
+    description: `Find ${serviceFacilities.length} public clinics and hospitals offering ${serviceName.toLowerCase()} across South Africa.`,
+    url: `https://clinicfinder.co.za/services/${SERVICE_MAP[serviceKey].slug}`,
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalWebPage',
+    about: { '@type': 'MedicalCondition', name: serviceLabel },
+    lastReviewed: '2026-04-16',
+  },
+] : undefined;
 ---
 <Base
   title={`${serviceName} — Public Clinics in South Africa`}
   description={`Find ${serviceFacilities.length} public clinics and hospitals offering ${serviceName.toLowerCase()} across South Africa. Browse by province.`}
+  jsonLd={jsonLd}
 >
   <div class="container" style="padding: 32px 0;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
@@ -31,24 +52,81 @@ const byProvince = PROVINCES.map(p => ({
     <h1 style="font-size: 1.5rem; margin-bottom: 8px;">{serviceName}</h1>
     <p style="color: var(--text-muted); margin-bottom: 24px;">{serviceFacilities.length} public facilities across South Africa</p>
 
+    {editorial && (
+      <section style="margin-bottom: 32px; max-width: 720px;">
+        <p style="line-height: 1.7; font-size: 0.95rem; color: var(--text);">{editorial.intro}</p>
+        {editorial.keyFact && (
+          <div style="margin-top: 16px; border-left: 4px solid var(--green); padding: 12px 16px; background: var(--green-light); border-radius: 0 var(--radius) var(--radius) 0;">
+            <strong style="font-size: 0.85rem; color: var(--green-dark);">Key fact:</strong>
+            <span style="font-size: 0.9rem; margin-left: 4px;">{editorial.keyFact}</span>
+          </div>
+        )}
+      </section>
+    )}
+
+    {editorial && (
+      <section style="margin-bottom: 32px; max-width: 720px;">
+        <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--green-dark);">What to expect</h2>
+        <div style="display: grid; gap: 12px;">
+          {editorial.whatToExpect.map((step, i) => (
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="flex-shrink: 0; width: 36px; height: 36px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--green-dark); font-size: 0.9rem;">{i + 1}</div>
+              <div>
+                <strong style="font-size: 0.95rem;">{step.step}</strong>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 2px; line-height: 1.6;">{step.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {editorial && (
+      <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px; max-width: 720px;">
+        <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Who is eligible?</h2>
+        <p style="font-size: 0.9rem; line-height: 1.7;">{editorial.eligibility}</p>
+      </section>
+    )}
+
+    {editorial?.guideSlug && (
+      <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px; max-width: 720px;">
+        <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Read the full guide</h2>
+        <p style="font-size: 0.9rem; margin-bottom: 12px;">
+          Our guide covers everything in detail: step-by-step process, FAQs, and practical tips.
+        </p>
+        <a href={`/guides/${editorial.guideSlug}`} class="btn btn--primary" style="font-size: 0.9rem;">
+          {editorial.guideName} &rarr;
+        </a>
+      </section>
+    )}
+
+    <h2 style="font-size: 1.2rem; margin-bottom: 16px;">{serviceFacilities.length} facilities offering {serviceName.toLowerCase()}</h2>
+
     {byProvince.map(prov => (
       <section style="margin-bottom: 32px;">
-        <h2 style="font-size: 1.15rem; margin-bottom: 12px;">
+        <h3 style="font-size: 1.1rem; margin-bottom: 12px;">
           <a href={`/clinics/${prov.slug}`}>{prov.name}</a>
           <span style="font-weight: normal; color: var(--text-muted); font-size: 0.9rem;"> ({prov.facilities.length})</span>
-        </h2>
+        </h3>
         <div style="display: grid; gap: 8px;">
-          {prov.facilities.map(f => (
-            <a href={f.url_path} class="card" style="text-decoration: none; color: var(--text); padding: 12px 16px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <strong>{f.name}</strong>
-                  <span style="font-size: 0.85rem; color: var(--text-muted); margin-left: 8px;">{typeLabel(f.type)}</span>
+          {prov.facilities.map(f => {
+            const addr = [f.address.street, f.address.suburb, f.address.city].filter(Boolean).join(', ');
+            return (
+              <a href={f.url_path} class="card" style="text-decoration: none; color: var(--text); padding: 12px 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <strong>{f.name}</strong>
+                    {addr && <div style="font-size: 0.85rem; color: var(--text); margin-top: 2px;">{addr}</div>}
+                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
+                      {typeLabel(f.type)}
+                      {f.district && ` · ${f.district}`}
+                    </div>
+                  </div>
+                  {f.operating_hours.is_24_hour && <span class="chip" style="font-size: 0.75rem; background: #fef3cd; color: #856404;">24h</span>}
                 </div>
-                {f.operating_hours.is_24_hour && <span class="chip" style="font-size: 0.75rem; background: #fef3cd; color: #856404;">24h</span>}
-              </div>
-            </a>
-          ))}
+              </a>
+            );
+          })}
         </div>
       </section>
     ))}
