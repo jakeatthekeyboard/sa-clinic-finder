@@ -1,0 +1,134 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities } from '../../data/helpers';
+
+const fpClinics = facilities.filter(f => f.services.family_planning);
+
+const methods = [
+  { name: 'Injectable (Depo-Provera / Nur-Isterate)', duration: 'Every 2-3 months', how: 'Injection at the clinic. Depo-Provera every 3 months, Nur-Isterate every 2 months.', pros: 'Most popular in SA. Private. No daily pill. Very effective (99.7%).', cons: 'May cause irregular bleeding, weight gain. Fertility return takes 6-12 months after stopping. Must return to clinic for each injection.' },
+  { name: 'Contraceptive pill (oral)', duration: 'Daily', how: 'Take one pill at the same time every day. 21 active pills + 7 inactive or continuous packs.', pros: 'Easy to start and stop. Can improve acne and period pain. Fertility returns quickly.', cons: 'Must remember daily. Less effective if missed (91% typical use). Does not protect against STIs.' },
+  { name: 'Subdermal implant (Implanon NXT)', duration: '3 years', how: 'Small rod inserted under the skin of your upper arm. Takes 2 minutes. Local anaesthetic.', pros: 'Most effective method available (99.95%). Nothing to remember for 3 years. Free at public clinics since 2014.', cons: 'Irregular bleeding common in first 6 months. Requires trained nurse for insertion and removal. Some women report mood changes.' },
+  { name: 'IUD — copper (Copper-T)', duration: '5-10 years', how: 'Small T-shaped device inserted into the uterus by a trained nurse or doctor.', pros: 'No hormones. Effective for up to 10 years. Fertility returns immediately after removal.', cons: 'May cause heavier periods. Insertion can be uncomfortable. Requires a trained provider — not all clinics offer it.' },
+  { name: 'Male condom', duration: 'Single use', how: 'Free at all public clinics, community health centres, hospitals, and many public spaces.', pros: 'Only method that prevents STIs and HIV. No prescription needed. Free and widely available.', cons: 'Must be used correctly every time. Some people find them less comfortable. 85% typical-use effectiveness.' },
+  { name: 'Female condom', duration: 'Single use', how: 'Available free at some clinics. Can be inserted up to 8 hours before sex.', pros: 'Woman-controlled. Protects against STIs. Can be used if allergic to latex (made of nitrile).', cons: 'Less widely available than male condoms. Takes practice to insert correctly.' },
+  { name: 'Emergency contraception (morning-after pill)', duration: 'Single dose within 72 hours', how: 'Available at any public clinic or pharmacy. At clinics, it is free. At pharmacies, it costs R30-R80.', pros: 'Can prevent pregnancy after unprotected sex. No prescription needed at pharmacies.', cons: 'Not for regular use. Less effective the longer you wait (95% within 24h, 58% at 72h). May cause nausea.' },
+];
+
+const faqs = [
+  {
+    question: 'Can teenagers get contraception without parental consent?',
+    answer: 'Yes. Under the Children\'s Act (Section 134), any child aged 12 and older can access contraception and contraceptive advice without parental consent. This includes condoms, the pill, injectables, and implants. The clinic cannot notify parents or require parental permission. This law exists because teenage pregnancy is a major health and education issue in South Africa — access to contraception saves lives.',
+  },
+  {
+    question: 'Which method is best for me?',
+    answer: 'There is no single "best" method — it depends on your body, lifestyle, and plans. The implant (Implanon) is the most effective and requires no daily action, but some women dislike the irregular bleeding. Injectables are the most popular in SA because they are private and only need a clinic visit every 2-3 months. The pill gives you control but requires daily discipline. Condoms are the only method that prevents STIs. Talk to a clinic nurse — they will help you choose based on your situation.',
+  },
+  {
+    question: 'Is family planning really free?',
+    answer: 'Yes. All contraceptive methods listed above are free at public health facilities, including the implant (Implanon), which would cost R3,000-R5,000 at a private doctor. Condoms are also free at clinics, hospitals, universities, and many community spaces. The only exception is emergency contraception at a private pharmacy (R30-R80) — but it is free at public clinics.',
+  },
+  {
+    question: 'Can men access family planning services?',
+    answer: 'Yes. Men can get: free condoms at any clinic, voluntary medical male circumcision (VMMC) which reduces HIV risk by 60%, vasectomy referral (permanent, requires counselling and consent), and STI testing and treatment. Men are welcome at family planning clinics — the service is not women-only.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Free Family Planning and Contraception at Public Clinics in South Africa',
+    description: 'All contraception methods available free at South African public clinics: injectables, implant, pill, IUD, condoms, emergency contraception.',
+    url: 'https://clinicfinder.co.za/guides/family-planning-contraception',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+<Base
+  title="Free Family Planning & Contraception at Public Clinics — Clinic Finder SA"
+  description="All contraception methods available free at South African public clinics: injectables, implant, pill, IUD, condoms. How to access, what to expect, teens' rights."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; Family Planning
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Free Family Planning & Contraception</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      Every public clinic in South Africa offers free family planning services. You can get contraception without medical aid, without a referral, and — if you are 12 or older — without parental consent. This guide covers every method available and how to access them.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--green-dark);">Methods available at public clinics</h2>
+      <div style="display: grid; gap: 16px;">
+        {methods.map(m => (
+          <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+            <strong style="font-size: 1rem; color: var(--green-dark);">{m.name}</strong>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">Duration: {m.duration}</div>
+            <p style="font-size: 0.9rem; margin-top: 8px; line-height: 1.6;"><strong>How it works:</strong> {m.how}</p>
+            <p style="font-size: 0.9rem; margin-top: 6px; line-height: 1.6; color: var(--green-dark);"><strong>Pros:</strong> {m.pros}</p>
+            <p style="font-size: 0.9rem; margin-top: 6px; line-height: 1.6; color: #856404;"><strong>Cons:</strong> {m.cons}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">How to get started</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Walk into any public clinic.</strong> No appointment needed. Tell the nurse you want family planning services.</li>
+        <li><strong>The nurse will ask about your health.</strong> Blood pressure check, pregnancy test (to confirm you are not currently pregnant), brief medical history. This takes 10-15 minutes.</li>
+        <li><strong>Choose your method together.</strong> The nurse will explain the options and help you choose based on your body, lifestyle, and plans. There is no pressure — you can change your mind at any time.</li>
+        <li><strong>Start immediately.</strong> Most methods can be started the same day. The implant and IUD require a trained provider — if your clinic does not have one, they will refer you to one that does.</li>
+        <li><strong>Follow-up.</strong> The nurse will schedule a check-up (usually 3 months for new methods) to make sure everything is working well and you are comfortable.</li>
+      </ol>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--green-dark);">Dual protection — why condoms still matter</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7;">
+        Hormonal contraception (pill, injectable, implant, IUD) prevents pregnancy but does <strong>not protect against HIV or other STIs</strong>. In South Africa — with one of the highest HIV rates in the world — using a condom alongside your chosen method (dual protection) is strongly recommended. Free condoms are available at every public clinic and many public spaces.
+      </p>
+    </section>
+
+    <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Find a clinic with family planning services</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        {fpClinics.length} facilities in our database offer family planning.
+      </p>
+      <a href="/services/family-planning" class="btn btn--primary" style="font-size: 0.9rem;">Browse family planning clinics</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Sources:</strong> National Contraception Clinical Guidelines (NDoH, 2019). Children's Act 38 of 2005, Section 134. National Contraception and Fertility Planning Policy and Service Delivery Guidelines (2012). WHO Medical Eligibility Criteria for Contraceptive Use. South African Demographic and Health Survey 2016.
+    </section>
+  </div>
+</Base>

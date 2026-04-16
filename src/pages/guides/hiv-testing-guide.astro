@@ -1,0 +1,162 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities } from '../../data/helpers';
+
+const hivClinics = facilities.filter(f => f.services.hiv_testing);
+
+const faqs = [
+  {
+    question: 'How long does an HIV test take?',
+    answer: 'A rapid finger-prick test takes about 20 minutes from start to result. It is the standard test at public clinics in South Africa. The nurse pricks your finger, puts a drop of blood on a test strip, and waits 15 minutes. If the first rapid test is positive, a second rapid test is done immediately to confirm. If both are positive, you are offered same-day ARV treatment.',
+  },
+  {
+    question: 'Can I test anonymously?',
+    answer: 'Yes. You have the right to anonymous HIV testing. You can request that your name is not recorded — the clinic gives you a number instead. Your test result is never shared with your employer, family, or anyone else without your written consent. This is protected by the National Health Act and the Constitution. If a healthcare worker discloses your status without consent, it is a criminal offence.',
+  },
+  {
+    question: 'What if I test positive?',
+    answer: 'South Africa follows same-day ARV initiation. If you test positive: (1) the nurse does a clinical assessment (weight, blood pressure, TB screening), (2) draws blood for CD4 count and viral load, (3) starts you on TLD (one pill, once daily) the same day. You do not need to wait for blood results. ARVs are free, highly effective, and most people live normal lifespans on treatment. See our full guide: How to Get ARVs at a Public Clinic.',
+  },
+  {
+    question: 'How often should I test?',
+    answer: 'The South African guidelines recommend: sexually active adults — at least once a year. Higher risk (multiple partners, inconsistent condom use, partner\'s status unknown) — every 3-6 months. Pregnant women — at first antenatal visit, again at 32 weeks, and at delivery. Men who have sex with men — every 3 months. People with TB — at every TB visit (TB-HIV co-testing is standard).',
+  },
+  {
+    question: 'What is PrEP and where can I get it?',
+    answer: 'PrEP (Pre-Exposure Prophylaxis) is a daily pill (same drugs as in ARVs) taken by HIV-negative people to prevent HIV infection. It is 99% effective when taken consistently. PrEP is available free at public clinics in South Africa for anyone at substantial risk of HIV. You need an HIV-negative test first, then a prescription from the clinic nurse. Follow-up every 3 months for HIV re-testing and refills.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'HIV Testing in South Africa — Where, How, and What to Expect',
+    description: 'Complete guide to free HIV testing at South African public clinics: rapid tests, anonymous testing, self-test kits, PrEP, and what happens next.',
+    url: 'https://clinicfinder.co.za/guides/hiv-testing-guide',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+<Base
+  title="HIV Testing — Where, How & What to Expect — Clinic Finder SA"
+  description="Free HIV testing at South African public clinics: rapid tests, anonymous testing, self-test kits, PrEP, and what happens if you test positive."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; HIV Testing
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">HIV Testing — Where, How & What to Expect</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      South Africa has the largest HIV treatment programme in the world — over 5.7 million people on ARVs. But an estimated 1.5 million people living with HIV do not know their status. Testing is free, fast, confidential, and the single most important step you can take. This guide covers everything you need to know.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Where to get tested</h2>
+      <div style="display: grid; gap: 12px;">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--green-dark);">Public clinics and hospitals</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Walk in and ask for an HIV test. Free. No appointment needed. Available at every public health facility in the country. Results in 20 minutes.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--green-dark);">Mobile testing points</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Government and NGO-run testing tents at taxi ranks, shopping centres, community events, and workplaces. Free. Often available on weekends and evenings when clinics are closed.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--green-dark);">HIV self-test kits</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">OraQuick and similar self-test kits are available at pharmacies (R100-R150) and sometimes free through NGOs and clinics. Oral swab — no blood needed. Results in 20 minutes. If positive, you must confirm at a clinic with a blood-based test before starting treatment.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--green-dark);">Private doctors and pathology labs</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Available at private GPs and pathology labs (Lancet, Ampath, PathCare). Costs R200-R500 depending on the type of test. Covered by most medical aid schemes. No medical reason to prefer private over public — the rapid tests are identical.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">What happens during a test at a clinic</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Pre-test counselling</strong> — a counsellor or nurse explains what the test involves, what the possible results mean, and answers your questions. This takes about 5 minutes. You can decline the test at any point.</li>
+        <li><strong>The test</strong> — the nurse pricks your finger and puts a drop of blood on a rapid test strip. You wait about 15 minutes.</li>
+        <li><strong>First result</strong> — if negative, you are counselled about staying negative (condoms, PrEP, partner testing). If positive, a second rapid test is done immediately on a different test kit to confirm.</li>
+        <li><strong>Confirmed positive</strong> — the nurse does a clinical assessment (weight, BP, TB screening), draws blood for CD4 and viral load, and offers same-day ARV initiation. You can start treatment today.</li>
+        <li><strong>Post-test counselling</strong> — whether positive or negative, the counsellor discusses next steps, partner notification (voluntary), and follow-up plans.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">PrEP — prevention for HIV-negative people</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        PrEP (Pre-Exposure Prophylaxis) is a daily pill that prevents HIV infection. It contains the same drugs used in ARVs (tenofovir + emtricitabine) and is <strong>99% effective</strong> when taken consistently. South Africa makes PrEP available free at public clinics for anyone at substantial risk of HIV.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        <strong>Who should consider PrEP:</strong>
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 4px; margin-top: 8px;">
+        <li>People with an HIV-positive partner (serodiscordant couples)</li>
+        <li>People with multiple sexual partners</li>
+        <li>People who do not consistently use condoms</li>
+        <li>Men who have sex with men</li>
+        <li>Sex workers</li>
+        <li>Anyone who feels at risk and wants additional protection</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        To start PrEP: go to any public clinic offering HIV services, test HIV-negative, and ask for PrEP. You will need to return every 3 months for HIV re-testing and medication refills. PrEP does not protect against other STIs — condoms are still recommended alongside PrEP.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Your rights</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li><strong>Consent:</strong> No one can test you for HIV without your informed consent (except unconscious emergency patients).</li>
+        <li><strong>Confidentiality:</strong> Your result is private. It cannot be disclosed to anyone — employer, family, partner — without your written consent.</li>
+        <li><strong>No discrimination:</strong> You cannot be fired, denied education, refused insurance, or treated differently because of your HIV status. This is protected by the Employment Equity Act and the Promotion of Equality Act.</li>
+        <li><strong>Partner notification:</strong> Telling your partner is strongly encouraged but voluntary. The clinic can help with partner notification if you want — a counsellor contacts your partner without revealing who requested the notification.</li>
+      </ol>
+    </section>
+
+    <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Find a clinic for HIV testing</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        {hivClinics.length} facilities in our database offer HIV testing.
+      </p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="/services/hiv-testing" class="btn btn--primary" style="font-size: 0.9rem;">Browse HIV testing clinics</a>
+        <a href="/guides/how-to-get-arvs" class="btn btn--outline" style="font-size: 0.9rem;">ARV treatment guide</a>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Sources:</strong> National HIV Testing Services Policy (NDoH, 2016). National HIV Self-Testing Framework (2018). PrEP implementation guidelines — NDoH. UNAIDS 90-90-90 targets and South Africa progress report. National Health Act — patient rights provisions. Employment Equity Act — HIV non-discrimination.
+    </section>
+  </div>
+</Base>

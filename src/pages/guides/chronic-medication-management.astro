@@ -1,0 +1,197 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities } from '../../data/helpers';
+
+const chronicClinics = facilities.filter(f => f.services.chronic_medication);
+
+const conditions = [
+  {
+    name: 'Hypertension (high blood pressure)',
+    prevalence: 'Affects 1 in 3 South African adults. Leading cause of stroke and heart disease.',
+    treatment: 'Medication (hydrochlorothiazide, amlodipine, enalapril), lifestyle changes (reduce salt, exercise, lose weight), regular BP monitoring.',
+    atClinic: 'BP check at every visit. Blood tests every 6-12 months (kidney function, cholesterol). Medication adjusted based on readings. Target: below 140/90.',
+  },
+  {
+    name: 'Diabetes (Type 2)',
+    prevalence: 'Affects 4.5 million South Africans. Growing rapidly — linked to diet, obesity, and urbanisation.',
+    treatment: 'Metformin (first-line), glimepiride, insulin (if oral medication fails). Diet management, exercise, foot care.',
+    atClinic: 'Blood glucose and HbA1c testing every 3-6 months. Annual eye exam referral (diabetic retinopathy screening). Foot check at every visit. Dietician counselling where available.',
+  },
+  {
+    name: 'Epilepsy',
+    prevalence: 'Affects about 1 in 100 people. Often undertreated in rural South Africa due to stigma.',
+    treatment: 'Sodium valproate, carbamazepine, or phenytoin. Must be taken daily without interruption — stopping suddenly can trigger life-threatening seizures.',
+    atClinic: 'Seizure diary review at every visit. Drug level monitoring if seizures are not controlled. Referral to neurologist for difficult cases. Driving restrictions counselling.',
+  },
+  {
+    name: 'Asthma',
+    prevalence: 'Affects 3.9 million South Africans. Undertreated — many patients only use rescue inhalers.',
+    treatment: 'Inhaled beclomethasone (preventer, daily) + salbutamol (reliever, as needed). Spacer device improves effectiveness. Oral theophylline for severe cases.',
+    atClinic: 'Inhaler technique check at every visit (most patients use inhalers incorrectly). Peak flow monitoring. Written asthma action plan. Trigger identification and avoidance advice.',
+  },
+  {
+    name: 'Depression / Anxiety (chronic)',
+    prevalence: 'One in three South Africans experience a mental health condition. Depression and anxiety are the most common.',
+    treatment: 'Fluoxetine (SSRI) for depression/anxiety. Amitriptyline for depression with insomnia or chronic pain. Counselling where available.',
+    atClinic: 'PHQ-9 or GAD-7 screening tools. Medication review every 3 months for first year, then every 6 months. Referral for counselling. Treatment continues minimum 12 months after symptoms resolve.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'How do I register as a chronic patient at a clinic?',
+    answer: 'When a doctor or nurse diagnoses you with a chronic condition and starts treatment, you are automatically registered in the clinic\'s chronic patient system. You will be given a specific follow-up date (usually monthly or every 3 months) and your medication will be prepared for collection on that date. After 6-12 months of stable treatment, you may qualify for CCMDD (collecting medication from a pharmacy instead of the clinic).',
+  },
+  {
+    question: 'Can I get chronic medication at any clinic?',
+    answer: 'You are registered at a specific "home clinic" that holds your file. For routine refills, go to your home clinic. If you are travelling or move to a new area, any public clinic can give you an emergency 1-month supply. To permanently transfer your file, ask your current clinic to prepare a transfer letter and take it to the new clinic. The transfer includes your full treatment history.',
+  },
+  {
+    question: 'What if the clinic runs out of my medication?',
+    answer: 'Stock-outs do happen, especially in rural clinics. If your medication is out of stock: (1) ask the nurse for an alternative from the same drug class, (2) ask for a referral to the nearest hospital pharmacy, (3) contact the district pharmacist (the clinic should have this number) to find the nearest facility with stock. Never just stop taking chronic medication — disrupting treatment can be dangerous.',
+  },
+  {
+    question: 'Do I need to take chronic medication forever?',
+    answer: 'For most chronic conditions — yes. Hypertension, diabetes, epilepsy, and HIV are managed, not cured. Stopping medication leads to the condition returning, often worse than before. The exception is depression — after 12+ months of stable mood on medication, your doctor may gradually reduce the dose to see if symptoms stay in remission. Never stop chronic medication without discussing it with your clinic nurse or doctor.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Managing Chronic Conditions at Public Clinics in South Africa',
+    description: 'How South African public clinics manage hypertension, diabetes, epilepsy, asthma, and depression: medication, monitoring, and CCMDD.',
+    url: 'https://clinicfinder.co.za/guides/chronic-medication-management',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+<Base
+  title="Chronic Medication at Public Clinics — Clinic Finder SA"
+  description="How South African public clinics manage hypertension, diabetes, epilepsy, asthma, and depression. Free medication, monitoring schedules, and CCMDD."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; Chronic Medication
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Chronic Medication at Public Clinics</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      South Africa's non-communicable disease burden is enormous: hypertension, diabetes, and mental health conditions affect millions, and most are managed at primary clinics. Treatment is free, lifelong, and — when followed consistently — keeps you out of hospital. This guide covers the most common chronic conditions and what to expect at the clinic.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--green-dark);">Common chronic conditions</h2>
+      <div style="display: grid; gap: 20px;">
+        {conditions.map(c => (
+          <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px;">
+            <strong style="font-size: 1.05rem; color: var(--green-dark);">{c.name}</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">{c.prevalence}</p>
+            <div style="margin-top: 12px; display: grid; gap: 8px; font-size: 0.9rem;">
+              <div><strong>Treatment:</strong> <span style="color: var(--text-muted);">{c.treatment}</span></div>
+              <div><strong>At the clinic:</strong> <span style="color: var(--text-muted);">{c.atClinic}</span></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">What to bring to your chronic visit</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li><strong>Green clinic card</strong> — your patient-held record</li>
+        <li><strong>All current medication</strong> — including the boxes/packets, so the nurse can check what you are taking and how much is left</li>
+        <li><strong>Home monitoring records</strong> — if you check blood pressure or blood sugar at home, bring the readings</li>
+        <li><strong>List of symptoms or concerns</strong> — write them down beforehand so you do not forget</li>
+        <li><strong>ID document</strong> — may be needed for file retrieval</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">The chronic medication cycle</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        Chronic patients follow a predictable cycle at the clinic:
+      </p>
+      <div style="display: grid; gap: 12px;">
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 36px; height: 36px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--green-dark); font-size: 0.9rem;">1</div>
+          <div>
+            <strong>Monthly/bi-monthly collection</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 2px; line-height: 1.5;">Collect your pre-prepared medication. Quick vital signs check (weight, BP). In and out in under an hour on a good day.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 36px; height: 36px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--green-dark); font-size: 0.9rem;">2</div>
+          <div>
+            <strong>Quarterly review (every 3 months)</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 2px; line-height: 1.5;">Longer visit. Nurse reviews your condition, checks adherence, adjusts medication if needed. Blood tests may be drawn.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 36px; height: 36px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--green-dark); font-size: 0.9rem;">3</div>
+          <div>
+            <strong>Annual review (once a year)</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 2px; line-height: 1.5;">Full assessment. Comprehensive blood work (fasting glucose, HbA1c, lipids, kidney function, liver function). Eye screening referral for diabetics. Foot examination. Prescription renewal for the year.</p>
+          </div>
+        </div>
+      </div>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 16px;">
+        Once stable, you can enrol in <a href="/guides/ccmdd-chronic-meds-pickup">CCMDD</a> to collect medication from a convenient pickup point instead of the clinic. You still return to the clinic for quarterly and annual reviews.
+      </p>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--green-dark);">Adherence — why it matters</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7;">
+        Chronic medication only works if you take it consistently. Skipping doses or stopping treatment leads to uncontrolled conditions, hospital admissions, and preventable complications (stroke, kidney failure, diabetic amputation, seizures). In South Africa, non-adherence is the leading reason chronic patients end up in hospital.
+      </p>
+      <p style="font-size: 0.95rem; line-height: 1.7; margin-top: 8px;">
+        If you are struggling to take your medication — side effects, forgetfulness, cost of transport to the clinic, feeling well so thinking you do not need it — <strong>tell your nurse</strong>. They can simplify your regimen, switch to a better-tolerated drug, enrol you in CCMDD, or connect you with a treatment buddy. The worst thing you can do is silently stop.
+      </p>
+    </section>
+
+    <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Find a clinic for chronic medication</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        {chronicClinics.length} facilities in our database offer chronic medication services.
+      </p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="/services/chronic-medication" class="btn btn--primary" style="font-size: 0.9rem;">Browse chronic meds clinics</a>
+        <a href="/guides/ccmdd-chronic-meds-pickup" class="btn btn--outline" style="font-size: 0.9rem;">CCMDD pickup guide</a>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Sources:</strong> Primary Care 101 guideline (NDoH). Essential Drugs List — Primary Healthcare. South African Hypertension Practice Guideline (2019). SEMDSA Type 2 Diabetes Guidelines (2023). South African Epilepsy Guidelines (ILAE). Global Asthma Report — South Africa chapter.
+    </section>
+  </div>
+</Base>
