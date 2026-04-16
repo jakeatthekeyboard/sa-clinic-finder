@@ -109,20 +109,43 @@ const jsonLd = {
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Nearby facilities</h2>
       <div style="display: grid; gap: 10px;">
-        {nearby.map(n => (
+        {nearby.map(n => {
+          const nAddr = [n.address.street, n.address.suburb, n.address.city].filter(Boolean).join(', ');
+          return (
           <a href={n.url_path} class="card" style="text-decoration: none; color: var(--text);">
             <strong>{n.name}</strong>
-            <div style="font-size: 0.85rem; color: var(--text-muted);">
+            {nAddr && <div style="font-size: 0.85rem; color: var(--text); margin-top: 2px;">{nAddr}</div>}
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
               {typeLabel(n.type)} · {n.province}
             </div>
           </a>
-        ))}
+        )})}
       </div>
     </section>
 
-    <div style="font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 16px;">
-      <p>Last verified: {facility.last_verified} · Data quality: {facility.data_quality_score}/5 · Source: {facility.data_source}</p>
-      <p style="margin-top: 4px;">Information may be outdated. Call the facility to confirm before visiting.</p>
-    </div>
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Data source</h2>
+      <div style="display: grid; gap: 8px; font-size: 0.9rem;">
+        <div style="display: flex; gap: 8px;">
+          <strong style="min-width: 100px; color: var(--text-muted);">Source:</strong>
+          <span>{facility.data_source === 'overpass'
+            ? 'OpenStreetMap (via Overpass API) — community-mapped geographic data'
+            : facility.data_source === 'hotosm'
+            ? 'Humanitarian OpenStreetMap Team (HOTOSM) — humanitarian mapping data'
+            : facility.data_source}</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <strong style="min-width: 100px; color: var(--text-muted);">Last verified:</strong>
+          <span>{facility.last_verified}</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <strong style="min-width: 100px; color: var(--text-muted);">Data quality:</strong>
+          <span>{'★'.repeat(facility.data_quality_score)}{'☆'.repeat(5 - facility.data_quality_score)} ({facility.data_quality_score}/5)</span>
+        </div>
+      </div>
+      <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+        This information is sourced from open data and may not reflect the latest changes. We recommend phoning the facility to confirm services and hours before visiting. If this information is incorrect, <a href="mailto:hello@clinicfinder.co.za">email us</a> and we will update it.
+      </p>
+    </section>
   </div>
 </Base>

@@ -1,0 +1,181 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities } from '../../data/helpers';
+
+const mhClinics = facilities.filter(f => f.services.mental_health);
+
+const faqs = [
+  {
+    question: 'Can I go to a clinic for depression without a referral?',
+    answer: 'Yes. You can walk into any public clinic and tell the nurse you are struggling with your mental health. You do not need a referral, a diagnosis, or a specific reason — feeling overwhelmed, unable to sleep, unable to function at work, or feeling hopeless are all valid reasons to seek help. The nurse will do an initial screening and either treat you at clinic level or refer you to a psychologist or psychiatrist.',
+  },
+  {
+    question: 'Is mental health treatment free?',
+    answer: 'Yes. Mental health is covered under primary healthcare in South Africa. Consultations, medication (antidepressants, anti-anxiety, antipsychotic), and psychological counselling at public facilities are free. Specialist psychiatric care at hospital level may incur means-tested fees, but primary clinic-level care is always free.',
+  },
+  {
+    question: 'What medication can I get at a clinic?',
+    answer: 'Primary care clinics can prescribe: fluoxetine (Prozac-type SSRI for depression and anxiety), amitriptyline (for depression, chronic pain, insomnia), and haloperidol or risperidone (for psychosis). These cover the most common conditions. If your condition needs a specialist medication, the clinic will refer you to a district hospital psychiatrist who has a wider formulary.',
+  },
+  {
+    question: 'Can I get counselling, not just medication?',
+    answer: 'Yes. Many clinics now have access to lay counsellors or psychologists through the integrated school health programme or district mental health teams. The quality and availability varies by province — Gauteng and Western Cape have the most resources. If your clinic does not offer counselling, ask for a referral to the nearest community health centre or district hospital with a psychology department.',
+  },
+  {
+    question: 'What if someone is in a mental health crisis?',
+    answer: 'If someone is a danger to themselves or others: call 10111 (SAPS) or 10177 (ambulance). Take them to the nearest 24-hour emergency unit — do not wait for a clinic appointment. Under the Mental Health Care Act, a person in crisis can be admitted for 72-hour observation and assessment at a designated psychiatric facility. A family member, SAPS member, or health professional can initiate an involuntary admission if the person refuses help but is clearly at risk.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Mental Health Services at Public Clinics in South Africa',
+    description: 'Where to get help for depression, anxiety, PTSD, and substance abuse in South Africa\'s public health system.',
+    url: 'https://clinicfinder.co.za/guides/mental-health-services',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+<Base
+  title="Mental Health Services at Public Clinics — Clinic Finder SA"
+  description="Where to get help for depression, anxiety, PTSD, and substance abuse in South Africa's public health system. Free treatment, what to expect, crisis resources."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; Mental Health Services
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Mental Health Services at Public Clinics</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      One in three South Africans will experience a mental health condition in their lifetime, but fewer than 25% receive treatment. Public clinics can help — depression, anxiety, PTSD, and substance abuse are all treated for free. This guide explains what is available and how to access it.
+    </p>
+
+    <section style="background: #fef3cd; border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: #856404;">Crisis? Get help now</h2>
+      <div style="font-size: 0.95rem; line-height: 1.7; color: #856404;">
+        <p><strong>SADAG helpline:</strong> 0800 567 567 (free, 24/7)</p>
+        <p><strong>Suicide crisis line:</strong> 0800 567 567</p>
+        <p><strong>SMS helpline:</strong> 31393 (Cipla 24/7)</p>
+        <p><strong>Emergency:</strong> 10177 (ambulance) or 10111 (SAPS)</p>
+        <p style="margin-top: 8px;">If you or someone you know is in immediate danger, go to the nearest <a href="/services/emergency" style="color: #856404; font-weight: 600;">24-hour emergency facility</a>.</p>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">What you can access at a primary clinic</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Public clinics are the entry point for mental health care in South Africa. At a clinic, you can get:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px; margin-top: 8px;">
+        <li><strong>Screening and assessment</strong> — the nurse uses standardized tools (PHQ-9 for depression, GAD-7 for anxiety) to assess your condition</li>
+        <li><strong>Medication</strong> — antidepressants (fluoxetine, amitriptyline), anti-anxiety medication, and basic antipsychotics are available at clinic level</li>
+        <li><strong>Counselling</strong> — basic supportive counselling from trained lay counsellors (availability varies by province)</li>
+        <li><strong>Referral</strong> — to a psychologist, psychiatrist, or psychiatric hospital if your condition needs specialist care</li>
+        <li><strong>Sick note</strong> — for time off work due to mental health (depression, anxiety, and burnout are legitimate medical conditions)</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">How to ask for help</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Walk into any public clinic. You do not need an appointment. Tell the receptionist or nurse that you want to talk to someone about your mental health. If you find it hard to say this out loud, you can write it on a piece of paper: "I need help with my mental health" — hand it to the nurse.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        The nurse will take you to a private room. There is no wrong way to describe what you are feeling. Common things people say at a first visit:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 4px; margin-top: 8px; color: var(--text-muted);">
+        <li>"I can't sleep and I can't stop worrying"</li>
+        <li>"I feel like I can't get out of bed or do anything"</li>
+        <li>"I'm drinking too much and I want to stop"</li>
+        <li>"I keep having flashbacks / nightmares"</li>
+        <li>"I don't feel like myself and I don't know why"</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        All of these are valid reasons to seek help. The nurse will not judge you.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Common conditions treated</h2>
+      <div style="display: grid; gap: 12px;">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--green-dark);">Depression</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Persistent sadness, loss of interest, fatigue, difficulty concentrating, changes in appetite or sleep. Treatment: SSRI medication (usually fluoxetine) + counselling. Most people improve significantly within 4-6 weeks of starting medication.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--green-dark);">Anxiety disorders</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Constant worry, panic attacks, social anxiety, phobias. Treatment: SSRI medication, sometimes short-term benzodiazepines for acute panic, cognitive behavioural techniques from a counsellor.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--green-dark);">Post-traumatic stress (PTSD)</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Flashbacks, nightmares, hypervigilance, emotional numbness after trauma (violence, accident, assault, disaster). Very common in South Africa — an estimated 3.5 million people live with PTSD. Treatment: trauma-focused counselling + medication for sleep and intrusive symptoms.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--green-dark);">Substance use disorders</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Alcohol, cannabis, methamphetamine (tik), heroin (nyaope), prescription drug misuse. Clinics can initiate treatment and refer to community-based rehabilitation programmes. Inpatient rehab through the public system requires a referral from a social worker or clinic.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">The referral pathway</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        If your condition needs more than a clinic can provide, the nurse will refer you up the chain:
+      </p>
+      <div style="margin-top: 12px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+        <div style="display: grid; grid-template-columns: auto 1fr; font-size: 0.9rem;">
+          <div style="padding: 12px; background: var(--green-light); font-weight: 600; border-bottom: 1px solid var(--border);">Level 1</div>
+          <div style="padding: 12px; border-bottom: 1px solid var(--border); line-height: 1.6;"><strong>Primary clinic</strong> — screening, basic medication, lay counselling, referral</div>
+          <div style="padding: 12px; background: var(--green-light); font-weight: 600; border-bottom: 1px solid var(--border);">Level 2</div>
+          <div style="padding: 12px; border-bottom: 1px solid var(--border); line-height: 1.6;"><strong>Community health centre / district hospital</strong> — psychologist, psychiatric nurse, wider medication formulary</div>
+          <div style="padding: 12px; background: var(--green-light); font-weight: 600; border-bottom: 1px solid var(--border);">Level 3</div>
+          <div style="padding: 12px; border-bottom: 1px solid var(--border); line-height: 1.6;"><strong>Regional hospital</strong> — psychiatrist, inpatient admission, specialised programmes (eating disorders, dual diagnosis)</div>
+          <div style="padding: 12px; background: var(--green-light); font-weight: 600;">Level 4</div>
+          <div style="padding: 12px; line-height: 1.6;"><strong>Tertiary / psychiatric hospital</strong> — complex cases, forensic psychiatry, long-term rehabilitation</div>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Find a clinic with mental health services</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        {mhClinics.length} facilities in our database offer mental health services.
+      </p>
+      <a href="/services/mental-health" class="btn btn--primary" style="font-size: 0.9rem;">Browse mental health clinics</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Sources:</strong> Mental Health Care Act 17 of 2002 (South Africa). National Mental Health Policy Framework and Strategic Plan 2023-2030. South African Depression and Anxiety Group (SADAG). WHO Mental Health Atlas — South Africa. South African Stress and Health (SASH) study. Essential Drugs List — Primary Healthcare (NDoH).
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,159 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities } from '../../data/helpers';
+
+const tbClinics = facilities.filter(f => f.services.tb_treatment);
+
+const faqs = [
+  {
+    question: 'Is TB treatment free?',
+    answer: 'Yes. All TB diagnosis and treatment is free at public health facilities in South Africa. This includes sputum tests, chest X-rays, medication, and follow-up appointments. TB is a notifiable disease — the government funds treatment because curing each case protects the community.',
+  },
+  {
+    question: 'Can I work while on TB treatment?',
+    answer: 'In most cases, yes. After 2 weeks of treatment, you are no longer infectious and can return to work. Some employers require a doctor\'s letter confirming you are on treatment and no longer contagious. You are legally protected from dismissal due to TB — it falls under disability discrimination.',
+  },
+  {
+    question: 'What if I miss TB doses?',
+    answer: 'Missing doses is the most common cause of drug-resistant TB. If you miss a day or two, return to the clinic immediately. The nurse will assess whether you can continue where you left off or need to restart. Do not wait until your next appointment — go as soon as possible. There is no punishment for returning.',
+  },
+  {
+    question: 'What is MDR-TB?',
+    answer: 'Multi-drug resistant TB (MDR-TB) happens when the TB bacteria become resistant to the two main drugs (isoniazid and rifampicin), usually because of incomplete treatment. MDR-TB requires a longer treatment course (9-18 months instead of 6) with stronger medications that may have more side effects. The newer drug bedaquiline has significantly improved MDR-TB outcomes in South Africa since 2018.',
+  },
+  {
+    question: 'Can I get TB if I am HIV-positive?',
+    answer: 'HIV-positive people are 15-22 times more likely to develop active TB than HIV-negative people. TB is the leading cause of death among people living with HIV in South Africa. If you are HIV-positive, your clinic should screen you for TB at every visit and provide isoniazid preventive therapy (IPT) if you do not have active TB. This reduces your TB risk by 33-67%.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'TB Treatment in South Africa — What to Expect',
+    description: 'Complete guide to tuberculosis treatment at South African public clinics: diagnosis, DOTS, drug-resistant TB, and staying the course.',
+    url: 'https://clinicfinder.co.za/guides/tb-treatment-what-to-expect',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+<Base
+  title="TB Treatment — What to Expect — Clinic Finder SA"
+  description="Complete guide to tuberculosis treatment at South African public clinics. Diagnosis, DOTS programme, drug-resistant TB, side effects, and how to complete 6 months."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; TB Treatment
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">TB Treatment — What to Expect</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      South Africa has one of the highest TB rates in the world, but the disease is curable. Treatment is free, takes 6 months for drug-sensitive TB, and has a cure rate above 85% when completed. This guide covers the full treatment journey.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Getting diagnosed</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        If you have a cough lasting more than 2 weeks, night sweats, unexplained weight loss, or fever, go to your nearest clinic and ask for a TB test. The clinic will collect a sputum sample (you cough into a small container) and send it for GeneXpert testing. Results come back within 2 hours at clinics with on-site machines, or within 48 hours if sent to a lab.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        GeneXpert is the standard first test in South Africa. It detects TB bacteria and simultaneously checks for rifampicin resistance (the most important drug). If the test is positive, the clinic may also order a chest X-ray and additional sputum cultures to guide treatment.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">The treatment regimen</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Standard drug-sensitive TB treatment lasts <strong>6 months</strong> in two phases:
+      </p>
+      <div style="margin-top: 12px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+        <div style="display: grid; grid-template-columns: 1fr 2fr; font-size: 0.9rem;">
+          <div style="padding: 12px; background: var(--green-light); font-weight: 600; border-bottom: 1px solid var(--border);">Intensive phase</div>
+          <div style="padding: 12px; border-bottom: 1px solid var(--border); line-height: 1.6;">Months 1-2: four drugs (isoniazid, rifampicin, pyrazinamide, ethambutol). Taken daily. This kills most of the TB bacteria.</div>
+          <div style="padding: 12px; background: var(--green-light); font-weight: 600;">Continuation phase</div>
+          <div style="padding: 12px; line-height: 1.6;">Months 3-6: two drugs (isoniazid, rifampicin). Taken daily. This eliminates remaining bacteria that the intensive phase weakened.</div>
+        </div>
+      </div>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        All medication is provided in a single combined pill (fixed-dose combination) — you take one pill per day, not four separate tablets. The pills are free.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">DOTS — Directly Observed Treatment</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        South Africa uses the DOTS strategy: during the intensive phase, a health worker, community volunteer, or treatment supporter observes you taking each dose. This is not about distrust — it is the most proven way to ensure treatment completion worldwide.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Your DOTS supporter can be a clinic nurse, a community health worker who visits your home, a workplace health officer, or even a trusted family member trained by the clinic. The goal is to make daily treatment as easy as possible for you — if the current arrangement is not working, tell the nurse and they will find an alternative.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Side effects to watch for</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        Most people tolerate TB medication well, but some side effects are common in the first few weeks:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Orange/red urine</strong> — this is normal and caused by rifampicin. It is harmless. It may also stain contact lenses and sweat.</li>
+        <li><strong>Nausea</strong> — take medication with a small amount of food if needed. Usually settles after the first 2 weeks.</li>
+        <li><strong>Joint pain</strong> — caused by pyrazinamide. Usually mild. Tell the nurse at your next visit.</li>
+        <li><strong>Tingling in hands/feet</strong> — caused by isoniazid. The clinic should give you pyridoxine (vitamin B6) to prevent this.</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        <strong>Go to the clinic immediately</strong> if you experience: yellow eyes or skin (liver toxicity), vision changes (ethambutol can affect eyesight), severe rash, or persistent vomiting. These are rare but need urgent attention.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Why finishing treatment matters</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Most people feel better within 2-4 weeks of starting treatment. This is the most dangerous point — because you feel well, it is tempting to stop. But the TB bacteria are still alive, just weakened. Stopping early almost guarantees the TB will return, and it may return as drug-resistant TB, which is harder and longer to treat.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Complete the full 6 months. No exceptions. South Africa's TB crisis is driven primarily by incomplete treatment and the resulting drug resistance.
+      </p>
+    </section>
+
+    <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Find a clinic that treats TB</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        {tbClinics.length} facilities in our database offer TB treatment.
+      </p>
+      <a href="/services/tb" class="btn btn--primary" style="font-size: 0.9rem;">Browse TB clinics</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Sources:</strong> South African National TB Programme guidelines (2024). WHO End TB Strategy. GeneXpert implementation report — National Health Laboratory Service. DOTS strategy implementation guide — National Department of Health. Global Tuberculosis Report 2025 — WHO.
+    </section>
+  </div>
+</Base>

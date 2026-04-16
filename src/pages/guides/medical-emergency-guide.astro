@@ -1,0 +1,191 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities } from '../../data/helpers';
+
+const emergencyClinics = facilities.filter(f => f.services.emergency_24h);
+
+const faqs = [
+  {
+    question: 'Can I be turned away from a public emergency room?',
+    answer: 'No. Section 27 of the Constitution guarantees the right to emergency medical treatment. No one — regardless of nationality, immigration status, ability to pay, or medical aid membership — can be turned away from emergency treatment. If you are refused, get the name of the person who refused you and contact the Health Ombud: 012 366 7599.',
+  },
+  {
+    question: 'How much does emergency treatment cost?',
+    answer: 'Emergency treatment is free at public facilities for people who cannot pay. After stabilisation, if you are admitted to hospital, fees are means-tested based on your income. South African citizens earning below a threshold (updated annually) pay nothing. Foreign nationals without documentation still receive emergency treatment first — billing is sorted later.',
+  },
+  {
+    question: 'Should I call an ambulance or drive to the hospital?',
+    answer: 'Call an ambulance (10177) if: the person is unconscious, having a seizure, struggling to breathe, has a suspected spinal injury, or is too injured to move safely. Drive to the hospital if: the person is conscious, alert, can sit upright, and you can get there faster than an ambulance (which may take 30-60+ minutes in some areas). If in doubt, call 10177 — the dispatcher will advise you.',
+  },
+  {
+    question: 'What is the difference between a clinic and an emergency room?',
+    answer: 'Clinics handle routine primary healthcare during business hours (07:00-16:00 weekdays). They do not have doctors on site 24/7, cannot do surgery, and cannot manage severe trauma or life-threatening conditions. Emergency rooms (casualty) at hospitals operate 24 hours, have doctors, surgical capacity, blood supplies, and resuscitation equipment. For anything life-threatening, go to a hospital, not a clinic.',
+  },
+  {
+    question: 'What if the nearest public hospital is far away?',
+    answer: 'Call 10177 for an ambulance. If the situation is immediately life-threatening and an ambulance is too far away, go to ANY hospital — including private hospitals. Private hospitals are legally required to stabilise emergency patients regardless of medical aid status (National Health Act Section 5). They may transfer you to a public hospital once stabilised, but they cannot refuse initial treatment.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'What to Do in a Medical Emergency in South Africa',
+    description: 'When to go to a clinic vs emergency room, how to call an ambulance, and what happens at casualty in South Africa.',
+    url: 'https://clinicfinder.co.za/guides/medical-emergency-guide',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+<Base
+  title="What to Do in a Medical Emergency — Clinic Finder SA"
+  description="Emergency guide for South Africa: when to call an ambulance, clinic vs emergency room, what happens at casualty, and your rights to emergency treatment."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; Medical Emergency Guide
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">What to Do in a Medical Emergency</h1>
+    <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.7;">
+      In a medical emergency, knowing where to go and what to do can save a life. This guide covers the essential steps: who to call, where to go, and what to expect at a public hospital emergency room.
+    </p>
+
+    <section style="background: #fef3cd; border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: #856404;">Emergency numbers</h2>
+      <div style="font-size: 0.95rem; line-height: 1.8; color: #856404;">
+        <p><strong>10177</strong> — Ambulance (national)</p>
+        <p><strong>10111</strong> — Police (SAPS)</p>
+        <p><strong>112</strong> — Universal emergency (from any cellphone)</p>
+        <p><strong>082 911</strong> — Netcare 911 (private ambulance, all callers)</p>
+        <p><strong>0800 055 555</strong> — ER24 (private ambulance)</p>
+      </div>
+      <p style="font-size: 0.85rem; color: #856404; margin-top: 8px;">Save these numbers on your phone now. In an emergency, you will not have time to search for them.</p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 1: Assess the situation</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        <strong>Call an ambulance (10177) immediately if the person:</strong>
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 4px;">
+        <li>Is unconscious or unresponsive</li>
+        <li>Is struggling to breathe or not breathing</li>
+        <li>Is having a seizure (convulsions)</li>
+        <li>Has severe chest pain (possible heart attack)</li>
+        <li>Has been in a serious car accident or fall</li>
+        <li>Has a suspected spinal or neck injury — do NOT move them</li>
+        <li>Is bleeding heavily and it will not stop with pressure</li>
+        <li>Has been poisoned (call Poison Information Centre: 0861 555 777)</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        <strong>Drive to the hospital yourself if:</strong> the person is conscious, alert, and able to sit upright. In many areas, driving is faster than waiting for an ambulance. Public ambulance response times vary widely — 15 minutes in urban areas to over an hour in rural areas.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 2: Go to the right facility</h2>
+      <div style="display: grid; gap: 12px;">
+        <div style="border-left: 4px solid #dc3545; padding: 12px 16px; background: #fff5f5; border-radius: 0 var(--radius) var(--radius) 0;">
+          <strong style="color: #dc3545;">Life-threatening → Hospital emergency room</strong>
+          <p style="font-size: 0.9rem; margin-top: 4px; line-height: 1.5;">Go to a hospital with 24-hour casualty. They have doctors, blood, surgical capacity, and resuscitation equipment. Do not go to a clinic for emergencies.</p>
+        </div>
+        <div style="border-left: 4px solid #fd7e14; padding: 12px 16px; background: #fff8f0; border-radius: 0 var(--radius) var(--radius) 0;">
+          <strong style="color: #e65100;">Urgent but not life-threatening → Community health centre</strong>
+          <p style="font-size: 0.9rem; margin-top: 4px; line-height: 1.5;">Broken bone (no open wound), deep cut needing stitches, severe allergic reaction (after using EpiPen), high fever in a child. Some community health centres operate 24 hours and can handle these. Check before going.</p>
+        </div>
+        <div style="border-left: 4px solid var(--green); padding: 12px 16px; background: var(--green-light); border-radius: 0 var(--radius) var(--radius) 0;">
+          <strong style="color: var(--green-dark);">Non-urgent → Clinic (during hours)</strong>
+          <p style="font-size: 0.9rem; margin-top: 4px; line-height: 1.5;">Persistent cough, rash, earache, mild fever, repeat prescription. Visit during clinic hours (07:00-16:00 weekdays). Using emergency rooms for non-emergencies overloads the system and delays care for critically ill patients.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 3: What happens at casualty</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        When you arrive at a public hospital emergency room (casualty):
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px; margin-top: 8px;">
+        <li><strong>Triage</strong> — a triage nurse assesses every patient on arrival and assigns a colour code:
+          <div style="display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin-top: 6px; font-size: 0.9rem;">
+            <span style="color: #dc3545; font-weight: 600;">Red</span><span>— Life-threatening. Seen immediately.</span>
+            <span style="color: #fd7e14; font-weight: 600;">Orange</span><span>— Very urgent. Seen within 10 minutes.</span>
+            <span style="color: #ffc107; font-weight: 600;">Yellow</span><span>— Urgent. Seen within 60 minutes.</span>
+            <span style="color: var(--green); font-weight: 600;">Green</span><span>— Non-urgent. May wait 4+ hours.</span>
+          </div>
+        </li>
+        <li><strong>Treatment</strong> — emergency doctors stabilise you: stop bleeding, manage pain, run basic tests (blood, X-ray), start IV fluids or medication.</li>
+        <li><strong>Outcome</strong> — after assessment, you are either: discharged with instructions, admitted to a ward, transferred to a specialist hospital, or referred back to your clinic for follow-up.</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        Important: triage is based on medical severity, not time of arrival. A patient who arrives after you but is in worse condition will be seen first. This is how it should work — trust the system.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">What to bring</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li><strong>ID or passport</strong> (if available — treatment will not be refused without it)</li>
+        <li><strong>Green clinic card</strong> or any medical records</li>
+        <li><strong>List of current medications</strong> (or bring the actual boxes/bottles)</li>
+        <li><strong>Medical aid card</strong> (if applicable — not required for public hospital emergency)</li>
+        <li><strong>Phone charger</strong> and <strong>water</strong> — waits can be long</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Your rights</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        The Constitution (Section 27) and the National Health Act (Section 5) protect your right to emergency treatment:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px; margin-top: 8px;">
+        <li><strong>No one can be refused emergency treatment</strong> — not by a public or private hospital</li>
+        <li><strong>Payment is sorted after treatment</strong> — you are never required to pay upfront for emergency care</li>
+        <li><strong>Foreign nationals are covered</strong> — regardless of documentation status</li>
+        <li><strong>Private hospitals must stabilise you</strong> before considering transfer to a public facility</li>
+      </ol>
+    </section>
+
+    <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Find a 24-hour emergency facility</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        {emergencyClinics.length} facilities in our database offer 24-hour emergency services.
+      </p>
+      <a href="/services/emergency" class="btn btn--primary" style="font-size: 0.9rem;">Browse emergency facilities</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Sources:</strong> Constitution of the Republic of South Africa, Section 27. National Health Act 61 of 2003, Section 5. South African Triage Scale (SATS). Emergency Medical Services regulations — National Department of Health. Health Professions Act — duty of care provisions.
+    </section>
+  </div>
+</Base>

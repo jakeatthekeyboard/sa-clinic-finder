@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { facilities, PROVINCES, SERVICE_MAP, provinceSlug, typeLabel } from '../data/helpers';
 
-// Build lightweight search index (name, province, type, services, slug, url)
+// Build lightweight search index (name, province, type, services, slug, url, coords, location)
 const searchData = facilities
   .filter(f => f.province !== '')
   .map(f => ({
@@ -12,6 +12,11 @@ const searchData = facilities
     s: Object.entries(f.services).filter(([,v]) => v).map(([k]) => k),
     u: f.url_path,
     h: f.operating_hours.is_24_hour,
+    lt: f.coordinates.lat,
+    lg: f.coordinates.lng,
+    c: f.address.city || '',
+    st: f.address.street || '',
+    sb: f.address.suburb || '',
   }));
 ---
 <Base
@@ -25,7 +30,7 @@ const searchData = facilities
       <input
         type="text"
         id="q"
-        placeholder="Search by clinic name..."
+        placeholder="Search by clinic name, city, or street..."
         style="width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: var(--radius); font-size: 1rem; outline: none;"
       />
     </div>
@@ -64,15 +69,30 @@ const searchData = facilities
       satellite_clinic: 'Satellite Clinic',
     };
 
+    function locationStr(f) {
+      const parts = [];
+      if (f.st) parts.push(f.st);
+      if (f.sb) parts.push(f.sb);
+      if (f.c) parts.push(f.c);
+      return parts.join(', ');
+    }
+
     function render(items) {
       const show = items.slice(0, 50);
-      results.innerHTML = show.map(f => `
+      results.innerHTML = show.map(f => {
+        const loc = locationStr(f);
+        return `
         <a href="${f.u}" style="display:block;padding:14px 16px;border:1px solid #e0e0e0;border-radius:8px;margin-bottom:8px;text-decoration:none;color:#1a1a1a;">
-          <strong>${f.n}</strong>
-          <span style="font-size:0.85rem;color:#555;margin-left:8px;">${typeLabels[f.t]||f.t} · ${f.p}${f.h?' · 24h':''}</span>
-          ${f._dist ? `<span style="font-size:0.8rem;color:#1a7a4c;margin-left:8px;">${f._dist.toFixed(1)} km</span>` : ''}
-        </a>
-      `).join('');
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+            <div>
+              <strong>${f.n}</strong>
+              ${loc ? `<div style="font-size:0.85rem;color:#555;margin-top:2px;">${loc}</div>` : ''}
+              <div style="font-size:0.8rem;color:#888;margin-top:2px;">${typeLabels[f.t]||f.t} · ${f.p}${f.h?' · 24h':''}</div>
+            </div>
+            ${f._dist != null ? `<span style="font-size:0.85rem;color:#1a7a4c;font-weight:600;white-space:nowrap;">${f._dist.toFixed(1)} km</span>` : ''}
+          </div>
+        </a>`;
+      }).join('');
       count.textContent = `Showing ${show.length} of ${items.length} results`;
     }
 
@@ -81,9 +101,16 @@ const searchData = facilities
       const provVal = prov.value;
       const svcVal = svc.value;
       let filtered = data;
-      if (query) filtered = filtered.filter(f => f.n.toLowerCase().includes(query));
+      if (query) filtered = filtered.filter(f => f.n.toLowerCase().includes(query) || f.c.toLowerCase().includes(query) || f.st.toLowerCase().includes(query));
       if (provVal) filtered = filtered.filter(f => f.p === provVal);
       if (svcVal) filtered = filtered.filter(f => f.s.includes(svcVal));
+      // Add distance if user location is available
+      if (userLat != null && userLng != null) {
+        filtered = filtered.map(f => ({
+          ...f,
+          _dist: (f.lt && f.lg) ? haversine(userLat, userLng, f.lt, f.lg) : null
+        })).sort((a, b) => (a._dist ?? 99999) - (b._dist ?? 99999));
+      }
       render(filtered);
     }
 
@@ -91,22 +118,32 @@ const searchData = facilities
     prov.addEventListener('change', filter);
     svc.addEventListener('change', filter);
 
+    let userLat = null, userLng = null;
+
+    function haversine(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) ** 2 +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) ** 2;
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
     nearMe.addEventListener('click', () => {
-      if (!navigator.geolocation) { alert('Geolocation not supported'); return; }
-      nearMe.textContent = 'Finding...';
+      if (!navigator.geolocation) { count.textContent = 'Geolocation not supported on this device.'; return; }
+      nearMe.textContent = 'Finding your location...';
       navigator.geolocation.getCurrentPosition(pos => {
-        const lat = pos.coords.latitude, lng = pos.coords.longitude;
-        const R = 6371;
-        const withDist = data.map(f => {
-          // Look up coordinates from full facilities data embedded in search
-          return { ...f, _dist: 0 };
-        });
-        nearMe.textContent = 'Near me';
-        // For now, just filter to user's province or show all sorted
+        userLat = pos.coords.latitude;
+        userLng = pos.coords.longitude;
+        nearMe.textContent = 'Near me ✓';
+        nearMe.style.background = 'var(--green)';
+        nearMe.style.color = '#fff';
+        // Calculate distances and re-filter (sorted by distance)
         filter();
       }, () => {
         nearMe.textContent = 'Near me';
-        alert('Could not get your location. Please allow location access.');
+        count.textContent = 'Could not get your location. Please allow location access in your browser settings.';
       });
     });
 

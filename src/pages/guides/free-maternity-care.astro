@@ -1,0 +1,177 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities } from '../../data/helpers';
+
+const maternityClinics = facilities.filter(f => f.services.maternity_antenatal);
+
+const faqs = [
+  {
+    question: 'When should I go for my first antenatal visit?',
+    answer: 'As early as possible — ideally before 12 weeks of pregnancy. Early booking allows the clinic to detect high-risk pregnancies (ectopic pregnancy, pre-eclampsia, HIV, anaemia), start folic acid supplementation, and plan your care. South Africa recommends at least 8 antenatal visits total. You can book at any public clinic that offers maternity services.',
+  },
+  {
+    question: 'Is delivery at a public hospital really free?',
+    answer: 'Yes. Delivery at a public hospital or midwife obstetric unit (MOU) is free for all women, regardless of nationality or medical aid status. This includes normal vaginal delivery, assisted delivery, and caesarean section if medically indicated. The only time fees apply is if you choose a private ward (where available) or are a non-resident seeking elective services.',
+  },
+  {
+    question: 'Can I choose where to deliver?',
+    answer: 'Low-risk pregnancies are managed at midwife obstetric units (MOUs) or district hospitals close to your home. High-risk pregnancies (twins, pre-eclampsia, HIV with complications, previous caesarean) are referred to regional or tertiary hospitals. You cannot choose a hospital that is not appropriate for your risk level, but you can request a specific facility at the same level. Discuss your options with your antenatal nurse.',
+  },
+  {
+    question: 'What if I am HIV-positive and pregnant?',
+    answer: 'All pregnant women are tested for HIV at the first antenatal visit. If positive, ARVs are started immediately (same-day initiation). South Africa\'s PMTCT programme (Prevention of Mother-to-Child Transmission) has reduced vertical transmission to under 1% when mothers are on treatment. Your baby will receive a prophylactic ARV dose at birth and be tested at birth, 10 weeks, and 18 months. Breastfeeding is recommended — ARVs make breast milk safe.',
+  },
+  {
+    question: 'Do I need to bring anything to the hospital for delivery?',
+    answer: 'Bring: your maternity case record (green book), ID or passport, toiletries, 2-3 changes of underwear, sanitary pads (heavy flow), a nightgown or comfortable clothes, a going-home outfit for yourself, and for the baby: 2 vests, 2 sleepsuits, a blanket, nappies, and a hat. The hospital provides food and basic medical supplies. Do not bring valuables.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Free Maternity Care at Public Hospitals in South Africa',
+    description: 'Everything pregnant women can access for free at South African public clinics: antenatal care, delivery, postnatal support.',
+    url: 'https://clinicfinder.co.za/guides/free-maternity-care',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+<Base
+  title="Free Maternity Care at Public Hospitals — Clinic Finder SA"
+  description="Complete guide to free pregnancy and maternity care in South Africa: antenatal visits, hospital delivery, postnatal care, PMTCT, and what to bring."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; Free Maternity Care
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Free Maternity Care at Public Hospitals</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      Every pregnant woman in South Africa is entitled to free antenatal care, delivery, and postnatal support at public health facilities. No medical aid required. This guide covers what you can expect from your first clinic visit to bringing your baby home.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Antenatal care (before birth)</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Book your first antenatal visit as early as possible — before 12 weeks is ideal. At the first visit, the nurse will:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px; margin-top: 8px;">
+        <li>Confirm the pregnancy and estimate your due date</li>
+        <li>Check your blood pressure, weight, and urine</li>
+        <li>Draw blood for HIV, syphilis, anaemia, and blood group</li>
+        <li>Start folic acid and iron supplements</li>
+        <li>Give you a maternity case record (green book) — bring this to every visit</li>
+        <li>Assess risk factors and refer to a hospital if needed</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        South Africa recommends <strong>at least 8 antenatal visits</strong>: monthly until 28 weeks, then every 2 weeks until 36 weeks, then weekly until delivery. Each visit checks the baby's growth, your blood pressure, and screens for complications like pre-eclampsia and gestational diabetes.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Where you will deliver</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Where you deliver depends on your pregnancy risk level:
+      </p>
+      <div style="margin-top: 12px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+        <div style="display: grid; grid-template-columns: 1fr 2fr; font-size: 0.9rem;">
+          <div style="padding: 12px; background: var(--green-light); font-weight: 600; border-bottom: 1px solid var(--border);">Low risk</div>
+          <div style="padding: 12px; border-bottom: 1px solid var(--border); line-height: 1.6;">Midwife Obstetric Unit (MOU) or district hospital. Staffed by midwives. Handles normal vaginal delivery. If complications arise during labour, you are transferred to a hospital.</div>
+          <div style="padding: 12px; background: var(--green-light); font-weight: 600; border-bottom: 1px solid var(--border);">Medium risk</div>
+          <div style="padding: 12px; border-bottom: 1px solid var(--border); line-height: 1.6;">District hospital with doctors on call. Handles assisted delivery (vacuum/forceps) and some caesarean sections. Referred here if pre-eclampsia, breech, or previous caesarean.</div>
+          <div style="padding: 12px; background: var(--green-light); font-weight: 600;">High risk</div>
+          <div style="padding: 12px; line-height: 1.6;">Regional or tertiary hospital. Full surgical, ICU, and neonatal intensive care facilities. For multiple pregnancies, severe pre-eclampsia, placenta praevia, premature labour.</div>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">What to pack for hospital</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px;">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="font-size: 0.95rem; color: var(--green-dark);">For you</strong>
+          <ol style="padding-left: 16px; font-size: 0.9rem; line-height: 1.6; margin-top: 8px; display: grid; gap: 4px;">
+            <li>Maternity case record (green book)</li>
+            <li>ID or passport</li>
+            <li>Nightgown or comfortable clothes</li>
+            <li>2-3 changes of underwear</li>
+            <li>Heavy-flow sanitary pads</li>
+            <li>Toiletries</li>
+            <li>Comfortable going-home outfit</li>
+            <li>Snacks and water</li>
+          </ol>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="font-size: 0.95rem; color: var(--green-dark);">For baby</strong>
+          <ol style="padding-left: 16px; font-size: 0.9rem; line-height: 1.6; margin-top: 8px; display: grid; gap: 4px;">
+            <li>2 cotton vests</li>
+            <li>2 sleepsuits (babygrows)</li>
+            <li>Warm hat</li>
+            <li>Receiving blanket</li>
+            <li>Newborn nappies</li>
+            <li>Going-home outfit</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">After birth — postnatal care</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        After a normal delivery, you will stay in hospital for 6-24 hours. After a caesarean section, expect 3-4 days. Before discharge, the nurse will:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px; margin-top: 8px;">
+        <li>Check that the baby is feeding well (breastfeeding support is available)</li>
+        <li>Give the baby BCG (TB vaccine) and oral polio vaccine — the first two immunisations</li>
+        <li>Issue the baby's Road to Health booklet (vaccination and growth record)</li>
+        <li>Schedule a postnatal visit within 3-6 days</li>
+        <li>Discuss family planning options</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        You should return to the clinic within 6 days of delivery, then again at 6 weeks. The 6-week visit is important: the nurse checks your recovery, the baby's growth, continues immunisations, and can diagnose postnatal depression early. Do not skip this visit.
+      </p>
+    </section>
+
+    <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Find a clinic with maternity services</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        {maternityClinics.length} facilities in our database offer maternity and antenatal care.
+      </p>
+      <a href="/services/maternity" class="btn btn--primary" style="font-size: 0.9rem;">Browse maternity clinics</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Sources:</strong> Guidelines for Maternity Care in South Africa (National Department of Health, 2016). Saving Mothers Report 2020-2022. PMTCT guidelines (NDoH, 2019). WHO recommendations on antenatal care (2016). Basic Antenatal Care approach — SA adaptation.
+    </section>
+  </div>
+</Base>

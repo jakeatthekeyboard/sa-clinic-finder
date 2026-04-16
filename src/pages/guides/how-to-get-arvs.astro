@@ -1,0 +1,147 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities, SERVICE_MAP } from '../../data/helpers';
+
+const arvClinics = facilities.filter(f => f.services.arv_treatment);
+const provinceCounts: Record<string, number> = {};
+arvClinics.forEach(f => { provinceCounts[f.province] = (provinceCounts[f.province] || 0) + 1; });
+
+const faqs = [
+  {
+    question: 'Can I get ARVs without an ID?',
+    answer: 'Yes. You cannot be turned away from HIV testing or treatment because you lack an ID. Clinics may ask for alternative identification (asylum permit, refugee document, affidavit from a police station) to create a file, but treatment cannot be withheld. If a clinic refuses, contact the Treatment Action Campaign helpline: 0800 322 322.',
+  },
+  {
+    question: 'How much do ARVs cost at a government clinic?',
+    answer: 'ARV treatment is completely free at all public health facilities in South Africa. This includes the medication, blood tests (CD4 count and viral load), and consultations. You do not need medical aid.',
+  },
+  {
+    question: 'Can I start ARVs the same day I test positive?',
+    answer: 'Yes. South Africa follows a same-day initiation policy since 2017. If you test HIV-positive, a nurse can start you on ARVs the same day after a brief clinical assessment and blood draw. You do not need to wait for blood results to start.',
+  },
+  {
+    question: 'What happens if I miss my ARV doses?',
+    answer: 'Missing doses increases the risk of drug resistance, which means your current regimen may stop working. If you miss a dose, take it as soon as you remember (unless it is almost time for the next dose). If you have been off treatment for more than a month, return to the clinic — they will restart you, possibly with blood tests first. There is no penalty or judgement for returning.',
+  },
+  {
+    question: 'Can I collect ARVs from a pharmacy instead of a clinic?',
+    answer: 'Yes, if you are stable on treatment (suppressed viral load for 12+ months). The CCMDD programme allows you to collect your ARVs from over 3,000 external pickup points including private pharmacies, community halls, and workplaces. Ask your clinic nurse to register you for CCMDD.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'How to Get ARVs at a Public Clinic in South Africa',
+    description: 'Step-by-step guide to starting antiretroviral treatment at a South African government clinic.',
+    url: 'https://clinicfinder.co.za/guides/how-to-get-arvs',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+<Base
+  title="How to Get ARVs at a Public Clinic — Clinic Finder SA"
+  description="Step-by-step guide to starting ARV treatment at a South African government clinic. Same-day initiation, what to bring, blood tests, and free medication."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; How to Get ARVs
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">How to Get ARVs at a Public Clinic</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      Antiretroviral treatment (ARVs) is free at every public clinic in South Africa. You can start the same day you test positive. This guide walks through the full process — from arriving at the clinic to collecting your medication every month.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 1: Get tested</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Walk into any public clinic and ask for an HIV test. Testing is free, confidential, and takes about 20 minutes (rapid finger-prick test). You do not need an appointment. Results are given to you privately — they are never shared with your employer, family, or anyone else without your consent.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        If you prefer not to go to your local clinic, any public facility in any province will test you. You can also test at mobile testing points (look for government health tents at taxi ranks and malls) or ask a community health worker in your area.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 2: Same-day initiation</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        If you test positive, a nurse will do a brief clinical assessment: weight, blood pressure, check for TB symptoms, and draw blood for a CD4 count and viral load test. South Africa's policy since September 2017 is <strong>same-day ARV initiation</strong> — you do not need to wait for blood results to start treatment.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        The standard first-line regimen is TLD (tenofovir + lamivudine + dolutegravir) — one pill, once a day. It is highly effective, has few side effects, and achieves viral suppression in most people within 3-6 months.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 3: What to bring</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>South African ID, passport, or asylum permit</strong> — for creating your clinic file. If you have none of these, the clinic should still treat you (see FAQ below).</li>
+        <li><strong>Proof of address</strong> — not always required, but helps the clinic assign you to the nearest facility for follow-up.</li>
+        <li><strong>Any current medication</strong> — especially if you are on TB treatment, diabetes medication, or epilepsy drugs. Some medications interact with ARVs and the nurse needs to know.</li>
+        <li><strong>Green clinic card</strong> — if you already have one from a previous visit. If not, the clinic will create a new patient file.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 4: Follow-up visits</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        For the first 6 months, you will visit the clinic monthly to collect your medication and check in with the nurse. Blood tests happen at month 3 (viral load) and month 6 (viral load + kidney function). Once you are stable — viral load suppressed, no side effects — visits move to every 2-3 months.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        After 12 months of suppressed viral load, you can register for <a href="/guides/ccmdd-chronic-meds-pickup">CCMDD</a> (Central Chronic Medicine Dispensing and Distribution). This lets you collect your ARVs from a private pharmacy, community hall, or workplace pickup point — no more clinic queues for routine refills.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 5: Staying on treatment</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        ARVs are a lifelong treatment — there is no cure for HIV, but treatment suppresses the virus so effectively that people on ARVs live normal lifespans and cannot transmit HIV sexually (U=U: Undetectable = Untransmittable).
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        The most important thing is taking your pill at the same time every day. Set a phone alarm. If you travel, take enough medication with you. If you run out, go to the nearest clinic anywhere in the country — they can give you an emergency supply while your file is transferred.
+      </p>
+    </section>
+
+    <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Find a clinic that provides ARVs</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        {arvClinics.length} facilities in our database offer ARV treatment across all 9 provinces.
+      </p>
+      <a href="/services/arvs" class="btn btn--primary" style="font-size: 0.9rem;">Browse ARV clinics</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Sources:</strong> South African National Department of Health ARV treatment guidelines (2023 update). Treatment Action Campaign. UNAIDS country profile — South Africa. WHO consolidated guidelines on HIV prevention, testing, treatment. CCMDD implementation framework (National Department of Health, 2018).
+    </section>
+  </div>
+</Base>

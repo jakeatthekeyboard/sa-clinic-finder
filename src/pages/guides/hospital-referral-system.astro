@@ -1,0 +1,175 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const faqs = [
+  {
+    question: 'Can I go straight to a hospital without a referral?',
+    answer: 'For emergencies — yes, always. Go directly to the nearest hospital emergency room. For non-emergencies — technically no. Public hospitals are supposed to require a referral letter from a clinic or community health centre. In practice, some hospitals will see walk-in patients but you will wait much longer than referred patients, and you may be sent back to your clinic. The system works better when you start at the clinic.',
+  },
+  {
+    question: 'How long does it take to get a referral?',
+    answer: 'The referral letter itself is issued at your clinic visit — the nurse or doctor writes it based on their assessment. The wait is for the hospital appointment. Urgent referrals (suspected cancer, surgery needed, unstable conditions) may be seen within days. Routine referrals (specialist opinion, elective surgery, chronic condition review) can take 2-12 months depending on the hospital, speciality, and province.',
+  },
+  {
+    question: 'Can I choose which hospital I am referred to?',
+    answer: 'Not usually. The referral pathway sends you to the hospital that serves your catchment area (based on where you live). Each clinic feeds into a specific district hospital, which feeds into a specific regional hospital. You can request a different facility, but the clinic is not obligated to accommodate this unless there is a clinical reason (e.g. the catchment hospital does not have the required specialist).',
+  },
+  {
+    question: 'What if the clinic cannot help me but will not refer me?',
+    answer: 'If you believe you need specialist care that the clinic cannot provide, you have the right to ask for a reason why the referral is being denied. If you are not satisfied, escalate: (1) Ask to see the clinic manager. (2) Contact the district health office. (3) File a complaint with the Health Ombud: 012 366 7599. You should not need to do this often — most clinics refer appropriately — but it is your right.',
+  },
+  {
+    question: 'Do I need a new referral for every hospital visit?',
+    answer: 'Not for ongoing treatment at the same hospital. Once you are in the hospital system for a condition (e.g. attending a diabetes clinic at the hospital), you are given follow-up appointments directly. You only need a new referral if: (a) you are seeing a different speciality, (b) more than 6-12 months have passed without a visit, or (c) you are changing hospitals.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'How Hospital Referrals Work in South Africa',
+    description: 'The clinic-to-hospital referral chain: when you need one, how to get one, and what happens if you skip it.',
+    url: 'https://clinicfinder.co.za/guides/hospital-referral-system',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+<Base
+  title="How Hospital Referrals Work in South Africa — Clinic Finder SA"
+  description="The South African hospital referral system explained: clinic to district to regional to tertiary. When you need a referral, how to get one, and what to expect."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; Hospital Referral System
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">How Hospital Referrals Work in South Africa</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      South Africa's public health system is built on a referral chain: you start at a clinic, and if the clinic cannot manage your condition, they refer you up to a hospital. Understanding this system helps you get the right care faster.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">The referral chain</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 16px;">
+        The system has four levels. Each level handles conditions that the level below cannot:
+      </p>
+      <div style="display: grid; gap: 12px;">
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 40px; height: 40px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--green-dark);">1</div>
+          <div>
+            <strong style="font-size: 1rem;">Primary clinic / Community health centre</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">Staffed by nurses and sometimes a visiting doctor. Handles: chronic conditions (HIV, hypertension, diabetes), minor illnesses, family planning, antenatal care, immunisations, TB treatment, basic wound care. This is where 90% of health needs should be met.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 40px; height: 40px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--green-dark);">2</div>
+          <div>
+            <strong style="font-size: 1rem;">District hospital</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">Has doctors, basic surgery, X-ray, laboratory, maternity ward. Handles: complicated pregnancies, fractures, appendectomy, stabilisation of medical emergencies, conditions needing inpatient care. Usually the first stop for clinic referrals.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 40px; height: 40px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--green-dark);">3</div>
+          <div>
+            <strong style="font-size: 1rem;">Regional hospital</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">Has specialist doctors (surgeons, paediatricians, physicians, obstetricians, psychiatrists). Handles: complex surgery, cancer treatment initiation, high-risk pregnancies, specialist medical conditions. Referred from district hospitals.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 40px; height: 40px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--green-dark);">4</div>
+          <div>
+            <strong style="font-size: 1rem;">Tertiary / Central hospital</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">Academic hospitals with sub-specialists (neurosurgery, cardiothoracic, oncology, transplant). Handles: the most complex conditions, rare diseases, advanced surgery, teaching and research. Examples: Chris Hani Baragwanath, Groote Schuur, Inkosi Albert Luthuli, Steve Biko, Tygerberg.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">When the clinic refers you</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Common reasons a clinic will refer you to a hospital:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px; margin-top: 8px;">
+        <li><strong>Diagnosis beyond clinic scope</strong> — suspected cancer, undiagnosed lump, persistent abnormal blood results</li>
+        <li><strong>Surgery needed</strong> — hernia, gallbladder, orthopaedic procedures, biopsies</li>
+        <li><strong>Pregnancy complications</strong> — pre-eclampsia, breech presentation, previous caesarean, multiple pregnancies</li>
+        <li><strong>Medication not working</strong> — drug-resistant TB, HIV treatment failure, uncontrolled diabetes despite maximum clinic-level drugs</li>
+        <li><strong>Specialist assessment</strong> — cardiac workup, endoscopy, MRI, specialist eye or ear conditions</li>
+        <li><strong>Mental health crisis</strong> — psychotic episode, suicide risk, severe substance withdrawal</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">What the referral letter contains</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        The clinic gives you a written referral letter. It includes:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px; margin-top: 8px;">
+        <li>Your personal details (name, ID, clinic number)</li>
+        <li>Your diagnosis or suspected condition</li>
+        <li>What the clinic has already done (tests, medication, treatment attempted)</li>
+        <li>Reason for referral (what the clinic cannot manage)</li>
+        <li>Urgency level</li>
+        <li>Which hospital/department you are referred to</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        <strong>Do not lose this letter.</strong> The hospital needs it to know why you are there and what has already been done. Without it, you may be sent back to the clinic to get another one — wasting a trip and delaying your care.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">What to expect at the hospital</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Registration</strong> — go to the admissions desk with your referral letter, ID, and clinic card. They will create a hospital file (or retrieve an existing one).</li>
+        <li><strong>Waiting</strong> — hospital outpatient clinics are busy. Urgent referrals are prioritised. Routine referrals may wait several hours. Bring water, snacks, a phone charger, and something to read.</li>
+        <li><strong>Assessment</strong> — a doctor (often a registrar or medical officer) will examine you, review the clinic's referral, and may order further tests.</li>
+        <li><strong>Outcome</strong> — you will be either: treated and sent back to your clinic for ongoing care, given a follow-up hospital appointment, or admitted.</li>
+      </ol>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--green-dark);">Tips to make the system work for you</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Start at the clinic.</strong> Do not bypass the system and go straight to a hospital — you will wait longer and may be turned away.</li>
+        <li><strong>Keep all your documents together.</strong> Referral letter, clinic card, ID, medication list, blood results. Put them in a plastic sleeve or folder.</li>
+        <li><strong>Ask about waiting times.</strong> When you get the referral, ask the nurse: "How long will it take to get a hospital appointment?" This sets your expectations.</li>
+        <li><strong>Follow up.</strong> If you have not received an appointment within the expected timeframe, go back to the clinic and ask them to follow up with the hospital.</li>
+        <li><strong>Go to your appointment.</strong> Hospital no-show rates are high, which wastes slots and increases waiting times for everyone. If you cannot make it, call the hospital to reschedule.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Sources:</strong> National Health Act 61 of 2003. District Health System policy framework — National Department of Health. Hospital referral guidelines — NDoH. Health Ombud — Office of Health Standards Compliance. Patient Rights Charter — Department of Health.
+    </section>
+  </div>
+</Base>

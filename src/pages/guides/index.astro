@@ -1,0 +1,100 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const guides = [
+  {
+    title: 'How to Get ARVs at a Public Clinic',
+    slug: 'how-to-get-arvs',
+    description: 'Step-by-step guide to starting antiretroviral treatment at a government clinic, from testing to lifelong treatment.',
+    category: 'HIV / ARVs',
+  },
+  {
+    title: 'TB Treatment — What to Expect',
+    slug: 'tb-treatment-what-to-expect',
+    description: 'The full TB treatment journey: diagnosis, DOTS, drug-resistant TB, and how to stick with it for 6 months.',
+    category: 'TB',
+  },
+  {
+    title: 'Free Maternity Care at Public Hospitals',
+    slug: 'free-maternity-care',
+    description: 'Everything pregnant women can access for free: antenatal visits, delivery, postnatal care, and what to bring.',
+    category: 'Maternity',
+  },
+  {
+    title: 'CCMDD — Collecting Chronic Meds Without the Queue',
+    slug: 'ccmdd-chronic-meds-pickup',
+    description: 'How the Central Chronic Medicine programme works: who qualifies, pickup points, and how to register.',
+    category: 'Chronic meds',
+  },
+  {
+    title: 'Mental Health Services at Public Clinics',
+    slug: 'mental-health-services',
+    description: 'Where to get help for depression, anxiety, PTSD, and substance abuse in the public health system.',
+    category: 'Mental health',
+  },
+  {
+    title: 'Child Immunisation Schedule (South Africa)',
+    slug: 'child-immunisation-schedule',
+    description: 'The full EPI-SA vaccination schedule from birth to 12 years, including catch-up doses and where to go.',
+    category: 'Child health',
+  },
+  {
+    title: 'What to Do in a Medical Emergency',
+    slug: 'medical-emergency-guide',
+    description: 'When to go to a clinic vs. emergency room, how to call an ambulance, and what happens at casualty.',
+    category: 'Emergency',
+  },
+  {
+    title: 'How Hospital Referrals Work in South Africa',
+    slug: 'hospital-referral-system',
+    description: 'The clinic-to-hospital referral chain: when you need one, how to get one, and what happens if you skip it.',
+    category: 'General',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Health Guides — Clinic Finder SA',
+  description: 'Plain-language guides to using South Africa\'s public health system: ARVs, TB, maternity, chronic meds, emergencies, immunisations.',
+  url: 'https://clinicfinder.co.za/guides',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: guides.map((g, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `https://clinicfinder.co.za/guides/${g.slug}`,
+      name: g.title,
+    })),
+  },
+};
+---
+<Base
+  title="Health Guides — Clinic Finder SA"
+  description="Plain-language guides to South Africa's public health system. How to get ARVs, TB treatment, maternity care, chronic meds, mental health services, and more."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; Guides
+    </nav>
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Health Guides</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; max-width: 640px; line-height: 1.6;">
+      Plain-language guides to using South Africa's public health system. No medical jargon, no sign-up — just clear information about what you can access for free and how to get it.
+    </p>
+
+    <div style="display: grid; gap: 16px;">
+      {guides.map(g => (
+        <a href={`/guides/${g.slug}`} class="card" style="text-decoration: none; color: var(--text);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+            <div>
+              <strong style="font-size: 1.05rem;">{g.title}</strong>
+              <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">{g.description}</p>
+            </div>
+            <span class="chip" style="flex-shrink: 0;">{g.category}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

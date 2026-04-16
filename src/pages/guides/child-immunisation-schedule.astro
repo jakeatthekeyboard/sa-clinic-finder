@@ -1,0 +1,177 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities } from '../../data/helpers';
+
+const immunClinics = facilities.filter(f => f.services.immunisation);
+
+const schedule = [
+  { age: 'Birth', vaccines: 'BCG (tuberculosis), OPV 0 (oral polio)', notes: 'Given before discharge from hospital or at first clinic visit.' },
+  { age: '6 weeks', vaccines: 'DTaP-IPV-Hib-HBV 1 (6-in-1), OPV 1, PCV 1 (pneumococcal), RV 1 (rotavirus)', notes: 'First big vaccination day — 4 jabs + 2 oral drops. The 6-in-1 covers diphtheria, tetanus, pertussis, polio, Hib, and hepatitis B.' },
+  { age: '10 weeks', vaccines: 'DTaP-IPV-Hib-HBV 2, RV 2', notes: 'Second dose of 6-in-1 plus second rotavirus.' },
+  { age: '14 weeks', vaccines: 'DTaP-IPV-Hib-HBV 3, PCV 2, RV 3', notes: 'Third dose of 6-in-1, second pneumococcal, third rotavirus. Rotavirus series complete.' },
+  { age: '6 months', vaccines: 'Measles 1 (in high-risk areas only)', notes: 'Only given in areas with active measles outbreaks. The routine first dose is at 9 months.' },
+  { age: '9 months', vaccines: 'Measles 1, PCV 3', notes: 'First routine measles dose. Third pneumococcal. Pneumococcal series complete.' },
+  { age: '12 months', vaccines: 'Measles 2', notes: 'Second measles dose. Measles series complete.' },
+  { age: '18 months', vaccines: 'DTaP-IPV-Hib-HBV booster', notes: 'Booster of the 6-in-1. Important for long-term protection.' },
+  { age: '6 years', vaccines: 'Td (tetanus + diphtheria booster)', notes: 'School entry booster. Given through the school health programme or at a clinic.' },
+  { age: '12 years', vaccines: 'Td booster, HPV (girls only, 2 doses 6 months apart)', notes: 'HPV vaccine prevents cervical cancer. Given through schools. 2-dose schedule at 0 and 6 months.' },
+];
+
+const faqs = [
+  {
+    question: 'Are vaccinations free at public clinics?',
+    answer: 'Yes. All vaccines on the Expanded Programme on Immunisation (EPI-SA) schedule are free at public health facilities. You do not need medical aid. The vaccines are also available at private doctors but at a cost — there is no medical reason to choose private over public for routine immunisations, as the vaccines are identical.',
+  },
+  {
+    question: 'What if my child missed a vaccination?',
+    answer: 'Go to the clinic as soon as possible. There is no need to restart the series — the clinic will continue from where the schedule left off (catch-up schedule). Bring the Road to Health booklet so the nurse can see which vaccines have been given. If you have lost the booklet, the nurse will start a new one and may give certain vaccines again to be safe.',
+  },
+  {
+    question: 'Can my child be vaccinated if they have a cold?',
+    answer: 'Yes, in most cases. Mild illness (runny nose, low-grade fever, cough) is NOT a reason to delay vaccination. The only contraindications are: high fever (above 38.5°C), severe allergic reaction to a previous dose of the same vaccine, or confirmed immune deficiency (for live vaccines like BCG and OPV). Do not delay — every missed or delayed vaccine is a window of vulnerability.',
+  },
+  {
+    question: 'Is the HPV vaccine safe?',
+    answer: 'Yes. The HPV vaccine has been given to over 300 million people worldwide since 2006. It prevents the HPV strains that cause 70% of cervical cancers. South Africa introduced it in 2014 for girls aged 9-12 through the school health programme. Side effects are mild (sore arm, occasional low fever). Cervical cancer kills over 3,000 South African women per year — the vaccine prevents this.',
+  },
+  {
+    question: 'Where is my child\'s vaccination recorded?',
+    answer: 'In the Road to Health booklet (RTHB) — the green or yellow book given at birth. This is your child\'s official health record. Bring it to every clinic visit and every school registration. If lost, go to the clinic where your child was last vaccinated — they may have records. The clinic will issue a new booklet.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Child Immunisation Schedule — South Africa (EPI-SA)',
+    description: 'The full South African vaccination schedule from birth to 12 years: which vaccines, when, and where to get them.',
+    url: 'https://clinicfinder.co.za/guides/child-immunisation-schedule',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+<Base
+  title="Child Immunisation Schedule (South Africa) — Clinic Finder SA"
+  description="Full EPI-SA vaccination schedule from birth to 12 years. Which vaccines at each age, catch-up doses, HPV for girls, and where to get vaccinated for free."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; Child Immunisation Schedule
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Child Immunisation Schedule (South Africa)</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      South Africa's Expanded Programme on Immunisation (EPI-SA) provides free vaccines against 13 diseases from birth to age 12. All vaccines are given at public clinics — no medical aid or appointment needed. This schedule is current as of 2026.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--green-dark);">Vaccination schedule</h2>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+          <thead>
+            <tr style="background: var(--green-light);">
+              <th style="padding: 10px; text-align: left; border-bottom: 2px solid var(--border); white-space: nowrap;">Age</th>
+              <th style="padding: 10px; text-align: left; border-bottom: 2px solid var(--border);">Vaccines</th>
+              <th style="padding: 10px; text-align: left; border-bottom: 2px solid var(--border);">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {schedule.map((row, i) => (
+              <tr style={i % 2 === 1 ? 'background: var(--bg-alt)' : ''}>
+                <td style="padding: 10px; border-bottom: 1px solid var(--border); font-weight: 600; white-space: nowrap; vertical-align: top;">{row.age}</td>
+                <td style="padding: 10px; border-bottom: 1px solid var(--border); line-height: 1.5; vertical-align: top;">{row.vaccines}</td>
+                <td style="padding: 10px; border-bottom: 1px solid var(--border); color: var(--text-muted); line-height: 1.5; vertical-align: top;">{row.notes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">What the vaccines protect against</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        The EPI-SA schedule covers 13 diseases that used to kill or disable thousands of South African children every year:
+      </p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.9rem;">
+        <div style="padding: 8px; background: var(--bg-alt); border-radius: 4px;"><strong>BCG:</strong> Tuberculosis (severe childhood forms)</div>
+        <div style="padding: 8px; background: var(--bg-alt); border-radius: 4px;"><strong>OPV/IPV:</strong> Polio</div>
+        <div style="padding: 8px; background: var(--bg-alt); border-radius: 4px;"><strong>DTaP:</strong> Diphtheria, tetanus, pertussis (whooping cough)</div>
+        <div style="padding: 8px; background: var(--bg-alt); border-radius: 4px;"><strong>Hib:</strong> Haemophilus influenzae type b (meningitis)</div>
+        <div style="padding: 8px; background: var(--bg-alt); border-radius: 4px;"><strong>HBV:</strong> Hepatitis B</div>
+        <div style="padding: 8px; background: var(--bg-alt); border-radius: 4px;"><strong>PCV:</strong> Pneumococcal disease (pneumonia, meningitis)</div>
+        <div style="padding: 8px; background: var(--bg-alt); border-radius: 4px;"><strong>RV:</strong> Rotavirus (severe diarrhoea)</div>
+        <div style="padding: 8px; background: var(--bg-alt); border-radius: 4px;"><strong>Measles:</strong> Measles (rash, fever, complications)</div>
+        <div style="padding: 8px; background: var(--bg-alt); border-radius: 4px;"><strong>HPV:</strong> Human papillomavirus (cervical cancer)</div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Catch-up vaccinations</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        If your child has missed any vaccines, do not panic — take them to the clinic as soon as possible. The nurse will check the Road to Health booklet and administer any outstanding doses. There is no need to restart any series from the beginning. The immune system "remembers" previous doses even if years have passed.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Common catch-up scenarios:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px; margin-top: 8px;">
+        <li><strong>Born at home / birth doses missed:</strong> Go to the clinic within 2 weeks for BCG and OPV0.</li>
+        <li><strong>6-week vaccines missed:</strong> Can be given any time up to 12 months. The clinic will adjust the schedule.</li>
+        <li><strong>Just missed measles at 9 months:</strong> Give as soon as possible. The second dose at 12 months can still be given on schedule (minimum 4 weeks between doses).</li>
+        <li><strong>No Road to Health booklet:</strong> The clinic will start a new one. Some vaccines may be repeated if there is no record — this is safe.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Tips for vaccination day</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Bring the Road to Health booklet</strong> — the nurse needs it to record vaccines and check what is due.</li>
+        <li><strong>Dress baby in loose clothing</strong> — most injections go in the thigh (under 12 months) or upper arm (over 12 months). Easy access saves time.</li>
+        <li><strong>Breastfeed during or immediately after the injection</strong> — this reduces pain and calms the baby. Studies confirm it is the most effective non-medical pain relief for infants.</li>
+        <li><strong>Expect mild side effects</strong> — a small red lump at the injection site, low-grade fever (under 38°C), and fussiness for 24-48 hours are normal. Give paracetamol (dose by weight) if the baby is uncomfortable.</li>
+        <li><strong>Arrive early</strong> — most clinics vaccinate in the morning (07:00-12:00). Arrive by 07:00 to avoid long waits.</li>
+      </ol>
+    </section>
+
+    <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Find a clinic that offers vaccinations</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        {immunClinics.length} facilities in our database offer immunisation services.
+      </p>
+      <a href="/services/immunisation" class="btn btn--primary" style="font-size: 0.9rem;">Browse vaccination clinics</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Sources:</strong> Expanded Programme on Immunisation — South Africa (EPI-SA, 2023 schedule). National Department of Health immunisation guidelines. WHO position papers on childhood vaccines. Road to Health booklet (RTHB) guidelines — NDoH. HPV vaccination programme — South African school health services.
+    </section>
+  </div>
+</Base>

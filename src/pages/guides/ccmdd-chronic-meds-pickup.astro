@@ -1,0 +1,168 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities } from '../../data/helpers';
+
+const chronicClinics = facilities.filter(f => f.services.chronic_medication);
+
+const faqs = [
+  {
+    question: 'What conditions qualify for CCMDD?',
+    answer: 'The most common conditions enrolled in CCMDD are: HIV (on stable ARVs with suppressed viral load), hypertension (controlled blood pressure), diabetes (Type 1 and 2, stable HbA1c), epilepsy (seizure-free on medication), asthma (controlled on inhalers), mental health conditions (stable on psychiatric medication), and hypothyroidism. Any chronic condition requiring repeat prescriptions may qualify if you are clinically stable.',
+  },
+  {
+    question: 'How do I register for CCMDD?',
+    answer: 'You cannot self-register. Your clinic nurse or doctor must assess that you are stable on treatment and register you on the CCMDD electronic system. At your next clinic visit, ask the nurse: "Am I eligible for CCMDD?" If you are stable (usually 6-12 months on treatment with controlled symptoms), they will register you and help you choose a pickup point. Registration takes about 10 minutes.',
+  },
+  {
+    question: 'Can I change my pickup point?',
+    answer: 'Yes. Tell your clinic at your next scheduled review visit and they will update your pickup point on the system. Common reasons to change: moving to a new area, a more convenient pharmacy near work, or the current pickup point having long queues. Changes take effect from your next medication collection cycle (usually the following month).',
+  },
+  {
+    question: 'What happens if I do not collect my medication?',
+    answer: 'If you do not collect within the pickup window (usually 5 business days from the delivery date), the medication is returned. The clinic is notified and a community health worker may contact you. If you miss 2 consecutive pickups, you may be removed from CCMDD and need to return to the clinic for collections until re-registered. Do not let this happen — if you cannot collect, send a family member with a signed letter of consent.',
+  },
+  {
+    question: 'Do I still need to go to the clinic if I use CCMDD?',
+    answer: 'Yes, but much less often. You must return to the clinic every 6-12 months (depending on your condition) for a clinical review: blood tests, assessment of symptoms, prescription renewal. The clinic appointment is for the doctor or nurse to check that your treatment is still working — the routine monthly medication collection is what CCMDD replaces.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'CCMDD — Collecting Chronic Meds Without the Queue',
+    description: 'How the Central Chronic Medicine Dispensing and Distribution programme works in South Africa: eligibility, pickup points, registration.',
+    url: 'https://clinicfinder.co.za/guides/ccmdd-chronic-meds-pickup',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+<Base
+  title="CCMDD — Collecting Chronic Meds Without the Queue — Clinic Finder SA"
+  description="How the CCMDD programme works: collect chronic medication from a pharmacy or community pickup point instead of queuing at the clinic. Eligibility, registration, and pickup points."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; CCMDD Chronic Meds
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">CCMDD — Collecting Chronic Meds Without the Queue</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      The Central Chronic Medicine Dispensing and Distribution programme (CCMDD) is one of the most important — and least known — services in South Africa's public health system. It lets stable chronic patients collect their medication from a convenient pickup point instead of queuing for hours at a clinic every month. Over 4.9 million patients are enrolled.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">What is CCMDD?</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        CCMDD is a government programme that pre-packs chronic medication at a central pharmacy and delivers it to external pickup points across the country. Instead of sitting in a clinic queue to collect the same pills you take every month, you walk into a private pharmacy, community centre, or workplace near your home and collect a pre-labelled, sealed medication parcel.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        The programme was originally designed for stable HIV patients on ARVs, but it has expanded to cover all chronic conditions: hypertension, diabetes, epilepsy, asthma, mental health conditions, and more. It is free — you pay nothing at the pickup point.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Who qualifies?</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        You can be registered for CCMDD if you meet all of these criteria:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>On chronic treatment for 6-12 months</strong> (depends on the condition)</li>
+        <li><strong>Clinically stable</strong> — your condition is controlled. For HIV: viral load suppressed. For hypertension: blood pressure within target. For diabetes: HbA1c controlled.</li>
+        <li><strong>No dose changes in the last 3 months</strong></li>
+        <li><strong>No adherence concerns</strong> — you have been collecting medication regularly</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        Your nurse or doctor makes the final decision. If you have been turned down, ask what you need to do to qualify — it is usually a matter of achieving stability for a few more months.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Types of pickup points</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        CCMDD operates through a network of over 3,000 external pickup points across South Africa:
+      </p>
+      <div style="display: grid; gap: 12px;">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--green-dark);">Private pharmacies</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Clicks, Dis-Chem, independent pharmacies. The most common pickup point. You collect from the dispensary counter like any other prescription — the pharmacist verifies your identity and hands over the sealed parcel.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--green-dark);">Community adherence clubs</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Groups of 25-30 patients who meet at a community venue (church hall, library, clinic annex) to collect medication together. A facilitator distributes parcels. Includes a brief wellness check and peer support.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--green-dark);">Fast-lane clinic collection</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">For patients who prefer their own clinic but want to skip the queue. CCMDD parcels arrive pre-packed — you go to a dedicated CCMDD window, verify your ID, and leave. No waiting for the pharmacy to dispense.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--green-dark);">Workplace and other sites</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Some large employers and universities host CCMDD pickup points. Collection during work hours, no clinic visit needed. Ask your workplace health office if this is available.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">How to get registered</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>At your next clinic visit</strong>, tell the nurse you want to join CCMDD.</li>
+        <li>The nurse checks your clinical stability using your file and recent blood results.</li>
+        <li>If eligible, they register you on the CCMDD electronic system (takes ~10 minutes).</li>
+        <li>You choose your preferred pickup point from the list of available sites.</li>
+        <li>Your medication is centrally dispensed and delivered to your chosen point before your next collection date.</li>
+        <li>You receive an SMS when your parcel is ready. Collect within 5 business days.</li>
+      </ol>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--green-dark);">Why this matters</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7;">
+        Before CCMDD, chronic patients spent an average of <strong>4-8 hours per month</strong> at the clinic just to collect the same medication they take every month. Many people — especially those who work hourly jobs — stopped collecting because they could not afford to lose a day's pay every month. This led to treatment interruptions, drug resistance (especially for HIV and TB), and preventable deaths.
+      </p>
+      <p style="font-size: 0.95rem; line-height: 1.7; margin-top: 8px;">
+        CCMDD reduces collection time to <strong>under 15 minutes</strong>. Adherence rates among CCMDD patients are significantly higher than clinic-only patients. If you are eligible, enrolling is one of the most important things you can do for your long-term health.
+      </p>
+    </section>
+
+    <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Find a clinic for chronic medication</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        {chronicClinics.length} facilities in our database offer chronic medication services. Ask about CCMDD at your next visit.
+      </p>
+      <a href="/services/chronic-medication" class="btn btn--primary" style="font-size: 0.9rem;">Browse chronic meds clinics</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Sources:</strong> CCMDD Implementation Framework (National Department of Health, 2018). Differentiated Service Delivery models for HIV — SA adaptation. CCMDD monthly statistics — NDoH quarterly reports. Right to Care — CCMDD operational guidelines.
+    </section>
+  </div>
+</Base>
