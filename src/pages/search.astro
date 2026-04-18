@@ -130,22 +130,42 @@ const searchData = facilities
       return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     }
 
+    function markNearMeActive() {
+      nearMe.textContent = 'Near me ✓';
+      nearMe.style.background = 'var(--green)';
+      nearMe.style.color = '#fff';
+    }
+
     nearMe.addEventListener('click', () => {
       if (!navigator.geolocation) { count.textContent = 'Geolocation not supported on this device.'; return; }
       nearMe.textContent = 'Finding your location...';
       navigator.geolocation.getCurrentPosition(pos => {
         userLat = pos.coords.latitude;
         userLng = pos.coords.longitude;
-        nearMe.textContent = 'Near me ✓';
-        nearMe.style.background = 'var(--green)';
-        nearMe.style.color = '#fff';
-        // Calculate distances and re-filter (sorted by distance)
+        try {
+          sessionStorage.setItem('cf_user_loc', JSON.stringify({ lat: userLat, lng: userLng, ts: Date.now() }));
+        } catch (e) {}
+        markNearMeActive();
         filter();
       }, () => {
         nearMe.textContent = 'Near me';
         count.textContent = 'Could not get your location. Please allow location access in your browser settings.';
       });
     });
+
+    // Pick up location handed over from the landing-page "List clinics near me" button.
+    try {
+      const stored = sessionStorage.getItem('cf_user_loc');
+      if (stored) {
+        const loc = JSON.parse(stored);
+        // Trust location for 30 min within the session
+        if (loc && typeof loc.lat === 'number' && typeof loc.lng === 'number' && (Date.now() - (loc.ts || 0)) < 30 * 60 * 1000) {
+          userLat = loc.lat;
+          userLng = loc.lng;
+          markNearMeActive();
+        }
+      }
+    } catch (e) {}
 
     // Initial render
     filter();
