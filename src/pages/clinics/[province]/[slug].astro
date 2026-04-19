@@ -24,8 +24,6 @@ const shareUrl = whatsappShareUrl(facility);
 const addressParts = [facility.address.street, facility.address.suburb, facility.address.city, facility.address.postal_code].filter(Boolean);
 const addressStr = addressParts.length > 0 ? addressParts.join(', ') : `${facility.province}${facility.district ? ', ' + facility.district : ''}`;
 
-const mapUrl = `https://www.openstreetmap.org/?mlat=${facility.coordinates.lat}&mlon=${facility.coordinates.lng}#map=16/${facility.coordinates.lat}/${facility.coordinates.lng}`;
-
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': ['MedicalClinic', 'LocalBusiness'],
@@ -132,9 +130,6 @@ const jsonLd = {
 
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 8px;">Location</h2>
-      <p style="margin-bottom: 6px;">
-        <a href={mapUrl} target="_blank" rel="noopener" style="font-size: 0.9rem;">View on OpenStreetMap</a>
-      </p>
       <p style="font-size: 0.85rem; color: var(--text-muted);">
         GPS: {facility.coordinates.lat.toFixed(4)}, {facility.coordinates.lng.toFixed(4)}
         {facility.district && ` · District: ${facility.district}`}
