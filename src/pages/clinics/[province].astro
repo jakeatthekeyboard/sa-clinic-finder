@@ -27,11 +27,45 @@ const serviceBreakdown = Object.keys(SERVICE_MAP).map(key => ({
 })).filter(s => s.count > 0).sort((a, b) => b.count - a.count);
 
 const editorial = PROVINCE_EDITORIAL[provinceName];
+
+const twentyFourHour = provFacilities.filter(f => f.operating_hours?.is_24_hour);
+const withARVs = provFacilities.filter(f => f.services?.arvs);
+const topService = serviceBreakdown[0];
+
+const faqs = [
+  {
+    q: `How many public clinics are in ${provinceName}?`,
+    a: `There are ${provFacilities.length} public health facilities in ${provinceName}. These include ${Object.entries(typeBreakdown).map(([t, c]) => `${c} ${typeLabel(t).toLowerCase()}${c !== 1 ? 's' : ''}`).join(', ')}. ${twentyFourHour.length > 0 ? `${twentyFourHour.length} of these facilities operate 24 hours.` : 'Operating hours vary by facility.'}`,
+  },
+  {
+    q: `Can I get ARV treatment in ${provinceName}?`,
+    a: withARVs.length > 0
+      ? `Yes. ${withARVs.length} of ${provFacilities.length} public facilities in ${provinceName} offer ARV services. Treatment is free at government facilities — you do not need a referral to start, just visit any clinic offering ARVs with your ID.`
+      : `ARV availability varies. Check individual facility pages for current service listings. All South African public clinics provide ARV referrals even if they don't dispense on-site.`,
+  },
+  {
+    q: `What services do public clinics in ${provinceName} offer?`,
+    a: topService
+      ? `The most widely available service is ${topService.label.toLowerCase()} (offered at ${topService.count} of ${provFacilities.length} facilities). Other common services include ${serviceBreakdown.slice(1, 4).map(s => `${s.label.toLowerCase()} (${s.count})`).join(', ')}. All services at government facilities are free for South African citizens.`
+      : `Services vary by facility. All government clinics provide basic primary healthcare. Check individual facility pages for specific services.`,
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
 ---
 <Base
   title={`Public Clinics in ${provinceName} — Clinic Finder SA`}
   description={`Find ${provFacilities.length} public clinics and hospitals in ${provinceName}, South Africa. Filter by ARVs, maternity, TB treatment, emergency services.`}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
   <div class="container" style="padding: 32px 0;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
       <a href="/">Home</a> &rsaquo; <a href="/clinics">Provinces</a> &rsaquo; {provinceName}
@@ -92,6 +126,16 @@ const editorial = PROVINCE_EDITORIAL[provinceName];
         </ol>
       </section>
     )}
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      {faqs.map(f => (
+        <details style="border-bottom: 1px solid var(--border); padding: 12px 0;">
+          <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem;">{f.q}</summary>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">{f.a}</p>
+        </details>
+      ))}
+    </section>
 
     <h2 style="font-size: 1.15rem; margin-bottom: 16px;">All facilities in {provinceName}</h2>
     <div style="display: grid; gap: 12px;">

@@ -22,6 +22,35 @@ const byProvince = PROVINCES.map(p => ({
   facilities: serviceFacilities.filter(f => f.province === p),
 })).filter(p => p.facilities.length > 0);
 
+const topProvinces = byProvince.slice(0, 3);
+
+const serviceFaqs = [
+  {
+    q: `Where can I get ${serviceName.toLowerCase()} in South Africa?`,
+    a: `${serviceFacilities.length} public clinics and hospitals across South Africa offer ${serviceName.toLowerCase()}. ${topProvinces.length > 0 ? `The provinces with the most facilities are ${topProvinces.map(p => `${p.name} (${p.facilities.length})`).join(', ')}.` : ''} All services at government facilities are free for South African citizens and permanent residents.`,
+  },
+  {
+    q: `Is ${serviceName.toLowerCase()} free at public clinics?`,
+    a: `Yes. ${serviceName} is provided free of charge at all public health facilities in South Africa. You do not need medical aid or insurance. Bring your South African ID or passport and your clinic card if you have one.`,
+  },
+  {
+    q: `Do I need a referral for ${serviceName.toLowerCase()}?`,
+    a: editorial?.eligibility
+      ? `Eligibility: ${editorial.eligibility} In most cases, you can walk in to any public clinic that offers this service. District hospitals may require a referral from a primary clinic unless it is an emergency.`
+      : `In most cases, you can walk in to any public clinic that offers ${serviceName.toLowerCase()}. District hospitals may require a referral from a primary health clinic unless it is an emergency.`,
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": serviceFaqs.map(f => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
+
 const jsonLd = editorial ? [
   {
     '@context': 'https://schema.org',
@@ -45,6 +74,7 @@ const jsonLd = editorial ? [
   description={`Find ${serviceFacilities.length} public clinics and hospitals offering ${serviceName.toLowerCase()} across South Africa. Browse by province.`}
   jsonLd={jsonLd}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
   <div class="container" style="padding: 32px 0;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
       <a href="/">Home</a> &rsaquo; <a href="/services">Services</a> &rsaquo; {serviceName}
@@ -99,6 +129,16 @@ const jsonLd = editorial ? [
         </a>
       </section>
     )}
+
+    <section style="margin-bottom: 32px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      {serviceFaqs.map(f => (
+        <details style="border-bottom: 1px solid var(--border); padding: 12px 0;">
+          <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem;">{f.q}</summary>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">{f.a}</p>
+        </details>
+      ))}
+    </section>
 
     <h2 style="font-size: 1.2rem; margin-bottom: 16px;">{serviceFacilities.length} facilities offering {serviceName.toLowerCase()}</h2>
 
