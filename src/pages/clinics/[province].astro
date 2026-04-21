@@ -137,6 +137,29 @@ const faqJsonLd = {
       ))}
     </section>
 
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Health Services in {provinceName}</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Find facilities offering specific services in this province:</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        {serviceBreakdown.slice(0, 8).map(s => (
+          <a href={`/services/${s.key}`} style="display: inline-block; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; color: var(--text); text-decoration: none; transition: border-color 0.15s;">
+            {s.label} <span style="color: var(--text-muted);">({s.count})</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Other Provinces</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        {PROVINCES.filter(p => p !== provinceName).map(p => (
+          <a href={`/clinics/${provinceSlug(p)}`} style="display: inline-block; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; color: var(--text); text-decoration: none; transition: border-color 0.15s;">
+            {p}
+          </a>
+        ))}
+      </div>
+    </section>
+
     <h2 style="font-size: 1.15rem; margin-bottom: 16px;">All facilities in {provinceName}</h2>
     <div style="display: grid; gap: 12px;">
       {provFacilities.map(f => (

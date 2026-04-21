@@ -140,6 +140,28 @@ const jsonLd = editorial ? [
       ))}
     </section>
 
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Other Health Services</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        {Object.entries(SERVICE_MAP).filter(([k]) => k !== serviceKey).map(([k, svc]) => (
+          <a href={`/services/${svc.slug}`} style="display: inline-block; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; color: var(--text); text-decoration: none; transition: border-color 0.15s;">
+            {svc.plain}
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Browse by Province</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        {PROVINCES.map(p => (
+          <a href={`/clinics/${provinceSlug(p)}`} style="display: inline-block; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; color: var(--text); text-decoration: none; transition: border-color 0.15s;">
+            {p}
+          </a>
+        ))}
+      </div>
+    </section>
+
     <h2 style="font-size: 1.2rem; margin-bottom: 16px;">{serviceFacilities.length} facilities offering {serviceName.toLowerCase()}</h2>
 
     {byProvince.map(prov => (
