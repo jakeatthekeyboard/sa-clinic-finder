@@ -1,0 +1,21 @@
+{
+  "lastRun": "2026-04-22T21:05:00+02:00",
+  "editorialLastRun": "2026-04-22T21:05:00+02:00",
+  "guidesWritten": ["find-nearest-clinic"],
+  "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
+  "runIntervalHours": 2.5,
+  "runs": [
+    {
+      "timestamp": "2026-04-22T21:05:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 6 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (Eastern Cape, Gauteng, Western Cape) all 200. Province page (Eastern Cape) 200. Guide page (chronic-medication-management) 200. 1095 sitemap URLs."
+    },
+    {
+      "timestamp": "2026-04-22T21:05:00+02:00",
+      "task": "guide-article",
+      "result": "pass",
+      "details": "Wrote new guide: 'How to Find Your Nearest Clinic' (find-nearest-clinic.astro). Covers facility types, what to bring, what to expect, rural tips, 6 FAQs with FAQ schema. Added to guides index. Build succeeded: 1096 pages."
+    }
+  ]
+}

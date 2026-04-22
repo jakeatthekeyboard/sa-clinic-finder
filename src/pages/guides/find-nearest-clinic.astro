@@ -1,0 +1,208 @@
+---
+import Base from '../../layouts/Base.astro';
+import { facilities, PROVINCES, provinceSlug } from '../../data/helpers';
+
+const totalFacilities = facilities.length;
+const totalClinics = facilities.filter(f => f.type === 'clinic').length;
+const totalCHC = facilities.filter(f => f.type === 'community_health_centre').length;
+const total24h = facilities.filter(f => f.operating_hours?.is_24_hour).length;
+
+const provinceCounts = PROVINCES.map(p => ({
+  name: p,
+  slug: provinceSlug(p),
+  total: facilities.filter(f => f.province === p).length,
+  clinics: facilities.filter(f => f.province === p && f.type === 'clinic').length,
+}));
+
+const faqs = [
+  {
+    question: 'Do I have to go to the clinic closest to where I live?',
+    answer: 'No. You can visit any public clinic in any province. However, for ongoing treatment (chronic medication, ARVs, antenatal care) it is best to register at one facility so your medical history stays in one file. If you move, ask for a transfer letter.',
+  },
+  {
+    question: 'What if there is no clinic near me?',
+    answer: 'Many rural areas are served by mobile clinic teams that visit on set days — ask your ward councillor or community health worker for the schedule. District hospitals also accept walk-in patients for primary healthcare if no clinic is accessible.',
+  },
+  {
+    question: 'Can I go straight to a hospital instead of a clinic?',
+    answer: 'For emergencies, yes — go to the nearest hospital with a 24-hour casualty unit. For non-emergencies, hospitals will typically ask for a referral letter from a clinic. Starting at a clinic also means shorter waiting times for routine issues.',
+  },
+  {
+    question: 'Do I need to book an appointment?',
+    answer: 'Most public clinics operate on a walk-in basis — no appointment needed. A few urban clinics have introduced appointment systems to reduce queues. When you arrive, go to the reception desk and explain why you are there. You will be triaged (assessed by urgency) and seen in order.',
+  },
+  {
+    question: 'What does it cost to visit a public clinic?',
+    answer: 'Primary healthcare at public clinics is free for everyone — South African citizens, permanent residents, refugees, and asylum seekers. This includes consultations, basic medication, chronic disease management, immunisations, family planning, and TB/HIV services. You will never be asked to pay at a clinic.',
+  },
+  {
+    question: 'What if the clinic turns me away?',
+    answer: 'Public clinics cannot legally refuse to see you. If you are turned away (other than being redirected to a hospital for something beyond the clinic\'s scope), note the date, time, and name of the staff member, and report it to the provincial health department or call the national health complaints hotline at 0800 029 999.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'How to Find Your Nearest Clinic in South Africa',
+    description: 'Step-by-step guide to finding and visiting a public health clinic in South Africa. Covers all 9 provinces, what to expect, and what to bring.',
+    url: 'https://clinicfinder.co.za/guides/find-nearest-clinic',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-22',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+<Base
+  title="How to Find Your Nearest Clinic — Clinic Finder SA"
+  description="Find a public health clinic near you in South Africa. Browse 1,000+ facilities across all 9 provinces — free healthcare, no appointment needed."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; Find Your Nearest Clinic
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">How to Find Your Nearest Clinic</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      South Africa has over {totalFacilities.toLocaleString()} public health facilities — {totalClinics} clinics, {totalCHC} community health centres, and hundreds of hospitals — all offering free primary healthcare. This guide explains how to find the right one, what to expect when you get there, and what to bring.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 1: Search by province or location</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        The fastest way to find a clinic is to browse by your province. Each province page lists every public facility — clinics, community health centres, and hospitals — with addresses, phone numbers, and services offered. You can also search by name on the <a href="/clinics">main search page</a>.
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; margin-top: 16px;">
+        {provinceCounts.map(p => (
+          <a href={`/clinics/${p.slug}`} style="display: block; padding: 10px 14px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none; font-size: 0.9rem;">
+            <strong>{p.name}</strong>
+            <span style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">{p.total} facilities</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 2: Choose the right type of facility</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Not all facilities are the same. Choosing the right one saves you time and avoids being redirected.
+      </p>
+      <div style="display: grid; gap: 12px; margin-top: 16px;">
+        <div style="padding: 14px; border: 1px solid var(--border); border-radius: var(--radius);">
+          <strong style="font-size: 0.95rem;">Clinic</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">
+            Your first stop for most health needs. Clinics handle vaccinations, chronic medication, family planning, HIV/TB testing and treatment, minor injuries, and general consultations. Most operate weekdays 07:00–16:00; some open on Saturdays.
+          </p>
+        </div>
+        <div style="padding: 14px; border: 1px solid var(--border); border-radius: var(--radius);">
+          <strong style="font-size: 0.95rem;">Community Health Centre (CHC)</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">
+            Larger than a clinic, with a doctor on site (clinics are often nurse-led). CHCs handle more complex cases — dental extractions, minor surgery, mental health consultations — and many operate 24 hours.
+          </p>
+        </div>
+        <div style="padding: 14px; border: 1px solid var(--border); border-radius: var(--radius);">
+          <strong style="font-size: 0.95rem;">District Hospital</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">
+            For emergencies, births, surgery, and anything beyond what a clinic can manage. You will usually need a referral letter from a clinic for non-emergency hospital visits. District hospitals have 24-hour casualty departments.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 3: Check opening hours and services</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Each facility page on this site shows its operating hours and the services it offers. {total24h} of the {totalFacilities.toLocaleString()} facilities listed here operate 24 hours. If you need care outside normal hours, look for a 24-hour facility or go to the nearest hospital casualty.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Services vary between facilities. Not every clinic offers dental care, mental health services, or ARV initiation. Filter by service on the <a href="/clinics">search page</a>, or check the facility's individual page before making the trip.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 4: What to bring on your first visit</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>South African ID, passport, or asylum permit</strong> — for creating your clinic file. If you have none, the clinic should still see you. You will not be turned away in an emergency regardless of documentation.</li>
+        <li><strong>Proof of address</strong> — helpful for registration but not legally required for treatment.</li>
+        <li><strong>Road to Health booklet</strong> — mandatory for children under 5. This yellow booklet tracks immunisations and growth. If you have lost it, ask the clinic to issue a new one.</li>
+        <li><strong>Any current medication or prescriptions</strong> — bring pill bottles or a written list so the clinician can check for interactions and avoid duplicate prescriptions.</li>
+        <li><strong>Referral letter (if going to a hospital)</strong> — not needed for clinic visits, but hospitals require a referral from a clinic for non-emergency care.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Step 5: What happens when you arrive</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        At the clinic, go to reception and explain why you are there. A nurse will triage you — assess whether your case is urgent — and assign you to a queue. Urgent cases (severe pain, breathing difficulty, heavy bleeding) are seen first, regardless of arrival time.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Waiting times vary widely. Busy urban clinics in Gauteng and the Cape Flats may have 2-4 hour waits; smaller rural clinics are often faster. Arriving early (before 07:30) significantly shortens your wait at high-volume clinics.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        After your consultation, you may receive medication from the clinic pharmacy (free), a referral to a hospital, or a follow-up appointment date. Keep your green clinic card — it is your portable medical record and speeds up every future visit.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--green-dark);">Tips for rural areas</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        In provinces like the Northern Cape, Limpopo, and the Eastern Cape, the nearest clinic can be 30–60 km away. A few things that help:
+      </p>
+      <ul style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px; margin-top: 8px;">
+        <li><strong>Mobile clinics</strong> visit remote areas on fixed schedules. Ask your community health worker or ward councillor for the dates.</li>
+        <li><strong>CCMDD pickup points</strong> let stable chronic patients collect medication at external points (pharmacies, community halls) instead of travelling to the clinic every month. <a href="/guides/ccmdd-chronic-meds-pickup">Read how to register</a>.</li>
+        <li><strong>Telephonic consultations</strong> are available at some clinics for follow-up visits that do not require a physical exam. Ask at your clinic.</li>
+        <li><strong>Patient transport</strong> is available in some districts for hospital appointments. Ask the clinic to arrange it when they give you a referral.</li>
+      </ul>
+    </section>
+
+    <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Start searching</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Browse all {totalFacilities.toLocaleString()} public health facilities across South Africa's 9 provinces.
+      </p>
+      <a href="/clinics" class="btn btn--primary" style="font-size: 0.9rem;">Find a clinic near you</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Related Guides</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href="/guides/medical-emergency-guide" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Medical Emergency Guide</a>
+      <a href="/guides/hospital-referral-system" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Hospital Referral System</a>
+      <a href="/guides/chronic-medication-management" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Chronic Medication Management</a>
+      <a href="/guides/ccmdd-chronic-meds-pickup" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">CCMDD — Chronic Meds Pickup</a>
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-top: 24px;">
+      <strong style="color: var(--text);">Sources:</strong> South African National Health Act (Act 61 of 2003). National Department of Health — Ideal Clinic framework. District Health Information System (DHIS). National Health Insurance white paper (2017). Clinic Finder SA facility database ({totalFacilities.toLocaleString()} facilities verified 2026).
+    </section>
+  </div>
+</Base>
