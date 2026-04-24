@@ -128,6 +128,26 @@ const faqJsonLd = {
     )}
 
     <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Helpful Guides</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Practical information for visiting public clinics in {provinceName}:</p>
+      <div style="display: grid; gap: 8px;">
+        {[
+          { title: 'How to Find Your Nearest Clinic', slug: 'find-nearest-clinic' },
+          { title: 'What to Do in a Medical Emergency', slug: 'medical-emergency-guide' },
+          { title: 'How Hospital Referrals Work in South Africa', slug: 'hospital-referral-system' },
+          { title: 'CCMDD — Collecting Chronic Meds Without the Queue', slug: 'ccmdd-chronic-meds-pickup' },
+          { title: 'Child Immunisation Schedule (South Africa)', slug: 'child-immunisation-schedule' },
+          { title: 'Family Planning & Contraception', slug: 'family-planning-contraception' },
+        ].map(g => (
+          <a href={`/guides/${g.slug}`} style="display: block; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; color: var(--text); text-decoration: none; transition: border-color 0.15s;">
+            {g.title}
+          </a>
+        ))}
+      </div>
+      <a href="/guides" style="display: inline-block; margin-top: 12px; font-size: 0.85rem; color: var(--green-dark);">View all guides &rarr;</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.15rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
       {faqs.map(f => (
         <details style="border-bottom: 1px solid var(--border); padding: 12px 0;">
