@@ -1,6 +1,6 @@
 {
-  "lastRun": "2026-04-24T21:03:00+02:00",
-  "editorialLastRun": "2026-04-24T21:03:00+02:00",
+  "lastRun": "2026-04-27T21:04:00+02:00",
+  "editorialLastRun": "2026-04-27T21:04:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
   "runIntervalHours": 2.5,
@@ -28,6 +28,18 @@
       "task": "internal-linking",
       "result": "pass",
       "details": "Added 'Helpful Guides' section to province page template ([province].astro). Links 6 key guides (find-nearest-clinic, medical-emergency-guide, hospital-referral-system, ccmdd-chronic-meds-pickup, child-immunisation-schedule, family-planning-contraception) plus 'View all guides' link. All 9 province pages now cross-link to guides. Build succeeded: 1096 pages."
+    },
+    {
+      "timestamp": "2026-04-27T21:04:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (gauteng/west-street-medical-centre-pretoria, western-cape/tc-newman-hospital-paarl, limpopo/tiyani-health-centre-thohoyandou) all 200. Province page (gauteng) 200. Guide page (mental-health-services) 200."
+    },
+    {
+      "timestamp": "2026-04-27T21:04:00+02:00",
+      "task": "internal-linking",
+      "result": "pass",
+      "details": "Added 'Related Guides' section to 3 guides that were missing it: chronic-medication-management (links to CCMDD, ARVs, referral system, find clinic), hiv-testing-guide (links to ARVs, family planning, mental health, find clinic), how-to-get-arvs (links to HIV testing, CCMDD, TB treatment, find clinic). All 15 guides now have cross-links. Build succeeded: 1096 pages."
     }
   ]
 }
