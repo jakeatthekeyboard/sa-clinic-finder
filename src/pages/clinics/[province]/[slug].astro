@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import { facilities, PROVINCES, SERVICE_MAP, provinceSlug, typeLabel, nearbyFacilities, mapsUrl, whatsappShareUrl } from '../../../data/helpers';
+import { generateFacilityEditorial } from '../../../data/facility-editorial';
 
 export function getStaticPaths() {
   return facilities
@@ -13,6 +14,7 @@ export function getStaticPaths() {
 
 const { facility } = Astro.props;
 const nearby = nearbyFacilities(facility, 3);
+const editorial = generateFacilityEditorial(facility);
 const activeServices = Object.entries(facility.services)
   .filter(([, v]) => v)
   .map(([k]) => ({ key: k, ...SERVICE_MAP[k] }))
@@ -95,6 +97,18 @@ const jsonLd = {
         ))}
       </div>
       {activeServices.length === 0 && <p style="color: var(--text-muted); font-size: 0.9rem;">Service details not yet verified for this facility.</p>}
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px;">About this facility</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px;" set:html={editorial.context} />
+      {editorial.tips.length > 0 && (
+        <div style="display: grid; gap: 12px;">
+          {editorial.tips.map(tip => (
+            <div style="background: var(--bg-alt); border-radius: var(--radius); padding: 14px 16px; font-size: 0.9rem; line-height: 1.6;" set:html={tip} />
+          ))}
+        </div>
+      )}
     </section>
 
     {facility.operating_hours.raw && (
