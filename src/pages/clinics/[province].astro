@@ -76,7 +76,7 @@ const faqJsonLd = {
     {editorial && (
       <section style="margin-bottom: 32px; line-height: 1.7;">
         <div style="max-width: 720px; color: var(--text); font-size: 0.95rem;">
-          <p>{editorial.intro}</p>
+          <p set:html={editorial.intro} />
         </div>
       </section>
     )}
@@ -103,7 +103,7 @@ const faqJsonLd = {
           {editorial.healthTips.map(tip => (
             <div>
               <strong style="font-size: 0.95rem;">{tip.title}</strong>
-              <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">{tip.text}</p>
+              <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;" set:html={tip.text} />
             </div>
           ))}
         </div>

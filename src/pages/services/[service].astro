@@ -84,7 +84,7 @@ const jsonLd = editorial ? [
 
     {editorial && (
       <section style="margin-bottom: 32px; max-width: 720px;">
-        <p style="line-height: 1.7; font-size: 0.95rem; color: var(--text);">{editorial.intro}</p>
+        <p style="line-height: 1.7; font-size: 0.95rem; color: var(--text);" set:html={editorial.intro} />
         {editorial.keyFact && (
           <div style="margin-top: 16px; border-left: 4px solid var(--green); padding: 12px 16px; background: var(--green-light); border-radius: 0 var(--radius) var(--radius) 0;">
             <strong style="font-size: 0.85rem; color: var(--green-dark);">Key fact:</strong>
@@ -103,7 +103,7 @@ const jsonLd = editorial ? [
               <div style="flex-shrink: 0; width: 36px; height: 36px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--green-dark); font-size: 0.9rem;">{i + 1}</div>
               <div>
                 <strong style="font-size: 0.95rem;">{step.step}</strong>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 2px; line-height: 1.6;">{step.detail}</p>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 2px; line-height: 1.6;" set:html={step.detail} />
               </div>
             </div>
           ))}
@@ -114,7 +114,7 @@ const jsonLd = editorial ? [
     {editorial && (
       <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px; max-width: 720px;">
         <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Who is eligible?</h2>
-        <p style="font-size: 0.9rem; line-height: 1.7;">{editorial.eligibility}</p>
+        <p style="font-size: 0.9rem; line-height: 1.7;" set:html={editorial.eligibility} />
       </section>
     )}
 
