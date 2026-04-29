@@ -118,6 +118,27 @@ const jsonLd = editorial ? [
       </section>
     )}
 
+    {editorial?.patientTips && editorial.patientTips.length > 0 && (
+      <section style="margin-bottom: 32px; max-width: 720px;">
+        <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--green-dark);">Tips for patients</h2>
+        <div style="display: grid; gap: 10px;">
+          {editorial.patientTips.map(tip => (
+            <div style="display: flex; gap: 12px; align-items: flex-start; background: var(--bg-alt); border-radius: var(--radius); padding: 14px 16px;">
+              <span style="flex-shrink: 0; color: var(--green-dark); font-size: 1.1rem; line-height: 1;">&#10003;</span>
+              <p style="font-size: 0.9rem; line-height: 1.6; margin: 0;" set:html={tip} />
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {editorial?.realityCheck && (
+      <section style="margin-bottom: 32px; max-width: 720px; border-left: 4px solid var(--border); padding: 16px 20px;">
+        <h2 style="font-size: 1.1rem; margin-bottom: 8px;">Quality of care — what to expect in practice</h2>
+        <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted);">{editorial.realityCheck}</p>
+      </section>
+    )}
+
     {editorial?.guideSlug && (
       <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px; max-width: 720px;">
         <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Read the full guide</h2>
