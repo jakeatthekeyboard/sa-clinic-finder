@@ -79,6 +79,9 @@ export function typeLabel(type: string): string {
     community_health_centre: 'Community Health Centre',
     regional_hospital: 'Regional Hospital',
     tertiary_hospital: 'Tertiary Hospital',
+    central_hospital: 'Central Hospital',
+    specialised_hospital: 'Specialised Hospital',
+    mobile_clinic: 'Mobile Clinic',
     satellite_clinic: 'Satellite Clinic',
   };
   return map[type] || type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());

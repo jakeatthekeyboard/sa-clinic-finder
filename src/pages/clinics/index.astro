@@ -1,29 +1,129 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { facilities, PROVINCES, provinceSlug } from '../../data/helpers';
+import { facilities, PROVINCES, SERVICE_MAP, provinceSlug, typeLabel } from '../../data/helpers';
 
-const provinceStats = PROVINCES.map(p => ({
-  name: p,
-  slug: provinceSlug(p),
-  count: facilities.filter(f => f.province === p).length,
-}));
+const totalFacilities = facilities.filter(f => f.province !== '').length;
+const total24h = facilities.filter(f => f.operating_hours?.is_24_hour).length;
+
+const typeBreakdown = facilities.reduce((acc, f) => {
+  if (f.province) {
+    acc[f.type] = (acc[f.type] || 0) + 1;
+  }
+  return acc;
+}, {} as Record<string, number>);
+
+const provinceStats = PROVINCES.map(p => {
+  const pFacilities = facilities.filter(f => f.province === p);
+  const p24h = pFacilities.filter(f => f.operating_hours?.is_24_hour).length;
+  return {
+    name: p,
+    slug: provinceSlug(p),
+    count: pFacilities.length,
+    twentyFourHour: p24h,
+  };
+});
+
+const faqs = [
+  {
+    q: 'How is the South African public health system structured?',
+    a: `The system follows a referral hierarchy: primary clinics (${typeBreakdown['clinic'] || 0}) handle routine care, community health centres (${typeBreakdown['community_health_centre'] || 0}) offer extended hours and minor procedures, district hospitals (${typeBreakdown['district_hospital'] || 0}) provide surgery and emergency care, regional hospitals (${typeBreakdown['regional_hospital'] || 0}) have resident specialists, and tertiary hospitals (${typeBreakdown['tertiary_hospital'] || 0}) handle sub-specialist and complex cases. You start at the clinic level and are referred upward as needed — except for emergencies, where you can go directly to any hospital casualty department.`,
+  },
+  {
+    q: 'Is public healthcare in South Africa really free?',
+    a: 'Primary healthcare at clinics is free for everyone — citizens, permanent residents, and foreign nationals. Hospital care is means-tested: if you earn below a threshold (adjusted annually), you pay nothing. Above the threshold, fees are set according to the Uniform Patient Fee Schedule (UPFS). Emergency treatment is always free regardless of income — this is a constitutional right under Section 27(3). Children under 6 and pregnant women receive free care at all levels.',
+  },
+  {
+    q: 'What is the difference between a clinic and a hospital?',
+    a: 'Clinics are nurse-driven primary care facilities that do not admit patients overnight. They handle immunisations, chronic medication, HIV/TB treatment, family planning, and minor injuries. Hospitals have doctors, operating theatres, X-ray, laboratories, and can admit patients. If a clinic cannot manage your condition, they issue a referral letter to the nearest hospital.',
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
 ---
 <Base
   title="Public Clinics by Province — Clinic Finder SA"
-  description="Browse public clinics and hospitals in all 9 South African provinces. Find facilities near you with services like ARVs, maternity, TB treatment."
+  description={`Browse ${totalFacilities} public clinics and hospitals across all 9 South African provinces. Find facilities with ARVs, maternity, TB treatment, emergency services.`}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
   <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href="/">Home</a> &rsaquo; Provinces
+    </nav>
     <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Public Clinics by Province</h1>
-    <p style="color: var(--text-muted); margin-bottom: 24px;">Select a province to see all public health facilities.</p>
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px;">
+    <p style="color: var(--text-muted); margin-bottom: 24px; max-width: 640px; line-height: 1.6;">
+      South Africa's public health system serves approximately 84% of the population through {totalFacilities.toLocaleString()} facilities across 9 provinces. Of these, {total24h} operate 24 hours. Select a province below to see every clinic, community health centre, and hospital in that area — with service details, health tips, and emergency contacts.
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 32px;">
       {provinceStats.map(p => (
         <a href={`/clinics/${p.slug}`} class="card" style="text-decoration: none; color: var(--text);">
           <strong style="font-size: 1.1rem;">{p.name}</strong>
           <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
-            {p.count} clinics and hospitals
+            {p.count} facilities · {p.twentyFourHour} open 24h
           </div>
         </a>
       ))}
     </div>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 24px; margin-bottom: 32px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--green-dark);">The referral hierarchy — where to go first</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px;">
+        The public health system is designed so patients start at the lowest appropriate level of care and are referred upward only when needed. Going directly to a hospital for something a clinic can handle wastes scarce hospital capacity and may result in being turned away without a referral letter.
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.9rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Clinic</strong> ({typeBreakdown['clinic'] || 0} in SA) — Your first stop for all non-emergency care. Nurse-driven. No overnight stay.</li>
+        <li><strong>Community Health Centre</strong> ({typeBreakdown['community_health_centre'] || 0}) — Extended clinic with 24h services, normal deliveries, minor procedures.</li>
+        <li><strong>District Hospital</strong> ({typeBreakdown['district_hospital'] || 0}) — First hospital level. Surgery, X-ray, lab, emergency department, admissions.</li>
+        <li><strong>Regional Hospital</strong> ({typeBreakdown['regional_hospital'] || 0}) — Resident specialists. CT scan, complex surgery, ICU, high-risk obstetrics.</li>
+        <li><strong>Tertiary Hospital</strong> ({typeBreakdown['tertiary_hospital'] || 0}) — Neurosurgery, cardiac surgery, organ transplant, radiation therapy. Referral only.</li>
+      </ol>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">
+        Exception: in a medical emergency, go directly to the nearest hospital with a 24-hour casualty department. No referral is needed. Call <a href="tel:10177">10177</a> for an ambulance or <a href="tel:112">112</a> from any mobile phone (works without airtime).
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 16px;">National facility breakdown</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+        {Object.entries(typeBreakdown).sort((a, b) => b[1] - a[1]).map(([type, count]) => (
+          <span class="chip chip--type">{typeLabel(type)} ({count})</span>
+        ))}
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+        Data sourced from OpenStreetMap and the Humanitarian Data Exchange. Facilities marked as 24-hour have been verified against available official listings. Service availability is based on facility type and provincial data — confirm specific services by phoning the facility before visiting.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
+      {faqs.map(f => (
+        <details style="border-bottom: 1px solid var(--border); padding: 12px 0;">
+          <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem;">{f.q}</summary>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">{f.a}</p>
+        </details>
+      ))}
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Find by service instead</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+        Looking for a specific service rather than a province? Browse facilities by what they offer:
+      </p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        {Object.entries(SERVICE_MAP).map(([key, svc]) => (
+          <a href={`/services/${svc.slug}`} class="chip" style="text-decoration: none; font-size: 0.85rem; padding: 6px 12px;">
+            {svc.plain}
+          </a>
+        ))}
+      </div>
+    </section>
   </div>
 </Base>

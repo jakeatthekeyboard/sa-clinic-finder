@@ -8,6 +8,18 @@ export interface ProvinceEditorial {
   intro: string;
   healthTips: { title: string; text: string }[];
   whatToBring: { item: string; note: string }[];
+  /** Provincial health department and emergency contact details */
+  contacts: {
+    healthDeptPhone: string;
+    healthDeptName: string;
+    ambulance: string;
+    /** Provincial HIV/AIDS helpline or relevant crisis line, if distinct from national */
+    crisisLine?: string;
+    /** Complaints or patient rights hotline */
+    complaintsLine?: string;
+  };
+  /** Key health districts with facility density context */
+  districtHighlights: { name: string; context: string }[];
 }
 
 export const PROVINCE_EDITORIAL: Record<string, ProvinceEditorial> = {
@@ -25,6 +37,18 @@ export const PROVINCE_EDITORIAL: Record<string, ProvinceEditorial> = {
       { item: 'Chronic medication list or pill bottles', note: 'If you take chronic medication, bring the packaging or a list of names and dosages so the clinician can check for interactions.' },
       { item: 'Referral letter (if applicable)', note: 'District hospitals require a referral from a clinic or CHC unless it is an emergency.' },
     ],
+    contacts: {
+      healthDeptPhone: '040 608 1000',
+      healthDeptName: 'Eastern Cape Department of Health (Bhisho)',
+      ambulance: '10177',
+      complaintsLine: '040 608 1735',
+    },
+    districtHighlights: [
+      { name: 'OR Tambo', context: 'Deepest rural healthcare challenge in the province. Covers Mthatha, Lusikisiki, and surrounding areas where some communities are 80+ km from the nearest hospital. Nelson Mandela Academic Hospital is the only tertiary facility for this entire region.' },
+      { name: 'Buffalo City', context: 'Urban metro centred on East London. Frere Hospital and Cecilia Makiwane Hospital handle the bulk of surgical and emergency referrals. TB and HIV co-infection rates are among the highest in the province.' },
+      { name: 'Nelson Mandela Bay', context: 'Metro covering Port Elizabeth and Uitenhage. Livingstone Tertiary Hospital and Dora Nginza Hospital are the main referral points. The metro has better facility density than rural districts but still faces severe staff shortages.' },
+      { name: 'Amathole', context: 'Covers Fort Beaufort, Alice, and Keiskammahoek. A mix of small-town hospitals and deep rural clinics. Victoria Hospital in Alice is a key facility for the central Eastern Cape.' },
+    ],
   },
 
   'Free State': {
@@ -40,6 +64,17 @@ export const PROVINCE_EDITORIAL: Record<string, ProvinceEditorial> = {
       { item: 'Road to Health booklet', note: 'For all children under 5 — immunisation schedules are tracked here.' },
       { item: 'Chronic medication or prescription', note: 'Bring current medication so clinicians can verify doses and avoid duplication.' },
       { item: 'Referral letter', note: 'Needed for hospital visits unless presenting at casualty with an emergency.' },
+    ],
+    contacts: {
+      healthDeptPhone: '051 408 1000',
+      healthDeptName: 'Free State Department of Health (Bloemfontein)',
+      ambulance: '10177',
+      complaintsLine: '051 408 1126',
+    },
+    districtHighlights: [
+      { name: 'Mangaung', context: 'Metro district covering Bloemfontein, Botshabelo, and Thaba Nchu. Universitas Academic Hospital is here — the only tertiary facility in the province. Pelonomi Hospital handles district-level emergencies and overflow.' },
+      { name: 'Lejweleputswa', context: 'Gold mining district covering Welkom and Virginia. High HIV prevalence among mine workers and surrounding communities. Mining-related lung disease (silicosis) is a significant occupational health burden.' },
+      { name: 'Thabo Mofutsanyana', context: 'Eastern Free State covering Bethlehem, QwaQwa, and Harrismith. Mountainous terrain makes ambulance access slow — some communities in QwaQwa are accessible only by gravel road in dry weather.' },
     ],
   },
 
@@ -57,6 +92,19 @@ export const PROVINCE_EDITORIAL: Record<string, ProvinceEditorial> = {
       { item: 'Chronic medication list', note: 'Bring current medication, especially if transferring between facilities — duplicate prescriptions are a common problem in Gauteng.' },
       { item: 'Proof of address (for new registration)', note: 'Some Gauteng clinics request this for first-time registration, though it is not legally required for care.' },
     ],
+    contacts: {
+      healthDeptPhone: '011 355 3000',
+      healthDeptName: 'Gauteng Department of Health (Johannesburg)',
+      ambulance: '10177',
+      crisisLine: '0800 012 322 (Gauteng mental health crisis line)',
+      complaintsLine: '011 355 3015',
+    },
+    districtHighlights: [
+      { name: 'City of Johannesburg', context: 'The most populous metro in SA. Chris Hani Baragwanath (Bara) in Soweto is one of the largest hospitals in the world with ~3,200 beds. Charlotte Maxeke Johannesburg Academic is the main tertiary referral. Hillbrow, Alexandra, and Soweto clinics are among the busiest in the country.' },
+      { name: 'City of Tshwane', context: 'Pretoria metro with Steve Biko Academic Hospital and Kalafong Hospital as tertiary referral points. Mamelodi and Atteridgeville clinics serve dense communities. Tshwane has relatively better specialist access than other metros due to dual tertiary hospitals.' },
+      { name: 'Ekurhuleni', context: 'East Rand metro covering Germiston, Benoni, Springs, and Tembisa. Tembisa Hospital is one of the busiest district hospitals in SA. Industrial injuries from the manufacturing sector are a significant caseload.' },
+      { name: 'Sedibeng', context: 'Vaal Triangle district covering Vereeniging, Vanderbijlpark, and Sebokeng. Severe air pollution from heavy industry contributes to high respiratory disease rates. Sebokeng Hospital handles most emergency referrals.' },
+    ],
   },
 
   'KwaZulu-Natal': {
@@ -72,6 +120,19 @@ export const PROVINCE_EDITORIAL: Record<string, ProvinceEditorial> = {
       { item: 'Road to Health booklet', note: 'Essential for children under 5 — tracks immunisations and growth.' },
       { item: 'Chronic medication or repeat prescription', note: 'KZN has CCMDD pickup points at some clinics — ask about external collection if travel is difficult.' },
       { item: 'Maternity case record (if pregnant)', note: 'Issued at your first antenatal visit. Carry it at all times during pregnancy, including to the delivery facility.' },
+    ],
+    contacts: {
+      healthDeptPhone: '033 395 2111',
+      healthDeptName: 'KwaZulu-Natal Department of Health (Pietermaritzburg)',
+      ambulance: '10177',
+      crisisLine: '0800 567 567 (SADAG — 24/7 mental health crisis)',
+      complaintsLine: '033 395 2180',
+    },
+    districtHighlights: [
+      { name: 'eThekwini', context: 'Durban metro — the busiest health district in KZN. Inkosi Albert Luthuli Central Hospital is the flagship for complex surgery and trauma. King Edward VIII Hospital handles high-risk obstetrics. Extremely high HIV prevalence: ~30% adult rate.' },
+      { name: 'uMgungundlovu', context: 'Pietermaritzburg and surrounding areas. Grey\'s Hospital is the regional referral centre. This district has some of the highest HIV prevalence figures nationally and a well-established ARV programme.' },
+      { name: 'Zululand', context: 'Rural northern KZN covering Ulundi, Nongoma, and Pongola. Facilities are widely spaced across hilly terrain. Malaria risk in the eastern lowlands near Mozambique border. Traditional healing practices are widespread — clinics work alongside traditional health practitioners.' },
+      { name: 'uMkhanyakude', context: 'Most remote district in KZN, bordering Mozambique and Eswatini. Includes Hlabisa, Jozini, and Mtubatuba. Some of the highest HIV prevalence rates in the world (>40% in some sub-districts). Malaria endemic. The Africa Health Research Institute in Somkhele conducts world-leading HIV research here.' },
     ],
   },
 
@@ -89,6 +150,18 @@ export const PROVINCE_EDITORIAL: Record<string, ProvinceEditorial> = {
       { item: 'Chronic medication and pill bottles', note: 'Bring everything you are currently taking, including traditional medicines, so the clinician has the full picture.' },
       { item: 'Referral letter', note: 'Required for hospital visits. In Limpopo, some hospitals are hours apart — an incorrect referral means wasted travel.' },
     ],
+    contacts: {
+      healthDeptPhone: '015 293 6000',
+      healthDeptName: 'Limpopo Department of Health (Polokwane)',
+      ambulance: '10177',
+      complaintsLine: '015 293 6036',
+    },
+    districtHighlights: [
+      { name: 'Vhembe', context: 'Northernmost district bordering Zimbabwe and Mozambique. Covers Thohoyandou, Musina, and Louis Trichardt. Malaria endemic zone. Tshilidzini Hospital is the main facility. Cross-border patient flow from Zimbabwe strains capacity.' },
+      { name: 'Mopani', context: 'Eastern Limpopo covering Tzaneen, Phalaborwa, and Giyani. Mix of agricultural and mining communities. Malaria risk area. Letaba Hospital in Tzaneen is the key referral point. High rates of TB in farming communities.' },
+      { name: 'Capricorn', context: 'Central district covering Polokwane — Limpopo\'s capital. Pietersburg Hospital is the provincial referral centre and the only facility offering some specialist services. The best-resourced district in the province but still severely doctor-short.' },
+      { name: 'Sekhukhune', context: 'Southwestern Limpopo, platinum mining belt. Covers Groblersdal and Jane Furse. Mining-related injuries and silicosis are significant. Communities are spread across mountainous terrain, making ambulance access difficult.' },
+    ],
   },
 
   'Mpumalanga': {
@@ -104,6 +177,17 @@ export const PROVINCE_EDITORIAL: Record<string, ProvinceEditorial> = {
       { item: 'Road to Health booklet', note: 'For children under 5 — tracks vaccinations and growth monitoring.' },
       { item: 'Chronic medication', note: 'Bring current medication to every visit, especially if you collect from different facilities.' },
       { item: 'Referral letter', note: 'District hospitals require a referral for non-emergency visits.' },
+    ],
+    contacts: {
+      healthDeptPhone: '013 766 3753',
+      healthDeptName: 'Mpumalanga Department of Health (Mbombela)',
+      ambulance: '10177',
+      complaintsLine: '013 766 3078',
+    },
+    districtHighlights: [
+      { name: 'Ehlanzeni', context: 'Lowveld district covering Mbombela (Nelspruit), Bushbuckridge, and Nkomazi. Rob Ferreira Hospital is the provincial referral centre. Malaria endemic zone. Bushbuckridge has among the worst facility-to-population ratios in SA — large communities with few clinics.' },
+      { name: 'Nkangala', context: 'Highveld coal belt covering eMalahleni (Witbank), Middelburg, and Standerton. Witbank Hospital handles high-volume trauma from mining injuries and road accidents on the N4. Air pollution from Eskom\'s coal-fired power stations is a major health determinant.' },
+      { name: 'Gert Sibande', context: 'Southern Mpumalanga covering Ermelo, Standerton, and Piet Retief. Predominantly agricultural with seasonal worker influxes. Ermelo Hospital and Piet Retief Hospital are the main facilities. Long distances between towns make transport a critical barrier.' },
     ],
   },
 
@@ -121,6 +205,17 @@ export const PROVINCE_EDITORIAL: Record<string, ProvinceEditorial> = {
       { item: 'Chronic medication', note: 'Bring current prescriptions. If you are on ARVs and moving between clinics, request a transfer letter.' },
       { item: 'Occupational health records (if applicable)', note: 'Mining and industrial workers should bring their occupational health card or last medical certificate.' },
     ],
+    contacts: {
+      healthDeptPhone: '018 391 4320',
+      healthDeptName: 'North West Department of Health (Mahikeng)',
+      ambulance: '10177',
+      complaintsLine: '018 391 4490',
+    },
+    districtHighlights: [
+      { name: 'Bojanala Platinum', context: 'The platinum belt around Rustenburg, Brits, and Mogwase. Job Shimankana Tabane Hospital is the main referral. Highly mobile mining population creates unique challenges: workers from Lesotho, Mozambique, and Eastern Cape need continuity of care across facilities. Silicosis and TB rates are elevated.' },
+      { name: 'Dr Kenneth Kaunda', context: 'Covers Klerksdorp, Potchefstroom, and Stilfontein. Klerksdorp-Tshepong Hospital complex is one of the largest in the province. Gold mining decline has left behind communities with high unemployment and persistent occupational lung disease.' },
+      { name: 'Ngaka Modiri Molema', context: 'Mahikeng (Mafikeng) district — seat of the provincial government. Mahikeng Provincial Hospital is the main facility. Rural villages south of Mahikeng have limited access. Cross-border patient flow from Botswana occurs at facilities near the border.' },
+    ],
   },
 
   'Northern Cape': {
@@ -137,6 +232,17 @@ export const PROVINCE_EDITORIAL: Record<string, ProvinceEditorial> = {
       { item: 'Chronic medication and a cooler bag', note: 'Some medications (like insulin) degrade in extreme heat. Transport them in a cooler bag if travelling long distances.' },
       { item: 'Water and food for the journey', note: 'Hospital visits may require a full day of travel. Bring water and food, especially for children.' },
     ],
+    contacts: {
+      healthDeptPhone: '053 830 0500',
+      healthDeptName: 'Northern Cape Department of Health (Kimberley)',
+      ambulance: '10177',
+      complaintsLine: '053 830 0571',
+    },
+    districtHighlights: [
+      { name: 'Frances Baard', context: 'Kimberley district — the provincial capital and best-resourced area. Robert Mangaliso Sobukwe Hospital is the main referral centre for the entire province. Despite being the "urban" district, Kimberley itself has fewer than 300,000 people.' },
+      { name: 'Namakwa', context: 'The most sparsely populated district in South Africa. Covers Springbok, Port Nolloth, and the Richtersveld. Some communities are 150+ km from the nearest hospital. Extreme heat in summer, cold desert nights in winter. Helicopter EMS is the only viable emergency response for some areas.' },
+      { name: 'Pixley Ka Seme', context: 'Central Karoo covering De Aar, Colesberg, and Hanover. The N1 highway runs through this district, generating road accident trauma. Facilities are widely spaced across semi-arid terrain. FASD prevalence is among the highest nationally, linked to historical farm-worker alcohol payment practices.' },
+    ],
   },
 
   'Western Cape': {
@@ -152,6 +258,19 @@ export const PROVINCE_EDITORIAL: Record<string, ProvinceEditorial> = {
       { item: 'Road to Health booklet', note: 'For children under 5 — immunisation and growth tracking.' },
       { item: 'Chronic medication list', note: 'Bring your current medication. The Western Cape has a well-established CCMDD programme — ask about pharmacy pickup points if queues at your clinic are long.' },
       { item: 'Referral letter (for hospital visits)', note: 'Groote Schuur and Tygerberg require referral from a clinic or district hospital for non-emergency care.' },
+    ],
+    contacts: {
+      healthDeptPhone: '021 483 3455',
+      healthDeptName: 'Western Cape Government Health (Cape Town)',
+      ambulance: '10177',
+      crisisLine: '021 726 8200 (Western Cape substance abuse helpline)',
+      complaintsLine: '021 483 4474',
+    },
+    districtHighlights: [
+      { name: 'City of Cape Town', context: 'The metro handles >70% of the province\'s patient load. Groote Schuur (home of the first heart transplant, 1967) and Tygerberg are the tertiary referral centres. Khayelitsha District Hospital, GF Jooste, and Mitchell\'s Plain are among the busiest trauma and emergency units in the world. Weekend violence spikes overwhelm emergency departments.' },
+      { name: 'Cape Winelands', context: 'Covers Paarl, Stellenbosch, and Worcester. Paarl Hospital and Worcester Hospital are the main facilities. High FASD rates in farming communities linked to the historic "dop system" (paying workers with wine). Seasonal fruit-picking workers need mobile clinic access.' },
+      { name: 'Garden Route', context: 'Southern Cape from Mossel Bay to Plettenberg Bay. George Hospital is the regional referral point. Tourism industry means seasonal population spikes that strain facilities. The N2 highway generates significant road trauma.' },
+      { name: 'Overberg', context: 'Remote coastal and inland area from Hermanus to Bredasdorp. Otto du Plessis Hospital in Bredasdorp and Hermanus Hospital serve scattered rural communities. Limited specialist access — most specialist care requires travel to Cape Town (2+ hours).' },
     ],
   },
 };

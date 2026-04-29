@@ -127,6 +127,52 @@ const faqJsonLd = {
       </section>
     )}
 
+    {editorial?.contacts && (
+      <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 24px; margin-bottom: 32px;">
+        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--green-dark);">Emergency & health department contacts</h2>
+        <div style="display: grid; gap: 10px; font-size: 0.9rem;">
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <strong style="min-width: 140px; color: var(--text-muted); flex-shrink: 0;">Ambulance:</strong>
+            <span><a href={`tel:${editorial.contacts.ambulance}`}>{editorial.contacts.ambulance}</a> (national number — works from any phone)</span>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <strong style="min-width: 140px; color: var(--text-muted); flex-shrink: 0;">Health department:</strong>
+            <span>{editorial.contacts.healthDeptName} — <a href={`tel:${editorial.contacts.healthDeptPhone.replace(/\s/g, '')}`}>{editorial.contacts.healthDeptPhone}</a></span>
+          </div>
+          {editorial.contacts.crisisLine && (
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <strong style="min-width: 140px; color: var(--text-muted); flex-shrink: 0;">Crisis line:</strong>
+              <span>{editorial.contacts.crisisLine}</span>
+            </div>
+          )}
+          {editorial.contacts.complaintsLine && (
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <strong style="min-width: 140px; color: var(--text-muted); flex-shrink: 0;">Complaints:</strong>
+              <span><a href={`tel:${editorial.contacts.complaintsLine.replace(/\s/g, '')}`}>{editorial.contacts.complaintsLine}</a> (patient rights &amp; service complaints)</span>
+            </div>
+          )}
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <strong style="min-width: 140px; color: var(--text-muted); flex-shrink: 0;">From any mobile:</strong>
+            <span><a href="tel:112">112</a> (emergency) — works without airtime</span>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {editorial?.districtHighlights && editorial.districtHighlights.length > 0 && (
+      <section style="margin-bottom: 32px;">
+        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--green-dark);">Health districts in {provinceName}</h2>
+        <div style="display: grid; gap: 16px;">
+          {editorial.districtHighlights.map(d => (
+            <div style="border-left: 3px solid var(--green); padding-left: 16px;">
+              <strong style="font-size: 0.95rem;">{d.name}</strong>
+              <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">{d.context}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Helpful Guides</h2>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Practical information for visiting public clinics in {provinceName}:</p>
