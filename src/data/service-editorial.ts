@@ -11,10 +11,10 @@ export interface ServiceEditorial {
   guideSlug?: string;
   guideName?: string;
   keyFact: string;
-  /** Practical tips patients won't find in official guidelines */
   patientTips: string[];
-  /** Honest quality-of-care context — what works, what doesn't, and how to navigate the system */
   realityCheck: string;
+  whatToBring: string[];
+  faqs: { q: string; a: string }[];
 }
 
 export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
@@ -41,6 +41,18 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
       'Keep a backup strip (7 days) in a separate location in case your main supply is lost or stolen.',
     ],
     realityCheck: 'The ARV programme is one of South Africa\'s genuine public health successes. Medication supply is stable — nationwide stockouts, once a crisis, have been rare since 2020 thanks to centralised procurement through the National Department of Health. Where the system struggles is in retention: approximately 20% of patients drop out of care within the first year, often due to stigma, transport costs (R50-R100 per clinic trip in rural areas), or long waiting times. CCMDD and adherence clubs have helped, but coverage is uneven — Gauteng and Western Cape have far more pickup points than Limpopo or Eastern Cape. If your clinic consistently runs out of medication or has wait times exceeding 4 hours, you have the right to transfer your file to any other public clinic — ask the facility manager for a transfer letter.',
+    whatToBring: [
+      'South African ID book or passport (treatment cannot be refused without it, but having it speeds up file creation)',
+      'Clinic card if you have one from a previous visit',
+      'Any previous blood test results or medical records',
+      'A list of other medications you currently take, including traditional medicines',
+      'Contact details for your treatment supporter or next of kin',
+    ],
+    faqs: [
+      { q: 'Can I start ARVs the same day I test positive?', a: 'Yes. Since September 2017, all public clinics in South Africa offer same-day ARV initiation. You can test HIV-positive and start treatment the same day, without waiting for blood results. The nurse draws baseline blood (CD4, creatinine, hepatitis B) but does not wait for results before prescribing TLD.' },
+      { q: 'What are the side effects of TLD (tenofovir, lamivudine, dolutegravir)?', a: 'Common early side effects include insomnia, headache, and dizziness — these usually resolve within 2-4 weeks. Dolutegravir can cause weight gain of 3-5kg in the first year, particularly in women. Report persistent insomnia to your nurse, as a dose-timing change or alternative regimen may help.' },
+      { q: 'Can I collect ARVs from a pharmacy instead of the clinic?', a: 'Yes, once you are stable (viral load undetectable for 12 months), you can enrol in the CCMDD programme and collect pre-packaged medication from over 3,500 pickup points — pharmacies, community halls, adherence clubs, and some workplaces. You only return to the clinic for annual blood work.' },
+    ],
   },
 
   tb_treatment: {
@@ -67,6 +79,18 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
       'Keep every sputum result and treatment card. If you transfer clinics or move provinces, these documents prevent you from being restarted on treatment unnecessarily.',
     ],
     realityCheck: 'TB remains South Africa\'s leading single cause of death, largely because of late diagnosis and treatment interruption — not because treatment does not work. The 6-month regimen cures over 85% of drug-sensitive cases when completed. The real challenge is that roughly 1 in 3 patients do not complete the full course: they feel better after 2-3 months and stop, or they struggle with daily clinic visits for DOTS. Facilities vary widely in how well they manage TB — some have dedicated TB rooms with negative-pressure ventilation, while others screen patients in general waiting areas, risking transmission. If your clinic does not separate TB patients from the general queue, raise it with the facility manager. The gold standard is a dedicated TB consulting room with natural cross-ventilation.',
+    whatToBring: [
+      'South African ID book or passport',
+      'Clinic card or any previous TB treatment records',
+      'A list of household contacts (names, ages, addresses) — the nurse needs this for contact tracing',
+      'A list of all current medications, especially ARVs (rifampicin interacts with some HIV drugs)',
+      'A sputum sample collected early in the morning if requested by the clinic at your previous visit',
+    ],
+    faqs: [
+      { q: 'How long does TB treatment take?', a: 'Standard drug-sensitive TB treatment takes 6 months: 2 months of intensive therapy (4 drugs: rifampicin, isoniazid, pyrazinamide, ethambutol) followed by 4 months of continuation therapy (2 drugs: rifampicin, isoniazid). Drug-resistant TB requires 9-24 months depending on the resistance pattern.' },
+      { q: 'Can I work while on TB treatment?', a: 'After 2 weeks on effective treatment, your infectiousness drops dramatically and you can generally return to work. However, you still need daily observed doses (DOTS) for the first 2 months. Discuss a DOTS schedule with your nurse that accommodates your work hours. If you work in mining or healthcare, your employer must provide paid sick leave during treatment.' },
+      { q: 'Is TB treatment safe during pregnancy?', a: 'The standard RHZE regimen is safe during pregnancy. Streptomycin is the only first-line TB drug that is contraindicated in pregnancy. If you are pregnant and diagnosed with TB, treatment should start immediately — untreated TB is more dangerous to both mother and baby than the medication.' },
+    ],
   },
 
   maternity_antenatal: {
@@ -92,6 +116,18 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
       'If you delivered by caesarean section, you need at least 6 weeks recovery before returning to physical work. Ask your clinic for a sick note if your employer needs documentation.',
     ],
     realityCheck: 'Quality of maternity care in the public sector varies significantly by facility. MOUs in the Western Cape and Gauteng generally have good midwife-to-patient ratios and supportive birth practices. In contrast, some district hospitals in rural KwaZulu-Natal, Eastern Cape, and Limpopo are severely understaffed — a single midwife managing 3-4 women in labour simultaneously is not uncommon. Patient abuse during delivery (shouting, slapping, withholding pain relief) has been documented and is the subject of the Respectful Maternity Care campaign. If you experience or witness abuse during delivery, you can report it to the facility manager, the provincial health department, or the Office of Health Standards Compliance at 012 942 7700. Birth companions reduce the risk of a negative experience — insist on your right to have one present.',
+    whatToBring: [
+      'Maternity case record (green folder) — issued at your booking visit, must accompany you to every appointment and to delivery',
+      'South African ID book or passport',
+      'Hospital bag from 37 weeks: baby clothes (3 vests, 3 sleepsuits, beanie, receiving blanket), maternity sanitary pads (at least 2 packs), toiletries',
+      'Any ultrasound reports or blood test results from previous visits',
+      'Your birth companion\'s ID if you plan to have someone with you during delivery',
+    ],
+    faqs: [
+      { q: 'Is maternity care really free at public hospitals?', a: 'Yes. All maternity care — from the first antenatal booking visit through delivery (including caesarean section) and postnatal check-ups — is completely free at public facilities. You do not need medical aid. The Uniform Patient Fee Schedule exempts pregnant women from all fees, including foreign nationals.' },
+      { q: 'When should I go to the hospital for delivery?', a: 'Go to the facility when contractions are 5 minutes apart and lasting 1 minute each, or if your water breaks. Also go immediately if you have vaginal bleeding, severe headache with blurred vision, or reduced baby movement. Do not wait for your next scheduled appointment if you experience any danger signs.' },
+      { q: 'Can I choose to have a caesarean section at a public hospital?', a: 'Caesarean sections in the public sector are performed based on clinical indications, not patient preference. The national public-sector C-section rate is approximately 25%, reflecting stricter medical criteria. If a vaginal delivery poses a risk to you or your baby, the doctor will recommend a caesarean.' },
+    ],
   },
 
   chronic_medication: {
@@ -117,6 +153,18 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
       'Keep a medication diary or use a pillbox — missed doses of blood pressure medication cause BP spikes that increase stroke risk.',
     ],
     realityCheck: 'The chronic medication system works well when it works — CCMDD is a genuine innovation that has reduced clinic queues and improved adherence for millions. Where it breaks down is in transitions: patients who move between provinces often lose their CCMDD registration and must re-enrol at a new facility (which can take 2-3 months). Medication stockouts at individual clinics still occur 2-3 times per year in some provinces, particularly for second-line diabetes drugs and newer antihypertensives. The workaround is to collect from a different clinic or ask the pharmacist to substitute with a therapeutic equivalent from the same drug class. Gauteng and Western Cape have the most reliable supply chains; Limpopo, Eastern Cape, and North West experience more frequent disruptions.',
+    whatToBring: [
+      'South African ID book or passport',
+      'Clinic card and any previous prescription labels or medication packaging',
+      'A list of ALL medications you currently take — including traditional medicines and over-the-counter supplements',
+      'Home blood pressure readings if you have a BP monitor (for hypertension patients)',
+      'Fasting blood sugar readings if you self-monitor (for diabetes patients) — do not eat for 8 hours before blood tests',
+    ],
+    faqs: [
+      { q: 'How do I join the CCMDD programme to collect meds from a pharmacy?', a: 'Once you have been stable on chronic medication for 6-12 months (well-controlled blood pressure, blood sugar, or viral load), your clinic nurse can enrol you in CCMDD. Your medication is then pre-packed at a central facility and delivered to your chosen pickup point — a pharmacy, community hall, or adherence club — every 2 months. You only visit the clinic for your annual review.' },
+      { q: 'What if my medication runs out before my next collection date?', a: 'Go to the nearest public clinic with your prescription label or medication packaging. Most facilities will provide a bridging supply of 3-7 days. You do not need to go to your registered clinic — any public clinic can dispense an emergency supply of chronic medication.' },
+      { q: 'Can I get chronic medication if I don\'t have a South African ID?', a: 'Yes. Refugees and asylum seekers can access chronic medication at public clinics by presenting their asylum seeker permit. Undocumented foreign nationals may face difficulties at some facilities, but no one can be refused emergency medication. The Uniform Patient Fee Schedule classifies chronic medication as essential healthcare.' },
+    ],
   },
 
   emergency_24h: {
@@ -142,6 +190,18 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
       'Weekend and public holiday emergency departments are busiest between 22:00 and 02:00 due to alcohol-related trauma. If your condition is urgent but not life-threatening, early morning (06:00-08:00) is typically quieter.',
     ],
     realityCheck: 'Emergency departments in South African public hospitals are under extreme pressure. Chris Hani Baragwanath (Soweto) and Charlotte Maxeke (Johannesburg) each see 300-500 patients per day in their casualty departments. The majority of after-hours presentations are green-coded — conditions that could have been managed at a clinic during the day. This clogs the system and extends wait times for genuinely urgent cases. Staff burnout is real: a 2023 survey found that 60% of emergency nursing staff in Gauteng reported symptoms of burnout. The system works best when you use it correctly: clinics for routine care, CHCs for after-hours non-emergencies, and hospital emergency departments for genuine emergencies. Trauma care in urban centres (particularly in Cape Town and Johannesburg) is world-class — the volume of trauma cases means SA emergency doctors are among the most experienced globally.',
+    whatToBring: [
+      'South African ID book or passport (you will be treated without it, but it speeds up registration)',
+      'Clinic card or hospital card if you have one',
+      'All current medications — bring the actual boxes or blister packs so the doctor can see exactly what you take',
+      'Medical aid card if you have one (public hospitals can bill medical aid for emergency treatment)',
+      'A charged cellphone and contact details for your next of kin',
+    ],
+    faqs: [
+      { q: 'Can the emergency department refuse to treat me if I can\'t pay?', a: 'No. Section 27(3) of the South African Constitution guarantees the right to emergency medical treatment. No facility — public or private — can refuse or delay emergency treatment for any reason, including inability to pay, lack of documentation, or nationality. Fees are discussed after stabilisation.' },
+      { q: 'How long will I wait in a public hospital emergency department?', a: 'It depends on your triage colour. Red (life-threatening): immediate. Orange (very urgent): within 10 minutes. Yellow (urgent): within 1 hour. Green (non-urgent): 4-8 hours or more. Triage is based on clinical severity, not arrival time. If your condition worsens while waiting, tell the triage nurse immediately for re-assessment.' },
+      { q: 'Should I call an ambulance or drive to hospital?', a: 'Call 10177 (public ambulance) or 112 (any mobile) if you have chest pain, difficulty breathing, heavy bleeding, or suspected spinal injury. For conditions where you can safely sit upright and are not at risk of losing consciousness, having someone drive you may be faster — public ambulance response times range from 15 minutes (urban) to 4 hours (rural).' },
+    ],
   },
 
   dental: {
@@ -166,6 +226,18 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
       'Children should have their first dental visit by age 1. Ask about fluoride varnish application — it reduces cavities by 43% and is available free at clinics with dental services.',
     ],
     realityCheck: 'Public dental care in South Africa is overwhelmingly extraction-based. Across the country, roughly 70% of public dental visits end in a tooth being removed rather than saved — not because dentists prefer extraction, but because patients present late (when the tooth is beyond saving) and because the materials and time for complex restorations (root canals, lab-fabricated crowns) are not available in primary care settings. Prevention is the most cost-effective dental care, yet fewer than 15% of public facilities have active preventive programmes for children. The situation is better in the Western Cape and Gauteng, where oral health promotion programmes reach some schools. In other provinces, school dental services depend on whether a district has a dental therapist — many do not. If you value keeping your teeth, invest in a toothbrush (R15-R30), fluoride toothpaste (R20-R40), and brush twice daily. This is more effective than any clinical intervention.',
+    whatToBring: [
+      'South African ID book or passport',
+      'Clinic card if you have one',
+      'A list of all current medications — blood thinners (warfarin, rivaroxaban), diabetes medication, and heart valve medications affect dental treatment',
+      'Any dental X-rays you have from previous visits (saves time and radiation)',
+      'Pain medication you have been taking for reference (so the dentist knows what has or hasn\'t worked)',
+    ],
+    faqs: [
+      { q: 'Can I get a filling instead of having my tooth pulled?', a: 'If the tooth can be saved with a filling, the dentist will do so. However, many patients present late — when the decay has destroyed too much tooth structure for a filling to hold. Root canals, crowns, and bridges are generally not available in primary care public facilities. If you want to save a tooth, go to the clinic as soon as you notice a cavity or sensitivity, not after the pain becomes unbearable.' },
+      { q: 'How long is the waiting list for dentures?', a: 'Dentures involve multiple visits (impression, jaw registration, try-in, fitting) and the full process takes 3-12 months depending on the facility. Dentures are provided free of charge. Some hospitals offer immediate dentures (placed the same day as extractions) but this is not available at all facilities. Ask at your first visit how long the current waiting period is.' },
+      { q: 'Is dental treatment at university hospitals better?', a: 'Dental training hospitals (Wits, Pretoria, Tygerberg, UKZN, Sefako Makgatho) often have shorter waiting times because dental students need clinical patients. All treatment is supervised by qualified dentists. The range of procedures available is also wider — some training hospitals offer root canals and orthodontics that primary clinics cannot provide.' },
+    ],
   },
 
   mental_health: {
@@ -191,6 +263,18 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
       'If a family member is in mental health crisis, do not try to restrain them physically unless they are in immediate danger. Call 10177, explain it is a psychiatric emergency, and stay with the person until help arrives.',
     ],
     realityCheck: 'Mental health is the most under-resourced area of South Africa\'s public health system. The 2016 Life Esidimeni tragedy — in which 144 psychiatric patients died after being transferred from specialist care to unlicensed NGOs in Gauteng — exposed systemic failures in oversight and political accountability. Since then, monitoring has improved, but bed shortages persist: Gauteng has roughly 0.4 psychiatric beds per 10,000 people, far below the WHO recommendation of 5 per 10,000. At primary level, mental health screening is improving — more nurses are trained, and screening tools are available in clinics — but follow-through is weak. A patient screened positive for depression may receive fluoxetine but have no access to counselling, no follow-up call, and no monitoring of whether they actually take the medication. The system works best when patients advocate for themselves: ask for your screening score, ask when to come back, and insist on a follow-up appointment.',
+    whatToBring: [
+      'South African ID book or passport',
+      'Clinic card if you have one',
+      'A list of all current medications, including any psychiatric medication from a previous facility',
+      'A written note of your symptoms if you find it hard to explain verbally — when they started, how they affect your daily life, any triggers',
+      'Contact details for a family member or support person (helpful if the nurse needs collateral history)',
+    ],
+    faqs: [
+      { q: 'Can I get antidepressants at a public clinic without seeing a psychiatrist?', a: 'Yes. Primary care nurses trained in mental health can screen for depression using the PHQ-9 tool and prescribe first-line medication (fluoxetine 20mg daily). You do not need to see a psychiatrist unless first-line treatment fails after 6-8 weeks or you have symptoms of psychosis. Most mental health care in South Africa is delivered at primary clinic level.' },
+      { q: 'What should I do in a mental health crisis?', a: 'Call SADAG (South African Depression and Anxiety Group) at 0800 567 567 — free, confidential, 24/7. If someone is actively suicidal or in a psychotic episode, call 10177 and explain it is a psychiatric emergency. You can also go directly to the nearest hospital emergency department — no referral needed for psychiatric emergencies.' },
+      { q: 'Is my mental health information kept confidential?', a: 'Yes. Mental health records are protected under the National Health Act and the Mental Health Care Act. Your employer, family, or anyone else cannot access your mental health records without your written consent. The only exception is involuntary admission, which requires assessment by two medical practitioners and a review board hearing within 30 days.' },
+    ],
   },
 
   child_health: {
@@ -216,6 +300,18 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
       'Keep the Road to Health booklet in a plastic bag to protect it from water damage. If it is lost, go to any clinic for a replacement — but bring any records you have of previous vaccinations.',
     ],
     realityCheck: 'South Africa\'s child health outcomes are good in aggregate but hide enormous inequality. A child born in the Western Cape has an under-5 mortality rate of 18 per 1,000; a child born in the Eastern Cape faces 40 per 1,000 — more than double. The main killers are preventable: diarrhoea (often from unsafe water or delayed ORS), pneumonia (often from delayed presentation or missed immunisation), and malnutrition (often from poverty compounded by inadequate nutrition counselling). Well-baby visit attendance drops sharply after 14 weeks — once the mother returns to work, many children miss subsequent immunisations and growth monitoring. The ISHP (school health programme) is meant to catch children who fell through the gaps, but coverage is below 50% nationally. Grandmothers and other caregivers who bring children to clinic should bring the Road to Health booklet and know the child\'s date of birth — the nurse needs both to determine which vaccines and assessments are due.',
+    whatToBring: [
+      'Road to Health booklet (issued at birth — this is the child\'s medical passport)',
+      'Child\'s birth certificate or parent/guardian\'s ID',
+      'Any previous vaccination records or clinic cards if the Road to Health booklet is lost',
+      'A note of the child\'s recent eating patterns and any symptoms (fever, diarrhoea, rash, cough)',
+      'Nappies, a change of clothes, and a snack for older toddlers — clinic waits can be long',
+    ],
+    faqs: [
+      { q: 'What if I lost my child\'s Road to Health booklet?', a: 'Go to any public clinic and ask for a replacement. The nurse will issue a new booklet, but the vaccination history may be incomplete. Catch-up doses will be given for any vaccines without documented proof — it is safer to give an extra dose than to leave a child unprotected. Bring any records you have, even a handwritten note from a previous clinic.' },
+      { q: 'My child missed several vaccinations — is it too late to catch up?', a: 'No. There is no maximum age for catch-up immunisation. A clinic can give multiple catch-up doses in a single visit following minimum interval guidelines. Even a 10-year-old who never received a measles vaccine can and should get it. Take the child to any clinic with whatever records you have.' },
+      { q: 'When should I take my child to the clinic vs the emergency department?', a: 'Go to the emergency department immediately if the child cannot drink or breastfeed, is vomiting everything, has convulsions, is unusually sleepy or difficult to wake, has severe chest indrawing, or has a high fever with a stiff neck. For non-danger-sign illnesses (mild fever, runny nose, mild diarrhoea with no dehydration), the clinic during operating hours is appropriate.' },
+    ],
   },
 
   family_planning: {
@@ -241,6 +337,18 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
       'VMMC (voluntary medical male circumcision) for men reduces HIV acquisition risk by 60% and is performed free at many public facilities. The procedure takes 30 minutes under local anaesthetic with a 6-week healing period.',
     ],
     realityCheck: 'South Africa has one of the highest contraceptive prevalence rates in Sub-Saharan Africa (65%), but choice is heavily skewed toward injectables because they are nurse-delivered, quick, and do not require follow-up appointments. Long-acting methods (IUD and implant) are more effective and cost-effective, but uptake remains low — partly because not enough providers are trained in insertion, and partly because misinformation circulates on social media (the implant does not cause cancer; the IUD does not make you infertile). A 2022 audit found that fewer than 40% of primary clinics had a nurse trained in both implant and IUD insertion. If your clinic cannot provide the method you want, ask for a referral — do not settle for a less suitable method because of staffing limitations. Contraception counselling should be non-directive: the nurse presents options, you choose. Any provider who pushes a specific method or refuses to discuss alternatives is not following national guidelines.',
+    whatToBring: [
+      'South African ID book or passport (not required for teens 12+, but speeds up registration)',
+      'Clinic card if you have one from a previous visit',
+      'A note of your last menstrual period date',
+      'A list of any medications you currently take (some interact with hormonal contraception)',
+      'Your current contraceptive packaging if you are switching methods',
+    ],
+    faqs: [
+      { q: 'Can a teenager get contraception without parental consent?', a: 'Yes. The Children\'s Act (Section 134) allows anyone aged 12 or older to access contraception — including hormonal methods and the implant — without parental consent or notification. The clinic cannot contact your parents without your permission. Condoms have no age restriction.' },
+      { q: 'How do I get the implant (Implanon) removed if I want to fall pregnant?', a: 'Go to any clinic with a trained provider and request removal. The implant is removed through a small incision under local anaesthetic — it takes 5 minutes. Fertility returns almost immediately. You have the right to removal on demand, at any time, for any reason. If the nurse says they cannot remove it, insist on a referral to a facility that can.' },
+      { q: 'Where can I get emergency contraception (morning-after pill)?', a: 'Emergency contraception is available free at any public clinic, and over the counter at pharmacies (R30-R80). It is most effective within 12 hours of unprotected sex, and can be taken up to 72 hours after. The copper IUD can also be used as emergency contraception within 5 days — and then continues to prevent pregnancy for up to 10 years.' },
+    ],
   },
 
   immunisation: {
@@ -266,6 +374,18 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
       'Flu vaccines are available free at public clinics for high-risk groups: pregnant women, people over 65, people with HIV, diabetes, asthma, or heart disease. Ask during flu season (April-June).',
     ],
     realityCheck: 'South Africa\'s immunisation programme is well-designed but inconsistently implemented. Coverage rates vary dramatically by province: the Western Cape achieves over 90% for most antigens, while Gauteng and KwaZulu-Natal fall below 80% — driven by rapid urbanisation, informal settlements where tracking children is difficult, and occasional vaccine stockouts. The 2023-2024 measles outbreaks (concentrated in Limpopo and the Eastern Cape) revealed that coverage had dropped below the 95% threshold needed for herd immunity. Cold chain breaks — vaccines exposed to temperatures above 8°C during transport or storage — remain a concern in rural areas, though the introduction of vaccine vial monitors (colour-changing stickers on each vial) has helped nurses identify compromised vaccines. Anti-vaccination sentiment is growing on social media but has not yet significantly affected uptake at population level. If a nurse tells you a vaccine is "out of stock," ask when the next delivery is expected and come back — do not assume the vaccine is unavailable permanently.',
+    whatToBring: [
+      'Road to Health booklet — the nurse needs it to check which vaccines are due and to record what is given',
+      'Child\'s birth certificate or parent/guardian\'s ID',
+      'Any previous vaccination records from other clinics or countries',
+      'A note of the child\'s date of birth (grandmothers and other caregivers must know this — the nurse needs it to determine the schedule)',
+      'A light blanket for infants — the clinic may be cold and the child will need comforting after injections',
+    ],
+    faqs: [
+      { q: 'Can my child be vaccinated if they have a mild cold or fever?', a: 'Yes. A mild illness (runny nose, low-grade fever, mild diarrhoea) is NOT a reason to postpone vaccination. Only a severe illness — high fever above 38.5°C, convulsions, or a condition requiring hospitalisation — is a valid reason to delay. Mild illness is the most common reason children miss vaccinations unnecessarily.' },
+      { q: 'Is the HPV vaccine safe for my daughter?', a: 'Yes. The HPV vaccine has been given to over 400 million people worldwide and is one of the most extensively studied vaccines in history. It prevents cervical cancer, which kills 3,000 South African women annually. It is given free to Grade 5 girls (age 9-10) at school or at any public clinic. Two doses are needed, 6 months apart.' },
+      { q: 'My child is older and missed all their baby vaccinations — can they still catch up?', a: 'Yes. There is no maximum age for catch-up immunisation. The clinic can give multiple vaccines in a single visit following minimum interval guidelines. Even adults who were never vaccinated as children can receive catch-up doses for measles, hepatitis B, and tetanus. Take any vaccination records you have to the clinic.' },
+    ],
   },
 
   hiv_testing: {
@@ -291,5 +411,17 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
       'Employers cannot require HIV testing or discriminate based on HIV status — this is protected under the Employment Equity Act. If you experience workplace discrimination due to your HIV status, contact the CCMA.',
     ],
     realityCheck: 'South Africa has made testing highly accessible — you can test at clinics, mobile units, pharmacies, workplaces, and at home. The challenge is not testing capacity but the "missing middle": the estimated 600,000-800,000 people living with HIV who do not know their status. These are disproportionately young men aged 25-34, who are the least likely to visit a clinic and the least likely to test. Index testing (where the partners of newly diagnosed positive individuals are contacted and offered testing) has been effective but raises ethical concerns about consent and disclosure. At clinic level, provider-initiated counselling and testing (PICT) — where the nurse offers an HIV test during any visit, regardless of the reason — has dramatically increased testing uptake. If a nurse offers you an HIV test during a visit for something unrelated (wound care, chronic medication, family planning), accept it. It is not an accusation — it is routine healthcare.',
+    whatToBring: [
+      'You do not need anything — testing is available without ID, clinic card, or documentation',
+      'If you want testing on your official record, bring your South African ID or passport',
+      'Your partner, if you want to test together (couples testing is encouraged)',
+      'A phone number where the clinic can reach you for results if confirmatory blood tests are needed',
+      'Any previous test results if you are retesting after a window period exposure',
+    ],
+    faqs: [
+      { q: 'Can I test anonymously without giving my name?', a: 'Yes. HIV testing can be completely anonymous at public clinics. You do not need to give your real name or ID. The counsellor will assign you a code number. Anonymous testing is designed to remove barriers — many people test anonymously first and then link to care under their real identity once they are ready.' },
+      { q: 'How soon after exposure can an HIV test detect the virus?', a: 'Rapid finger-prick tests have a window period of 4-12 weeks. If you were potentially exposed less than 4 weeks ago, a negative result does not guarantee you are negative — retest at 6 weeks and again at 12 weeks. Fourth-generation lab tests (which detect both antibodies and p24 antigen) can detect HIV as early as 2 weeks after exposure, but these require a blood draw and are not available at all facilities.' },
+      { q: 'What is PrEP and how do I get it?', a: 'PrEP (pre-exposure prophylaxis) is a daily pill that reduces HIV acquisition risk by over 95%. It is free at public clinics for anyone who is HIV-negative and at risk — you do not need to justify your risk. The standard regimen is tenofovir + emtricitabine (one pill daily). You need an HIV test every 3 months while on PrEP. Ask any clinic nurse about starting PrEP.' },
+    ],
   },
 };

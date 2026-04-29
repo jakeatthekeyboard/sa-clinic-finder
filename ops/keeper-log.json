@@ -1,6 +1,6 @@
 {
-  "lastRun": "2026-04-27T21:04:00+02:00",
-  "editorialLastRun": "2026-04-27T21:04:00+02:00",
+  "lastRun": "2026-04-29T21:08:00+02:00",
+  "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
   "runIntervalHours": 2.5,
@@ -40,6 +40,18 @@
       "task": "internal-linking",
       "result": "pass",
       "details": "Added 'Related Guides' section to 3 guides that were missing it: chronic-medication-management (links to CCMDD, ARVs, referral system, find clinic), hiv-testing-guide (links to ARVs, family planning, mental health, find clinic), how-to-get-arvs (links to HIV testing, CCMDD, TB treatment, find clinic). All 15 guides now have cross-links. Build succeeded: 1096 pages."
+    },
+    {
+      "timestamp": "2026-04-29T21:08:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (western-cape/claremont-hospital, gauteng/rayton-public-clinic, kwazulu-natal/bhekumthetu-clinic) all 200. Province page (western-cape) 200. Guide page (tb-treatment-what-to-expect) 200."
+    },
+    {
+      "timestamp": "2026-04-29T21:08:00+02:00",
+      "task": "service-page-depth",
+      "result": "pass",
+      "details": "Added 'What to bring' checklist (5 items each) and service-specific FAQs (3 per service) to all 11 service pages. Updated ServiceEditorial interface with whatToBring and faqs fields. Updated [service].astro template with checklist UI section and merged editorial FAQs into FAQ schema. All 11 services now have 6 FAQs (3 generic + 3 specific) and a document checklist. Build succeeded: 1096 pages."
     }
   ]
 }

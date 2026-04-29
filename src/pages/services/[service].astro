@@ -24,7 +24,7 @@ const byProvince = PROVINCES.map(p => ({
 
 const topProvinces = byProvince.slice(0, 3);
 
-const serviceFaqs = [
+const genericFaqs = [
   {
     q: `Where can I get ${serviceName.toLowerCase()} in South Africa?`,
     a: `${serviceFacilities.length} public clinics and hospitals across South Africa offer ${serviceName.toLowerCase()}. ${topProvinces.length > 0 ? `The provinces with the most facilities are ${topProvinces.map(p => `${p.name} (${p.facilities.length})`).join(', ')}.` : ''} All services at government facilities are free for South African citizens and permanent residents.`,
@@ -40,6 +40,8 @@ const serviceFaqs = [
       : `In most cases, you can walk in to any public clinic that offers ${serviceName.toLowerCase()}. District hospitals may require a referral from a primary health clinic unless it is an emergency.`,
   },
 ];
+
+const serviceFaqs = [...genericFaqs, ...(editorial?.faqs ?? [])];
 
 const faqJsonLd = {
   "@context": "https://schema.org",
@@ -115,6 +117,20 @@ const jsonLd = editorial ? [
       <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px; max-width: 720px;">
         <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Who is eligible?</h2>
         <p style="font-size: 0.9rem; line-height: 1.7;" set:html={editorial.eligibility} />
+      </section>
+    )}
+
+    {editorial?.whatToBring && editorial.whatToBring.length > 0 && (
+      <section style="margin-bottom: 32px; max-width: 720px;">
+        <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--green-dark);">What to bring</h2>
+        <div style="display: grid; gap: 8px;">
+          {editorial.whatToBring.map(item => (
+            <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius);">
+              <span style="flex-shrink: 0; color: var(--green-dark); font-size: 1rem; line-height: 1.4;">&#9745;</span>
+              <span style="font-size: 0.9rem; line-height: 1.6;">{item}</span>
+            </div>
+          ))}
+        </div>
       </section>
     )}
 
