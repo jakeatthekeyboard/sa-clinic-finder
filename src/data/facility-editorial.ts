@@ -80,6 +80,75 @@ const FACILITY_OVERRIDES: Record<string, FacilityOverride> = {
       'The emergency department uses the South African Triage Scale (SATS). Green-coded patients (non-urgent) may wait several hours, especially over weekends. For routine care, visit during weekday mornings.',
     ],
   },
+
+  'ethafeni-clinic-tembisa': {
+    context:
+      'Ethafeni Clinic is a 24-hour primary healthcare facility serving Tembisa, one of Gauteng\'s largest townships with an estimated population exceeding 500,000. Located east of Johannesburg near Kempton Park, Tembisa is a high-density residential area where public transport connections to tertiary hospitals can take well over an hour. Ethafeni\'s 24-hour status makes it one of the few after-hours primary care options for the Tembisa community outside of Tembisa Provincial Tertiary Hospital\'s emergency department. The clinic provides <a href="/services/emergency">emergency stabilisation</a>, <a href="/services/family-planning">family planning</a>, <a href="/services/immunisation">immunisation</a>, and <a href="/services/hiv-testing">HIV testing</a>. Tembisa faces significant public health challenges including high HIV prevalence, TB, and chronic lifestyle diseases — the clinic\'s after-hours access is critical for shift workers in nearby industrial areas who cannot attend during standard clinic hours.',
+    facilityTips: [
+      'Ethafeni operates 24 hours but non-emergency services (family planning, immunisation) are typically available during standard weekday hours only. Phone ahead on +27 11 925 6222 to confirm if you need a specific service after hours.',
+      '<a href="/services/hiv-testing">HIV testing</a> is free and confidential. If you test positive, ask about same-day ART initiation — the nurse can start you on treatment immediately or refer you to Tembisa Provincial Tertiary Hospital for ARV initiation.',
+      'For chronic medication, the nearest facility with a dedicated chronic dispensing unit is Tembisa Provincial Tertiary Hospital. Ask the Ethafeni nursing staff about CCMDD pick-up points in Tembisa if you are already stable on treatment.',
+      'Tembisa is served by multiple taxi routes. The clinic is accessible from the main Tembisa taxi rank — confirm the exact location with the driver as Tembisa has multiple health facilities spread across the township.',
+    ],
+  },
+
+  'lilian-ngoyi-community-clinic-johannesburg': {
+    context:
+      'Lilian Ngoyi Community Clinic operates at district hospital level in Johannesburg, providing 24-hour services including <a href="/services/emergency">emergency care</a>, <a href="/services/chronic-medication">chronic medication</a> management, and <a href="/services/immunisation">immunisation</a>. Named after anti-apartheid activist Lilian Masediba Ngoyi, the facility is operated by the Gauteng Department of Health and serves communities across Johannesburg\'s western suburbs and surrounding areas. As a district hospital-level facility, it sits above a basic clinic in the referral chain — it can manage chronic conditions, stabilise emergencies, and provide services that smaller clinics in the surrounding area refer patients to. Johannesburg\'s public health system handles enormous patient volumes, and Lilian Ngoyi\'s 24-hour operation and chronic medication capability make it an important alternative to overcrowded emergency departments at larger hospitals like Chris Hani Baragwanath and Charlotte Maxeke.',
+    facilityTips: [
+      'The facility operates 24 hours for emergencies. For chronic medication collection, arrive during weekday mornings — the pharmacy queue is longest on Mondays and at month-end.',
+      '<a href="/services/chronic-medication">Chronic medication</a> patients who have been stable for 6+ months should ask about CCMDD enrolment. This programme lets you collect your monthly medication from a participating pharmacy closer to home.',
+      'For conditions requiring specialist care (orthopaedics, cardiology, oncology), Lilian Ngoyi will issue a referral to Charlotte Maxeke Johannesburg Academic Hospital or Chris Hani Baragwanath. Keep your referral letter — specialists cannot see non-emergency patients without one.',
+      'Contact the facility on +27 11 933 0202 to confirm operating hours for specific services before travelling.',
+    ],
+  },
+
+  'blue-downs-clinic-western-cape': {
+    context:
+      'Blue Downs Clinic is a primary healthcare facility operated by the City of Cape Town, serving the Blue Downs community in the greater Eerste Rivier/Kuilsrivier area of the Western Cape. Blue Downs is a residential area on the Cape Flats with a mixed-income population, situated along the Stellenbosch Arterial between Eerste Rivier and Mfuleni. The clinic provides <a href="/services/family-planning">family planning</a>, <a href="/services/immunisation">immunisation</a>, and <a href="/services/hiv-testing">HIV testing</a> as its core verified services. The facility does not operate 24 hours — for after-hours emergencies, the nearest options are Eerste Rivier Hospital or Karl Bremer Hospital. The Western Cape has structured referral pathways, and Blue Downs Clinic refers complex cases to the Khayelitsha/Eastern Sub-structure health facilities or Eerste Rivier Hospital for inpatient care.',
+    facilityTips: [
+      'Blue Downs Clinic operates during standard clinic hours (typically 07:30–16:00 weekdays). Arrive before 08:00 for the shortest queue — afternoon visits are generally quieter.',
+      '<a href="/services/hiv-testing">HIV testing</a> is free, confidential, and available as a walk-in service. Results are typically ready within 15 minutes.',
+      '<a href="/services/family-planning">Family planning</a> includes injectable contraception, oral pills, and condoms. For long-acting methods (implant or IUD), the clinic can refer you to a nearby community health centre.',
+      'For after-hours emergencies, go to Eerste Rivier Hospital (approximately 5km away) or call the Western Cape emergency line on 10177.',
+      'Phone +27 21 444 8313 to confirm the clinic is open before travelling, especially on public holidays.',
+    ],
+  },
+
+  'idas-valley-clinic-western-cape': {
+    context:
+      'Idas Valley Clinic serves the Idas Valley community in Stellenbosch, Western Cape. Idas Valley is a historically coloured residential area on the western edge of Stellenbosch, with a mix of established homes and lower-income housing. The clinic provides primary healthcare services including <a href="/services/family-planning">family planning</a>, <a href="/services/immunisation">immunisation</a>, and <a href="/services/hiv-testing">HIV testing</a>. The facility does not operate 24 hours. Stellenbosch is served by a network of clinics feeding into Stellenbosch Hospital (district level) for cases requiring inpatient care, lab work, or X-rays. The Winelands District has lower HIV prevalence than the Cape Metro, but TB remains a significant concern in farming communities — seasonal agricultural workers moving through the area may need continuity of care, and Idas Valley Clinic can facilitate medication transfers from other facilities.',
+    facilityTips: [
+      'The clinic operates during standard hours (weekdays). For after-hours emergencies, Stellenbosch Hospital is the nearest 24-hour facility (approximately 3km away on Merriman Avenue).',
+      '<a href="/services/immunisation">Child immunisation</a> follows the national EPI-SA schedule. Bring your child\'s Road to Health booklet. If you\'ve missed a scheduled vaccination, the clinic can administer catch-up doses.',
+      '<a href="/services/family-planning">Family planning</a> is a walk-in service — no appointment or referral is needed. Available to anyone, including teens aged 12 and older (confidential, no parental consent required).',
+      'If you need chronic medication, TB treatment, or dental care, Stellenbosch Hospital or Cloetesville Community Health Clinic (nearby in <a href="/clinics/western-cape/cloetesville-community-health-clinic-stellenbosch">Cloetesville</a>) offer a broader range of services.',
+    ],
+  },
+
+  'the-newhaven-cape-town': {
+    context:
+      'The Newhaven is a district hospital-level facility in Durbanville, Cape Town, providing 24-hour services including <a href="/services/emergency">emergency care</a>, <a href="/services/chronic-medication">chronic medication</a> management, <a href="/services/mental-health">mental health</a> assessment, and <a href="/services/immunisation">immunisation</a>. Durbanville is a northern suburb of Cape Town, and The Newhaven serves a catchment area that includes Bellville, Brackenfell, Kraaifontein, and surrounding communities. The facility\'s <a href="/services/mental-health">mental health</a> services are notable — it provides psychiatric assessment, counselling, and can initiate treatment for conditions including depression, anxiety, and substance use disorders. In the Western Cape, mental health services are structured in tiers, and The Newhaven sits at the district level — it can manage stable psychiatric patients and refer acute cases to Stikland Hospital (the provincial psychiatric facility in Bellville) or Tygerberg Hospital for inpatient psychiatric care.',
+    facilityTips: [
+      'The Newhaven operates 24 hours for emergencies. Non-emergency services (chronic medication reviews, mental health consultations) are available during business hours by appointment.',
+      '<a href="/services/mental-health">Mental health</a> services include initial psychiatric assessment and ongoing medication management. You can self-refer — no letter from a clinic is needed. For crisis intervention, the facility can stabilise and refer to Stikland Hospital if inpatient care is required.',
+      '<a href="/services/chronic-medication">Chronic medication</a> patients stable on treatment for 6+ months should ask about CCMDD — pickup points in the Durbanville/Bellville area let you collect monthly medication without visiting the facility.',
+      'Contact +27 21 010 0813 to confirm availability of specific services or to book a mental health consultation.',
+      'The 24-hour emergency service uses the South African Triage Scale (SATS). Non-urgent (green) presentations may experience long waits — for routine care, visit during weekday mornings.',
+    ],
+  },
+
+  'orchards-clinic-orange-grove-johannesburg': {
+    context:
+      'Orchards Clinic serves the Orange Grove and surrounding communities in northeastern Johannesburg, including Norwood, Houghton Estate, and Observatory. This area has a diverse population including long-term residents, students, and a significant migrant community. The clinic provides <a href="/services/family-planning">family planning</a>, <a href="/services/immunisation">immunisation</a>, and <a href="/services/hiv-testing">HIV testing</a> as its core services. Under South African law, all people are entitled to primary healthcare regardless of nationality or documentation status — Orchards Clinic serves anyone who walks in. The facility operates during standard clinic hours (not 24 hours). For after-hours emergencies, the nearest hospitals are Charlotte Maxeke Johannesburg Academic Hospital on Jubilee Road (approximately 4km south) and Rahima Moosa Mother and Child Hospital for obstetric emergencies.',
+    facilityTips: [
+      'Orchards Clinic operates during standard weekday hours. Arrive before 08:00 for the shortest wait — the clinic serves a large catchment area and morning queues build quickly.',
+      '<a href="/services/hiv-testing">HIV testing</a> is free, confidential, and available without an appointment. If you test positive, the nurse will discuss same-day ARV initiation or refer you to the nearest ARV site.',
+      '<a href="/services/family-planning">Family planning</a> is available to all, including non-citizens. Methods include injectables, oral contraceptive pills, and condoms. For long-acting reversible contraception (implant, IUD), you may be referred to a community health centre.',
+      'For chronic medication, TB treatment, or dental services, the nearest facilities with a broader service range include Hillbrow Community Health Centre (CHC) or Charlotte Maxeke Johannesburg Academic Hospital.',
+      'If you do not have an ID document, you can still access all primary healthcare services. The clinic may ask for your name for record-keeping but cannot refuse service.',
+    ],
+  },
 };
 
 const TYPE_CONTEXT: Record<string, string> = {
