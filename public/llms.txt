@@ -1,0 +1,37 @@
+# Clinic Finder SA
+
+> South African public health facility directory. Find free clinics, community health centres, and hospitals by province, city, or service. Covers all 9 provinces with facility details, operating hours, services offered, and GPS coordinates. Data sourced from the National Department of Health facility registry.
+
+## Facility Search
+
+- [Search Clinics](https://clinicfinder.co.za/search): Find the nearest public clinic by location or service type
+- [All Provinces](https://clinicfinder.co.za/clinics): Browse facilities by province — Gauteng, Western Cape, KwaZulu-Natal, Eastern Cape, Free State, Limpopo, Mpumalanga, North West, Northern Cape
+
+## Province Pages
+
+- Province listing: `https://clinicfinder.co.za/clinics/{province-slug}` — all facilities in that province with addresses, hours, and services
+
+## Services
+
+- [All Services](https://clinicfinder.co.za/services): Browse facilities by service type
+- Service pages: `https://clinicfinder.co.za/services/{service-slug}` — facilities offering a specific service (HIV testing, dental, maternity, etc.)
+
+## Guides
+
+- [Find Nearest Clinic](https://clinicfinder.co.za/guides/find-nearest-clinic): How to locate your closest public health facility
+- [Child Immunisation Schedule](https://clinicfinder.co.za/guides/child-immunisation-schedule): SA EPI vaccination schedule from birth to 12 years
+- [How to Get ARVs](https://clinicfinder.co.za/guides/how-to-get-arvs): Step-by-step guide to accessing antiretroviral treatment
+- [HIV Testing Guide](https://clinicfinder.co.za/guides/hiv-testing-guide): Free HIV testing at public facilities — what to expect
+- [TB Treatment](https://clinicfinder.co.za/guides/tb-treatment-what-to-expect): TB diagnosis, DOTS treatment programme, and what to expect
+- [Free Maternity Care](https://clinicfinder.co.za/guides/free-maternity-care): Antenatal, delivery, and postnatal care at public facilities
+- [Family Planning](https://clinicfinder.co.za/guides/family-planning-contraception): Free contraception options at public clinics
+- [Dental Care](https://clinicfinder.co.za/guides/dental-care-public-clinics): Free dental services and what public clinics provide
+- [Mental Health Services](https://clinicfinder.co.za/guides/mental-health-services): Accessing psychiatric and psychological care through public health
+- [Chronic Medication (CCMDD)](https://clinicfinder.co.za/guides/ccmdd-chronic-meds-pickup): Chronic medication collection at pickup points
+- [Chronic Medication Management](https://clinicfinder.co.za/guides/chronic-medication-management): Managing diabetes, hypertension, epilepsy through public clinics
+- [Hospital Referral System](https://clinicfinder.co.za/guides/hospital-referral-system): How the clinic-to-hospital referral process works
+- [Medical Emergency Guide](https://clinicfinder.co.za/guides/medical-emergency-guide): When to go to a clinic vs emergency room
+
+## Data Coverage
+
+All 9 South African provinces, facility types (clinic, community health centre, district hospital, regional hospital), operating hours, services offered, GPS coordinates, contact numbers.
