@@ -24,6 +24,44 @@ const faqs = [
   },
 ];
 
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to access dental care at a South African public clinic',
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Find a facility with dental services',
+      text: 'Not every primary clinic has a dental chair. Look for a community health centre (CHC), district hospital dental department, or dental training hospital (attached to Wits, Pretoria, UWC, UKZN, Sefako Makgatho, or Limpopo universities). Use Clinic Finder to search for facilities offering dental care in your area.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Arrive early with your ID and clinic card',
+      text: 'For emergency dental pain (severe toothache, abscess, broken tooth), go to the facility as a walk-in before 07:00 — dental slots fill fast and most clinics operate 07:30-16:00. Bring your South African ID document and clinic card (green card). For non-emergency care, phone the facility first to get on the dental waiting list.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Get assessed by the dental therapist or dentist',
+      text: 'A dental therapist, oral hygienist, or dentist will examine your teeth, take X-rays if needed, and determine what treatment is required. Emergency patients (pain, swelling, infection) are prioritised. For routine care such as fillings or cleaning, you may be booked for a follow-up appointment.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 4,
+      name: 'Receive treatment — extractions, fillings, or denture referral',
+      text: 'Emergency extractions and abscess drainage are usually done on the same day. Basic fillings and scaling (teeth cleaning) may be done immediately or at a scheduled appointment. For dentures, the process takes several visits over 6-18 months: assessment, extractions, healing period, impressions, fabrication, and fitting. All treatment at public facilities is free.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 5,
+      name: 'Follow up and maintain preventive care',
+      text: 'After treatment, follow the aftercare instructions (no rinsing for 24 hours after extraction, complete any antibiotics course). For ongoing dental health, brush twice daily with fluoride toothpaste, limit sugar between meals, and return for annual check-ups. Children should be taken for preventive care (fissure sealants, fluoride application) — they are usually seen faster than adults at public dental clinics.',
+    },
+  ],
+};
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -43,6 +81,7 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
   },
+  howToLd,
 ];
 ---
 <Base

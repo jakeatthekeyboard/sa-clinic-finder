@@ -28,6 +28,44 @@ const faqs = [
   },
 ];
 
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to access mental health services at a South African public facility',
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Walk into any public clinic — no referral needed',
+      text: 'Go to your nearest public primary healthcare clinic during operating hours (typically 07:30-16:00 weekdays). Tell the receptionist or nurse that you want to talk to someone about your mental health. No appointment, referral, or diagnosis is needed — feeling overwhelmed, unable to sleep, or unable to function are all valid reasons. Bring your South African ID document.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Complete the mental health screening',
+      text: 'A nurse will take you to a private room and use standardised screening tools — the PHQ-9 questionnaire for depression and the GAD-7 for anxiety. Answer honestly; there are no wrong answers. The screening takes about 15-20 minutes and helps the nurse assess the severity of your condition and determine the right level of care.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Receive medication and/or counselling at the clinic',
+      text: 'If the screening indicates depression or anxiety, the nurse or doctor can prescribe medication on the same day — typically fluoxetine (an SSRI) for depression and anxiety, or amitriptyline for depression with insomnia. All mental health medication at public clinics is free. If lay counsellors or psychologists are available at the clinic (varies by province — Gauteng and Western Cape have the most), you will be booked for counselling sessions.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 4,
+      name: 'Attend follow-up appointments to monitor progress',
+      text: 'Return to the clinic as scheduled — usually every 2-4 weeks initially, then monthly once stable. The nurse will repeat the screening tools to track your progress and adjust medication if needed. Most people notice improvement within 4-6 weeks of starting medication. Treatment continues for a minimum of 12 months after symptoms resolve. Do not stop medication without discussing it with your nurse or doctor.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 5,
+      name: 'Get referred to a specialist if needed',
+      text: 'If your condition needs more than primary clinic care, the nurse will refer you up the chain: first to a community health centre or district hospital (psychologist, psychiatric nurse, wider medication formulary), then to a regional hospital psychiatrist if needed. For a mental health crisis — danger to yourself or others — go directly to a 24-hour emergency unit or call SADAG on 0800 567 567 (free, 24/7).',
+    },
+  ],
+};
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -47,6 +85,7 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
   },
+  howToLd,
 ];
 ---
 <Base

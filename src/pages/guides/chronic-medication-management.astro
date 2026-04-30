@@ -57,6 +57,44 @@ const faqs = [
   },
 ];
 
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to get chronic medication from a public facility in South Africa',
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Visit your nearest public clinic with your ID',
+      text: 'Go to your nearest primary healthcare clinic during operating hours (typically 07:30-16:00 weekdays). Bring your South African ID document or passport. Tell the receptionist you need to see a nurse or doctor about a health concern. No appointment or referral is needed for a first visit.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Get diagnosed and registered as a chronic patient',
+      text: 'A nurse or doctor will examine you, run tests (blood pressure, blood glucose, etc.), and diagnose your condition. Once diagnosed, you are registered in the clinic\'s chronic patient system and assigned a "home clinic" that holds your file. You will receive a green clinic card as your patient-held record.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Receive your first prescription and medication',
+      text: 'The prescribing clinician starts you on treatment from the Essential Drugs List (e.g. hydrochlorothiazide for hypertension, metformin for diabetes). Your first prescription is dispensed at the clinic pharmacy on the same day — all chronic medication at public facilities is free. You are given a follow-up date, usually 1 month later.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 4,
+      name: 'Attend monthly or quarterly follow-up visits',
+      text: 'Return to your home clinic on your scheduled date to collect pre-prepared medication and have vital signs checked (weight, blood pressure). Every 3 months you have a longer review where the nurse assesses adherence and adjusts medication if needed. Annual reviews include comprehensive blood work (HbA1c, kidney function, lipids).',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 5,
+      name: 'Enrol in CCMDD for convenient pickup once stable',
+      text: 'After 6-12 months of stable treatment (meeting clinical targets like BP below 140/90 or HbA1c below 7%), ask your clinic to enrol you in the Central Chronic Medicine Dispensing and Distribution (CCMDD) programme. You can then collect your medication from a convenient CCMDD pickup point — a pharmacy, church hall, or community centre — instead of queuing at the clinic. You still return to the clinic for quarterly and annual reviews.',
+    },
+  ],
+};
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -76,6 +114,7 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
   },
+  howToLd,
 ];
 ---
 <Base
