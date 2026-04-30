@@ -53,6 +53,19 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Access Free Contraception at a South African Public Clinic',
+    description: '5-step process to choose and start a contraceptive method at any public health facility in South Africa.',
+    step: [
+      { '@type': 'HowToStep', position: 1, name: 'Go to any public clinic — no booking required', text: 'Walk into any public clinic or community health centre during working hours (typically 7:30am–4pm). Family planning services are available at all public facilities. You do not need an appointment, referral, or medical aid. Teenagers aged 12+ can access contraception without parental consent (Children\'s Act Section 134).' },
+      { '@type': 'HowToStep', position: 2, name: 'Tell the nurse you want family planning', text: 'Ask for the family planning service. A nurse will discuss your options: injectable (every 2–3 months, most popular in SA), contraceptive pill (daily), subdermal implant (3 years, most effective — 99.95%), copper IUD (5–10 years, no hormones), condoms (free, only method preventing STIs), or emergency contraception (within 72 hours of unprotected sex).' },
+      { '@type': 'HowToStep', position: 3, name: 'Get a basic health check', text: 'The nurse will check your blood pressure, ask about your medical history (blood clots, migraines, liver disease), and check when your last period was. This takes 5–10 minutes. No blood test is required to start most contraception. If you want an IUD or implant, the nurse may need to schedule a second visit if a trained inserter is not available that day.' },
+      { '@type': 'HowToStep', position: 4, name: 'Start your chosen method immediately', text: 'Most methods start the same day: injectables (one injection), the pill (first pack dispensed), condoms (take as many as you need). Implant insertion takes 2 minutes under local anaesthetic. IUD insertion takes 10–15 minutes. Emergency contraception is given as a single dose. All methods are completely free at public clinics — including the implant, which costs R3,000–R5,000 at private doctors.' },
+      { '@type': 'HowToStep', position: 5, name: 'Return for follow-up as scheduled', text: 'Injectables: return every 2 months (Nur-Isterate) or 3 months (Depo-Provera). Pill: return for refills every 3–6 months. Implant: return only for removal after 3 years or sooner if you want to stop. IUD: check-up at 6 weeks, then annually. If you experience side effects (irregular bleeding, mood changes), go back to the clinic — the nurse can adjust your method or switch you to a different one.' },
+    ],
+  },
 ];
 ---
 <Base

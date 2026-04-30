@@ -60,6 +60,19 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Get Your Child Vaccinated at a Public Clinic in South Africa',
+    description: '5-step process to ensure your child receives all EPI-SA immunisations on schedule.',
+    step: [
+      { '@type': 'HowToStep', position: 1, name: 'Bring your Road to Health booklet to the clinic', text: 'The Road to Health booklet (RTHB — the green or yellow book given at birth) is your child\'s official vaccination record. Bring it to every clinic visit. The nurse checks it to see which vaccines are due. If you lost it, go to the clinic where your child was last vaccinated — they can issue a new one and may re-administer vaccines to be safe.' },
+      { '@type': 'HowToStep', position: 2, name: 'Go to any public clinic — no appointment needed', text: 'Immunisations are available at any public clinic, community health centre, or hospital that offers child health services. No appointment or booking is required. Walk in during clinic hours (typically 7:30am–4pm weekdays). Some clinics have specific immunisation days — phone ahead to check, but most will vaccinate any day.' },
+      { '@type': 'HowToStep', position: 3, name: 'Tell the nurse your child\'s age and what vaccines are due', text: 'Show the RTHB. The nurse will check which vaccines are due based on your child\'s age. The EPI-SA schedule runs from birth to 12 years. If your child has missed any vaccines, the nurse will follow the catch-up schedule — there is no need to restart the series. All vaccines are free.' },
+      { '@type': 'HowToStep', position: 4, name: 'Wait 15 minutes after vaccination for observation', text: 'After the injection, stay at the clinic for 15 minutes so the nurse can watch for any immediate reaction (extremely rare). Common side effects: sore arm, mild fever, fussiness — all normal and resolve within 24-48 hours. Give paracetamol (Panado) for discomfort if needed. Severe reactions requiring medical attention are exceptionally rare (roughly 1 in a million doses).' },
+      { '@type': 'HowToStep', position: 5, name: 'Schedule the next visit according to the EPI-SA timeline', text: 'Ask the nurse when the next vaccination is due and write it in your calendar. Key dates: 6 weeks (first big vaccination day — 4 jabs + 2 oral drops), 10 weeks, 14 weeks, 9 months (first measles), 12 months (second measles), 18 months (booster), 6 years (school entry booster), and 12 years (Td + HPV for girls). Missing or delaying vaccines leaves your child vulnerable to preventable diseases.' },
+    ],
+  },
 ];
 ---
 <Base

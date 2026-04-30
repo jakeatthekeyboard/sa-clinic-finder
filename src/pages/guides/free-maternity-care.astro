@@ -47,6 +47,19 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Access Free Maternity Care at a Public Hospital in South Africa',
+    description: '5-step process from first antenatal visit to delivery and postnatal care — all free at public facilities.',
+    step: [
+      { '@type': 'HowToStep', position: 1, name: 'Book your first antenatal visit before 12 weeks', text: 'Go to your nearest public clinic that offers maternity/antenatal services as early as possible — ideally before 12 weeks of pregnancy. Early booking allows the clinic to detect high-risk conditions (ectopic pregnancy, pre-eclampsia, HIV, anaemia), start folic acid supplementation, and plan your care. Bring your ID and any previous pregnancy records. No appointment needed.' },
+      { '@type': 'HowToStep', position: 2, name: 'Attend at least 8 antenatal visits', text: 'South African guidelines recommend a minimum of 8 antenatal visits during pregnancy. At each visit: blood pressure check, urine test, baby\'s heartbeat and growth measurement, and HIV and syphilis screening (at first visit). You receive a maternity case record (green book) — bring it to every visit and to the hospital when you deliver. All visits are free.' },
+      { '@type': 'HowToStep', position: 3, name: 'Know your delivery facility', text: 'Low-risk pregnancies deliver at a midwife obstetric unit (MOU) or district hospital near your home. High-risk pregnancies (twins, pre-eclampsia, HIV with complications, previous caesarean) are referred to regional or tertiary hospitals. Your antenatal nurse will tell you where to go based on your risk level. Register at your delivery facility before your due date so they have your records.' },
+      { '@type': 'HowToStep', position: 4, name: 'Go to the hospital when labour starts', text: 'Go to your designated facility when contractions are regular (every 5 minutes for an hour) or your water breaks. Bring: maternity case record, ID, toiletries, sanitary pads, changes of underwear, comfortable clothes, and for the baby — 2 vests, 2 sleepsuits, a blanket, nappies, and a hat. Delivery is free for all women, including caesarean section if medically required.' },
+      { '@type': 'HowToStep', position: 5, name: 'Return for postnatal visits at 3 days, 6 weeks, and 6 months', text: 'After delivery, go back to the clinic at 3 days (or within the first week) for a check on you and baby, at 6 weeks for a full assessment, and at 6 months. The 6-week visit is critical: it includes baby vaccinations (6-week EPI-SA schedule), contraception counselling, and HIV testing for the baby if the mother is HIV-positive. All postnatal care is free.' },
+    ],
+  },
 ];
 ---
 <Base

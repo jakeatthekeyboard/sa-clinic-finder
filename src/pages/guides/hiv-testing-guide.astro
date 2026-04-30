@@ -47,6 +47,19 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Get a Free HIV Test at a Public Clinic in South Africa',
+    description: '5-step process from walking into a clinic to getting your result and next steps.',
+    step: [
+      { '@type': 'HowToStep', position: 1, name: 'Go to any public clinic — no appointment needed', text: 'Walk into any public clinic, community health centre, or hospital during working hours. HIV testing is available at all public health facilities in South Africa. You can also test at mobile testing sites, community campaigns, and some workplaces. No referral, medical aid, or ID required. You have the right to test anonymously.' },
+      { '@type': 'HowToStep', position: 2, name: 'Ask for an HIV test — HCT or VCT', text: 'Tell the nurse you want an HIV test. You can request it as part of a general visit or specifically for testing only. HCT (HIV Counselling and Testing) includes pre-test counselling where the nurse explains the process, window period, and confidentiality. The counselling takes 5–10 minutes. You can decline counselling but it is recommended, especially for first-time testers.' },
+      { '@type': 'HowToStep', position: 3, name: 'Take the rapid finger-prick test (20 minutes)', text: 'The nurse pricks your finger, puts a drop of blood on a rapid test strip, and waits 15 minutes for the result. If the first test is positive, a second rapid test is done immediately to confirm. If both are positive, you are offered same-day ARV treatment. If negative, you receive a negative result and advice on prevention (condoms, PrEP if high-risk).' },
+      { '@type': 'HowToStep', position: 4, name: 'If positive — start treatment the same day', text: 'South Africa follows same-day ARV initiation (Universal Test and Treat). If confirmed positive: the nurse does a clinical assessment (weight, blood pressure, TB screening), draws blood for CD4 count and viral load, and starts you on TLD (tenofovir + lamivudine + dolutegravir — one pill, once daily). You do not need to wait for blood results. ARVs are free and highly effective.' },
+      { '@type': 'HowToStep', position: 5, name: 'If negative — consider PrEP and retest regularly', text: 'If you are at substantial risk of HIV (multiple partners, partner is HIV-positive, inconsistent condom use), ask the nurse about PrEP — a daily pill that is 99% effective at preventing HIV infection. PrEP is free at public clinics. Retest every 3–6 months if at higher risk, or at least once a year if sexually active. Testing is the single most important step in ending the epidemic.' },
+    ],
+  },
 ];
 ---
 <Base
