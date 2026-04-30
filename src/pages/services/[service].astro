@@ -24,6 +24,36 @@ const byProvince = PROVINCES.map(p => ({
 
 const topProvinces = byProvince.slice(0, 3);
 
+const serviceGuideMap: Record<string, { href: string; title: string }> = {
+  arv_treatment: { href: '/guides/how-to-get-arvs', title: 'How to Get ARVs' },
+  tb_treatment: { href: '/guides/tb-treatment-what-to-expect', title: 'TB Treatment — What to Expect' },
+  maternity_antenatal: { href: '/guides/free-maternity-care', title: 'Free Maternity Care' },
+  chronic_medication: { href: '/guides/chronic-medication-management', title: 'Chronic Medication Management' },
+  emergency_24h: { href: '/guides/medical-emergency-guide', title: 'Medical Emergency Guide' },
+  dental: { href: '/guides/dental-care-public-clinics', title: 'Dental Care at Public Clinics' },
+  mental_health: { href: '/guides/mental-health-services', title: 'Mental Health Services' },
+  family_planning: { href: '/guides/family-planning-contraception', title: 'Family Planning & Contraception' },
+  immunisation: { href: '/guides/child-immunisation-schedule', title: 'Child Immunisation Schedule' },
+  hiv_testing: { href: '/guides/hiv-testing-guide', title: 'HIV Testing Guide' },
+  child_health: { href: '/guides/child-immunisation-schedule', title: 'Child Immunisation Schedule' },
+};
+const primaryGuide = serviceGuideMap[serviceKey];
+const otherGuides = Object.entries(serviceGuideMap)
+  .filter(([k]) => k !== serviceKey)
+  .map(([, g]) => g)
+  .filter((g, i, arr) => arr.findIndex(x => x.href === g.href) === i);
+const extraServiceGuides = [
+  { href: '/guides/ccmdd-chronic-meds-pickup', title: 'CCMDD Chronic Meds Pickup' },
+  { href: '/guides/hospital-referral-system', title: 'Hospital Referral System' },
+  { href: '/guides/find-nearest-clinic', title: 'How to Use Public Clinics' },
+];
+const relatedServiceGuides: { href: string; title: string }[] = [];
+if (primaryGuide) relatedServiceGuides.push(primaryGuide);
+for (const g of [...otherGuides, ...extraServiceGuides]) {
+  if (relatedServiceGuides.length >= 4) break;
+  if (!relatedServiceGuides.some(x => x.href === g.href)) relatedServiceGuides.push(g);
+}
+
 const genericFaqs = [
   {
     q: `Where can I get ${serviceName.toLowerCase()} in South Africa?`,
@@ -176,6 +206,17 @@ const jsonLd = editorial ? [
         </details>
       ))}
     </section>
+
+    {relatedServiceGuides.length > 0 && (
+      <section style="margin-bottom: 32px; max-width: 720px;">
+        <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Related Health Guides</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem;">
+          {relatedServiceGuides.map(g => (
+            <a href={g.href} style="display: block; padding: 0.75rem 1rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500;">{g.title}</a>
+          ))}
+        </div>
+      </section>
+    )}
 
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Other Health Services</h2>
