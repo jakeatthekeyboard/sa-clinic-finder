@@ -42,7 +42,22 @@ const faqs = [
   },
 ];
 
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to Find Your Nearest Public Clinic in South Africa',
+  description: 'Find and visit a public health clinic near you. Free healthcare for all South Africans.',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Search by location', text: 'Use Clinic Finder SA to search by province, suburb, or GPS location. Filter by services you need (ARVs, maternity, dental).' },
+    { '@type': 'HowToStep', position: 2, name: 'Check services and hours', text: 'Review the facility page for services offered, operating hours, and whether it operates 24 hours.' },
+    { '@type': 'HowToStep', position: 3, name: 'Prepare your documents', text: 'Bring your SA ID or passport, clinic card (green card), and any current medication. Children under 5 need the Road to Health booklet.' },
+    { '@type': 'HowToStep', position: 4, name: 'Arrive early', text: 'Most clinics open at 07:00. Arrive before opening to avoid long queues. Take a queue number and wait in the waiting area.' },
+    { '@type': 'HowToStep', position: 5, name: 'See the nurse or doctor', text: 'You will be triaged and seen by a nurse or doctor. Chronic patients may go to a dedicated queue. All services are free.' },
+  ],
+};
+
 const jsonLd = [
+  howToLd,
   {
     '@context': 'https://schema.org',
     '@type': 'Article',

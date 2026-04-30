@@ -30,7 +30,23 @@ const faqs = [
   },
 ];
 
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to Get ARVs at a Public Clinic in South Africa',
+  description: 'Step-by-step guide to starting free antiretroviral treatment at a government clinic. Same-day initiation available.',
+  totalTime: 'PT2H',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Get tested', text: 'Walk into any public clinic and ask for a free HIV test. Results in 20 minutes via rapid finger-prick test.' },
+    { '@type': 'HowToStep', position: 2, name: 'Same-day initiation', text: 'If positive, a nurse does a clinical assessment and starts you on ARVs the same day. Standard regimen: TLD — one pill, once a day.' },
+    { '@type': 'HowToStep', position: 3, name: 'Bring your documents', text: 'Bring your SA ID or passport, any current medication, and your clinic card if you have one.' },
+    { '@type': 'HowToStep', position: 4, name: 'Follow-up visits', text: 'Return at 1 month, 3 months, then every 6 months once stable. Blood tests check viral load and kidney function.' },
+    { '@type': 'HowToStep', position: 5, name: 'Collect medication monthly', text: 'Collect medication monthly from the clinic pharmacy. Stable patients can join CCMDD for pickup at pharmacies or ATMs.' },
+  ],
+};
+
 const jsonLd = [
+  howToLd,
   {
     '@context': 'https://schema.org',
     '@type': 'Article',

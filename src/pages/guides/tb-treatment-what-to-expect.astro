@@ -28,7 +28,23 @@ const faqs = [
   },
 ];
 
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'TB Treatment in South Africa — What to Expect',
+  description: 'The full TB treatment journey at a public clinic: testing, diagnosis, 6-month DOTS regimen, and follow-up.',
+  totalTime: 'P6M',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Get tested', text: 'Visit any public clinic with a cough lasting 2+ weeks, night sweats, or weight loss. Sputum test results take 2-48 hours with GeneXpert.' },
+    { '@type': 'HowToStep', position: 2, name: 'Start treatment', text: 'TB treatment is free. The intensive phase (2 months) uses 4 drugs: rifampicin, isoniazid, pyrazinamide, ethambutol — taken daily.' },
+    { '@type': 'HowToStep', position: 3, name: 'DOTS observation', text: 'Take your medication under observation (DOTS) at the clinic or with a treatment supporter. This ensures adherence and catches side effects early.' },
+    { '@type': 'HowToStep', position: 4, name: 'Continuation phase', text: 'After 2 months, switch to 2 drugs (rifampicin + isoniazid) for 4 more months. Monthly clinic visits for sputum checks.' },
+    { '@type': 'HowToStep', position: 5, name: 'Complete 6 months', text: 'Finish all 6 months even if you feel better. Stopping early causes drug-resistant TB which is harder and longer to treat.' },
+  ],
+};
+
 const jsonLd = [
+  howToLd,
   {
     '@context': 'https://schema.org',
     '@type': 'Article',
