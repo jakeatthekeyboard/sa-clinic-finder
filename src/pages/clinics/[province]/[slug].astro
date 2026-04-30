@@ -68,6 +68,16 @@ const breadcrumbLd = {
   ],
 };
 
+const faqLd = typeEditorial ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: `When should I go to a ${typeLabel(facility.type).toLowerCase()}?`, acceptedAnswer: { '@type': 'Answer', text: typeEditorial.whenToGo } },
+    { '@type': 'Question', name: `What staff work at a ${typeLabel(facility.type).toLowerCase()}?`, acceptedAnswer: { '@type': 'Answer', text: typeEditorial.staffing } },
+    { '@type': 'Question', name: `How does the referral system work at a ${typeLabel(facility.type).toLowerCase()}?`, acceptedAnswer: { '@type': 'Answer', text: typeEditorial.referralFlow } },
+  ],
+} : null;
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': ['MedicalClinic', 'LocalBusiness'],
@@ -102,7 +112,7 @@ const jsonLd = {
 <Base
   title={`${facility.name} — ${typeLabel(facility.type)} in ${facility.province}`}
   description={`${facility.name} is a ${typeLabel(facility.type).toLowerCase()} in ${facility.province}. Services: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}. Get directions and contact details.`}
-  jsonLd={[breadcrumbLd, jsonLd]}
+  jsonLd={[breadcrumbLd, jsonLd, ...(faqLd ? [faqLd] : [])]}
 >
   <div class="container" style="padding: 32px 0;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
