@@ -188,6 +188,47 @@ const jsonLd = {
       </div>
     </section>
 
+    {(() => {
+      const guideMap: Record<string, { href: string; title: string }> = {
+        arv_treatment: { href: '/guides/how-to-get-arvs', title: 'How to Get ARVs' },
+        tb_treatment: { href: '/guides/tb-treatment-what-to-expect', title: 'TB Treatment — What to Expect' },
+        maternity_antenatal: { href: '/guides/free-maternity-care', title: 'Free Maternity Care' },
+        chronic_medication: { href: '/guides/chronic-medication-management', title: 'Chronic Medication Management' },
+        emergency_24h: { href: '/guides/medical-emergency-guide', title: 'Medical Emergency Guide' },
+        dental: { href: '/guides/dental-care-public-clinics', title: 'Dental Care at Public Clinics' },
+        mental_health: { href: '/guides/mental-health-services', title: 'Mental Health Services' },
+        family_planning: { href: '/guides/family-planning-contraception', title: 'Family Planning & Contraception' },
+        immunisation: { href: '/guides/child-immunisation-schedule', title: 'Child Immunisation Schedule' },
+        hiv_testing: { href: '/guides/hiv-testing-guide', title: 'HIV Testing Guide' },
+        child_health: { href: '/guides/child-immunisation-schedule', title: 'Child Immunisation Schedule' },
+      };
+      const matched = Object.entries(facility.services)
+        .filter(([k, v]) => v && guideMap[k])
+        .map(([k]) => guideMap[k])
+        .filter((g, i, arr) => arr.findIndex(x => x.href === g.href) === i)
+        .slice(0, 4);
+      const extras = [
+        { href: '/guides/ccmdd-chronic-meds-pickup', title: 'CCMDD Chronic Meds Pickup' },
+        { href: '/guides/hospital-referral-system', title: 'Hospital Referral System' },
+        { href: '/guides/find-nearest-clinic', title: 'How to Use Public Clinics' },
+      ];
+      const allGuides = [...matched];
+      for (const e of extras) {
+        if (allGuides.length >= 4) break;
+        if (!allGuides.some(g => g.href === e.href)) allGuides.push(e);
+      }
+      return allGuides.length > 0 ? (
+        <section style="margin-bottom: 32px;">
+          <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Related Guides</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem;">
+            {allGuides.map(g => (
+              <a href={g.href} style="display: block; padding: 0.75rem 1rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500;">{g.title}</a>
+            ))}
+          </div>
+        </section>
+      ) : null;
+    })()}
+
     <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Data source</h2>
       <div style="display: grid; gap: 8px; font-size: 0.9rem;">
