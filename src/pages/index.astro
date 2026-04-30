@@ -49,6 +49,19 @@ const faqJsonLd = {
   })),
 };
 
+const webSiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Clinic Finder SA',
+  url: 'https://clinicfinder.co.za',
+  description: `Free directory of ${totalFacilities} public health facilities across South Africa.`,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://clinicfinder.co.za/search?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+};
+
 const datasetJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Dataset',
@@ -65,9 +78,8 @@ const datasetJsonLd = {
 <Base
   title="Clinic Finder SA — Find Your Nearest Public Clinic or Hospital"
   description={`Search ${totalFacilities} public clinics and hospitals across South Africa. Filter by province, services like ARVs, maternity, TB treatment, and get directions.`}
-  jsonLd={faqJsonLd}
+  jsonLd={[faqJsonLd, webSiteJsonLd, datasetJsonLd]}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(datasetJsonLd)} />
   <section style="background: var(--green); color: #fff; padding: 48px 0 40px;">
     <div class="container" style="text-align: center;">
       <h1 style="font-size: 1.8rem; margin-bottom: 8px;">Find a Public Clinic Near You</h1>
