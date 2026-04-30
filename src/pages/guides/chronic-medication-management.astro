@@ -162,6 +162,51 @@ const jsonLd = [
       </p>
     </section>
 
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">What Counts as "Stable" — Treatment Targets</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">Your clinic classifies you as stable (eligible for CCMDD, fewer visits) when you meet specific targets. If you are out of target, expect more frequent visits and possible medication changes.</p>
+      <div style="overflow-x: auto; margin-bottom: 16px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+          <thead><tr style="border-bottom: 2px solid var(--border);">
+            <th style="text-align: left; padding: 10px 8px;">Condition</th>
+            <th style="text-align: left; padding: 10px 8px;">Stable Target</th>
+            <th style="text-align: left; padding: 10px 8px;">Out of Target — Action</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Hypertension</td><td style="padding: 8px;">BP consistently &lt;140/90</td><td style="padding: 8px;">Medication uptitrated, add second agent, recheck in 4 weeks</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Diabetes (Type 2)</td><td style="padding: 8px;">HbA1c &lt;7%, fasting glucose 4-7 mmol/L</td><td style="padding: 8px;">Metformin dose increased, add glimepiride/insulin, dietitian referral</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">HIV (on ART)</td><td style="padding: 8px;">Viral load undetectable (&lt;50 copies/mL)</td><td style="padding: 8px;">Enhanced adherence counselling x3 months, then recheck — if still detectable, switch to second-line</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Epilepsy</td><td style="padding: 8px;">Seizure-free for 12+ months</td><td style="padding: 8px;">Dose adjusted, add second agent, doctor review</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Asthma</td><td style="padding: 8px;">&lt;2 rescue inhaler uses per week</td><td style="padding: 8px;">Step up to inhaled corticosteroid + LABA, review technique</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted);">Blood tests are done annually (or more often if unstable): HbA1c and creatinine for diabetes, urea/creatinine/potassium for hypertension, viral load for HIV. These are free at public facilities — you do not need to go to a private lab.</p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Medication Interactions You Should Know</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">Many chronic patients take multiple medications. Some combinations require timing adjustments or monitoring.</p>
+      <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">ARVs + TB treatment</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">Rifampicin reduces efavirenz and dolutegravir levels. Dolutegravir dose is doubled during TB treatment. Never adjust this yourself — the clinic manages the overlap.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Metformin + kidney problems</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">Metformin must be stopped if creatinine rises above threshold. Annual blood tests catch this. Report persistent nausea or muscle pain.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">ACE inhibitors + potassium</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">Enalapril (common BP medication) raises potassium levels. Do not take potassium supplements or salt substitutes (KCl) without telling the nurse.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Epilepsy + contraception</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">Carbamazepine and phenytoin reduce the pill's effectiveness. Depot injection (Depo-Provera) or copper IUD are preferred alternatives. See our <a href="/guides/family-planning-contraception">contraception guide</a>.</p>
+        </div>
+      </div>
+    </section>
+
     <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Find a clinic for chronic medication</h2>
       <p style="font-size: 0.9rem; margin-bottom: 12px;">

@@ -152,6 +152,52 @@ const jsonLd = [
     </section>
 
     <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Waiting Times — What Is Realistic</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">Waiting times vary enormously by province, specialty, and urgency. These are typical ranges — not guarantees.</p>
+      <div style="overflow-x: auto; margin-bottom: 16px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+          <thead><tr style="border-bottom: 2px solid var(--border);">
+            <th style="text-align: left; padding: 10px 8px;">Specialty</th>
+            <th style="text-align: left; padding: 10px 8px;">Urgent Referral</th>
+            <th style="text-align: left; padding: 10px 8px;">Routine Referral</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Surgery (general)</td><td style="padding: 8px;">1-2 weeks</td><td style="padding: 8px;">3-12 months</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Orthopaedics (hip/knee)</td><td style="padding: 8px;">2-4 weeks</td><td style="padding: 8px;">6-24 months</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Ophthalmology (cataracts)</td><td style="padding: 8px;">4-8 weeks</td><td style="padding: 8px;">6-18 months</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">ENT</td><td style="padding: 8px;">2-4 weeks</td><td style="padding: 8px;">3-12 months</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Psychiatry</td><td style="padding: 8px;">Same day (crisis)</td><td style="padding: 8px;">4-12 weeks</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Oncology</td><td style="padding: 8px;">1-2 weeks</td><td style="padding: 8px;">2-6 weeks</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted);">If your condition worsens while waiting, go back to the clinic — they can escalate the referral or send you to the emergency department. Do not just wait in pain.</p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Your Rights When Referred</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">The Patients' Rights Charter and National Health Act protect you throughout the referral process.</p>
+      <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Right to information</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">You may ask to see your referral letter, know which hospital you are being sent to, and get an estimated waiting time. The clinic must explain why you are being referred.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Right to refuse</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">You can decline a referral or a procedure. The doctor must explain the risks of refusing and document your decision, but cannot force treatment (except psychiatric emergencies under the Mental Health Act).</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Right to complain</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">If the hospital loses your referral, cancels repeatedly, or provides poor care: complain to the hospital CEO's office first, then to the provincial Health Ombud, then the Office of Health Standards Compliance (OHSC). Hotline: 080 011 6472.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Right to emergency care</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">Section 27 of the Constitution guarantees emergency medical treatment regardless of referral status, ability to pay, or documentation. No hospital can turn away an emergency patient.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Frequently Asked Questions</h2>
       <div style="display: grid; gap: 12px;">
         {faqs.map(faq => (
