@@ -47,6 +47,19 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    'name': 'What to Do in a Medical Emergency in South Africa',
+    'description': 'The essential steps when someone needs emergency medical care — who to call, where to go, and what to expect at a public hospital emergency room.',
+    'step': [
+      {'@type': 'HowToStep', 'position': 1, 'name': 'Call 10177 for an ambulance or 112 from any cellphone', 'text': 'Call immediately if the person is unconscious, having a seizure, struggling to breathe, has a suspected spinal injury, or is too injured to move safely. The dispatcher will advise you on what to do while waiting. Ambulance response time varies — 30-60+ minutes in some areas.'},
+      {'@type': 'HowToStep', 'position': 2, 'name': 'Drive to the nearest hospital if faster than an ambulance', 'text': 'If the person is conscious, alert, can sit upright, and you can reach the hospital faster than waiting for an ambulance, drive directly to the nearest hospital emergency room (casualty). Go to a hospital, not a clinic — clinics do not have 24-hour doctors, surgical capacity, or resuscitation equipment.'},
+      {'@type': 'HowToStep', 'position': 3, 'name': 'Go to ANY hospital including private if nearest', 'text': 'Private hospitals are legally required to stabilise emergency patients regardless of medical aid status under the National Health Act Section 5. They may transfer you to a public hospital once stabilised, but they cannot refuse initial treatment. In a life-threatening situation, proximity matters more than facility type.'},
+      {'@type': 'HowToStep', 'position': 4, 'name': 'Expect triage on arrival at casualty', 'text': 'Patients are prioritised by severity, not arrival order. Life-threatening cases are seen first. Bring ID and any current medication if possible. Emergency treatment is free at public facilities for people who cannot pay — billing is sorted after stabilisation, not before treatment.'},
+      {'@type': 'HowToStep', 'position': 5, 'name': 'Know your rights to emergency treatment', 'text': 'Section 27 of the Constitution guarantees the right to emergency medical treatment. No one can be turned away — regardless of nationality, immigration status, or ability to pay. If refused treatment, get the name of the person who refused and contact the Health Ombud: 012 366 7599.'},
+    ],
+  },
 ];
 ---
 <Base

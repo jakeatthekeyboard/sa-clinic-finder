@@ -47,6 +47,19 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    'name': 'How to Register for CCMDD Chronic Medication Collection',
+    'description': 'Get your chronic medication from a convenient pickup point instead of queuing at the clinic every month.',
+    'step': [
+      {'@type': 'HowToStep', 'position': 1, 'name': 'Confirm your condition is stable', 'text': 'You need 6-12 months on treatment with controlled symptoms — suppressed viral load for HIV, controlled blood pressure for hypertension, stable HbA1c for diabetes. Your clinic nurse or doctor makes this assessment at a scheduled visit.'},
+      {'@type': 'HowToStep', 'position': 2, 'name': 'Ask your clinic nurse about CCMDD eligibility', 'text': 'At your next clinic visit, ask: "Am I eligible for CCMDD?" The nurse checks your treatment history and stability. If you qualify, they register you on the CCMDD electronic system — registration takes about 10 minutes.'},
+      {'@type': 'HowToStep', 'position': 3, 'name': 'Choose a convenient pickup point', 'text': 'Select from available pickup points near you: private pharmacies, community centres, or workplace collection points. Choose based on proximity to home or work and queue times. You can change your pickup point later at any scheduled clinic review.'},
+      {'@type': 'HowToStep', 'position': 4, 'name': 'Collect your pre-packed medication each month', 'text': 'Your medication is pre-packed at a central pharmacy and delivered to your chosen pickup point. Collect within the 5-day pickup window. If you cannot collect, send a family member with a signed consent letter. Missing 2 consecutive pickups removes you from the programme.'},
+      {'@type': 'HowToStep', 'position': 5, 'name': 'Return to the clinic for periodic reviews', 'text': 'Attend a clinical review every 6-12 months (depending on your condition) for blood tests, symptom assessment, and prescription renewal. CCMDD replaces monthly medication collection, not clinical monitoring — the reviews ensure your treatment is still working.'},
+    ],
+  },
 ];
 ---
 <Base

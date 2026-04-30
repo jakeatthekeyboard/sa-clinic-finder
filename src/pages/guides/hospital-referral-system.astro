@@ -44,6 +44,19 @@ const jsonLd = [
       acceptedAnswer: { '@type': 'Answer', text: faq.answer },
     })),
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    'name': 'How to Get a Hospital Referral in South Africa',
+    'description': 'Navigate the public health referral chain from clinic to specialist hospital appointment.',
+    'step': [
+      {'@type': 'HowToStep', 'position': 1, 'name': 'Visit your primary clinic first', 'text': 'Go to your nearest clinic or community health centre — this is the entry point into the referral chain. Bring your ID and any current medication. The nurse will assess your condition and determine whether clinic-level care is sufficient or you need hospital-level specialist input.'},
+      {'@type': 'HowToStep', 'position': 2, 'name': 'Request a referral if your condition needs specialist care', 'text': 'If the clinic cannot manage your condition, the nurse or doctor writes a referral letter. If you believe you need a referral and it is not offered, ask directly. If refused, escalate to the clinic manager or district health office. You have the right to ask for reasons.'},
+      {'@type': 'HowToStep', 'position': 3, 'name': 'Receive your referral letter', 'text': 'The referral letter includes your diagnosis, treatment history, and the recommended hospital. You are referred to the hospital in your catchment area — clinic feeds into district hospital, which feeds into regional, then tertiary. You cannot usually choose a different hospital unless there is a clinical reason.'},
+      {'@type': 'HowToStep', 'position': 4, 'name': 'Wait for your hospital appointment', 'text': 'Urgent referrals (suspected cancer, surgery needed, unstable conditions) may be seen within days. Routine referrals (specialist opinion, elective surgery) can take 2-12 months depending on the hospital, specialty, and province. Contact the hospital to confirm your appointment date.'},
+      {'@type': 'HowToStep', 'position': 5, 'name': 'Attend your hospital appointment', 'text': 'Bring your referral letter, ID, and all current medication to the appointment. Once in the hospital system for a condition, you receive follow-up appointments directly without needing new referrals — unless you are seeing a different specialty or more than 6-12 months have passed.'},
+    ],
+  },
 ];
 ---
 <Base
