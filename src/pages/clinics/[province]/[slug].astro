@@ -57,6 +57,17 @@ for (const e of extraGuides) {
 const addressParts = [facility.address.street, facility.address.suburb, facility.address.city, facility.address.postal_code].filter(Boolean);
 const addressStr = addressParts.length > 0 ? addressParts.join(', ') : `${facility.province}${facility.district ? ', ' + facility.district : ''}`;
 
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://clinicfinder.co.za/' },
+    { '@type': 'ListItem', position: 2, name: 'Provinces', item: 'https://clinicfinder.co.za/clinics' },
+    { '@type': 'ListItem', position: 3, name: facility.province, item: `https://clinicfinder.co.za/clinics/${provinceSlug(facility.province)}` },
+    { '@type': 'ListItem', position: 4, name: facility.name },
+  ],
+};
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': ['MedicalClinic', 'LocalBusiness'],
@@ -91,7 +102,7 @@ const jsonLd = {
 <Base
   title={`${facility.name} — ${typeLabel(facility.type)} in ${facility.province}`}
   description={`${facility.name} is a ${typeLabel(facility.type).toLowerCase()} in ${facility.province}. Services: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}. Get directions and contact details.`}
-  jsonLd={jsonLd}
+  jsonLd={[breadcrumbLd, jsonLd]}
 >
   <div class="container" style="padding: 32px 0;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">

@@ -3,7 +3,7 @@ interface Props {
   title: string;
   description: string;
   canonical?: string;
-  jsonLd?: object;
+  jsonLd?: object | object[];
 }
 
 const { title, description, canonical, jsonLd } = Astro.props;
@@ -25,7 +25,10 @@ const url = canonical || Astro.url.href;
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={url} />
-  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  {jsonLd && (Array.isArray(jsonLd)
+    ? jsonLd.map(ld => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)
+    : <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  )}
   <script is:inline>
     (function(c,l,a,r,i,t,y){
       c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

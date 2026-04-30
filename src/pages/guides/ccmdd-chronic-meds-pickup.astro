@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { facilities } from '../../data/helpers';
+import GuideBreadcrumb from '../../components/GuideBreadcrumb.astro';
 
 const chronicClinics = facilities.filter(f => f.services.chronic_medication);
 
@@ -53,6 +54,7 @@ const jsonLd = [
   description="How the CCMDD programme works: collect chronic medication from a pharmacy or community pickup point instead of queuing at the clinic. Eligibility, registration, and pickup points."
   jsonLd={jsonLd}
 >
+  <GuideBreadcrumb title="CCMDD — Collecting Chronic Meds Without the Queue — Clinic Finder SA" />
   <div class="container" style="padding: 32px 0; max-width: 720px;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
       <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; CCMDD Chronic Meds

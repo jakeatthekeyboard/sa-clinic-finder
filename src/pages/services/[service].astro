@@ -83,7 +83,18 @@ const faqJsonLd = {
   })),
 };
 
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://clinicfinder.co.za/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://clinicfinder.co.za/services' },
+    { '@type': 'ListItem', position: 3, name: serviceName },
+  ],
+};
+
 const jsonLd = editorial ? [
+  breadcrumbLd,
   {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -99,7 +110,7 @@ const jsonLd = editorial ? [
     about: { '@type': 'MedicalCondition', name: serviceLabel },
     lastReviewed: '2026-04-16',
   },
-] : undefined;
+] : breadcrumbLd;
 ---
 <Base
   title={`${serviceName} — Public Clinics in South Africa`}

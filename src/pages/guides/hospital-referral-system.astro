@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import GuideBreadcrumb from '../../components/GuideBreadcrumb.astro';
 
 const faqs = [
   {
@@ -50,6 +51,7 @@ const jsonLd = [
   description="The South African hospital referral system explained: clinic to district to regional to tertiary. When you need a referral, how to get one, and what to expect."
   jsonLd={jsonLd}
 >
+  <GuideBreadcrumb title="How Hospital Referrals Work in South Africa — Clinic Finder SA" />
   <div class="container" style="padding: 32px 0; max-width: 720px;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
       <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; Hospital Referral System

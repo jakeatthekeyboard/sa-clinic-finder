@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { facilities } from '../../data/helpers';
+import GuideBreadcrumb from '../../components/GuideBreadcrumb.astro';
 
 const mhClinics = facilities.filter(f => f.services.mental_health);
 
@@ -53,6 +54,7 @@ const jsonLd = [
   description="Where to get help for depression, anxiety, PTSD, and substance abuse in South Africa's public health system. Free treatment, what to expect, crisis resources."
   jsonLd={jsonLd}
 >
+  <GuideBreadcrumb title="Mental Health Services at Public Clinics — Clinic Finder SA" />
   <div class="container" style="padding: 32px 0; max-width: 720px;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
       <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; Mental Health Services

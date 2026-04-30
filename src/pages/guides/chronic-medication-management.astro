@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { facilities } from '../../data/helpers';
+import GuideBreadcrumb from '../../components/GuideBreadcrumb.astro';
 
 const chronicClinics = facilities.filter(f => f.services.chronic_medication);
 
@@ -82,6 +83,7 @@ const jsonLd = [
   description="How South African public clinics manage hypertension, diabetes, epilepsy, asthma, and depression. Free medication, monitoring schedules, and CCMDD."
   jsonLd={jsonLd}
 >
+  <GuideBreadcrumb title="Chronic Medication at Public Clinics — Clinic Finder SA" />
   <div class="container" style="padding: 32px 0; max-width: 720px;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
       <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; Chronic Medication

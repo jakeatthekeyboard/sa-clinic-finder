@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { facilities, SERVICE_MAP } from '../../data/helpers';
+import GuideBreadcrumb from '../../components/GuideBreadcrumb.astro';
 
 const arvClinics = facilities.filter(f => f.services.arv_treatment);
 const provinceCounts: Record<string, number> = {};
@@ -55,6 +56,7 @@ const jsonLd = [
   description="Step-by-step guide to starting ARV treatment at a South African government clinic. Same-day initiation, what to bring, blood tests, and free medication."
   jsonLd={jsonLd}
 >
+  <GuideBreadcrumb title="How to Get ARVs at a Public Clinic — Clinic Finder SA" />
   <div class="container" style="padding: 32px 0; max-width: 720px;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
       <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; How to Get ARVs

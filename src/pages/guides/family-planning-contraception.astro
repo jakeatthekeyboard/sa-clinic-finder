@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { facilities } from '../../data/helpers';
+import GuideBreadcrumb from '../../components/GuideBreadcrumb.astro';
 
 const fpClinics = facilities.filter(f => f.services.family_planning);
 
@@ -59,6 +60,7 @@ const jsonLd = [
   description="All contraception methods available free at South African public clinics: injectables, implant, pill, IUD, condoms. How to access, what to expect, teens' rights."
   jsonLd={jsonLd}
 >
+  <GuideBreadcrumb title="Free Family Planning & Contraception at Public Clinics — Clinic Finder SA" />
   <div class="container" style="padding: 32px 0; max-width: 720px;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
       <a href="/">Home</a> &rsaquo; <a href="/guides">Guides</a> &rsaquo; Family Planning
