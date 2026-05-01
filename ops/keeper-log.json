@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-29T21:08:00+02:00",
+  "lastRun": "2026-05-01T14:30:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
@@ -52,6 +52,12 @@
       "task": "service-page-depth",
       "result": "pass",
       "details": "Added 'What to bring' checklist (5 items each) and service-specific FAQs (3 per service) to all 11 service pages. Updated ServiceEditorial interface with whatToBring and faqs fields. Updated [service].astro template with checklist UI section and merged editorial FAQs into FAQ schema. All 11 services now have 6 FAQs (3 generic + 3 specific) and a document checklist. Build succeeded: 1096 pages."
+    },
+    {
+      "timestamp": "2026-05-01T14:30:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (gauteng/kalafong-provincial-tertiary-hospital-atteridgeville-pretoria, western-cape/orthotic-and-prosthetic-centre-pinelands, limpopo/polokwane-provincial-hospital-polokwane) all 200. Province page (clinics/mpumalanga) 200. Guide page (ccmdd-chronic-meds-pickup) 200. 357 sitemap URLs. All editorial tasks complete: 9/9 province intros, 13 guides, 11 service pages deepened, internal linking done."
     }
   ]
 }
