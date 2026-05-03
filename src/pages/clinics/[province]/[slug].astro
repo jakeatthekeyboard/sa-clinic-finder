@@ -54,6 +54,13 @@ for (const e of extraGuides) {
   if (!relatedGuides.some(g => g.href === e.href)) relatedGuides.push(e);
 }
 
+const idMatch = facility.facility_id.match(/^zaf_(way|nodes?)_(\d+)$/);
+const osmType = idMatch ? (idMatch[1] === 'way' ? 'way' : 'node') : 'node';
+const osmId = idMatch ? idMatch[2] : facility.facility_id;
+const osmUrl = `https://www.openstreetmap.org/${osmType}/${osmId}`;
+const overpassUrl = `https://overpass-turbo.eu/?Q=${osmType}(${osmId})%3Bout%3B&R`;
+const hotosmUrl = 'https://data.humdata.org/dataset/hotosm_zaf_health_facilities';
+
 const addressParts = [facility.address.street, facility.address.suburb, facility.address.city, facility.address.postal_code].filter(Boolean);
 const addressStr = addressParts.length > 0 ? addressParts.join(', ') : `${facility.province}${facility.district ? ', ' + facility.district : ''}`;
 
@@ -255,10 +262,18 @@ const jsonLd = {
         <div style="display: flex; gap: 8px;">
           <strong style="min-width: 100px; color: var(--text-muted);">Source:</strong>
           <span>{facility.data_source === 'overpass'
-            ? 'OpenStreetMap (via Overpass API) — community-mapped geographic data'
+            ? <Fragment>
+                <a href={osmUrl} target="_blank" rel="noopener">OpenStreetMap</a> (via <a href={overpassUrl} target="_blank" rel="noopener">Overpass API</a>) — community-mapped geographic data
+              </Fragment>
             : facility.data_source === 'hotosm'
-            ? 'Humanitarian OpenStreetMap Team (HOTOSM) — humanitarian mapping data'
+            ? <Fragment>
+                <a href={osmUrl} target="_blank" rel="noopener">OpenStreetMap</a> via <a href={hotosmUrl} target="_blank" rel="noopener">Humanitarian OpenStreetMap Team</a> — humanitarian mapping data
+              </Fragment>
             : facility.data_source}</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <strong style="min-width: 100px; color: var(--text-muted);">Record:</strong>
+          <span><a href={osmUrl} target="_blank" rel="noopener">OSM {osmType} {osmId}</a></span>
         </div>
         <div style="display: flex; gap: 8px;">
           <strong style="min-width: 100px; color: var(--text-muted);">Last verified:</strong>
@@ -270,7 +285,7 @@ const jsonLd = {
         </div>
       </div>
       <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
-        This information is sourced from open data and may not reflect the latest changes. We recommend phoning the facility to confirm services and hours before visiting. If this information is incorrect, <a href="mailto:hello@clinicfinder.co.za">email us</a> and we will update it.
+        Facility data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>, available under the <a href="https://opendatacommons.org/licenses/odbl/" target="_blank" rel="noopener">Open Database License</a>. This information may not reflect the latest changes. We recommend phoning the facility to confirm services and hours before visiting. If this information is incorrect, <a href="mailto:hello@clinicfinder.co.za">email us</a> and we will update it.
       </p>
     </section>
   </div>
