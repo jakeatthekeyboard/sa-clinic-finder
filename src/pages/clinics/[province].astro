@@ -184,6 +184,17 @@ const faqJsonLd = {
       </section>
     )}
 
+    {editorial?.deepDive && editorial.deepDive.length > 0 && (
+      <section style="margin-bottom: 32px; max-width: 720px;">
+        {editorial.deepDive.map(section => (
+          <div style="margin-bottom: 28px;">
+            <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--green-dark);">{section.heading}</h2>
+            <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text);" set:html={section.body} />
+          </div>
+        ))}
+      </section>
+    )}
+
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Helpful Guides</h2>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Practical information for visiting public clinics in {provinceName}:</p>
