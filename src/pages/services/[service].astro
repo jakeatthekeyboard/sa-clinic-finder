@@ -196,6 +196,61 @@ const jsonLd = editorial ? [
       </section>
     )}
 
+    {editorial?.deepDive && editorial.deepDive.length > 0 && (
+      <section style="margin-bottom: 32px; max-width: 720px;">
+        {editorial.deepDive.map(section => (
+          <div style="margin-bottom: 28px;">
+            <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--green-dark);">{section.heading}</h2>
+            <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text);" set:html={section.body} />
+          </div>
+        ))}
+      </section>
+    )}
+
+    {editorial?.provincialNotes && (
+      <section style="margin-bottom: 32px; max-width: 720px; background: var(--bg-alt); border-radius: var(--radius); padding: 20px;">
+        <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--green-dark);">Provincial differences</h2>
+        <p style="font-size: 0.9rem; line-height: 1.7;" set:html={editorial.provincialNotes} />
+      </section>
+    )}
+
+    {editorial?.myths && editorial.myths.length > 0 && (
+      <section style="margin-bottom: 32px; max-width: 720px;">
+        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--green-dark);">Common misconceptions</h2>
+        <div style="display: grid; gap: 16px;">
+          {editorial.myths.map(m => (
+            <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+              <div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
+                <span style="flex-shrink: 0; color: #dc3545; font-weight: 700; font-size: 0.85rem;">MYTH:</span>
+                <p style="font-size: 0.9rem; font-style: italic; margin: 0; line-height: 1.5;">{m.myth}</p>
+              </div>
+              <div style="display: flex; gap: 8px; align-items: flex-start;">
+                <span style="flex-shrink: 0; color: var(--green-dark); font-weight: 700; font-size: 0.85rem;">FACT:</span>
+                <p style="font-size: 0.9rem; margin: 0; line-height: 1.6; color: var(--text-muted);">{m.fact}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {editorial?.helplines && editorial.helplines.length > 0 && (
+      <section style="margin-bottom: 32px; max-width: 720px; background: var(--green-light); border-radius: var(--radius); padding: 20px;">
+        <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--green-dark);">Helplines and support</h2>
+        <div style="display: grid; gap: 10px;">
+          {editorial.helplines.map(h => (
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(255,255,255,0.6); border-radius: var(--radius);">
+              <div>
+                <strong style="font-size: 0.9rem;">{h.name}</strong>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">{h.hours}</div>
+              </div>
+              <a href={`tel:${h.number.replace(/\s/g, '')}`} style="font-size: 0.95rem; font-weight: 700; color: var(--green-dark); text-decoration: none; white-space: nowrap;">{h.number}</a>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
     {editorial?.guideSlug && (
       <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px; max-width: 720px;">
         <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Read the full guide</h2>
