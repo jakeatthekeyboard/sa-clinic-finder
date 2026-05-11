@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-05-08T15:20:00+02:00",
+  "lastRun": "2026-05-11T16:45:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
@@ -76,6 +76,12 @@
       "task": "health-check",
       "result": "pass",
       "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (limpopo/the-local-choice-pharmacy-clinic-polokwane, gauteng/sediba-hope-medical-centre-pretoria, mpumalanga/marapyane-community-health-centre-marapyane) all 200. Province page (free-state) 200. Guide page (find-nearest-clinic) 200. 357 sitemap URLs. All editorial tasks remain complete: 9/9 province intros, 13 guides, 11 service pages deepened, internal linking done."
+    },
+    {
+      "timestamp": "2026-05-11T16:45:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (western-cape/macassar-community-day-centre-western-cape, gauteng/daveyton-east-clinic-chris-hani-benoni, western-cape/strand-community-day-centre-western-cape) all 200. Province page (northern-cape) 200. Guide page (tb-treatment-what-to-expect) 200. 357 sitemap URLs. Note: 2 previously-checked facility slugs (claremont-hospital, bhekumthetu-clinic) now 404 — removed from dataset, not in sitemap. All editorial tasks remain complete: 9/9 province intros, 13 guides, 11 service pages deepened, internal linking done."
     }
   ]
 }
