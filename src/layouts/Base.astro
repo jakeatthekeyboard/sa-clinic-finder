@@ -116,6 +116,10 @@ const url = canonical || Astro.url.href;
   </style>
 </head>
 <body>
+  <script>
+    import { inject } from '@vercel/analytics';
+    inject();
+  </script>
   <header style="background: var(--green); color: #fff; padding: 12px 0;">
     <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
       <a href="/" style="color: #fff; font-weight: 700; font-size: 1.1rem;">Clinic Finder SA</a>
