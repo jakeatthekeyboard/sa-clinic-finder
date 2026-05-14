@@ -118,7 +118,9 @@ const url = canonical || Astro.url.href;
 <body>
   <script>
     import { inject } from '@vercel/analytics';
+    import { injectSpeedInsights } from '@vercel/speed-insights';
     inject();
+    injectSpeedInsights();
   </script>
   <header style="background: var(--green); color: #fff; padding: 12px 0;">
     <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
