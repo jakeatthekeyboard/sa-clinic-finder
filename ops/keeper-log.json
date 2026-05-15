@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-05-13T21:30:00+02:00",
+  "lastRun": "2026-05-15T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
@@ -88,6 +88,12 @@
       "task": "health-check",
       "result": "pass",
       "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (free-state/maletsatsi-mabaso-clinic-free-state, western-cape/dr-abdurahman-community-health-clinic-western-cape, gauteng/ndlovu-medical-centre-gauteng) all 200. Province page (kwazulu-natal) 200. Guide page (hiv-testing-guide) 200. 357 sitemap URLs. All editorial tasks remain complete: 9/9 province intros, 13 guides, 11 service pages deepened, internal linking done."
+    },
+    {
+      "timestamp": "2026-05-15T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (western-cape/wesfleur-hospital-atlantis, kwazulu-natal/fort-napier-hospital-pietermaritzburg-kwazulu-natal, gauteng/the-village-medical-centre-gauteng) all 200. Province page (limpopo) 200. Guide page (child-immunisation-schedule) 200. 357 sitemap URLs. All editorial tasks remain complete: 9/9 province intros, 14 guide pages, 11 service pages deepened, internal linking done."
     }
   ]
 }
