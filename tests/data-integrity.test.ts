@@ -1,9 +1,14 @@
 import { describe, it, expect } from 'vitest';
-import { readFileSync } from 'fs';
-import { join } from 'path';
+import { readFileSync, existsSync, readdirSync } from 'fs';
+import { join, resolve } from 'path';
+import { globSync } from 'glob';
+
+const ROOT = resolve(__dirname, '..');
+const DIST = join(ROOT, 'dist');
+const DATA = join(ROOT, 'src', 'data');
 
 const facilities: any[] = JSON.parse(
-  readFileSync(join(__dirname, '../src/data/facilities.json'), 'utf-8')
+  readFileSync(join(DATA, 'facilities.json'), 'utf-8')
 );
 
 describe('facilities.json', () => {
@@ -100,5 +105,74 @@ describe('facilities.json', () => {
     for (const [prov, count] of Object.entries(byCounts)) {
       expect(count, `${prov} has too few facilities`).toBeGreaterThanOrEqual(10);
     }
+  });
+});
+
+describe('editorial link validation', () => {
+  const editorialFiles = globSync(join(DATA, '*.ts'));
+  const linkRe = /href="(\/[^"]+)"/g;
+
+  const allLinks: { file: string; href: string }[] = [];
+  for (const f of editorialFiles) {
+    const content = readFileSync(f, 'utf-8');
+    let m: RegExpExecArray | null;
+    while ((m = linkRe.exec(content)) !== null) {
+      allLinks.push({ file: f.replace(ROOT + '/', ''), href: m[1] });
+    }
+  }
+
+  const uniqueHrefs = [...new Set(allLinks.map(l => l.href))];
+
+  it('editorial .ts files contain internal links', () => {
+    expect(allLinks.length).toBeGreaterThan(0);
+  });
+
+  it('every editorial internal link resolves to a built page', () => {
+    if (!existsSync(join(DIST, 'index.html'))) return;
+    const broken: string[] = [];
+    for (const href of uniqueHrefs) {
+      const pagePath = join(DIST, href, 'index.html');
+      if (!existsSync(pagePath)) {
+        const sources = allLinks.filter(l => l.href === href).map(l => l.file);
+        broken.push(`${href} (in ${sources.join(', ')})`);
+      }
+    }
+    expect(broken, `Broken editorial links:\n${broken.join('\n')}`).toHaveLength(0);
+  });
+});
+
+describe('vercel.json redirects', () => {
+  const vercelConfig = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf-8'));
+  const redirects: { source: string; destination: string; permanent: boolean }[] =
+    vercelConfig.redirects || [];
+
+  it('has redirects defined', () => {
+    expect(redirects.length).toBeGreaterThan(0);
+  });
+
+  it('redirect destinations resolve to existing pages or known paths', () => {
+    if (!existsSync(join(DIST, 'index.html'))) return;
+    const broken: string[] = [];
+    for (const r of redirects) {
+      const dest = r.destination.replace(/\?.*$/, '');
+      const asFile = join(DIST, dest);
+      const asDir = join(DIST, dest, 'index.html');
+      if (!existsSync(asFile) && !existsSync(asDir)) {
+        broken.push(`${r.source} → ${r.destination}`);
+      }
+    }
+    expect(broken, `Broken redirect destinations:\n${broken.join('\n')}`).toHaveLength(0);
+  });
+
+  it('no circular redirects', () => {
+    const sources = new Set(redirects.map(r => r.source));
+    const circular = redirects.filter(r => r.destination === r.source);
+    expect(circular.map(r => r.source)).toHaveLength(0);
+  });
+
+  it('no redirect chains', () => {
+    const sourceSet = new Set(redirects.map(r => r.source));
+    const chains = redirects.filter(r => sourceSet.has(r.destination));
+    expect(chains.map(r => `${r.source} → ${r.destination}`)).toHaveLength(0);
   });
 });
