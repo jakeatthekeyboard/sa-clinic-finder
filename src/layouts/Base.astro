@@ -4,9 +4,10 @@ interface Props {
   description: string;
   canonical?: string;
   jsonLd?: object | object[];
+  noindex?: boolean;
 }
 
-const { title, description, canonical, jsonLd } = Astro.props;
+const { title, description, canonical, jsonLd, noindex } = Astro.props;
 const url = canonical || Astro.url.href;
 ---
 <!DOCTYPE html>
@@ -17,6 +18,7 @@ const url = canonical || Astro.url.href;
   <meta name="google-site-verification" content="uSpqQ6rUz_bHQT-Agy2OzDfp0mhxFwk46g20121lJss" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
   <link rel="canonical" href={url} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly content" />
@@ -141,7 +143,7 @@ const url = canonical || Astro.url.href;
       <p>Clinic Finder SA — Free directory of South Africa's public health facilities.</p>
       <p style="margin-top: 8px;">Data sourced from OpenStreetMap and HOTOSM. Last updated April 2026. Not an official government site.</p>
       <p style="margin-top: 8px;">If information is incorrect, <a href="/contact">let us know</a>.</p>
-      <p style="margin-top: 8px;"><a href="/about">About</a> · <a href="/contact">Contact</a> · <a href="/privacy">Privacy</a></p>
+      <p style="margin-top: 8px;"><a href="/about">About</a> · <a href="/contact">Contact</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></p>
     </div>
   </footer>
 </body>
