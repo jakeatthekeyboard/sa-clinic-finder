@@ -30,15 +30,15 @@ export const FACILITY_TYPE_EDITORIAL: Record<string, FacilityTypeEditorial> = {
       'A primary healthcare clinic is the front door of the South African public health system. It handles roughly 80% of all public-sector patient contacts — from childhood immunisations to chronic medication refills. Most clinics are nurse-driven: a professional nurse manages the full consultation, and a doctor visits on scheduled days (often once or twice a week, sometimes less in rural areas). Clinics do not admit patients overnight and do not perform surgery. If your condition requires monitoring, imaging, or specialist assessment, the clinic will issue a referral letter to the district hospital.',
     canDo: [
       'Chronic medication dispensing and monitoring (hypertension, diabetes, epilepsy, asthma, HIV)',
-      'Immunisations for children and adults (full EPI-SA schedule)',
-      'HIV rapid testing, same-day ARV initiation, and ongoing ARV refills',
-      'TB sputum collection (sent to lab) and DOTS treatment supervision',
-      'Antenatal booking visits and low-risk pregnancy monitoring',
-      'Family planning: injectables, pills, implant insertion (where trained), condoms',
+      '<a href="/guides/child-immunisation-schedule">Immunisations</a> for children and adults (full EPI-SA schedule)',
+      '<a href="/guides/hiv-testing-guide">HIV rapid testing</a>, same-day <a href="/guides/how-to-get-arvs">ARV initiation</a>, and ongoing ARV refills',
+      '<a href="/guides/tb-treatment-what-to-expect">TB sputum collection</a> (sent to lab) and DOTS treatment supervision',
+      '<a href="/guides/free-maternity-care">Antenatal booking visits</a> and low-risk pregnancy monitoring',
+      '<a href="/guides/family-planning-contraception">Family planning</a>: injectables, pills, implant insertion (where trained), condoms',
       'Minor wound care: cleaning, suturing small lacerations, dressings',
       'Integrated Management of Childhood Illness (IMCI) assessments',
-      'Screening for depression and anxiety (PHQ-9/GAD-7) with first-line medication',
-      'CCMDD enrolment for stable chronic patients',
+      'Screening for <a href="/guides/mental-health-services">depression and anxiety</a> (PHQ-9/GAD-7) with first-line medication',
+      '<a href="/guides/ccmdd-chronic-meds-pickup">CCMDD enrolment</a> for stable chronic patients',
     ],
     cannotDo: [
       'Overnight admission or observation beyond a few hours',
@@ -51,10 +51,10 @@ export const FACILITY_TYPE_EDITORIAL: Record<string, FacilityTypeEditorial> = {
     staffing:
       'Typically staffed by 2-6 professional nurses, 1-3 enrolled nurses, and community health workers. A medical officer (doctor) visits on a scheduled rotation — in well-resourced areas this is daily, but in rural clinics it may be weekly or fortnightly. Some clinics have a pharmacist assistant; otherwise nurses dispense medication directly.',
     whenToGo:
-      'Go to a clinic for routine and non-emergency care: chronic medication collection, immunisations, HIV/TB testing, family planning, antenatal check-ups, minor injuries, and any new health complaint that does not require immediate emergency treatment. Arrive before 07:00 to avoid long queues — most clinics see walk-ins on a first-come-first-served basis.',
+      'Go to a clinic for routine and non-emergency care: <a href="/guides/chronic-medication-management">chronic medication collection</a>, immunisations, HIV/TB testing, family planning, antenatal check-ups, minor injuries, and any new health complaint that does not require immediate <a href="/guides/medical-emergency-guide">emergency treatment</a>. Arrive before 07:00 to avoid long queues — most clinics see walk-ins on a first-come-first-served basis.',
     referralLevel: 1,
     referralFlow:
-      'Clinics refer upward to district hospitals for anything requiring admission, surgery, imaging, or specialist assessment. Patients cannot self-refer to a hospital for non-emergency care — a referral letter from a clinic is required. The only exception is a medical emergency, where you can go directly to a hospital casualty department.',
+      'Clinics refer upward to district hospitals for anything requiring admission, surgery, imaging, or specialist assessment. Patients cannot self-refer to a hospital for non-emergency care — a <a href="/guides/hospital-referral-system">referral letter</a> from a clinic is required. The only exception is a medical emergency, where you can go directly to a hospital casualty department.',
   },
 
   community_health_centre: {
@@ -62,12 +62,12 @@ export const FACILITY_TYPE_EDITORIAL: Record<string, FacilityTypeEditorial> = {
       'A community health centre (CHC) sits between a clinic and a district hospital. It offers extended primary care — including 24-hour services, maternity deliveries, and minor procedures — in areas where a full hospital is not viable. CHCs are typically larger than clinics, have a resident medical officer, and can keep patients for short-stay observation (up to 48 hours). In the Western Cape, midwife obstetric units (MOUs) are classified as CHCs and deliver thousands of babies annually. Nationally there are fewer than 300 CHCs, so they are not available in every district.',
     canDo: [
       '24-hour emergency stabilisation and triage',
-      'Normal vaginal deliveries by midwives (not caesareans)',
+      'Normal vaginal deliveries by <a href="/guides/free-maternity-care">midwives</a> (not caesareans)',
       'Short-stay observation (up to 48 hours)',
       'All primary clinic services plus on-site blood tests (basic haematology, glucose)',
       'Minor surgical procedures: abscess drainage, foreign body removal, wound debridement',
-      'Dental extractions (most CHCs have a dental chair)',
-      'Mental health screening and first-line psychiatric medication',
+      '<a href="/guides/dental-care-public-clinics">Dental extractions</a> (most CHCs have a dental chair)',
+      '<a href="/guides/mental-health-services">Mental health screening</a> and first-line psychiatric medication',
       'On-site GeneXpert for rapid TB diagnosis (some CHCs)',
       'Contraceptive implant and IUD insertion by trained providers',
     ],
@@ -98,7 +98,7 @@ export const FACILITY_TYPE_EDITORIAL: Record<string, FacilityTypeEditorial> = {
       'X-ray, ultrasound, and on-site laboratory (full blood count, chemistry, blood bank)',
       'Internal medicine wards: managing heart failure, diabetic emergencies, renal colic, strokes',
       'Psychiatric observation for 72-hour assessments under the Mental Health Care Act',
-      'Dental extractions and emergency dental procedures',
+      '<a href="/guides/dental-care-public-clinics">Dental extractions</a> and emergency dental procedures',
       'Blood transfusions and IV fluid management',
     ],
     cannotDo: [
@@ -112,7 +112,7 @@ export const FACILITY_TYPE_EDITORIAL: Record<string, FacilityTypeEditorial> = {
     staffing:
       'Staffed by medical officers (generalist doctors), professional nurses, midwives, pharmacists, radiographers, and laboratory technicians. Most district hospitals do not have resident specialists — a visiting specialist from the regional hospital may hold outpatient clinics weekly or monthly. Intern doctors (community service year) are common and supervised by medical officers.',
     whenToGo:
-      'Go to a district hospital for emergencies (trauma, severe pain, breathing difficulty, heavy bleeding), when your clinic refers you with a referral letter, or when you need admission for a condition that cannot be managed at home. In an emergency, go directly to the casualty department — no referral needed.',
+      'Go to a district hospital for <a href="/guides/medical-emergency-guide">emergencies</a> (trauma, severe pain, breathing difficulty, heavy bleeding), when your clinic refers you with a <a href="/guides/hospital-referral-system">referral letter</a>, or when you need admission for a condition that cannot be managed at home. In an emergency, go directly to the casualty department — no referral needed.',
     referralLevel: 2,
     referralFlow:
       'District hospitals receive referrals from clinics and CHCs. They refer upward to regional hospitals for specialist assessment, and to tertiary hospitals for sub-specialist care. Down-referral: after stabilisation or surgery, patients are sent back to their clinic for follow-up and chronic care.',
