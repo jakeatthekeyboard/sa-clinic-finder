@@ -26,6 +26,7 @@ function getAllHtmlFiles(dir: string): string[] {
 function resolveInternalLink(href: string): string | null {
   if (!href.startsWith('/')) return null;
   if (href.includes('#')) href = href.split('#')[0];
+  if (href.includes('?')) href = href.split('?')[0];
   if (!href || href === '/') return '/';
   href = href.replace(/\/$/, '');
   return href;
