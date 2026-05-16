@@ -5,15 +5,41 @@ import { generateFacilityEditorial } from '../../../data/facility-editorial';
 import { getFacilityTypeEditorial, REFERRAL_HIERARCHY } from '../../../data/facility-types-editorial';
 
 export function getStaticPaths() {
-  return facilities
-    .filter(f => PROVINCES.includes(f.province as any))
-    .map(f => ({
+  const validFacilities = facilities.filter(f => PROVINCES.includes(f.province as any));
+
+  // Detect duplicate base titles: "Name — Type in Province"
+  const titleCounts = new Map<string, number>();
+  for (const f of validFacilities) {
+    const baseTitle = `${f.name} — ${typeLabel(f.type)} in ${f.province}`;
+    titleCounts.set(baseTitle, (titleCounts.get(baseTitle) || 0) + 1);
+  }
+
+  return validFacilities.map(f => {
+    const baseTitle = `${f.name} — ${typeLabel(f.type)} in ${f.province}`;
+    let titleSuffix = '';
+    if ((titleCounts.get(baseTitle) || 0) > 1) {
+      // Disambiguate: prefer city > suburb > district > slug tail
+      const loc = f.address.city || f.address.suburb || f.district;
+      if (loc) {
+        titleSuffix = `, ${loc}`;
+      } else {
+        // Extract suffix from slug (e.g. "health-care-limpopo-2" → "2")
+        const namePart = f.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        const tail = f.slug.slice(namePart.length).replace(/^-/, '');
+        if (tail) {
+          titleSuffix = ` (${tail})`;
+        }
+      }
+    }
+
+    return {
       params: { province: provinceSlug(f.province), slug: f.slug },
-      props: { facility: f },
-    }));
+      props: { facility: f, titleSuffix },
+    };
+  });
 }
 
-const { facility } = Astro.props;
+const { facility, titleSuffix } = Astro.props;
 const nearby = nearbyFacilities(facility, 3);
 const editorial = generateFacilityEditorial(facility);
 const typeEditorial = getFacilityTypeEditorial(facility.type);
@@ -117,7 +143,7 @@ const jsonLd = {
 };
 ---
 <Base
-  title={`${facility.name} — ${typeLabel(facility.type)} in ${facility.province}`}
+  title={`${facility.name} — ${typeLabel(facility.type)} in ${facility.province}${titleSuffix}`}
   description={`${facility.name} is a ${typeLabel(facility.type).toLowerCase()} in ${facility.province}. Services: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}. Get directions and contact details.`}
   jsonLd={[breadcrumbLd, jsonLd, ...(faqLd ? [faqLd] : [])]}
 >
