@@ -3620,7 +3620,7 @@
   },
   {
     "facility_id": "zaf_node_4416471791",
-    "name": "Cl\u00ednica Body & Face",
+    "name": "Clínica Body & Face",
     "type": "clinic",
     "province": "Mpumalanga",
     "district": "",
@@ -4703,7 +4703,7 @@
     "facility_id": "zaf_node_5006535722",
     "name": "Western Cape Blood Service (George Regional Office)",
     "type": "clinic",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -4744,7 +4744,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "western-cape-blood-service-george-regional-office-the-medical-centre-courtenay-s",
-    "url_path": "/clinics/unknown/western-cape-blood-service-george-regional-office-the-medical-centre-courtenay-s"
+    "url_path": "/clinics/western-cape/western-cape-blood-service-george-regional-office-the-medical-centre-courtenay-s"
   },
   {
     "facility_id": "zaf_node_5043189525",
@@ -6583,7 +6583,7 @@
     "facility_id": "zaf_node_7405266379",
     "name": "Carewell Medical Centre",
     "type": "clinic",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -6624,7 +6624,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "carewell-medical-centre",
-    "url_path": "/clinics/unknown/carewell-medical-centre"
+    "url_path": "/clinics/western-cape/carewell-medical-centre"
   },
   {
     "facility_id": "zaf_node_7417427675",
@@ -13868,7 +13868,7 @@
     "facility_id": "zaf_node_9651271590",
     "name": "Knysna Provincial Hospital",
     "type": "district_hospital",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -13909,7 +13909,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "knysna-provincial-hospital-knysna",
-    "url_path": "/clinics/unknown/knysna-provincial-hospital-knysna"
+    "url_path": "/clinics/western-cape/knysna-provincial-hospital-knysna"
   },
   {
     "facility_id": "zaf_node_9651370669",
@@ -17397,7 +17397,7 @@
     "district": "",
     "sub_district": "",
     "address": {
-      "street": "Cnr President Fouch\u00e9 Drive & Hawken Avenue",
+      "street": "Cnr President Fouché Drive & Hawken Avenue",
       "suburb": "",
       "city": "Boskruin Randburg",
       "postal_code": "2118"
@@ -17816,7 +17816,7 @@
     "facility_id": "zaf_way_85653109",
     "name": "Geneva Clinic",
     "type": "clinic",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -17857,7 +17857,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "geneva-clinic",
-    "url_path": "/clinics/unknown/geneva-clinic"
+    "url_path": "/clinics/western-cape/geneva-clinic"
   },
   {
     "facility_id": "zaf_way_86253731",
@@ -20170,7 +20170,7 @@
     "district": "",
     "sub_district": "",
     "address": {
-      "street": "Kraanvo\u00ebl Street",
+      "street": "Kraanvoël Street",
       "suburb": "",
       "city": "Humansdorp",
       "postal_code": "6300"
@@ -20213,7 +20213,7 @@
     "facility_id": "zaf_way_228182392",
     "name": "Willowmore Hospital",
     "type": "district_hospital",
-    "province": "",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -20254,7 +20254,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "willowmore-hospital-willowmore-eastern-cape",
-    "url_path": "/clinics/unknown/willowmore-hospital-willowmore-eastern-cape"
+    "url_path": "/clinics/eastern-cape/willowmore-hospital-willowmore-eastern-cape"
   },
   {
     "facility_id": "zaf_way_228183135",
@@ -20495,7 +20495,7 @@
     "facility_id": "zaf_way_237356110",
     "name": "Mossel Bay Hospital",
     "type": "district_hospital",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -20536,7 +20536,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "mossel-bay-hospital",
-    "url_path": "/clinics/unknown/mossel-bay-hospital"
+    "url_path": "/clinics/western-cape/mossel-bay-hospital"
   },
   {
     "facility_id": "zaf_way_241993350",
@@ -22467,7 +22467,7 @@
   },
   {
     "facility_id": "zaf_way_275962855",
-    "name": "KwaZulu-Natal Children\u2019s Hospital",
+    "name": "KwaZulu-Natal Children’s Hospital",
     "type": "district_hospital",
     "province": "KwaZulu-Natal",
     "district": "",
@@ -23221,7 +23221,7 @@
     "facility_id": "zaf_way_334494958",
     "name": "Perth Clinic",
     "type": "clinic",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -23262,7 +23262,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "perth-clinic-perth",
-    "url_path": "/clinics/unknown/perth-clinic-perth"
+    "url_path": "/clinics/western-cape/perth-clinic-perth"
   },
   {
     "facility_id": "zaf_way_334656394",
@@ -23360,7 +23360,7 @@
   },
   {
     "facility_id": "zaf_way_334674784",
-    "name": "L\u00fcneburg Clinic",
+    "name": "Lüneburg Clinic",
     "type": "clinic",
     "province": "KwaZulu-Natal",
     "district": "",
@@ -30882,7 +30882,7 @@
     "facility_id": "zaf_way_645380464",
     "name": "Kwanokuthula Community Day Centre",
     "type": "clinic",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -30923,7 +30923,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "kwanokuthula-community-day-centre-kwanokuthula-plettenberg-bay",
-    "url_path": "/clinics/unknown/kwanokuthula-community-day-centre-kwanokuthula-plettenberg-bay"
+    "url_path": "/clinics/western-cape/kwanokuthula-community-day-centre-kwanokuthula-plettenberg-bay"
   },
   {
     "facility_id": "zaf_way_647489474",
@@ -32292,7 +32292,7 @@
     "facility_id": "zaf_way_738361728",
     "name": "Oudtshoorn Hospital",
     "type": "district_hospital",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -32333,7 +32333,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "oudtshoorn-hospital-oudtshoorn-western-cape",
-    "url_path": "/clinics/unknown/oudtshoorn-hospital-oudtshoorn-western-cape"
+    "url_path": "/clinics/western-cape/oudtshoorn-hospital-oudtshoorn-western-cape"
   },
   {
     "facility_id": "zaf_way_738361970",
@@ -33232,11 +33232,11 @@
     "facility_id": "zaf_way_765595159",
     "name": "Prince Albert Hospital",
     "type": "district_hospital",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
-      "street": "La\u00ebr Mark Street",
+      "street": "Laër Mark Street",
       "suburb": "",
       "city": "Prince Albert",
       "postal_code": "6930"
@@ -33273,7 +33273,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "prince-albert-hospital-prince-albert",
-    "url_path": "/clinics/unknown/prince-albert-hospital-prince-albert"
+    "url_path": "/clinics/western-cape/prince-albert-hospital-prince-albert"
   },
   {
     "facility_id": "zaf_way_766355679",
@@ -34360,7 +34360,7 @@
     "facility_id": "zaf_way_791723315",
     "name": "George Provincial Hospital",
     "type": "district_hospital",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -34401,7 +34401,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "george-provincial-hospital-heatherlands-george",
-    "url_path": "/clinics/unknown/george-provincial-hospital-heatherlands-george"
+    "url_path": "/clinics/western-cape/george-provincial-hospital-heatherlands-george"
   },
   {
     "facility_id": "zaf_way_791728445",
@@ -37133,7 +37133,7 @@
     "facility_id": "zaf_way_792873638",
     "name": "Uniondale Hospital",
     "type": "district_hospital",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -37174,7 +37174,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "uniondale-hospital-uniondale",
-    "url_path": "/clinics/unknown/uniondale-hospital-uniondale"
+    "url_path": "/clinics/western-cape/uniondale-hospital-uniondale"
   },
   {
     "facility_id": "zaf_way_792874793",
@@ -38261,7 +38261,7 @@
     "facility_id": "zaf_way_823582435",
     "name": "Melkhoutfontein Kliniek",
     "type": "district_hospital",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -38302,7 +38302,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "melkhoutfontein-kliniek-still-bay-east-still-bay",
-    "url_path": "/clinics/unknown/melkhoutfontein-kliniek-still-bay-east-still-bay"
+    "url_path": "/clinics/western-cape/melkhoutfontein-kliniek-still-bay-east-still-bay"
   },
   {
     "facility_id": "zaf_way_824788557",
@@ -42256,7 +42256,7 @@
     "facility_id": "zaf_way_1090373229",
     "name": "Herbertsdale Satelite Clinic",
     "type": "clinic",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -42297,7 +42297,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "herbertsdale-satelite-clinic-garden-routmossel-bay",
-    "url_path": "/clinics/unknown/herbertsdale-satelite-clinic-garden-routmossel-bay"
+    "url_path": "/clinics/western-cape/herbertsdale-satelite-clinic-garden-routmossel-bay"
   },
   {
     "facility_id": "zaf_way_1090998649",
@@ -46392,7 +46392,7 @@
     "facility_id": "zaf_way_1347418895",
     "name": "Clinic Van Wyksdorp",
     "type": "clinic",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -46433,7 +46433,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "clinic-van-wyksdorp",
-    "url_path": "/clinics/unknown/clinic-van-wyksdorp"
+    "url_path": "/clinics/western-cape/clinic-van-wyksdorp"
   },
   {
     "facility_id": "zaf_way_1349277227",
@@ -47426,7 +47426,7 @@
     "facility_id": "zaf_way_1425968464",
     "name": "Joubertina Community Health Centre",
     "type": "community_health_centre",
-    "province": "",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -47467,7 +47467,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "joubertina-community-health-centre",
-    "url_path": "/clinics/unknown/joubertina-community-health-centre"
+    "url_path": "/clinics/eastern-cape/joubertina-community-health-centre"
   },
   {
     "facility_id": "zaf_way_1426405058",
@@ -47661,7 +47661,7 @@
     "facility_id": "zaf_way_1442610172",
     "name": "Outeniekwa Child & Youth Care Centre",
     "type": "district_hospital",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -47702,7 +47702,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "outeniekwa-child-youth-care-centre",
-    "url_path": "/clinics/unknown/outeniekwa-child-youth-care-centre"
+    "url_path": "/clinics/western-cape/outeniekwa-child-youth-care-centre"
   },
   {
     "facility_id": "zaf_way_1444503576",
@@ -48178,7 +48178,7 @@
     "facility_id": "zaf_way_1487696344",
     "name": "Haarlem Clinic",
     "type": "clinic",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -48219,7 +48219,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "haarlem-clinic-haarlem",
-    "url_path": "/clinics/unknown/haarlem-clinic-haarlem"
+    "url_path": "/clinics/western-cape/haarlem-clinic-haarlem"
   },
   {
     "facility_id": "zaf_way_1488480310",
@@ -49635,7 +49635,7 @@
     "facility_id": "zaf_node_12649858868",
     "name": "The Local Choice Pharmacy Plett Medicine Depot",
     "type": "clinic",
-    "province": "",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -49676,7 +49676,7 @@
     "data_quality_score": 4,
     "last_verified": "2026-04-14",
     "slug": "the-local-choice-pharmacy-plett-medicine-depot",
-    "url_path": "/clinics/unknown/the-local-choice-pharmacy-plett-medicine-depot"
+    "url_path": "/clinics/western-cape/the-local-choice-pharmacy-plett-medicine-depot"
   },
   {
     "facility_id": "zaf_way_684544449",
