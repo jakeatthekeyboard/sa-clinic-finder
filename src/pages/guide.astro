@@ -41,7 +41,7 @@ const jsonLd = {
 <Base
   title="How to Use Clinic Finder SA — Guide"
   description={`Learn how to search ${totalFacilities} public clinics and hospitals across South Africa. Find facilities by name, province, service, or GPS location.`}
-  jsonLd={jsonLd}
+  jsonLd={[jsonLd, { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://clinicfinder.co.za/' }, { '@type': 'ListItem', position: 2, name: 'Guide' }] }]}
 >
   <div class="container" style="padding: 32px 0; max-width: 720px;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">

@@ -47,7 +47,7 @@ const jsonLd = {
 <Base
   title="Services at Public Clinics — Clinic Finder SA"
   description="Find public clinics by service: ARVs, TB treatment, maternity care, emergency, dental, mental health, chronic medication, immunisation, and more."
-  jsonLd={jsonLd}
+  jsonLd={[jsonLd, { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://clinicfinder.co.za/' }, { '@type': 'ListItem', position: 2, name: 'Services' }] }]}
 >
   <div class="container" style="padding: 32px 0;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
