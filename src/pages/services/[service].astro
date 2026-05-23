@@ -93,6 +93,21 @@ const breadcrumbLd = {
   ],
 };
 
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: `How to Get ${serviceName} at a Public Clinic`,
+  description: `Step-by-step guide to accessing ${serviceName.toLowerCase()} at government health facilities in South Africa.`,
+  step: editorial?.whatToExpect
+    ? editorial.whatToExpect.map(s => ({ '@type': 'HowToStep', name: s.step, text: s.detail.replace(/<[^>]+>/g, '') }))
+    : [
+        { '@type': 'HowToStep', name: 'Find a facility', text: `Use the clinic finder to locate one of ${serviceFacilities.length} public facilities offering ${serviceName.toLowerCase()}.` },
+        { '@type': 'HowToStep', name: 'Walk in with your ID', text: 'Bring your South African ID or passport and any existing clinic card. No appointment is needed at primary clinics.' },
+        { '@type': 'HowToStep', name: 'See the healthcare worker', text: `Tell the nurse or doctor what you need. They will assess you and provide ${serviceName.toLowerCase()} or refer you to the appropriate facility.` },
+        { '@type': 'HowToStep', name: 'Collect your medication', text: 'If prescribed, collect medication from the facility pharmacy. All medication on the Essential Drugs List is free.' },
+      ],
+};
+
 const jsonLd = editorial ? [
   breadcrumbLd,
   {
@@ -110,14 +125,15 @@ const jsonLd = editorial ? [
     about: { '@type': 'MedicalCondition', name: serviceLabel },
     lastReviewed: '2026-04-16',
   },
-] : breadcrumbLd;
+  howToLd,
+  faqJsonLd,
+] : [breadcrumbLd, howToLd, faqJsonLd];
 ---
 <Base
   title={`${serviceName} — Public Clinics in South Africa`}
   description={`Find ${serviceFacilities.length} public clinics and hospitals offering ${serviceName.toLowerCase()} across South Africa. Browse by province.`}
   jsonLd={jsonLd}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
   <div class="container" style="padding: 32px 0;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
       <a href="/">Home</a> &rsaquo; <a href="/services">Services</a> &rsaquo; {serviceName}

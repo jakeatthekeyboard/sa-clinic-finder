@@ -70,13 +70,25 @@ const faqJsonLd = {
     "acceptedAnswer": { "@type": "Answer", "text": f.a },
   })),
 };
+
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: `How to Access Public Healthcare in ${provinceName}`,
+  description: `Step-by-step guide to visiting a public clinic in ${provinceName}, South Africa.`,
+  step: [
+    { '@type': 'HowToStep', name: 'Find a facility', text: `Use the clinic finder to locate one of the ${provFacilities.length} public facilities in ${provinceName}. Filter by service type if you need something specific like ARVs or maternity care.` },
+    { '@type': 'HowToStep', name: 'Check what to bring', text: 'Bring your South African ID or passport, clinic card (if you have one), and any current medication. Arrive early — most clinics operate on a first-come, first-served basis.' },
+    { '@type': 'HowToStep', name: 'Visit the clinic', text: 'Walk in to any public clinic — no appointment needed for primary care. Tell the nurse your symptoms and they will assess, treat, or refer you.' },
+    { '@type': 'HowToStep', name: 'Follow up if referred', text: 'If the clinic refers you to a hospital, keep your referral letter. District hospitals require a referral from a primary clinic unless it is an emergency.' },
+  ],
+};
 ---
 <Base
   title={`Public Clinics in ${provinceName} — Clinic Finder SA`}
   description={`Find ${provFacilities.length} public clinics and hospitals in ${provinceName}, South Africa. Filter by ARVs, maternity, TB treatment, emergency services.`}
+  jsonLd={[breadcrumbLd, faqJsonLd, howToLd]}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
-  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
   <div class="container" style="padding: 32px 0;">
     <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
       <a href="/">Home</a> &rsaquo; <a href="/clinics">Provinces</a> &rsaquo; {provinceName}
