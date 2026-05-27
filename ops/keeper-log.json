@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-05-25T21:00:00+02:00",
+  "lastRun": "2026-05-27T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
@@ -106,6 +106,12 @@
       "task": "health-check",
       "result": "pass",
       "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (gauteng/ampath-krugersdorp-bell-street-krugersdorp, north-west/kgotsong-clinic-welkom, eastern-cape/willowvale-hospital-willowvale) all 200. Province page (mpumalanga) 200. Guide page (find-nearest-clinic) 200. 357 sitemap URLs. All editorial tasks remain complete: 9/9 province intros, 13 guide pages, 11 service pages deepened, internal linking done."
+    },
+    {
+      "timestamp": "2026-05-27T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (eastern-cape/letitia-bam-kwanobuhle, gauteng/ff-ribeiro-clinic-pretoria, kwazulu-natal/kwamsane-clinic-kwazulu-natal) all 200. Province page (mpumalanga) 200. Guide page (hiv-testing-guide) 200. 357 sitemap URLs. All editorial tasks remain complete: 9/9 province intros, 13 guide pages, 11 service pages deepened, internal linking done."
     }
   ]
 }
