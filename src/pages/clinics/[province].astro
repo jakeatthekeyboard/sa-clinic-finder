@@ -121,7 +121,7 @@ const howToLd = {
 
     {editorial && (
       <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 24px; margin-bottom: 32px;">
-        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--green-dark);">Health tips for {provinceName}</h2>
+        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--primary-dark);">Health tips for {provinceName}</h2>
         <div style="display: grid; gap: 16px;">
           {editorial.healthTips.map(tip => (
             <div>
@@ -135,11 +135,11 @@ const howToLd = {
 
     {editorial && (
       <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 32px;">
-        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--green-dark);">What to bring to a public clinic</h2>
+        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--primary-dark);">What to bring to a public clinic</h2>
         <ol style="list-style: none; padding: 0; display: grid; gap: 12px;">
           {editorial.whatToBring.map((item, i) => (
             <li style="display: flex; gap: 12px; font-size: 0.9rem;">
-              <span style="flex-shrink: 0; width: 24px; height: 24px; background: var(--green); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">{i + 1}</span>
+              <span style="flex-shrink: 0; width: 24px; height: 24px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">{i + 1}</span>
               <div>
                 <strong>{item.item}</strong>
                 <p style="color: var(--text-muted); margin-top: 2px; line-height: 1.5;">{item.note}</p>
@@ -152,7 +152,7 @@ const howToLd = {
 
     {editorial?.contacts && (
       <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 24px; margin-bottom: 32px;">
-        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--green-dark);">Emergency & health department contacts</h2>
+        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--primary-dark);">Emergency & health department contacts</h2>
         <div style="display: grid; gap: 10px; font-size: 0.9rem;">
           <div style="display: flex; gap: 12px; align-items: flex-start;">
             <strong style="min-width: 140px; color: var(--text-muted); flex-shrink: 0;">Ambulance:</strong>
@@ -184,10 +184,10 @@ const howToLd = {
 
     {editorial?.districtHighlights && editorial.districtHighlights.length > 0 && (
       <section style="margin-bottom: 32px;">
-        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--green-dark);">Health districts in {provinceName}</h2>
+        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--primary-dark);">Health districts in {provinceName}</h2>
         <div style="display: grid; gap: 16px;">
           {editorial.districtHighlights.map(d => (
-            <div style="border-left: 3px solid var(--green); padding-left: 16px;">
+            <div style="border-left: 3px solid var(--primary); padding-left: 16px;">
               <strong style="font-size: 0.95rem;">{d.name}</strong>
               <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">{d.context}</p>
             </div>
@@ -200,7 +200,7 @@ const howToLd = {
       <section style="margin-bottom: 32px; max-width: 720px;">
         {editorial.deepDive.map(section => (
           <div style="margin-bottom: 28px;">
-            <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--green-dark);">{section.heading}</h2>
+            <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">{section.heading}</h2>
             <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text);" set:html={section.body} />
           </div>
         ))}
@@ -224,7 +224,7 @@ const howToLd = {
           </a>
         ))}
       </div>
-      <a href="/guides" style="display: inline-block; margin-top: 12px; font-size: 0.85rem; color: var(--green-dark);">View all guides &rarr;</a>
+      <a href="/guides" style="display: inline-block; margin-top: 12px; font-size: 0.85rem; color: var(--primary-dark);">View all guides &rarr;</a>
     </section>
 
     <section style="margin-bottom: 32px;">
@@ -271,7 +271,7 @@ const howToLd = {
         <a href="/guides/ccmdd-chronic-meds-pickup" style="display: block; padding: 0.75rem 1rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500;">CCMDD Meds Pickup</a>
         <a href="/guides/hiv-testing-guide" style="display: block; padding: 0.75rem 1rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500;">HIV Testing Guide</a>
       </div>
-      <p style="margin-top: 0.75rem;"><a href="/guides" style="color: var(--green-dark); font-weight: 500; font-size: 0.9rem;">All guides &rarr;</a></p>
+      <p style="margin-top: 0.75rem;"><a href="/guides" style="color: var(--primary-dark); font-weight: 500; font-size: 0.9rem;">All guides &rarr;</a></p>
     </section>
 
     <h2 style="font-size: 1.15rem; margin-bottom: 16px;">All facilities in {provinceName}</h2>

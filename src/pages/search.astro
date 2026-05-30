@@ -90,7 +90,7 @@ const searchData = facilities
               ${loc ? `<div style="font-size:0.85rem;color:#555;margin-top:2px;">${loc}</div>` : ''}
               <div style="font-size:0.8rem;color:#888;margin-top:2px;">${typeLabels[f.t]||f.t} · ${f.p}${f.h?' · 24h':''}</div>
             </div>
-            ${f._dist != null ? `<span style="font-size:0.85rem;color:#1a7a4c;font-weight:600;white-space:nowrap;">${f._dist.toFixed(1)} km</span>` : ''}
+            ${f._dist != null ? `<span style="font-size:0.85rem;color:#b91c1c;font-weight:600;white-space:nowrap;">${f._dist.toFixed(1)} km</span>` : ''}
           </div>
         </a>`;
       }).join('');
@@ -133,7 +133,7 @@ const searchData = facilities
 
     function markNearMeActive() {
       nearMe.textContent = 'Near me ✓';
-      nearMe.style.background = 'var(--green)';
+      nearMe.style.background = 'var(--primary)';
       nearMe.style.color = '#fff';
     }
 

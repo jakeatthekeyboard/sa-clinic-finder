@@ -23,7 +23,7 @@ const url = canonical || Astro.url.href;
   <link rel="canonical" href={url} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly content" />
-  <meta name="theme-color" content="#1a7a4c" />
+  <meta name="theme-color" content="#b91c1c" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
@@ -44,9 +44,9 @@ const url = canonical || Astro.url.href;
   </script>
   <style is:global>
     :root {
-      --green: #1a7a4c;
-      --green-dark: #145f3b;
-      --green-light: #e8f5ee;
+      --primary: #b91c1c;
+      --primary-dark: #991b1b;
+      --primary-light: #fef2f2;
       --text: #1a1a1a;
       --text-muted: #555;
       --bg: #fff;
@@ -62,7 +62,7 @@ const url = canonical || Astro.url.href;
       line-height: 1.6;
       -webkit-text-size-adjust: 100%;
     }
-    a { color: var(--green); text-decoration: none; }
+    a { color: var(--primary); text-decoration: none; }
     a:hover { text-decoration: underline; }
     /* !important guards against per-page inline `style="padding: 32px 0;"` shorthand wiping horizontal padding. */
     .container {
@@ -82,12 +82,12 @@ const url = canonical || Astro.url.href;
       padding: 4px 10px;
       border-radius: 20px;
       font-size: 0.8rem;
-      background: var(--green-light);
-      color: var(--green-dark);
+      background: var(--primary-light);
+      color: var(--primary-dark);
       margin: 2px;
     }
     .chip--type {
-      background: var(--green);
+      background: var(--primary);
       color: #fff;
       font-weight: 600;
     }
@@ -103,9 +103,9 @@ const url = canonical || Astro.url.href;
       cursor: pointer;
       text-decoration: none;
     }
-    .btn--primary { background: var(--green); color: #fff; }
-    .btn--primary:hover { background: var(--green-dark); text-decoration: none; }
-    .btn--outline { background: transparent; border: 2px solid var(--green); color: var(--green); }
+    .btn--primary { background: var(--primary); color: #fff; }
+    .btn--primary:hover { background: var(--primary-dark); text-decoration: none; }
+    .btn--outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
     .btn--wa { background: #25D366; color: #fff; }
     .btn--wa:hover { background: #1da851; text-decoration: none; }
     .card {
@@ -125,7 +125,7 @@ const url = canonical || Astro.url.href;
     inject();
     injectSpeedInsights();
   </script>
-  <header style="background: var(--green); color: #fff; padding: 12px 0;">
+  <header style="background: var(--primary); color: #fff; padding: 12px 0;">
     <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
       <a href="/" style="color: #fff; font-weight: 700; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 6px;"><span style="font-size: 1.3rem; line-height: 1;" aria-hidden="true">🇿🇦</span> Clinic Finder SA</a>
       <nav style="display: flex; gap: 16px; font-size: 0.9rem;" aria-label="Main navigation">

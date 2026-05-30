@@ -145,8 +145,8 @@ const jsonLd = editorial ? [
       <section style="margin-bottom: 32px; max-width: 720px;">
         <p style="line-height: 1.7; font-size: 0.95rem; color: var(--text);" set:html={editorial.intro} />
         {editorial.keyFact && (
-          <div style="margin-top: 16px; border-left: 4px solid var(--green); padding: 12px 16px; background: var(--green-light); border-radius: 0 var(--radius) var(--radius) 0;">
-            <strong style="font-size: 0.85rem; color: var(--green-dark);">Key fact:</strong>
+          <div style="margin-top: 16px; border-left: 4px solid var(--primary); padding: 12px 16px; background: var(--primary-light); border-radius: 0 var(--radius) var(--radius) 0;">
+            <strong style="font-size: 0.85rem; color: var(--primary-dark);">Key fact:</strong>
             <span style="font-size: 0.9rem; margin-left: 4px;">{editorial.keyFact}</span>
           </div>
         )}
@@ -155,11 +155,11 @@ const jsonLd = editorial ? [
 
     {editorial && (
       <section style="margin-bottom: 32px; max-width: 720px;">
-        <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--green-dark);">What to expect</h2>
+        <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--primary-dark);">What to expect</h2>
         <div style="display: grid; gap: 12px;">
           {editorial.whatToExpect.map((step, i) => (
             <div style="display: flex; gap: 16px; align-items: flex-start;">
-              <div style="flex-shrink: 0; width: 36px; height: 36px; background: var(--green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--green-dark); font-size: 0.9rem;">{i + 1}</div>
+              <div style="flex-shrink: 0; width: 36px; height: 36px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-dark); font-size: 0.9rem;">{i + 1}</div>
               <div>
                 <strong style="font-size: 0.95rem;">{step.step}</strong>
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 2px; line-height: 1.6;" set:html={step.detail} />
@@ -172,18 +172,18 @@ const jsonLd = editorial ? [
 
     {editorial && (
       <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px; max-width: 720px;">
-        <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Who is eligible?</h2>
+        <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Who is eligible?</h2>
         <p style="font-size: 0.9rem; line-height: 1.7;" set:html={editorial.eligibility} />
       </section>
     )}
 
     {editorial?.whatToBring && editorial.whatToBring.length > 0 && (
       <section style="margin-bottom: 32px; max-width: 720px;">
-        <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--green-dark);">What to bring</h2>
+        <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--primary-dark);">What to bring</h2>
         <div style="display: grid; gap: 8px;">
           {editorial.whatToBring.map(item => (
             <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius);">
-              <span style="flex-shrink: 0; color: var(--green-dark); font-size: 1rem; line-height: 1.4;">&#9745;</span>
+              <span style="flex-shrink: 0; color: var(--primary-dark); font-size: 1rem; line-height: 1.4;">&#9745;</span>
               <span style="font-size: 0.9rem; line-height: 1.6;">{item}</span>
             </div>
           ))}
@@ -193,11 +193,11 @@ const jsonLd = editorial ? [
 
     {editorial?.patientTips && editorial.patientTips.length > 0 && (
       <section style="margin-bottom: 32px; max-width: 720px;">
-        <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--green-dark);">Tips for patients</h2>
+        <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--primary-dark);">Tips for patients</h2>
         <div style="display: grid; gap: 10px;">
           {editorial.patientTips.map(tip => (
             <div style="display: flex; gap: 12px; align-items: flex-start; background: var(--bg-alt); border-radius: var(--radius); padding: 14px 16px;">
-              <span style="flex-shrink: 0; color: var(--green-dark); font-size: 1.1rem; line-height: 1;">&#10003;</span>
+              <span style="flex-shrink: 0; color: var(--primary-dark); font-size: 1.1rem; line-height: 1;">&#10003;</span>
               <p style="font-size: 0.9rem; line-height: 1.6; margin: 0;" set:html={tip} />
             </div>
           ))}
@@ -216,7 +216,7 @@ const jsonLd = editorial ? [
       <section style="margin-bottom: 32px; max-width: 720px;">
         {editorial.deepDive.map(section => (
           <div style="margin-bottom: 28px;">
-            <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--green-dark);">{section.heading}</h2>
+            <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">{section.heading}</h2>
             <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text);" set:html={section.body} />
           </div>
         ))}
@@ -225,14 +225,14 @@ const jsonLd = editorial ? [
 
     {editorial?.provincialNotes && (
       <section style="margin-bottom: 32px; max-width: 720px; background: var(--bg-alt); border-radius: var(--radius); padding: 20px;">
-        <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--green-dark);">Provincial differences</h2>
+        <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">Provincial differences</h2>
         <p style="font-size: 0.9rem; line-height: 1.7;" set:html={editorial.provincialNotes} />
       </section>
     )}
 
     {editorial?.myths && editorial.myths.length > 0 && (
       <section style="margin-bottom: 32px; max-width: 720px;">
-        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--green-dark);">Common misconceptions</h2>
+        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--primary-dark);">Common misconceptions</h2>
         <div style="display: grid; gap: 16px;">
           {editorial.myths.map(m => (
             <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
@@ -241,7 +241,7 @@ const jsonLd = editorial ? [
                 <p style="font-size: 0.9rem; font-style: italic; margin: 0; line-height: 1.5;">{m.myth}</p>
               </div>
               <div style="display: flex; gap: 8px; align-items: flex-start;">
-                <span style="flex-shrink: 0; color: var(--green-dark); font-weight: 700; font-size: 0.85rem;">FACT:</span>
+                <span style="flex-shrink: 0; color: var(--primary-dark); font-weight: 700; font-size: 0.85rem;">FACT:</span>
                 <p style="font-size: 0.9rem; margin: 0; line-height: 1.6; color: var(--text-muted);">{m.fact}</p>
               </div>
             </div>
@@ -251,8 +251,8 @@ const jsonLd = editorial ? [
     )}
 
     {editorial?.helplines && editorial.helplines.length > 0 && (
-      <section style="margin-bottom: 32px; max-width: 720px; background: var(--green-light); border-radius: var(--radius); padding: 20px;">
-        <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--green-dark);">Helplines and support</h2>
+      <section style="margin-bottom: 32px; max-width: 720px; background: var(--primary-light); border-radius: var(--radius); padding: 20px;">
+        <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">Helplines and support</h2>
         <div style="display: grid; gap: 10px;">
           {editorial.helplines.map(h => (
             <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(255,255,255,0.6); border-radius: var(--radius);">
@@ -260,7 +260,7 @@ const jsonLd = editorial ? [
                 <strong style="font-size: 0.9rem;">{h.name}</strong>
                 <div style="font-size: 0.8rem; color: var(--text-muted);">{h.hours}</div>
               </div>
-              <a href={`tel:${h.number.replace(/\s/g, '')}`} style="font-size: 0.95rem; font-weight: 700; color: var(--green-dark); text-decoration: none; white-space: nowrap;">{h.number}</a>
+              <a href={`tel:${h.number.replace(/\s/g, '')}`} style="font-size: 0.95rem; font-weight: 700; color: var(--primary-dark); text-decoration: none; white-space: nowrap;">{h.number}</a>
             </div>
           ))}
         </div>
@@ -268,8 +268,8 @@ const jsonLd = editorial ? [
     )}
 
     {editorial?.guideSlug && (
-      <section style="background: var(--green-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px; max-width: 720px;">
-        <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--green-dark);">Read the full guide</h2>
+      <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px; max-width: 720px;">
+        <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Read the full guide</h2>
         <p style="font-size: 0.9rem; margin-bottom: 12px;">
           Our guide covers everything in detail: step-by-step process, FAQs, and practical tips.
         </p>
