@@ -130,8 +130,8 @@ const jsonLd = editorial ? [
 ] : [breadcrumbLd, howToLd, faqJsonLd];
 ---
 <Base
-  title={`${serviceName} — Public Clinics in South Africa`}
-  description={`Find ${serviceFacilities.length} public clinics and hospitals offering ${serviceName.toLowerCase()} across South Africa. Browse by province.`}
+  title={editorial?.title || `${serviceName} — Public Clinics in South Africa`}
+  description={editorial?.metaDescription || `Find ${serviceFacilities.length} public clinics and hospitals offering ${serviceName.toLowerCase()} across South Africa. Browse by province.`}
   jsonLd={jsonLd}
 >
   <div class="container" style="padding: 32px 0;">

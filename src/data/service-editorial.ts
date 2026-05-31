@@ -5,6 +5,8 @@
  */
 
 export interface ServiceEditorial {
+  title?: string;
+  metaDescription?: string;
   intro: string;
   whatToExpect: { step: string; detail: string }[];
   eligibility: string;
@@ -269,6 +271,8 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
   },
 
   emergency_24h: {
+    title: '24-Hour Emergency Hospitals & Clinics in South Africa (2026)',
+    metaDescription: 'Find 24-hour emergency hospitals and clinics near you in South Africa. Call 10177 (ambulance) or 112 (mobile). Triage system explained, what to bring, and provincial facility lists.',
     intro: `Section 27 of the South African Constitution guarantees the right to emergency medical treatment — no facility can turn you away, regardless of your ability to pay or documentation status. Emergency departments use the South African Triage Scale (SATS) to prioritise patients: red (immediate, life-threatening), orange (very urgent, <10 min), yellow (urgent, <60 min), green (routine, may wait hours). Arriving by ambulance does not guarantee faster treatment — triage is based on clinical severity, not mode of arrival. The national emergency number is 10177 for public ambulances, or 112 from any mobile phone. In Gauteng, ER24 and Netcare 911 are private ambulance services — they will transport you to a public hospital if you request it, but may charge for the transport. Public ambulance response times vary: 15-30 minutes in urban areas, but 1-4 hours in rural settings where a single ambulance may serve an area the size of a European country.`,
     whatToExpect: [
       { step: 'Triage assessment', detail: 'A trained triage nurse assesses you within minutes of arrival and assigns a colour code. Red = immediate resuscitation. Orange = very urgent, seen within 10 minutes. Yellow = urgent, seen within 1 hour. Green = non-urgent, you may wait 4-8 hours or be redirected to a day clinic. The triage nurse does not diagnose — they prioritise. Do not argue with the colour code; it is based on physiological signs, not how much pain you feel.' },
@@ -526,6 +530,8 @@ export const SERVICE_EDITORIAL: Record<string, ServiceEditorial> = {
   },
 
   family_planning: {
+    title: 'Free Family Planning & Contraception — Public Clinics in South Africa',
+    metaDescription: 'Free contraception at any public clinic in South Africa. No medical aid or referral needed. Injectable, implant, IUD, and pill options. Find your nearest clinic.',
     intro: `Every public clinic in South Africa offers free <a href="/guides/family-planning-contraception">family planning services</a> — no medical aid, no referral, and no parental consent needed for anyone aged 12 or older (Children's Act, Section 134). The most popular method is the injectable (Depo-Provera or Nur-Isterate), used by over 40% of South African contraception users. Since 2014, the subdermal implant (Implanon NXT) has been available free at public clinics — it lasts 3 years and is 99.95% effective, making it the most effective reversible method available. South Africa's unmet need for contraception is estimated at 18% — meaning nearly 1 in 5 women who want to avoid pregnancy are not using any method. The Choice on Termination of Pregnancy Act (1996) allows pregnancy termination up to 12 weeks on request, up to 20 weeks with certain conditions, and after 20 weeks only for severe health risks. Not all public facilities provide termination of pregnancy — ask at your clinic for the nearest designated facility.`,
     whatToExpect: [
       { step: 'Walk in — no appointment needed', detail: 'Tell the nurse you want family planning. No referral needed. Teens aged 12+ do not need parental consent or notification — this is law, and the clinic cannot contact your parents without your permission. Some clinics have a dedicated family planning day (often Wednesdays) with a shorter queue; call ahead to check.' },
