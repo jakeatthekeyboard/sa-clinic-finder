@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-06-05T21:00:00+02:00",
+  "lastRun": "2026-06-08T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
@@ -136,6 +136,12 @@
       "task": "health-check",
       "result": "pass",
       "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (eastern-cape/greenways-family-medical-centre-port-elizabeth, mpumalanga/salter-chiropractic-pilates-mbombela, gauteng/health-worx-medical-centre-centurion-mall-centurion) all 200. Province page (eastern-cape) 200. Guide page (child-immunisation-schedule) 200. 879 sitemap URLs. All editorial tasks remain complete: 9/9 province intros, 13 guide pages, 11 service pages deepened, internal linking done."
+    },
+    {
+      "timestamp": "2026-06-08T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (gauteng/247-medclinic-johannesburg, western-cape/bettiesbaai-oord-mooihawens-western-cape, kwazulu-natal/bhekabantu-clinic-kwazulu-natal) all 200. Province page (northern-cape) 200. Guide page (free-maternity-care) 200. 879 sitemap URLs. All editorial tasks remain complete: 9/9 province intros, 13 guide pages, 11 service pages deepened, internal linking done."
     }
   ]
 }
