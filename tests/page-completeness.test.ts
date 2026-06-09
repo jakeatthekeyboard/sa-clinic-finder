@@ -2,6 +2,8 @@ import { describe, it, expect, beforeAll } from 'vitest';
 import { readFileSync, existsSync, readdirSync } from 'fs';
 import { join } from 'path';
 import * as cheerio from 'cheerio';
+import { SERVICE_MAP } from '../src/data/helpers';
+import { SERVICE_EDITORIAL } from '../src/data/service-editorial';
 
 const DIST = join(__dirname, '..', 'dist');
 
@@ -137,6 +139,33 @@ describe('Service pages — all render with required elements', () => {
 
       expect($('title').text().length).toBeGreaterThan(10);
       expect($('meta[name="description"]').attr('content')?.length).toBeGreaterThan(10);
+    });
+  });
+});
+
+// Source-level guard: every service in SERVICE_MAP must have a full editorial
+// entry. The rendered-page tests above pass even on the generic fallback
+// template (no SERVICE_EDITORIAL entry), so they did NOT catch emergency_24h
+// and child_health rendering empty for weeks. This asserts editorial parity at
+// the data layer. Added 2026-06-09 after both gaps were filled.
+describe('Service editorial — every service has a complete editorial entry', () => {
+  const SERVICE_KEYS = Object.keys(SERVICE_MAP);
+
+  it('has at least 11 services defined in SERVICE_MAP', () => {
+    expect(SERVICE_KEYS.length).toBeGreaterThanOrEqual(11);
+  });
+
+  SERVICE_KEYS.forEach(key => {
+    it(`SERVICE_EDITORIAL['${key}'] exists and is fully populated`, () => {
+      const e = SERVICE_EDITORIAL[key];
+      expect(e, `missing SERVICE_EDITORIAL entry for service '${key}'`).toBeTruthy();
+      // core required fields — these are what separate a real page from the
+      // generic fallback template
+      expect(e.intro?.length ?? 0, `${key}.intro too short`).toBeGreaterThan(200);
+      expect(e.eligibility?.length ?? 0, `${key}.eligibility too short`).toBeGreaterThan(50);
+      expect(e.whatToExpect?.length ?? 0, `${key}.whatToExpect needs steps`).toBeGreaterThanOrEqual(3);
+      expect(e.faqs?.length ?? 0, `${key}.faqs needs entries`).toBeGreaterThanOrEqual(3);
+      expect(e.keyFact?.length ?? 0, `${key}.keyFact missing`).toBeGreaterThan(20);
     });
   });
 });
