@@ -1,0 +1,47 @@
+#!/bin/bash
+# ClinicFinder pre-push hook — verifies site builds + internal links before push
+# Catches: broken imports, bad data, template errors, missing files, dead links
+# All must pass or push is blocked.
+#
+# VERSIONED HOOK (tracked in git, source of truth). Activate via:
+#     git config core.hooksPath .githooks
+# core.hooksPath is machine-local (not tracked) — a fresh clone runs that once.
+# See .githooks/README.md.
+
+set -e
+
+SITE_DIR="$(git rev-parse --show-toplevel)"
+
+echo "═══════════════════════════════════════════════════"
+echo "  ClinicFinder Pre-Push: Build + Link Verification"
+echo "═══════════════════════════════════════════════════"
+echo ""
+
+# ── Build check ──────────────────────────────────────────────────
+echo "▸ Running astro build..."
+cd "$SITE_DIR"
+rm -rf dist
+npx astro build 2>&1
+
+if [ $? -ne 0 ]; then
+    echo ""
+    echo "✗ PUSH BLOCKED — astro build failed."
+    exit 1
+fi
+
+# ── Dead-link scan (static internal-link integrity) ──────────────
+# Reuses the dist just built above (no --build). Catches inline-editorial
+# 404s. 0 broken across 36,931 hrefs when added (2026-06-10).
+echo ""
+echo "▸ Running dead-link scan (static internal links)..."
+if ! python3 /Users/jake/dev/product-pipeline-1/tools/dead-link-scan.py "$SITE_DIR"; then
+    echo ""
+    echo "✗ PUSH BLOCKED — dead-link scan found broken internal links."
+    echo "  Fix the broken hrefs and re-push."
+    exit 1
+fi
+
+echo ""
+echo "═══════════════════════════════════════════════════"
+echo "  ✓ ClinicFinder build + link verification passed."
+echo "═══════════════════════════════════════════════════"
