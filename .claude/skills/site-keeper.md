@@ -75,3 +75,12 @@ After each run, append to `ops/keeper-log.json`:
 
 Commit changes with message: `Keeper: <what was done> — clinicfinder.co.za`
 Push to main.
+
+## Cron mode — never end the turn with background work pending (TODO #736)
+
+When this skill runs under cron (`CRON_JOB_ID` is set; `claude --print`, non-interactive): the session EXITS the moment your final message ends. Background tasks are killed with it, and there is NO re-invocation when they complete — "the background poll will re-invoke me" is always false here. That assumption silently killed FVS watchdog remediation batches on 2026-06-10 and 2026-06-12 (exit 0, 1 output line, downloads/verdicts vanished).
+
+1. Run every download, extraction, build, or verification step synchronously in the FOREGROUND. Do not launch background work and end the turn "waiting" for it — the completion notification will never arrive.
+2. NEVER end your turn while any batch, download, or poll is still pending.
+3. If the work genuinely cannot finish in this session, write the exact remaining steps to `/Users/jake/dev/product-pipeline-1/TODO.md` as a `[ ]` Jake's Queue item, then end with an explicit final report of what was done and what was deferred.
+4. End-of-turn check: your last paragraph must report completed work — never "waiting on…" / "will continue when…".
