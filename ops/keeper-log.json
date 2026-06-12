@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-06-10T21:00:00+02:00",
+  "lastRun": "2026-06-12T21:01:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
@@ -148,6 +148,12 @@
       "task": "health-check",
       "result": "pass",
       "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (western-cape/hermanus-provincial-hospital-western-cape, western-cape/tc-newman-hospital-paarl-charlston-hill-western-cape, western-cape/fagan-street-clinic-strand) all 200. Province page (free-state) 200. Guide page (free-maternity-care) 200. 879 sitemap URLs. All editorial tasks remain complete: 9/9 province intros, 11 service pages with full editorial (parity test passing per commit 8140005), internal linking done."
+    },
+    {
+      "timestamp": "2026-06-12T21:01:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (northern-cape/deorham-clinic-northern-cape, western-cape/brighton-clinic-western-cape, kwazulu-natal/think-site-clinic-adherence-module-kwazulu-natal) all 200. Province page (mpumalanga) 200. Guide page (hospital-referral-system) 200. 879 sitemap URLs. Editorial state verified on disk: 9/9 province intros in province-editorial.ts, 13 guide pages covering all 6 skill topics, 11 service pages with full editorial (parity test per commit 8140005), internal linking done. No editorial work outstanding."
     }
   ]
 }
