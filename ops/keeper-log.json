@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-06-15T21:00:00+02:00",
+  "lastRun": "2026-06-17T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
@@ -160,6 +160,12 @@
       "task": "health-check",
       "result": "pass",
       "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (kwazulu-natal/st-francis-hospital-mahlabathini-ulundi, gauteng/fairlands-scout-hall-gauteng, western-cape/westridge-clinic-western-cape) all 200. Province page (kwazulu-natal) 200. Guide page (hospital-referral-system) 200. 879 sitemap URLs. Editorial state verified on disk: 9/9 province intros in province-editorial.ts, 13 guide pages covering all 6 skill topics, 11 service editorial entries (arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, emergency_24h, dental, mental_health, child_health, family_planning, immunisation, hiv_testing) with whatToBring + FAQs, internal linking done. No editorial work outstanding."
+    },
+    {
+      "timestamp": "2026-06-17T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (kwazulu-natal/emmaus-hospital-emmaus-winterton, mpumalanga/mgobodi-community-clinic-mpumalanga-south-africa, eastern-cape/komga-hospital-komga) all 200 (komga-hospital returned 000 once in a parallel curl loop — transient connection blip, re-checked clean 200). Province page (north-west) 200. Guide page (tb-treatment-what-to-expect) 200. 879 sitemap URLs. robots.txt verified: AI crawlers allowlisted (ChatGPT-User, OAI-SearchBot, Claude-User, Claude-SearchBot, PerplexityBot allowed; GPTBot, ClaudeBot, Meta-ExternalAgent, CCBot disallowed). Editorial state verified on disk: 9/9 province intros in province-editorial.ts, 13 guide pages, 11 service editorial entries with whatToBring + FAQs, internal linking done. No editorial work outstanding."
     }
   ]
 }
