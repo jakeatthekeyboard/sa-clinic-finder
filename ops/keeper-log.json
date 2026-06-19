@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-06-17T21:00:00+02:00",
+  "lastRun": "2026-06-19T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
@@ -166,6 +166,12 @@
       "task": "health-check",
       "result": "pass",
       "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (kwazulu-natal/emmaus-hospital-emmaus-winterton, mpumalanga/mgobodi-community-clinic-mpumalanga-south-africa, eastern-cape/komga-hospital-komga) all 200 (komga-hospital returned 000 once in a parallel curl loop — transient connection blip, re-checked clean 200). Province page (north-west) 200. Guide page (tb-treatment-what-to-expect) 200. 879 sitemap URLs. robots.txt verified: AI crawlers allowlisted (ChatGPT-User, OAI-SearchBot, Claude-User, Claude-SearchBot, PerplexityBot allowed; GPTBot, ClaudeBot, Meta-ExternalAgent, CCBot disallowed). Editorial state verified on disk: 9/9 province intros in province-editorial.ts, 13 guide pages, 11 service editorial entries with whatToBring + FAQs, internal linking done. No editorial work outstanding."
+    },
+    {
+      "timestamp": "2026-06-19T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (gauteng/azaadville-clinic-azaadville, kwazulu-natal/ladysmith-hospital-ladysmith, limpopo/medical-centre-bela-bela) all 200. Province page (western-cape) 200. Guide page (free-maternity-care) 200. 879 sitemap URLs. robots.txt verified: AI crawlers allowlisted (ChatGPT-User, OAI-SearchBot, Claude-User, Claude-SearchBot, PerplexityBot allowed; GPTBot, ClaudeBot, Meta-ExternalAgent, CCBot disallowed). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (keys are proper-case province names e.g. 'Gauteng'), 13 guide pages (14 files incl. index.astro) covering all 6 skill topics, 12 service editorial entries with whatToBring + FAQs, internal linking done. No editorial work outstanding."
     }
   ]
 }
