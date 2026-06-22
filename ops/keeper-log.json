@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-06-19T21:00:00+02:00",
+  "lastRun": "2026-06-22T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
@@ -172,6 +172,12 @@
       "task": "health-check",
       "result": "pass",
       "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (gauteng/azaadville-clinic-azaadville, kwazulu-natal/ladysmith-hospital-ladysmith, limpopo/medical-centre-bela-bela) all 200. Province page (western-cape) 200. Guide page (free-maternity-care) 200. 879 sitemap URLs. robots.txt verified: AI crawlers allowlisted (ChatGPT-User, OAI-SearchBot, Claude-User, Claude-SearchBot, PerplexityBot allowed; GPTBot, ClaudeBot, Meta-ExternalAgent, CCBot disallowed). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (keys are proper-case province names e.g. 'Gauteng'), 13 guide pages (14 files incl. index.astro) covering all 6 skill topics, 12 service editorial entries with whatToBring + FAQs, internal linking done. No editorial work outstanding."
+    },
+    {
+      "timestamp": "2026-06-22T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (kwazulu-natal/christ-the-king-hospital-ixopo-kwazulu-natal, limpopo/health-care-limpopo, eastern-cape/cloete-joubert-hospital-ekhepini) all 200 (christ-the-king returned 000 once in a parallel curl loop — transient connection blip, re-checked clean 200 sequentially with --retry). Province page (kwazulu-natal) 200. Guide page (ccmdd-chronic-meds-pickup) 200. 879 sitemap URLs (850 clinics, 13 guides + index, 12 services, search). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (single-quoted proper-case keys), 13 guide pages, service-editorial.ts intact (arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + sub-fields), internal linking done. No editorial work outstanding."
     }
   ]
 }
