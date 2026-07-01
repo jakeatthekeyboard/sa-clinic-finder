@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-06-24T21:00:00+02:00",
+  "lastRun": "2026-07-01T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
@@ -184,6 +184,12 @@
       "task": "health-check",
       "result": "pass",
       "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 random facility pages (north-west/lehurutshe-district-hospital-lehurutshe-north-west-province, gauteng/laudium-community-health-centre-pretoria, limpopo/limpopo-mdr-tb-unit-modimolle) all 200. Province page (mpumalanga) 200. Guide page (medical-emergency-guide) 200. 879 sitemap URLs (1 sub-sitemap: sitemap-0.xml). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (incl. hyphenated key KwaZulu-Natal), 13 guide pages (14 files incl. index.astro) covering all 6 skill topics, service-editorial.ts intact (10 service entries: arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + shared faqs field), internal linking done. No editorial work outstanding."
+    },
+    {
+      "timestamp": "2026-07-01T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 random facility pages (eastern-cape/pz-meyer-hospital-humansdorp, free-state/fauna-clinic-bloemfontein, north-west/christiana-hospital-christiana-north-west-province) all 200 (checked sequentially with --retry to avoid transient parallel-curl blips). Province page (limpopo) 200. Guide page (hospital-referral-system) 200. 879 sitemap URLs (1 sub-sitemap: sitemap-0.xml; 9 province pages, 13 guides). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape, Western Cape), 13 guide pages (14 files incl. index.astro), service-editorial.ts intact (10 service entries: arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + shared faqs field), internal linking done. No editorial work outstanding."
     }
   ]
 }
