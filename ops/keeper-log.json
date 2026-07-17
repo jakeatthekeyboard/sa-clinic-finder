@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-07-15T21:00:00+02:00",
+  "lastRun": "2026-07-17T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": ["find-nearest-clinic"],
   "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
@@ -226,6 +226,12 @@
       "task": "health-check",
       "result": "pass",
       "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 random facility pages (eastern-cape/thembalesizwe-clinic-xamdeboo, kwazulu-natal/bhekabantu-clinic-kwazulu-natal, western-cape/citrusdal-hospital-citrusdal) all 200 (checked sequentially with --retry to avoid transient parallel-curl blips). Province page (free-state) 200. Guide page (how-to-get-arvs) 200. 878 sitemap URLs (1 sub-sitemap: sitemap-0.xml; 849 clinic pages + province/guide/service/search). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape, Western Cape), 13 guide pages (14 files incl. index.astro), service-editorial.ts intact (10 service entries: arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + shared faqs field), internal linking done. No editorial work outstanding."
+    },
+    {
+      "timestamp": "2026-07-17T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 random facility pages (gauteng/unjani-clinic-tembisa-tembisa, gauteng/finetown-clinic-finetown, gauteng/health-worx-medical-centre-centurion-mall-centurion) all 200 (unjani-clinic returned 000 once in a rapid parallel curl loop — transient connection blip, re-checked clean 200 sequentially with --retry). Province page (northern-cape) 200. Guide page (tb-treatment-what-to-expect) 200. 879 sitemap URLs (1 sub-sitemap: sitemap-0.xml; 840 clinic pages, 9 province pages, 13 guides + index, services, search). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape, Western Cape), 13 guide pages (14 files incl. index.astro), service-editorial.ts intact (10 service entries: arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + shared faqs field), internal linking done. No editorial work outstanding."
     }
   ]
 }
