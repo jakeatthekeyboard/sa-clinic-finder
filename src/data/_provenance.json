@@ -1,0 +1,52 @@
+{
+  "$comment": "Provenance manifest for clinicfinder.co.za data. Declares, per VALUE CLASS, where each value came from. Modelled on SDMX observation-status flags (Eurostat/IMF/FAO).",
+  "updated_at": "2026-07-19T18:35:00+02:00",
+  "levels": {
+    "sourced": "Taken from a named third-party open-data source.",
+    "derived": "Computed from other values in this dataset.",
+    "ai_authored": "Explanatory prose written by AI over sourced material.",
+    "observed": "Directly measured by our own tooling at a point in time.",
+    "config": "Site configuration or build artefact authored by our own tooling \u2014 sitemap priorities, routing. Not a factual claim about the world."
+  },
+  "datasets": {
+    "facilities.json": {
+      "name": "sourced",
+      "facility_id": "sourced",
+      "operator": "sourced",
+      "operator_type": "sourced",
+      "province": "sourced",
+      "district": "sourced",
+      "address": "sourced",
+      "coordinates": "sourced",
+      "contact": "sourced",
+      "operating_hours": "sourced",
+      "services": "sourced",
+      "data_source": "observed",
+      "last_verified": "observed",
+      "data_quality_score": "derived"
+    },
+    "facility-editorial.ts": {
+      "*": "ai_authored"
+    },
+    "province-editorial.ts": {
+      "*": "ai_authored"
+    },
+    "service-editorial.ts": {
+      "*": "ai_authored"
+    },
+    "facility-types-editorial.ts": {
+      "*": "ai_authored"
+    },
+    "sitemap-priority-paths.json": {
+      "*": "config"
+    }
+  },
+  "primary_sources": [
+    "OpenStreetMap via the Overpass API (1,058 facilities) \u2014 community-maintained open data, ODbL licensed.",
+    "Humanitarian OpenStreetMap Team / HOTOSM exports (18 facilities)."
+  ],
+  "notes": [
+    "Facility records are SOURCED from open data, not modelled \u2014 do not hedge them as estimates. The honest caveat here is different: OpenStreetMap is community-maintained, so completeness and currency vary by area. That is a coverage caveat, not a provenance one, and data_quality_score plus last_verified exist to expose it.",
+    "This is a humanitarian site. A wrong clinic address costs someone a trip they may not be able to afford, so the coverage caveat matters more here than anywhere else in the portfolio."
+  ]
+}
