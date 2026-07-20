@@ -1,8 +1,20 @@
 {
-  "lastRun": "2026-07-17T21:00:00+02:00",
+  "lastRun": "2026-07-20T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
-  "guidesWritten": ["find-nearest-clinic"],
-  "provincesWithIntros": ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Northern Cape", "Western Cape"],
+  "guidesWritten": [
+    "find-nearest-clinic"
+  ],
+  "provincesWithIntros": [
+    "Eastern Cape",
+    "Free State",
+    "Gauteng",
+    "KwaZulu-Natal",
+    "Limpopo",
+    "Mpumalanga",
+    "North West",
+    "Northern Cape",
+    "Western Cape"
+  ],
   "runIntervalHours": 2.5,
   "runs": [
     {
@@ -81,7 +93,7 @@
       "timestamp": "2026-05-11T16:45:00+02:00",
       "task": "health-check",
       "result": "pass",
-      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (western-cape/macassar-community-day-centre-western-cape, gauteng/daveyton-east-clinic-chris-hani-benoni, western-cape/strand-community-day-centre-western-cape) all 200. Province page (northern-cape) 200. Guide page (tb-treatment-what-to-expect) 200. 357 sitemap URLs. Note: 2 previously-checked facility slugs (claremont-hospital, bhekumthetu-clinic) now 404 — removed from dataset, not in sitemap. All editorial tasks remain complete: 9/9 province intros, 13 guides, 11 service pages deepened, internal linking done."
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (western-cape/macassar-community-day-centre-western-cape, gauteng/daveyton-east-clinic-chris-hani-benoni, western-cape/strand-community-day-centre-western-cape) all 200. Province page (northern-cape) 200. Guide page (tb-treatment-what-to-expect) 200. 357 sitemap URLs. Note: 2 previously-checked facility slugs (claremont-hospital, bhekumthetu-clinic) now 404 \u2014 removed from dataset, not in sitemap. All editorial tasks remain complete: 9/9 province intros, 13 guides, 11 service pages deepened, internal linking done."
     },
     {
       "timestamp": "2026-05-13T21:30:00+02:00",
@@ -165,7 +177,7 @@
       "timestamp": "2026-06-17T21:00:00+02:00",
       "task": "health-check",
       "result": "pass",
-      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (kwazulu-natal/emmaus-hospital-emmaus-winterton, mpumalanga/mgobodi-community-clinic-mpumalanga-south-africa, eastern-cape/komga-hospital-komga) all 200 (komga-hospital returned 000 once in a parallel curl loop — transient connection blip, re-checked clean 200). Province page (north-west) 200. Guide page (tb-treatment-what-to-expect) 200. 879 sitemap URLs. robots.txt verified: AI crawlers allowlisted (ChatGPT-User, OAI-SearchBot, Claude-User, Claude-SearchBot, PerplexityBot allowed; GPTBot, ClaudeBot, Meta-ExternalAgent, CCBot disallowed). Editorial state verified on disk: 9/9 province intros in province-editorial.ts, 13 guide pages, 11 service editorial entries with whatToBring + FAQs, internal linking done. No editorial work outstanding."
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (kwazulu-natal/emmaus-hospital-emmaus-winterton, mpumalanga/mgobodi-community-clinic-mpumalanga-south-africa, eastern-cape/komga-hospital-komga) all 200 (komga-hospital returned 000 once in a parallel curl loop \u2014 transient connection blip, re-checked clean 200). Province page (north-west) 200. Guide page (tb-treatment-what-to-expect) 200. 879 sitemap URLs. robots.txt verified: AI crawlers allowlisted (ChatGPT-User, OAI-SearchBot, Claude-User, Claude-SearchBot, PerplexityBot allowed; GPTBot, ClaudeBot, Meta-ExternalAgent, CCBot disallowed). Editorial state verified on disk: 9/9 province intros in province-editorial.ts, 13 guide pages, 11 service editorial entries with whatToBring + FAQs, internal linking done. No editorial work outstanding."
     },
     {
       "timestamp": "2026-06-19T21:00:00+02:00",
@@ -177,7 +189,7 @@
       "timestamp": "2026-06-22T21:00:00+02:00",
       "task": "health-check",
       "result": "pass",
-      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (kwazulu-natal/christ-the-king-hospital-ixopo-kwazulu-natal, limpopo/health-care-limpopo, eastern-cape/cloete-joubert-hospital-ekhepini) all 200 (christ-the-king returned 000 once in a parallel curl loop — transient connection blip, re-checked clean 200 sequentially with --retry). Province page (kwazulu-natal) 200. Guide page (ccmdd-chronic-meds-pickup) 200. 879 sitemap URLs (850 clinics, 13 guides + index, 12 services, search). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (single-quoted proper-case keys), 13 guide pages, service-editorial.ts intact (arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + sub-fields), internal linking done. No editorial work outstanding."
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (kwazulu-natal/christ-the-king-hospital-ixopo-kwazulu-natal, limpopo/health-care-limpopo, eastern-cape/cloete-joubert-hospital-ekhepini) all 200 (christ-the-king returned 000 once in a parallel curl loop \u2014 transient connection blip, re-checked clean 200 sequentially with --retry). Province page (kwazulu-natal) 200. Guide page (ccmdd-chronic-meds-pickup) 200. 879 sitemap URLs (850 clinics, 13 guides + index, 12 services, search). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (single-quoted proper-case keys), 13 guide pages, service-editorial.ts intact (arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + sub-fields), internal linking done. No editorial work outstanding."
     },
     {
       "timestamp": "2026-06-24T21:00:00+02:00",
@@ -207,7 +219,7 @@
       "timestamp": "2026-07-08T21:00:00+02:00",
       "task": "health-check",
       "result": "pass",
-      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 random facility pages (gauteng/hatfield-clinic-sunnyside, kwazulu-natal/nhlungwana-clinic-nhlungwane-mahlabathini, north-west/sebokeng-hospital-north-west) all 200 (hatfield-clinic returned 000 once in a parallel curl loop — transient connection blip, re-checked clean 200 sequentially with --retry). Province page (limpopo) 200. Guide page (medical-emergency-guide) 200. 879 sitemap URLs (1 sub-sitemap: sitemap-0.xml). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape, Western Cape), 13 guide pages (14 files incl. index.astro), service-editorial.ts intact (10 service entries: arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + shared faqs field), internal linking done. No editorial work outstanding."
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 random facility pages (gauteng/hatfield-clinic-sunnyside, kwazulu-natal/nhlungwana-clinic-nhlungwane-mahlabathini, north-west/sebokeng-hospital-north-west) all 200 (hatfield-clinic returned 000 once in a parallel curl loop \u2014 transient connection blip, re-checked clean 200 sequentially with --retry). Province page (limpopo) 200. Guide page (medical-emergency-guide) 200. 879 sitemap URLs (1 sub-sitemap: sitemap-0.xml). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape, Western Cape), 13 guide pages (14 files incl. index.astro), service-editorial.ts intact (10 service entries: arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + shared faqs field), internal linking done. No editorial work outstanding."
     },
     {
       "timestamp": "2026-07-10T21:00:00+02:00",
@@ -231,7 +243,13 @@
       "timestamp": "2026-07-17T21:00:00+02:00",
       "task": "health-check",
       "result": "pass",
-      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 random facility pages (gauteng/unjani-clinic-tembisa-tembisa, gauteng/finetown-clinic-finetown, gauteng/health-worx-medical-centre-centurion-mall-centurion) all 200 (unjani-clinic returned 000 once in a rapid parallel curl loop — transient connection blip, re-checked clean 200 sequentially with --retry). Province page (northern-cape) 200. Guide page (tb-treatment-what-to-expect) 200. 879 sitemap URLs (1 sub-sitemap: sitemap-0.xml; 840 clinic pages, 9 province pages, 13 guides + index, services, search). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape, Western Cape), 13 guide pages (14 files incl. index.astro), service-editorial.ts intact (10 service entries: arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + shared faqs field), internal linking done. No editorial work outstanding."
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 random facility pages (gauteng/unjani-clinic-tembisa-tembisa, gauteng/finetown-clinic-finetown, gauteng/health-worx-medical-centre-centurion-mall-centurion) all 200 (unjani-clinic returned 000 once in a rapid parallel curl loop \u2014 transient connection blip, re-checked clean 200 sequentially with --retry). Province page (northern-cape) 200. Guide page (tb-treatment-what-to-expect) 200. 879 sitemap URLs (1 sub-sitemap: sitemap-0.xml; 840 clinic pages, 9 province pages, 13 guides + index, services, search). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape, Western Cape), 13 guide pages (14 files incl. index.astro), service-editorial.ts intact (10 service entries: arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + shared faqs field), internal linking done. No editorial work outstanding."
+    },
+    {
+      "timestamp": "2026-07-20T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 random facility pages (kwazulu-natal/usizo-lwethu-afrisun-clinic-kwazulu-natal, kwazulu-natal/ekuhlehleni-clinic-kwazulu-natal, eastern-cape/elizabeth-donkin-psychiatric-hospital-gqeberhaflorest-hill) all 200 (checked sequentially with --retry to avoid transient parallel-curl blips). Province page (clinics/mpumalanga) 200. Guide page (chronic-medication-management) 200. 879 sitemap URLs (1 sub-sitemap: sitemap-0.xml; 840 clinic detail pages, 9 province pages, 13 guides, 11 service URLs, plus home/clinics/search). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape, Western Cape), 13 guide pages (14 files incl. index.astro) covering all 6 skill topics, service-editorial.ts intact (10 service entries: arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + shared eligibility/intro/faqs fields), internal linking done. Working tree clean. No editorial work outstanding."
     }
   ]
 }
