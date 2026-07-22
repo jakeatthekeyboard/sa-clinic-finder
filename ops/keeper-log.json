@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-07-20T21:00:00+02:00",
+  "lastRun": "2026-07-22T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -250,6 +250,12 @@
       "task": "health-check",
       "result": "pass",
       "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 random facility pages (kwazulu-natal/usizo-lwethu-afrisun-clinic-kwazulu-natal, kwazulu-natal/ekuhlehleni-clinic-kwazulu-natal, eastern-cape/elizabeth-donkin-psychiatric-hospital-gqeberhaflorest-hill) all 200 (checked sequentially with --retry to avoid transient parallel-curl blips). Province page (clinics/mpumalanga) 200. Guide page (chronic-medication-management) 200. 879 sitemap URLs (1 sub-sitemap: sitemap-0.xml; 840 clinic detail pages, 9 province pages, 13 guides, 11 service URLs, plus home/clinics/search). Editorial state verified on disk: 9/9 province intros in province-editorial.ts (Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape, Western Cape), 13 guide pages (14 files incl. index.astro) covering all 6 skill topics, service-editorial.ts intact (10 service entries: arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + shared eligibility/intro/faqs fields), internal linking done. Working tree clean. No editorial work outstanding."
+    },
+    {
+      "timestamp": "2026-07-22T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index, robots.txt all 200. 3 random facility pages (kwazulu-natal/catherine-booth-hospital-amatikulu, eastern-cape/kwamagxaki-clinic-eastern-cape, limpopo/wayeni-clinic-limpopo) all 200 (checked sequentially with --retry to avoid transient parallel-curl blips). Province page (clinics/north-west) 200. Guide page (ccmdd-chronic-meds-pickup) 200. Sitemap grew 879 -> 1017 URLs (1 sub-sitemap: sitemap-0.xml; 978 clinic detail pages, 9 province pages, 13 guides, 11 service URLs, plus home/clinics/search) — consistent with commit 69da63c refreshing the sitemap priority manifest to 1,015 paths. Editorial state verified on disk: 9/9 province intros in province-editorial.ts (Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape, Western Cape), 13 guide pages (14 files incl. index.astro) covering all 6 skill topics, service-editorial.ts intact (10 service entries: arv_treatment, tb_treatment, maternity_antenatal, chronic_medication, dental, mental_health, child_health, family_planning, immunisation, hiv_testing + shared intro/eligibility/faqs fields), internal linking done. Working tree clean at start of run. No editorial work outstanding."
     }
   ]
 }
