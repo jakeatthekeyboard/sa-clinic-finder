@@ -76,6 +76,63 @@ After each run, append to `ops/keeper-log.json`:
 Commit changes with message: `Keeper: <what was done> — clinicfinder.co.za`
 Push to main.
 
+## End-of-run capture block (MANDATORY — the last thing you print)
+
+The final thing printed to stdout must be a JSON object wrapped in `<capture>…</capture>`
+fences. Nothing after `</capture>` — no prose, no closing markdown fence. The human-readable
+summary above it stays exactly as it is; this block is the authoritative source that
+`/Users/jake/dev/product-pipeline-1/tools/capture/post-run.py` records into
+`data/capture/keeper-runs/clinicfinder/<date>.json`.
+
+**Why this exists (#890).** Until 2026-07-24 the capture layer regex-scraped these numbers
+out of whatever prose a run happened to print. Its separators matched newlines, so a count on
+one line bound to a noun on the next and it recorded `guides_written: 52` on nights when one
+guide was refreshed — for 98 days, summed across keepers into a nightly "103 guides written"
+in the 06:30 Slack briefing. Two sibling defects in the same function banked 492/675/195 as
+"HTTP statuses" and logged a clean run's own "0 issues" line as an issue. Tightening those
+regexes only narrows the next accident; a run that STATES its own numbers cannot be misread.
+If this block is missing the parser falls back to the old scraper and stamps
+`capture_source: "regex"` on the capture, which a guard now flags.
+
+**A no-op run is a CORRECT outcome and must STILL emit the block, with zeros.** Do not
+inflate, do not round up, do not count a file you opened but did not change. Since the
+2026-07-17 decision, "nothing valuable to do" is an expected keeper result on a
+waterfall-exhausted, protect-mode site — a zero here is the signal working. It is also the
+only way anyone can see it: a fabricated 103 is precisely what hid 98 days of correct noops.
+
+<capture>
+{
+  "health": {"status": "healthy", "http_status": 200, "total_pages": 921, "sitemap_urls": 921},
+  "guides_written": 0,
+  "pages_updated": 0,
+  "internal_links_added": 0,
+  "editorial_sections_added": 0,
+  "content_actions": [
+    {"type": "editorial_deep_dive", "path": "/province/gauteng", "description": "CCMDD pickup-point context"}
+  ],
+  "issues": [],
+  "skipped": ["editorial deepening — CF is Settle autopilot, content grinding is out of scope"],
+  "commits": []
+}
+</capture>
+
+Field notes:
+- `health.http_status` — the real code from your clinicfinder.co.za homepage check, 100-599. Omit it or
+  use 0 if you did not check. Never invent one; an invented code is silently discarded anyway.
+- `health.status` — `healthy` / `degraded` / `unknown`.
+- `guides_written` / `pages_updated` / `internal_links_added` / `editorial_sections_added` —
+  count only what actually CHANGED on a rendered page this run. Zero is a valid answer and
+  usually the right one.
+- `content_actions[]` — one entry per real content change. This is the field that reaches the
+  content log (`data/capture/content-log/content-log.jsonl`); before 2026-07-24 the keeper
+  report wrote a differently-named key that no reader looked at, so no keeper content change
+  has ever appeared there. `type` terse (`guide_refresh`, `editorial_deep_dive`,
+  `data_correction`, `new_guide`), `path` is the URL path, `description` ≤200 chars.
+- `issues[]` — real problems only. NEVER add a line that reports the ABSENCE of a problem
+  ("0 issues", "Issues: None") — that is the exact bug this replaces.
+- `skipped[]` — work deliberately not done, each with its reason.
+- `commits[]` — short SHAs pushed this run; empty list if nothing was committed.
+
 ## Cron mode — never end the turn with background work pending (TODO #736)
 
 When this skill runs under cron (`CRON_JOB_ID` is set; `claude --print`, non-interactive): the session EXITS the moment your final message ends. Background tasks are killed with it, and there is NO re-invocation when they complete — "the background poll will re-invoke me" is always false here. That assumption silently killed FVS watchdog remediation batches on 2026-06-10 and 2026-06-12 (exit 0, 1 output line, downloads/verdicts vanished).
