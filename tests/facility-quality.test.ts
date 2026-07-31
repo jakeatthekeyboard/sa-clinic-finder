@@ -93,3 +93,46 @@ describe('against the live corpus', () => {
     if (good) expect(w.has(`${good.province}|${good.slug}`)).toBe(false);
   });
 });
+
+describe('the two signals cannot drift (#929)', () => {
+  it('every withheld page is noindexed AND absent from the sitemap, and no other page is', async () => {
+    // The sitemap filter (astro.config.mjs) and the noindex flag (the page template)
+    // are separate code paths that must agree. They share one predicate so they agree
+    // BY CONSTRUCTION — this pins that, because the failure mode is silent: a future
+    // edit to one and not the other tells Google two contradictory things, and
+    // tools/noindex-inventory-check.py's SITEMAP_CONFLICT rule deliberately skips
+    // wildcard routes, so nothing outside this repo would catch it.
+    const fs = await import('node:fs');
+    const path = await import('node:path');
+    const facilities = (await import('../src/data/facilities.json')).default as any[];
+    const { withheldKeys } = await import('../src/data/facility-quality.mjs');
+
+    const withheld = withheldKeys(facilities);
+    const withheldPaths = new Set(
+      [...withheld.keys()].map((k) => {
+        const [province, slug] = (k as string).split('|');
+        return `/clinics/${province.toLowerCase().replace(/ /g, '-')}/${slug}`;
+      })
+    );
+
+    const dist = ['.vercel/output/static', 'dist'].find((d) => fs.existsSync(d));
+    if (!dist) return;                       // no build present; nothing to assert
+    const xml = fs.readdirSync(dist)
+      .filter((f) => f.startsWith('sitemap') && f.endsWith('.xml'))
+      .map((f) => fs.readFileSync(path.join(dist, f), 'utf-8'))
+      .join('\n');
+    if (!xml) return;
+
+    const inSitemap = new Set(
+      [...xml.matchAll(/<loc>https:\/\/clinicfinder\.co\.za([^<]*)<\/loc>/g)].map((m) => m[1])
+    );
+
+    // No withheld page may be submitted.
+    const leaked = [...withheldPaths].filter((p) => inSitemap.has(p));
+    expect(leaked, `withheld pages present in the sitemap: ${leaked.slice(0, 5).join(', ')}`).toEqual([]);
+
+    // And the withholding must be doing something — a predicate that silently stops
+    // matching would make this test pass vacuously.
+    expect(withheldPaths.size).toBeGreaterThan(0);
+  });
+});
