@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+import provenance from '../data/_provenance.json';
+
+// Generated from src/data/_provenance.json so the table cannot drift from the manifest
+// the data tooling reads.
+const LEVEL_ORDER = ['sourced', 'derived', 'ai_authored', 'observed', 'config'];
+const used = new Set();
+for (const fields of Object.values(provenance.datasets ?? {})) {
+  if (fields && typeof fields === 'object') {
+    for (const v of Object.values(fields)) if (typeof v === 'string') used.add(v);
+  }
+}
+const levels = LEVEL_ORDER
+  .filter((k) => used.has(k) && provenance.levels?.[k])
+  .map((k) => ({ label: k.replace(/_/g, ' '), desc: provenance.levels[k] }));
+
+const sources = provenance.primary_sources ?? [];
+const updated = (provenance.updated_at ?? '').slice(0, 10);
+---
+
+<Base
+  title="How This Site Is Made — ClinicFinder"
+  description="How ClinicFinder is built: facility data comes from OpenStreetMap open data, what that means for accuracy and coverage, who is responsible, and how to report a wrong address."
+>
+  <div class="container">
+    <h1>How This Site Is Made</h1>
+    <p class="lead">
+      Where the facility information comes from, what it does and does not cover, and how
+      to tell us when something is wrong.
+    </p>
+
+    <h2>The written content is AI-drafted and human-supervised</h2>
+    <p>
+      The explanatory text on this site — what a clinic type does, what to expect at a
+      facility, how to prepare for a visit — is drafted by AI and reviewed by a person.
+      The facility records themselves are not written by AI: they come from open data, as
+      set out below.
+    </p>
+
+    <h2>Who is responsible for it</h2>
+    <p>
+      Editorial responsibility for ClinicFinder is held by the site's operator, a real
+      person who reviews what is published here and answers the contact address below. AI
+      drafts the explanatory text; it does not decide unsupervised what gets published,
+      and it is not the party accountable for it.
+    </p>
+
+    {sources.length > 0 && (
+      <>
+        <h2>Where the facility data comes from</h2>
+        <ul>
+          {sources.map((s) => <li>{s}</li>)}
+        </ul>
+      </>
+    )}
+
+    <h2>What is sourced, and what is written</h2>
+    <p>
+      Every field carries a provenance class. These are the classes actually in use, taken
+      from the manifest this site is built from:
+    </p>
+    <dl class="provenance-list">
+      {levels.map((l) => (
+        <div class="provenance-row">
+          <dt><code>{l.label}</code></dt>
+          <dd>{l.desc}</dd>
+        </div>
+      ))}
+    </dl>
+    <p>
+      Facility names, addresses and coordinates are <strong>sourced</strong> — they are
+      not estimated, and they are not adjusted by us. We do not rewrite a facility's name
+      even when it is obviously misspelled, because changing a sourced value while it
+      still reads as sourced is its own kind of error.
+    </p>
+
+    <h2>The honest caveat: coverage, not invention</h2>
+    <p>
+      The limitation here is not that figures are made up — it is that OpenStreetMap is
+      community-maintained, so how complete and how current the data is varies a great
+      deal by area. A well-mapped city may have every facility with phone numbers and
+      opening hours; a rural district may have a handful of pins and nothing else. Each
+      facility page shows a data-quality indicator and when the record was last checked,
+      so you can see which one you are looking at.
+    </p>
+    <p>
+      This matters more here than on an ordinary comparison site. A wrong address costs
+      someone a trip they may not be able to afford. <strong>Please phone ahead before
+      travelling</strong>, especially to a facility whose record looks sparse, and treat
+      opening hours as a starting point rather than a guarantee.
+    </p>
+
+    <h2>Found something wrong? Please tell us</h2>
+    <p>
+      Corrections are genuinely welcome and they help everyone who looks up the same
+      facility after you. Email
+      <a href="mailto:hello@clinicfinder.co.za">hello@clinicfinder.co.za</a> or use the
+      <a href="/contact">contact page</a> with the facility name and what is wrong —
+      a changed phone number, a closed facility, a wrong location — and it will be
+      checked and corrected.
+    </p>
+
+    <p class="meta">Provenance manifest last updated: {updated}</p>
+  </div>
+
+  <style>
+    .lead { font-size: 1.05rem; line-height: 1.7; }
+    h2 { margin-top: 2rem; }
+    p, li { line-height: 1.7; }
+    .meta { margin-top: 2.5rem; font-size: 0.85rem; opacity: 0.7; }
+    .provenance-list { margin: 1.25rem 0; }
+    .provenance-row {
+      display: grid;
+      grid-template-columns: 8rem 1fr;
+      gap: 1rem;
+      padding: 0.7rem 0;
+      border-top: 1px solid rgba(128, 128, 128, 0.25);
+    }
+    .provenance-row dt code { font-size: 0.85rem; white-space: nowrap; }
+    .provenance-row dd { margin: 0; line-height: 1.6; }
+    @media (max-width: 640px) {
+      .provenance-row { grid-template-columns: 1fr; gap: 0.25rem; }
+    }
+  </style>
+</Base>
