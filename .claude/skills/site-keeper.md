@@ -169,6 +169,16 @@ Field notes:
   gets dropped. Write the object even when severity is `low`.
   Put the full reasoning in `detail` — it is capped at 2,000 chars and any cut is marked, so
   length is safe; brevity is what loses the diagnosis.
+  **If the finding is about a specific VALUE, `detail` MUST name the FILE and RECORD KEY you
+  found it in** — `src/data/cities.json → salt-lake-city.editorial.real_cost`, not "the UT
+  editorial says $X". Measured 2026-07-31 (#932): three of three unreconciled-figure findings
+  from one run were MISATTRIBUTED, each costing a full verification pass to disprove. One
+  credited a $1,000 to a dispenser licence because it sat ~90 characters after the word
+  "dispensary"; another blamed Utah for $3,325 (a TEXAS fee) and $2,685 (a DELAWARE
+  POPULATION). The cause is matching values across the whole corpus and crediting them to
+  whatever the run is about — and a record key makes that impossible to do silently, because
+  you cannot write a Texas record under a Utah heading without noticing. Keep reporting these:
+  the same three findings surfaced two genuine live errors. Only the attribution was broken.
 - `skipped[]` — work deliberately not done, each with its reason.
 - `commits[]` — short SHAs pushed this run; empty list if nothing was committed.
 
