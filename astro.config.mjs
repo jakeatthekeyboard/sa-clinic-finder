@@ -29,7 +29,14 @@ console.log(`[sitemap] #929 quality gate: withholding ${withheldPaths.size} faci
 
 const structuralPrefixes = ['/clinics/', '/services/', '/guides/'];
 function isStructural(path) {
-  if (['/', '/clinics', '/services', '/guide', '/guides', '/search'].includes(path)) return true;
+  // /how-this-site-is-made is nominated deliberately (#844): it is the AI-transparency and
+  // E-E-A-T asset, it documents the EU AI Act Art.50(4) editorial-responsibility carve-out
+  // the portfolio relies on, and tools/ai-transparency-check.py already guards its content
+  // every 2h. It belongs HERE rather than in sitemap-priority-paths.json because that
+  // manifest is impressions-derived and regenerated (876 -> 1015 paths at 69da63c), so a
+  // hand-added zero-impression entry would be silently dropped on the next refresh.
+  if (['/', '/clinics', '/services', '/guide', '/guides', '/search',
+       '/how-this-site-is-made'].includes(path)) return true;
   for (const prefix of structuralPrefixes) {
     if (path.startsWith(prefix) && path.split('/').length <= 3) return true;
   }
