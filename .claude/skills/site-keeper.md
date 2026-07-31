@@ -76,6 +76,31 @@ After each run, append to `ops/keeper-log.json`:
 Commit changes with message: `Keeper: <what was done> — clinicfinder.co.za`
 Push to main.
 
+## Regulatory & legislative scan (weekly, portfolio-wide) — spec §9
+
+**Gate first, and usually skip.** Read `~/dev/product-pipeline-1/data/capture/regulatory-scan/latest.json`.
+If `scan_date` is within 7 days, SKIP this section entirely and say so in one line. This runs
+ONCE PER WEEK ACROSS THE WHOLE PORTFOLIO, not once per site — the first keeper to run in a new
+week does it and the other three skip. Do not run it because it looks undone.
+
+**Canonical scope, process and output schema: `~/dev/product-pipeline-1/.claude/skills/smoke-sitekeeper/spec.md` §9.**
+Read that file when the gate opens; it is the single source of truth and this section is
+deliberately a pointer, not a copy — four copies would drift, which is the bug that killed this
+scan in the first place (see below).
+
+**Why this section exists here rather than only in the spec (#961, 2026-07-31):** §9 was written
+into `smoke-sitekeeper/spec.md`, a file **no keeper cron loads**. `cron-runner.sh` resolves
+`/site-keeper` to THIS file, and none of the four per-site copies contained a regulatory section —
+so the scan ran exactly once (2026-07-19, by hand), its own `next_scan_due: 2026-07-26` passed
+unnoticed, and the `regulatory-scan-fresh` check has been firing against an artifact with no live
+producer ever since. Same shape as #930. The scan is worth reviving on its own record: it was
+created because the EU AI Act Art.50 deadline (applicable 2026-08-02) was found only incidentally,
+two weeks out, with nothing watching.
+
+**Write the result** to `~/dev/product-pipeline-1/data/capture/regulatory-scan/YYYY-MM-DD.json` and
+repoint `latest.json` at it (`ln -sfn`, it is a symlink). A run that finds nothing new still writes
+the file with `findings: []` — that is what keeps the freshness check honest rather than silent.
+
 ## End-of-run capture block (MANDATORY — the last thing you print)
 
 The final thing printed to stdout must be a JSON object wrapped in `<capture>…</capture>`
