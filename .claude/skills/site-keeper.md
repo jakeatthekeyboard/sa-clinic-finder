@@ -155,6 +155,20 @@ Field notes:
   `data_correction`, `new_guide`), `path` is the URL path, `description` ≤200 chars.
 - `issues[]` — real problems only. NEVER add a line that reports the ABSENCE of a problem
   ("0 issues", "Issues: None") — that is the exact bug this replaces.
+  **Each entry MUST be an OBJECT, not a bare string:**
+  `{"severity": "high"|"medium"|"low", "title": "<one line>", "detail": "<full reasoning>"}`.
+  `severity` is your own grading of whether this needs a human: `high` = a reader is being
+  shown something wrong right now; `medium` = real but not reader-facing yet, or blocked on
+  something you could not reach; `low` = worth recording, fine to leave.
+  **Why the object shape is mandatory (#915).** Your `issues[]` array is the most expensive
+  output of this run — it is your judgement about what you found and consciously did not fix.
+  Today it is a dead end: nothing reads it, and a finding survives only if a human happens to
+  open the capture the next morning. Measured 2026-07-31 across 435 stored entries, only 12
+  (3%) carried any grading at all, because nothing ever asked for one. A routing check cannot
+  triage what it cannot grade, so an ungraded finding is indistinguishable from a note and
+  gets dropped. Write the object even when severity is `low`.
+  Put the full reasoning in `detail` — it is capped at 2,000 chars and any cut is marked, so
+  length is safe; brevity is what loses the diagnosis.
 - `skipped[]` — work deliberately not done, each with its reason.
 - `commits[]` — short SHAs pushed this run; empty list if nothing was committed.
 
