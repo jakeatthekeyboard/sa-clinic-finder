@@ -35,8 +35,16 @@ function isStructural(path) {
   // every 2h. It belongs HERE rather than in sitemap-priority-paths.json because that
   // manifest is impressions-derived and regenerated (876 -> 1015 paths at 69da63c), so a
   // hand-added zero-impression entry would be silently dropped on the next refresh.
+  // /about is nominated for the same reason, added 2026-08-01. It is homepage-linked
+  // (one click), indexable (no robots noindex, unlike /contact, /privacy and /terms which
+  // ARE noindex and are correctly absent), and carries BreadcrumbList schema — so it meets
+  // the sitemap-growth criterion of being reachable in <=2 clicks. It matters more here
+  // than on a typical site: a clinic finder is YMYL health content, where "who is behind
+  // this site" is a first-order E-E-A-T signal. It has zero impressions, so it can never
+  // enter the impressions-derived manifest on its own; the structural list is the only
+  // place a deliberate nomination survives a manifest refresh.
   if (['/', '/clinics', '/services', '/guide', '/guides', '/search',
-       '/how-this-site-is-made'].includes(path)) return true;
+       '/how-this-site-is-made', '/about'].includes(path)) return true;
   for (const prefix of structuralPrefixes) {
     if (path.startsWith(prefix) && path.split('/').length <= 3) return true;
   }
