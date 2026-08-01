@@ -5522,14 +5522,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": false,
       "chronic_medication": true,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": false,
       "mental_health": false,
       "child_health": false,
@@ -6603,14 +6603,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": true,
       "chronic_medication": true,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": false,
       "mental_health": false,
       "child_health": false,
@@ -7355,14 +7355,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": false,
       "chronic_medication": true,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": true,
       "mental_health": false,
       "child_health": false,
@@ -10739,14 +10739,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": false,
       "chronic_medication": false,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": false,
       "mental_health": false,
       "child_health": false,
@@ -10786,14 +10786,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": false,
       "chronic_medication": false,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": false,
       "mental_health": false,
       "child_health": false,
@@ -10880,14 +10880,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": false,
       "chronic_medication": false,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": false,
       "mental_health": false,
       "child_health": false,
@@ -11068,14 +11068,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": false,
       "chronic_medication": true,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": false,
       "mental_health": false,
       "child_health": false,
@@ -12760,14 +12760,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": false,
       "chronic_medication": true,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": false,
       "mental_health": false,
       "child_health": false,
@@ -12901,14 +12901,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": false,
       "chronic_medication": false,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": false,
       "mental_health": false,
       "child_health": false,
@@ -12948,14 +12948,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": false,
       "chronic_medication": false,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": false,
       "mental_health": false,
       "child_health": false,
@@ -13136,14 +13136,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": false,
       "chronic_medication": true,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": false,
       "mental_health": false,
       "child_health": false,
@@ -13324,14 +13324,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": false,
       "chronic_medication": true,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": false,
       "mental_health": false,
       "child_health": false,
@@ -13371,14 +13371,14 @@
     },
     "operating_hours": {
       "raw": "",
-      "is_24_hour": true
+      "is_24_hour": false
     },
     "services": {
       "arv_treatment": false,
       "tb_treatment": false,
       "maternity_antenatal": false,
       "chronic_medication": true,
-      "emergency_24h": true,
+      "emergency_24h": false,
       "dental": false,
       "mental_health": false,
       "child_health": false,
