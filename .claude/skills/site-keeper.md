@@ -167,6 +167,17 @@ Field notes:
   (3%) carried any grading at all, because nothing ever asked for one. A routing check cannot
   triage what it cannot grade, so an ungraded finding is indistinguishable from a note and
   gets dropped. Write the object even when severity is `low`.
+  **The `title` is an IDENTITY, so keep it STABLE across nights (#1076).** The router
+  fingerprints a finding by its title, so **never embed a recurrence counter in it** — no
+  "for a third consecutive night", no "blocked a 4th night", no "still". One FVS finding was
+  re-logged under four different titles on four consecutive nights, three of them carrying a
+  night counter: it entered the state file as four separate findings with four fresh clocks,
+  two were routed by hand to the SAME item (#1052), and a title that counts its own
+  recurrences can never match its predecessor by construction. **The count belongs in
+  `detail`** ("unresolved since 2026-08-02, 4th run") where it is useful and harmless. When
+  you re-log an unresolved issue, re-use the SAME wording you used last night wherever you
+  can — the router now falls back to fuzzy title matching, but an unchanged title is exact
+  and free.
   Put the full reasoning in `detail` — it is capped at 2,000 chars and any cut is marked, so
   length is safe; brevity is what loses the diagnosis.
   **If the finding is about a specific VALUE, `detail` MUST name the FILE and RECORD KEY you
