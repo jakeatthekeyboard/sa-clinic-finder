@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-08-05T21:00:00+02:00",
+  "lastRun": "2026-08-07T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -286,6 +286,24 @@
       "task": "health-check",
       "result": "pass",
       "details": "All 6 checks pass. Homepage, sitemap-index.xml, robots.txt all 200. 3 random facility pages (gauteng/carecross-medical-dental-centre-gauteng, gauteng/skhonde-clinic-tswane, gauteng/dna-health-centre-gauteng) 200. Province page (clinics/mpumalanga) 200. Guide page (guides/tb-treatment-what-to-expect) 200. /about 200. 983 sitemap URLs. No content work: 9/9 provinces have editorial intros and all 6 planned guide topics are covered (13 guides live); CF is in Settle autopilot/protect mode. Regulatory scan skipped \u2014 portfolio scan_date 2026-07-31 is within 7 days (next due 2026-08-07)."
+    },
+    {
+      "timestamp": "2026-08-07T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 6 checks pass. Homepage, sitemap-index.xml, robots.txt all 200. 3 facility pages (free-state/molefi-tau-clinic-botshabelo-free-state, gauteng/manor-medical-centre-morningside-manor-sandton, kwazulu-natal/cramond-clinic-kwazulu-natal) all 200. Province page (clinics/limpopo) 200. Guide page (guides/ccmdd-chronic-meds-pickup) 200. /about 200. 983 sitemap URLs. AI-disclosure footer line verified live."
+    },
+    {
+      "timestamp": "2026-08-07T21:14:00+02:00",
+      "task": "regulatory-scan",
+      "result": "pass",
+      "details": "Weekly portfolio-wide spec \u00a79 scan \u2014 gate open (last scan 2026-07-31, next_scan_due 2026-08-07, no sibling keeper had run this week). Regions EU/USA/ZA. 3 findings recorded, 0 need action, 0 TODOs opened. EU AI Act Art.50 applicable since 2026-08-02 (our disclosure already live); CA SB 942/AB 853 operative 2026-08-02 but out of scope (covered providers >1M MAU only); Art.50(2) marking transitional deadline 2026-12-02 binds model providers, not deployers. Wrote data/capture/regulatory-scan/2026-08-07.json, repointed latest.json. Next scan due 2026-08-14."
+    },
+    {
+      "timestamp": "2026-08-07T21:00:00+02:00",
+      "task": "editorial",
+      "result": "skip",
+      "details": "No content work. Waterfall exhausted: 9/9 provinces have editorial intros, all 6 planned guide topics covered by the 13 existing guides, services is a single dynamic [service].astro template already deepened in earlier runs. CF is in protect mode (Settle autopilot) \u2014 content grinding is out of scope."
     }
   ]
 }
