@@ -11,6 +11,20 @@ export function getStaticPaths() {
 }
 
 const { serviceKey, serviceName, serviceLabel } = Astro.props;
+
+// Services whose per-facility flag is DERIVED from national policy rather than
+// verified clinic by clinic. Every such page must say so on the page itself — the
+// listing otherwise reads as a per-facility confirmation we have not done.
+// See TODO #1001: before this, arv_treatment was true for 2 of 1,076 facilities and
+// tb_treatment for 9, so the page contradicted its own editorial (and national policy)
+// by implying ARVs were available at two clinics nationally — an under-listing that is
+// more dangerous than an over-listing on a service people travel to reach.
+const DERIVED_SERVICES: Record<string, string> = {
+  arv_treatment:
+    'South Africa’s National Strategic Plan on HIV provides ARVs free at all public health facilities, to everyone living with HIV, regardless of CD4 count, nationality or documentation status.',
+  tb_treatment:
+    'TB diagnosis and treatment are provided free at all public health facilities in South Africa under the National TB Programme, regardless of nationality or documentation status.',
+};
 const editorial = SERVICE_EDITORIAL[serviceKey];
 const serviceFacilities = facilities
   .filter(f => f.services[serviceKey] && f.province !== '')
@@ -325,6 +339,20 @@ const jsonLd = editorial ? [
     </section>
 
     <h2 style="font-size: 1.2rem; margin-bottom: 16px;">{serviceFacilities.length} facilities offering {serviceName.toLowerCase()}</h2>
+
+    {DERIVED_SERVICES[serviceKey] && (
+      <section style="border-left: 4px solid var(--primary-dark); background: var(--bg-alt); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 24px; max-width: 720px;">
+        <h3 style="font-size: 0.95rem; margin: 0 0 8px;">How this list was compiled</h3>
+        <p style="font-size: 0.9rem; line-height: 1.7; margin: 0; color: var(--text-muted);">
+          {DERIVED_SERVICES[serviceKey]} These facilities are listed because they are confirmed
+          public health facilities, <strong>not</strong> because each one was individually checked
+          for this service. Stock and staffing vary by clinic and by day &mdash;
+          <strong>phone ahead before travelling</strong>, especially for a first visit.
+          Facility records come from OpenStreetMap; if something here is wrong, please
+          <a href="/contact"> tell us</a> and we will correct it.
+        </p>
+      </section>
+    )}
 
     {byProvince.map(prov => (
       <section style="margin-bottom: 32px;">
