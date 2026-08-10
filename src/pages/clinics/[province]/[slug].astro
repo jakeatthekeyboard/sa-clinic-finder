@@ -109,13 +109,18 @@ const breadcrumbLd = {
   ],
 };
 
+// FACILITY_TYPE_EDITORIAL prose carries inline <a href="/guides/…"> links. The rendered
+// page emits them as HTML (set:html below); schema.org FAQ answer text must be plain, so
+// strip the tags here rather than shipping markup into the structured data.
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
+
 const faqLd = typeEditorial ? {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: [
-    { '@type': 'Question', name: `When should I go to a ${typeLabel(facility.type).toLowerCase()}?`, acceptedAnswer: { '@type': 'Answer', text: typeEditorial.whenToGo } },
-    { '@type': 'Question', name: `What staff work at a ${typeLabel(facility.type).toLowerCase()}?`, acceptedAnswer: { '@type': 'Answer', text: typeEditorial.staffing } },
-    { '@type': 'Question', name: `How does the referral system work at a ${typeLabel(facility.type).toLowerCase()}?`, acceptedAnswer: { '@type': 'Answer', text: typeEditorial.referralFlow } },
+    { '@type': 'Question', name: `When should I go to a ${typeLabel(facility.type).toLowerCase()}?`, acceptedAnswer: { '@type': 'Answer', text: plain(typeEditorial.whenToGo) } },
+    { '@type': 'Question', name: `What staff work at a ${typeLabel(facility.type).toLowerCase()}?`, acceptedAnswer: { '@type': 'Answer', text: plain(typeEditorial.staffing) } },
+    { '@type': 'Question', name: `How does the referral system work at a ${typeLabel(facility.type).toLowerCase()}?`, acceptedAnswer: { '@type': 'Answer', text: plain(typeEditorial.referralFlow) } },
   ],
 } : null;
 
@@ -208,18 +213,18 @@ const jsonLd = {
     {typeEditorial && (
       <section style="margin-bottom: 32px;">
         <h2 style="font-size: 1.1rem; margin-bottom: 12px;">What is a {typeLabel(facility.type).toLowerCase()}?</h2>
-        <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px;">{typeEditorial.description}</p>
+        <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px;" set:html={typeEditorial.description} />
         <details style="margin-bottom: 12px;">
           <summary style="cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--primary-dark);">When should I go to a {typeLabel(facility.type).toLowerCase()}?</summary>
-          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">{typeEditorial.whenToGo}</p>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;" set:html={typeEditorial.whenToGo} />
         </details>
         <details style="margin-bottom: 12px;">
           <summary style="cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--primary-dark);">What staff work at a {typeLabel(facility.type).toLowerCase()}?</summary>
-          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">{typeEditorial.staffing}</p>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;" set:html={typeEditorial.staffing} />
         </details>
         <details>
           <summary style="cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--primary-dark);">How does the referral system work at a {typeLabel(facility.type).toLowerCase()}?</summary>
-          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">{typeEditorial.referralFlow}</p>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;" set:html={typeEditorial.referralFlow} />
         </details>
       </section>
     )}

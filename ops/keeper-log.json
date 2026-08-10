@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-08-07T21:00:00+02:00",
+  "lastRun": "2026-08-10T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -304,6 +304,18 @@
       "task": "editorial",
       "result": "skip",
       "details": "No content work. Waterfall exhausted: 9/9 provinces have editorial intros, all 6 planned guide topics covered by the 13 existing guides, services is a single dynamic [service].astro template already deepened in earlier runs. CF is in protect mode (Settle autopilot) \u2014 content grinding is out of scope."
+    },
+    {
+      "timestamp": "2026-08-10T21:04:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 6 checks pass. Homepage, sitemap-index.xml, robots.txt all 200. 3 facility pages (eastern-cape/andries-vosloo-hospital-somerset-east, kwazulu-natal/bhekumthetu-clinic, western-cape/nolungile-community-health-clinic-khayelitsha) 200. Province page (clinics/gauteng) 200. Guide page (guides/ccmdd-chronic-meds-pickup) 200. 983 sitemap URLs (952 clinics, 14 guides, 12 services, 5 other); 1120 pages built \u2014 the gap is the #929 withheld set, deliberate."
+    },
+    {
+      "timestamp": "2026-08-10T21:04:00+02:00",
+      "task": "bug-fix",
+      "result": "pass",
+      "details": "Fixed literal escaped HTML shown to readers on 1,012 pages. FACILITY_TYPE_EDITORIAL.whenToGo/referralFlow and SERVICE_EDITORIAL.eligibility carry inline <a href=\"/guides/...\"> markup, but [province]/[slug].astro rendered the type-editorial fields with {} interpolation, so 1,011 clinic + district_hospital pages printed '&lt;a href=&quot;/guides/...&quot;&gt;' as visible text inside the 'What is a clinic?' block; /services/child-health did the same via its Do-I-need-a-referral FAQ. Switched the four type-editorial fields to set:html (matching the sibling editorial.context block) and stripped tags from the two JSON-LD FAQ answer paths. Verified in built HTML: 0 escaped anchors sitewide (was 1,012 files), 3 real guide links now live in the clinic What-is section. Build clean, 1120 pages."
     }
   ]
 }

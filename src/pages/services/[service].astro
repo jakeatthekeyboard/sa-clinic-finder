@@ -79,8 +79,11 @@ const genericFaqs = [
   },
   {
     q: `Do I need a referral for ${serviceName.toLowerCase()}?`,
+    // editorial.eligibility carries inline <a href> markup (it is rendered with set:html
+    // further down). An FAQ answer is plain text in both the <details> block and the
+    // schema.org JSON-LD, so strip the tags here — same treatment as whatToExpect above.
     a: editorial?.eligibility
-      ? `Eligibility: ${editorial.eligibility} In most cases, you can walk in to any public clinic that offers this service. District hospitals may require a referral from a primary clinic unless it is an emergency.`
+      ? `Eligibility: ${editorial.eligibility.replace(/<[^>]+>/g, '')} In most cases, you can walk in to any public clinic that offers this service. District hospitals may require a referral from a primary clinic unless it is an emergency.`
       : `In most cases, you can walk in to any public clinic that offers ${serviceName.toLowerCase()}. District hospitals may require a referral from a primary health clinic unless it is an emergency.`,
   },
 ];
