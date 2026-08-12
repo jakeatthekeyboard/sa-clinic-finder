@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-08-10T21:00:00+02:00",
+  "lastRun": "2026-08-12T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -316,6 +316,12 @@
       "task": "bug-fix",
       "result": "pass",
       "details": "Fixed literal escaped HTML shown to readers on 1,012 pages. FACILITY_TYPE_EDITORIAL.whenToGo/referralFlow and SERVICE_EDITORIAL.eligibility carry inline <a href=\"/guides/...\"> markup, but [province]/[slug].astro rendered the type-editorial fields with {} interpolation, so 1,011 clinic + district_hospital pages printed '&lt;a href=&quot;/guides/...&quot;&gt;' as visible text inside the 'What is a clinic?' block; /services/child-health did the same via its Do-I-need-a-referral FAQ. Switched the four type-editorial fields to set:html (matching the sibling editorial.context block) and stripped tags from the two JSON-LD FAQ answer paths. Verified in built HTML: 0 escaped anchors sitewide (was 1,012 files), 3 real guide links now live in the clinic What-is section. Build clean, 1120 pages."
+    },
+    {
+      "timestamp": "2026-08-12T21:05:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 6 checks pass. Homepage, sitemap-index.xml, robots.txt all 200. 3 random facility pages sampled from the live sitemap (limpopo/ellisras-state-hospital-limpopo, kwazulu-natal/villiers-clinic-villiers, limpopo/fh-odendaal-hospital-modimolle-limpopo) all 200. Province page (clinics/northern-cape) 200, guide page (guides/find-nearest-clinic) 200, /about 200. 983 sitemap URLs (1 sub-sitemap sitemap-0.xml; 951 under /clinics incl. 9 province pages and the index, 13 guide URLs, 11 service URLs, /search, /guide, /services, /guides, home, /about, /how-this-site-is-made) - unchanged from the 2026-08-10 run. Verified the 2026-08-10 fix (237bfb6) is LIVE in production, not merely committed: 0 escaped '&lt;a href' anchors on a sampled clinic detail page and on /services/child-health, both of which were in the 1,012-page affected set. AI-disclosure node present on the homepage (Art.50 mitigation still rendering). Regulatory scan SKIPPED per gate - portfolio latest.json scan_date 2026-08-07 is 5 days old, next due 2026-08-14; it is portfolio-wide weekly, not per-site. No editorial work outstanding and none done: 9/9 provinces carry intros in province-editorial.ts, 13 guide pages cover all 6 planned skill topics, services is a single dynamic [service].astro template already deepened. CF remains in Settle autopilot/protect mode under the no-grind rule. Working tree clean at start of run; only this log file changed."
     }
   ]
 }
