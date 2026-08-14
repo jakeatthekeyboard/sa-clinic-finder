@@ -3,9 +3,18 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
       ]
     }
   ],
@@ -13,6 +22,656 @@
     {
       "source": "/sitemap.xml",
       "destination": "/sitemap-index.xml",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/leslie-williams-memorial-hospital-oberholzer-carltonville",
+      "destination": "/clinics/gauteng/leslie-williams-memorial-hospital-oberholzer-carltonville",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/dr-malizo-mpehle-memorial-kwazulu-natal",
+      "destination": "/clinics/eastern-cape/dr-malizo-mpehle-memorial-eastern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/virginia-provincial-virginia-matjhabeng-local-municipality-free-state",
+      "destination": "/clinics/free-state/virginia-provincial-virginia-matjhabeng-local-municipality-free-state",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/kopanong-clinic-tlholong-kestell",
+      "destination": "/clinics/free-state/kopanong-clinic-tlholong-kestell",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/free-state/beaconsfield-clinic-beaconsfield",
+      "destination": "/clinics/northern-cape/beaconsfield-clinic-beaconsfield",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/free-state/betty-gaetsewe-clinic-kimberly",
+      "destination": "/clinics/northern-cape/betty-gaetsewe-clinic-kimberly",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/free-state/de-beershoogte-clinic-barkly-west",
+      "destination": "/clinics/northern-cape/de-beershoogte-clinic-barkly-west",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/delportshoop-clinic-delportshoop-frances-baard-district-municipality-northern-ca",
+      "destination": "/clinics/northern-cape/delportshoop-clinic-delportshoop-frances-baard-district-municipality-northern-ca",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/free-state/dr-winston-torres-clinic-kimberlynorthern-cape",
+      "destination": "/clinics/northern-cape/dr-winston-torres-clinic-kimberlynorthern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/free-state/florianville-floors-clinic-free-state",
+      "destination": "/clinics/northern-cape/florianville-floors-clinic-northern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/ganspan-clinic-north-west",
+      "destination": "/clinics/northern-cape/ganspan-clinic-northern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/free-state/greenpoint-clinic-kimberley-northern-cape",
+      "destination": "/clinics/northern-cape/greenpoint-clinic-kimberley-northern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/pholong-clinic-warrenton",
+      "destination": "/clinics/northern-cape/pholong-clinic-warrenton",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/kgotsong-clinic-welkom",
+      "destination": "/clinics/free-state/kgotsong-clinic-welkom",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/kmaile-clinic-north-west",
+      "destination": "/clinics/free-state/kmaile-clinic-free-state",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/da-maleho-clinic-phahameng-bultfontein",
+      "destination": "/clinics/free-state/da-maleho-clinic-phahameng-bultfontein",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/dwarsloop-community-clinic-limpopo",
+      "destination": "/clinics/mpumalanga/dwarsloop-community-clinic-mpumalanga",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/mapulaneng-hospital-bushbuckridge-hazyview-mbombela-local-municipality",
+      "destination": "/clinics/mpumalanga/mapulaneng-hospital-bushbuckridge-hazyview-mbombela-local-municipality",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/mpumalanga/dr-moremi-surgery-marble-hall",
+      "destination": "/clinics/limpopo/dr-moremi-surgery-marble-hall",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/chief-albert-luthuli-memorial-clinic-wesselsbron",
+      "destination": "/clinics/free-state/chief-albert-luthuli-memorial-clinic-wesselsbron",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/lancet-labarotories-covid-19-testing-site-vereeniging",
+      "destination": "/clinics/gauteng/lancet-labarotories-covid-19-testing-site-vereeniging",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/pieterskraal-clinic-pieterskraal-a",
+      "destination": "/clinics/mpumalanga/pieterskraal-clinic-pieterskraal-a",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/kwaggafontein-community-health-centre-kwaggafontein",
+      "destination": "/clinics/mpumalanga/kwaggafontein-community-health-centre-kwaggafontein",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/tweefontein-a-clinic-tweefontein-a",
+      "destination": "/clinics/mpumalanga/tweefontein-a-clinic-tweefontein-a",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/buyisigugu-health-services-thembisile-hani-local-municipality",
+      "destination": "/clinics/mpumalanga/buyisigugu-health-services-thembisile-hani-local-municipality",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/vlaklaagte-1-clinic-thembisile-hani-local-municipality",
+      "destination": "/clinics/mpumalanga/vlaklaagte-1-clinic-thembisile-hani-local-municipality",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/boekenhouthoek-clinic-thembisile-hani-local-municipality",
+      "destination": "/clinics/mpumalanga/boekenhouthoek-clinic-thembisile-hani-local-municipality",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/health-care-limpopo",
+      "destination": "/clinics/mpumalanga/health-care-mpumalanga-9",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/healthcare-limpopo",
+      "destination": "/clinics/mpumalanga/healthcare-mpumalanga",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/health-care-limpopo-2",
+      "destination": "/clinics/mpumalanga/health-care-limpopo-2",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/health-care-limpopo-3",
+      "destination": "/clinics/mpumalanga/health-care-limpopo-3",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/health-care-limpopo-4",
+      "destination": "/clinics/mpumalanga/health-care-limpopo-4",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/health-care-limpopo-5",
+      "destination": "/clinics/mpumalanga/health-care-limpopo-5",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/health-care-limpopo-6",
+      "destination": "/clinics/mpumalanga/health-care-limpopo-6",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/health-care-limpopo-7",
+      "destination": "/clinics/mpumalanga/health-care-limpopo-7",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/health-care-limpopo-8",
+      "destination": "/clinics/mpumalanga/health-care-limpopo-8",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/ikhutseng-klipgat-clinic-madibeng-local-municipality",
+      "destination": "/clinics/north-west/ikhutseng-klipgat-clinic-madibeng-local-municipality",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/naledi-health-centre-kroonstad",
+      "destination": "/clinics/free-state/naledi-health-centre-kroonstad",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/piet-retief-hospital-piet-ritief",
+      "destination": "/clinics/mpumalanga/piet-retief-hospital-piet-ritief",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/kwamhlanga-local-clinic-gauteng",
+      "destination": "/clinics/mpumalanga/kwamhlanga-local-clinic-mpumalanga",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/mens-clinic-international-gauteng",
+      "destination": "/clinics/mpumalanga/mens-clinic-international-mpumalanga",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/thebe-district-hospital-harrismith",
+      "destination": "/clinics/free-state/thebe-district-hospital-harrismith",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/eastern-cape/jagersfontein-provincial-hospital-jagersfontein",
+      "destination": "/clinics/free-state/jagersfontein-provincial-hospital-jagersfontein",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/siyathemba-clinic-balfour",
+      "destination": "/clinics/mpumalanga/siyathemba-clinic-balfour",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/eastern-cape/hobhouse-clinic-eastern-cape",
+      "destination": "/clinics/free-state/hobhouse-clinic-free-state",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/ratanda-clinic-north-west",
+      "destination": "/clinics/gauteng/ratanda-clinic-gauteng",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/puremed-medical-centre-gauteng",
+      "destination": "/clinics/north-west/puremed-medical-centre-north-west",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/free-state/kimberley-eye-care-centre-kimberley",
+      "destination": "/clinics/northern-cape/kimberley-eye-care-centre-kimberley",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/free-state/west-end-hospital-west-end-kimberley",
+      "destination": "/clinics/northern-cape/west-end-hospital-west-end-kimberley",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/libode-clinic-libode-village",
+      "destination": "/clinics/eastern-cape/libode-clinic-libode-village",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/medivaal-hospital-vanderijilpark",
+      "destination": "/clinics/gauteng/medivaal-hospital-vanderijilpark",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/drs-reid-and-de-lange-eye-clinic-vanderbijlpark",
+      "destination": "/clinics/gauteng/drs-reid-and-de-lange-eye-clinic-vanderbijlpark",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/st-lucys-hospital-tsoloeastern-cape",
+      "destination": "/clinics/eastern-cape/st-lucys-hospital-tsoloeastern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/tintswalo-hospital-acornhoek",
+      "destination": "/clinics/mpumalanga/tintswalo-hospital-acornhoek",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/free-state/northern-cape-mental-healthcare-hospital-free-state",
+      "destination": "/clinics/northern-cape/northern-cape-mental-healthcare-hospital-northern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/western-cape/perth-clinic-perth",
+      "destination": "/clinics/northern-cape/perth-clinic-perth",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/iswepe-clinic-kwakhepa-village-iswepe",
+      "destination": "/clinics/mpumalanga/iswepe-clinic-kwakhepa-village-iswepe",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/amajuba-memorial-hospital-volksrust",
+      "destination": "/clinics/mpumalanga/amajuba-memorial-hospital-volksrust",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/ermelo-hospital-ermelo",
+      "destination": "/clinics/mpumalanga/ermelo-hospital-ermelo",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/thusanong-district-hospital-hospitaalpark",
+      "destination": "/clinics/free-state/thusanong-district-hospital-hospitaalpark",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/tokollo-hospital-heilbron-free-state",
+      "destination": "/clinics/free-state/tokollo-hospital-heilbron-free-state",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/evander-hospital-evander",
+      "destination": "/clinics/mpumalanga/evander-hospital-evander",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/reitz-provincial-hospital-reitz",
+      "destination": "/clinics/free-state/reitz-provincial-hospital-reitz",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/mount-ayliff-hospital-eastern-cape-south-africa",
+      "destination": "/clinics/eastern-cape/mount-ayliff-hospital-eastern-cape-south-africa",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/northern-cape/beaufort-west-hospital-beaufort-west",
+      "destination": "/clinics/western-cape/beaufort-west-hospital-beaufort-west",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/mpumalanga/groblersdal-hospital-groblersdal",
+      "destination": "/clinics/limpopo/groblersdal-hospital-groblersdal",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/carletonville-hospital-carletonville",
+      "destination": "/clinics/gauteng/carletonville-hospital-carletonville",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/eastern-cape/fritz-visser-hospital-noupoort-northern-cape",
+      "destination": "/clinics/northern-cape/fritz-visser-hospital-noupoort-northern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/brits-hospital-britsnorthwest",
+      "destination": "/clinics/north-west/brits-hospital-britsnorthwest",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/boitumelo-regional-hospital-kroonstad-free-state",
+      "destination": "/clinics/free-state/boitumelo-regional-hospital-kroonstad-free-state",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/madzikane-ka-zulu-memorial-hospital-mount-frere-eastern-cape",
+      "destination": "/clinics/eastern-cape/madzikane-ka-zulu-memorial-hospital-mount-frere-eastern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/tayler-bequest-hospital-mount-fletcher-eastern-cape",
+      "destination": "/clinics/eastern-cape/tayler-bequest-hospital-mount-fletcher-eastern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/bongani-regional-hospital-thabong-free-state",
+      "destination": "/clinics/free-state/bongani-regional-hospital-thabong-free-state",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/st-patricks-hospital-bizana",
+      "destination": "/clinics/eastern-cape/st-patricks-hospital-bizana",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/free-state/kimberley-hospital-free-state",
+      "destination": "/clinics/northern-cape/kimberley-hospital-northern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/elizabeth-ross-hospital-makong-village-phuthaditjhaba",
+      "destination": "/clinics/free-state/elizabeth-ross-hospital-makong-village-phuthaditjhaba",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/eastern-cape/orania-kliniek-orania",
+      "destination": "/clinics/northern-cape/orania-kliniek-orania",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/fezi-ngubentombi-district-hospital-sasolburg",
+      "destination": "/clinics/free-state/fezi-ngubentombi-district-hospital-sasolburg",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/eastern-cape/afm-steynville-church-eastern-cape",
+      "destination": "/clinics/northern-cape/afm-steynville-church-northern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/eastern-cape/hopetown-clinic-eastern-cape",
+      "destination": "/clinics/northern-cape/hopetown-clinic-northern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/nevada-medical-center-sebokengvreeniging",
+      "destination": "/clinics/gauteng/nevada-medical-center-sebokengvreeniging",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/mofumahadi-manapo-mopeli-regional-hospital-phuthaditjhaba",
+      "destination": "/clinics/free-state/mofumahadi-manapo-mopeli-regional-hospital-phuthaditjhaba",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/western-cape/abraham-esau-hospital-calvinia",
+      "destination": "/clinics/northern-cape/abraham-esau-hospital-calvinia",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/eastern-cape/manu-de-pico-hospital-colesberg-northern-cape",
+      "destination": "/clinics/northern-cape/manu-de-pico-hospital-colesberg-northern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/western-cape/sutherland-hospital-sutherland",
+      "destination": "/clinics/northern-cape/sutherland-hospital-sutherland",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/holy-cross-hospital-flagstaff",
+      "destination": "/clinics/eastern-cape/holy-cross-hospital-flagstaff",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/bophelong-clinic-nw2-vanderbijlpark-bophelong-vanderbijlpark",
+      "destination": "/clinics/gauteng/bophelong-clinic-nw2-vanderbijlpark-bophelong-vanderbijlpark",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/eastern-cape/albert-nzula-district-hospital-eastern-cape",
+      "destination": "/clinics/free-state/albert-nzula-district-hospital-free-state",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/eastern-cape/stoffel-coetzee-provincial-hospital-smithfield",
+      "destination": "/clinics/free-state/stoffel-coetzee-provincial-hospital-smithfield",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/vrede-hospital-thebephumelela-district-hospital-vrede-free-state",
+      "destination": "/clinics/free-state/vrede-hospital-thebephumelela-district-hospital-vrede-free-state",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/free-state/prof-zk-mathews-hospital-barkly-west",
+      "destination": "/clinics/northern-cape/prof-zk-mathews-hospital-barkly-west",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/johan-heyns-community-health-centre-vanderbijlpark",
+      "destination": "/clinics/gauteng/johan-heyns-community-health-centre-vanderbijlpark",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/mohau-district-hospital-hoopstad-hospital-hoopstad-free-state",
+      "destination": "/clinics/free-state/mohau-district-hospital-hoopstad-hospital-hoopstad-free-state",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/old-welkom-provincial-not-in-use-north-west",
+      "destination": "/clinics/free-state/old-welkom-provincial-not-in-use-free-state",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/northern-cape/nelspoort-hospital-nelspoort-beaufort-west",
+      "destination": "/clinics/western-cape/nelspoort-hospital-nelspoort-beaufort-west",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/tayler-bequest-hospital-tlokoeng",
+      "destination": "/clinics/eastern-cape/tayler-bequest-hospital-tlokoeng",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/clinic-limpopo",
+      "destination": "/clinics/mpumalanga/clinic-mpumalanga",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/sigagule-limpopo",
+      "destination": "/clinics/mpumalanga/sigagule-mpumalanga",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/dihlabeng-regional-hospital-bethlehem",
+      "destination": "/clinics/free-state/dihlabeng-regional-hospital-bethlehem",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/free-state/galeshewe-day-hospital-galeshewe-kimberley",
+      "destination": "/clinics/northern-cape/galeshewe-day-hospital-galeshewe-kimberley",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/connie-vorster-hospital-hartswater",
+      "destination": "/clinics/northern-cape/connie-vorster-hospital-hartswater",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/nala-hospital-bothaville",
+      "destination": "/clinics/free-state/nala-hospital-bothaville",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/els-medsorg-vereeniging-gauteng",
+      "destination": "/clinics/gauteng/els-medsorg-vereeniging-gauteng",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/clinic-kwazulu-natal",
+      "destination": "/clinics/free-state/clinic-free-state",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/mafube-district-hospital-frankfort",
+      "destination": "/clinics/free-state/mafube-district-hospital-frankfort",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/anglo-coal-highveld-hospital-witbankemalahleni-local-municipality",
+      "destination": "/clinics/mpumalanga/anglo-coal-highveld-hospital-witbankemalahleni-local-municipality",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/hebron-clinic-gauteng",
+      "destination": "/clinics/north-west/hebron-clinic-north-west",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/hartbeespoort-medical-centre-hartbeespoort",
+      "destination": "/clinics/north-west/hartbeespoort-medical-centre-hartbeespoort",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/matibidi-hospital-graskop",
+      "destination": "/clinics/mpumalanga/matibidi-hospital-graskop",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/ndlovu-medical-centre-gauteng",
+      "destination": "/clinics/limpopo/ndlovu-medical-centre-limpopo",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/villiers-clinic-villiers",
+      "destination": "/clinics/free-state/villiers-clinic-villiers",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/clinic-emalahleni",
+      "destination": "/clinics/mpumalanga/clinic-emalahleni",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/agincourt-community-health-center-acornhoek",
+      "destination": "/clinics/mpumalanga/agincourt-community-health-center-acornhoek",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/thulamahashe-community-health-centre-thulamahashe",
+      "destination": "/clinics/mpumalanga/thulamahashe-community-health-centre-thulamahashe",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/nthorwane-clinic-greylingstadmpumalanga",
+      "destination": "/clinics/mpumalanga/nthorwane-clinic-greylingstadmpumalanga",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/leslie-williams-memorial-hospital-north-west",
+      "destination": "/clinics/gauteng/leslie-williams-memorial-hospital-gauteng",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/sipetu-hospital-kwazulu-natal",
+      "destination": "/clinics/eastern-cape/sipetu-hospital-eastern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/limpopo/neo-clinic-limpopo",
+      "destination": "/clinics/north-west/neo-clinic-north-west",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/eastern-cape/orania-med-24-orania",
+      "destination": "/clinics/northern-cape/orania-med-24-orania",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/sebokeng-hospital-north-west",
+      "destination": "/clinics/gauteng/sebokeng-hospital-gauteng",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/eastern-cape/lephoi-clinic-eastern-cape",
+      "destination": "/clinics/free-state/lephoi-clinic-free-state",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/parys-district-hospital-parys",
+      "destination": "/clinics/free-state/parys-district-hospital-parys",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/flagstaff-community-health-centre-kwazulu-natal",
+      "destination": "/clinics/eastern-cape/flagstaff-community-health-centre-eastern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/khotsong-tb-hospital-kwazulu-natal",
+      "destination": "/clinics/eastern-cape/khotsong-tb-hospital-eastern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/sharpeville-community-health-centre-north-west",
+      "destination": "/clinics/gauteng/sharpeville-community-health-centre-gauteng",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/gauteng/philedalphia-hospital-gauteng",
+      "destination": "/clinics/limpopo/philedalphia-hospital-limpopo",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/north-west/heidelberg-hospital-north-west",
+      "destination": "/clinics/gauteng/heidelberg-hospital-gauteng",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/mpumalanga/moutse-east-clinic-mpumalanga",
+      "destination": "/clinics/limpopo/moutse-east-clinic-limpopo",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/kwazulu-natal/mvenyane-clinic-kwazulu-natal",
+      "destination": "/clinics/eastern-cape/mvenyane-clinic-eastern-cape",
+      "permanent": true
+    },
+    {
+      "source": "/clinics/eastern-cape/betesda-gesondheidhuis-orania",
+      "destination": "/clinics/northern-cape/betesda-gesondheidhuis-orania",
       "permanent": true
     }
   ],

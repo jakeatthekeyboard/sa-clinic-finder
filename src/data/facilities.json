@@ -802,7 +802,7 @@
     "facility_id": "zaf_node_1606184181",
     "name": "Leslie Williams Memorial Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -843,7 +843,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "leslie-williams-memorial-hospital-oberholzer-carltonville",
-    "url_path": "/clinics/north-west/leslie-williams-memorial-hospital-oberholzer-carltonville"
+    "url_path": "/clinics/gauteng/leslie-williams-memorial-hospital-oberholzer-carltonville"
   },
   {
     "facility_id": "zaf_node_1664041159",
@@ -990,7 +990,7 @@
     "facility_id": "zaf_node_1904552955",
     "name": "Dr Malizo Mpehle Memorial",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -1030,8 +1030,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "dr-malizo-mpehle-memorial-kwazulu-natal",
-    "url_path": "/clinics/kwazulu-natal/dr-malizo-mpehle-memorial-kwazulu-natal"
+    "slug": "dr-malizo-mpehle-memorial-eastern-cape",
+    "url_path": "/clinics/eastern-cape/dr-malizo-mpehle-memorial-eastern-cape"
   },
   {
     "facility_id": "zaf_node_2123577985",
@@ -1131,7 +1131,7 @@
     "facility_id": "zaf_node_2288061249",
     "name": "Virginia Provincial",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -1172,7 +1172,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "virginia-provincial-virginia-matjhabeng-local-municipality-free-state",
-    "url_path": "/clinics/north-west/virginia-provincial-virginia-matjhabeng-local-municipality-free-state"
+    "url_path": "/clinics/free-state/virginia-provincial-virginia-matjhabeng-local-municipality-free-state"
   },
   {
     "facility_id": "zaf_node_2298902321",
@@ -2071,7 +2071,7 @@
     "facility_id": "zaf_node_3442580228",
     "name": "Kopanong Clinic",
     "type": "clinic",
-    "province": "KwaZulu-Natal",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -2112,7 +2112,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "kopanong-clinic-tlholong-kestell",
-    "url_path": "/clinics/kwazulu-natal/kopanong-clinic-tlholong-kestell"
+    "url_path": "/clinics/free-state/kopanong-clinic-tlholong-kestell"
   },
   {
     "facility_id": "zaf_node_3492995214",
@@ -3669,7 +3669,7 @@
     "facility_id": "zaf_node_4508111828",
     "name": "Beaconsfield Clinic",
     "type": "clinic",
-    "province": "Free State",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -3710,13 +3710,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "beaconsfield-clinic-beaconsfield",
-    "url_path": "/clinics/free-state/beaconsfield-clinic-beaconsfield"
+    "url_path": "/clinics/northern-cape/beaconsfield-clinic-beaconsfield"
   },
   {
     "facility_id": "zaf_node_4508122582",
     "name": "Betty Gaetsewe Clinic",
     "type": "clinic",
-    "province": "Free State",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -3757,13 +3757,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "betty-gaetsewe-clinic-kimberly",
-    "url_path": "/clinics/free-state/betty-gaetsewe-clinic-kimberly"
+    "url_path": "/clinics/northern-cape/betty-gaetsewe-clinic-kimberly"
   },
   {
     "facility_id": "zaf_node_4526215329",
     "name": "De Beershoogte Clinic",
     "type": "clinic",
-    "province": "Free State",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -3804,13 +3804,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "de-beershoogte-clinic-barkly-west",
-    "url_path": "/clinics/free-state/de-beershoogte-clinic-barkly-west"
+    "url_path": "/clinics/northern-cape/de-beershoogte-clinic-barkly-west"
   },
   {
     "facility_id": "zaf_node_4526223063",
     "name": "Delportshoop Clinic",
     "type": "clinic",
-    "province": "North West",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -3851,13 +3851,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "delportshoop-clinic-delportshoop-frances-baard-district-municipality-northern-ca",
-    "url_path": "/clinics/north-west/delportshoop-clinic-delportshoop-frances-baard-district-municipality-northern-ca"
+    "url_path": "/clinics/northern-cape/delportshoop-clinic-delportshoop-frances-baard-district-municipality-northern-ca"
   },
   {
     "facility_id": "zaf_node_4526237317",
     "name": "Dr Winston Torres Clinic",
     "type": "clinic",
-    "province": "Free State",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -3898,13 +3898,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "dr-winston-torres-clinic-kimberlynorthern-cape",
-    "url_path": "/clinics/free-state/dr-winston-torres-clinic-kimberlynorthern-cape"
+    "url_path": "/clinics/northern-cape/dr-winston-torres-clinic-kimberlynorthern-cape"
   },
   {
     "facility_id": "zaf_node_4526252142",
     "name": "Florianville (Floors) Clinic",
     "type": "clinic",
-    "province": "Free State",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -3944,14 +3944,14 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "florianville-floors-clinic-free-state",
-    "url_path": "/clinics/free-state/florianville-floors-clinic-free-state"
+    "slug": "florianville-floors-clinic-northern-cape",
+    "url_path": "/clinics/northern-cape/florianville-floors-clinic-northern-cape"
   },
   {
     "facility_id": "zaf_node_4533348620",
     "name": "Ganspan Clinic",
     "type": "clinic",
-    "province": "North West",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -3991,14 +3991,14 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "ganspan-clinic-north-west",
-    "url_path": "/clinics/north-west/ganspan-clinic-north-west"
+    "slug": "ganspan-clinic-northern-cape",
+    "url_path": "/clinics/northern-cape/ganspan-clinic-northern-cape"
   },
   {
     "facility_id": "zaf_node_4533949614",
     "name": "Greenpoint Clinic",
     "type": "clinic",
-    "province": "Free State",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -4039,13 +4039,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "greenpoint-clinic-kimberley-northern-cape",
-    "url_path": "/clinics/free-state/greenpoint-clinic-kimberley-northern-cape"
+    "url_path": "/clinics/northern-cape/greenpoint-clinic-kimberley-northern-cape"
   },
   {
     "facility_id": "zaf_node_4533980461",
     "name": "Pholong Clinic",
     "type": "clinic",
-    "province": "North West",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -4086,7 +4086,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "pholong-clinic-warrenton",
-    "url_path": "/clinics/north-west/pholong-clinic-warrenton"
+    "url_path": "/clinics/northern-cape/pholong-clinic-warrenton"
   },
   {
     "facility_id": "zaf_node_4630670268",
@@ -4186,7 +4186,7 @@
     "facility_id": "zaf_node_4667356689",
     "name": "Kgotsong Clinic",
     "type": "clinic",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -4227,13 +4227,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "kgotsong-clinic-welkom",
-    "url_path": "/clinics/north-west/kgotsong-clinic-welkom"
+    "url_path": "/clinics/free-state/kgotsong-clinic-welkom"
   },
   {
     "facility_id": "zaf_node_4678474993",
     "name": "Kmaile Clinic",
     "type": "clinic",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -4273,8 +4273,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "kmaile-clinic-north-west",
-    "url_path": "/clinics/north-west/kmaile-clinic-north-west"
+    "slug": "kmaile-clinic-free-state",
+    "url_path": "/clinics/free-state/kmaile-clinic-free-state"
   },
   {
     "facility_id": "zaf_node_4791315428",
@@ -4421,7 +4421,7 @@
     "facility_id": "zaf_node_4815448467",
     "name": "DA Maleho Clinic",
     "type": "clinic",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -4462,7 +4462,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "da-maleho-clinic-phahameng-bultfontein",
-    "url_path": "/clinics/north-west/da-maleho-clinic-phahameng-bultfontein"
+    "url_path": "/clinics/free-state/da-maleho-clinic-phahameng-bultfontein"
   },
   {
     "facility_id": "zaf_node_4932427708",
@@ -4891,7 +4891,7 @@
     "facility_id": "zaf_node_5310623122",
     "name": "Dwarsloop Community Clinic",
     "type": "clinic",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -4931,8 +4931,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "dwarsloop-community-clinic-limpopo",
-    "url_path": "/clinics/limpopo/dwarsloop-community-clinic-limpopo"
+    "slug": "dwarsloop-community-clinic-mpumalanga",
+    "url_path": "/clinics/mpumalanga/dwarsloop-community-clinic-mpumalanga"
   },
   {
     "facility_id": "zaf_node_5317947643",
@@ -6395,7 +6395,7 @@
     "facility_id": "zaf_node_7328937288",
     "name": "Mapulaneng hospital",
     "type": "district_hospital",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -6436,7 +6436,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "mapulaneng-hospital-bushbuckridge-hazyview-mbombela-local-municipality",
-    "url_path": "/clinics/limpopo/mapulaneng-hospital-bushbuckridge-hazyview-mbombela-local-municipality"
+    "url_path": "/clinics/mpumalanga/mapulaneng-hospital-bushbuckridge-hazyview-mbombela-local-municipality"
   },
   {
     "facility_id": "zaf_node_7341728796",
@@ -7288,7 +7288,7 @@
     "facility_id": "zaf_node_7711787738",
     "name": "Dr. Moremi Surgery",
     "type": "district_hospital",
-    "province": "Mpumalanga",
+    "province": "Limpopo",
     "district": "",
     "sub_district": "",
     "address": {
@@ -7329,7 +7329,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "dr-moremi-surgery-marble-hall",
-    "url_path": "/clinics/mpumalanga/dr-moremi-surgery-marble-hall"
+    "url_path": "/clinics/limpopo/dr-moremi-surgery-marble-hall"
   },
   {
     "facility_id": "zaf_node_7762379262",
@@ -7946,7 +7946,7 @@
     "facility_id": "zaf_node_8727952083",
     "name": "Chief Albert Luthuli Memorial Clinic",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -7987,7 +7987,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "chief-albert-luthuli-memorial-clinic-wesselsbron",
-    "url_path": "/clinics/north-west/chief-albert-luthuli-memorial-clinic-wesselsbron"
+    "url_path": "/clinics/free-state/chief-albert-luthuli-memorial-clinic-wesselsbron"
   },
   {
     "facility_id": "zaf_node_8733666517",
@@ -8134,7 +8134,7 @@
     "facility_id": "zaf_node_8879826867",
     "name": "Lancet Labarotories Covid-19 Testing Site",
     "type": "clinic",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -8175,7 +8175,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "lancet-labarotories-covid-19-testing-site-vereeniging",
-    "url_path": "/clinics/north-west/lancet-labarotories-covid-19-testing-site-vereeniging"
+    "url_path": "/clinics/gauteng/lancet-labarotories-covid-19-testing-site-vereeniging"
   },
   {
     "facility_id": "zaf_node_8914255563",
@@ -10907,7 +10907,7 @@
     "facility_id": "zaf_node_9054690317",
     "name": "Pieterskraal Clinic",
     "type": "clinic",
-    "province": "Gauteng",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -10948,13 +10948,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "pieterskraal-clinic-pieterskraal-a",
-    "url_path": "/clinics/gauteng/pieterskraal-clinic-pieterskraal-a"
+    "url_path": "/clinics/mpumalanga/pieterskraal-clinic-pieterskraal-a"
   },
   {
     "facility_id": "zaf_node_9054693217",
     "name": "Kwaggafontein Community Health Centre",
     "type": "community_health_centre",
-    "province": "Gauteng",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -10995,7 +10995,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "kwaggafontein-community-health-centre-kwaggafontein",
-    "url_path": "/clinics/gauteng/kwaggafontein-community-health-centre-kwaggafontein"
+    "url_path": "/clinics/mpumalanga/kwaggafontein-community-health-centre-kwaggafontein"
   },
   {
     "facility_id": "zaf_node_9054695317",
@@ -11048,7 +11048,7 @@
     "facility_id": "zaf_node_9054704017",
     "name": "Tweefontein A Clinic",
     "type": "clinic",
-    "province": "Gauteng",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -11089,7 +11089,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "tweefontein-a-clinic-tweefontein-a",
-    "url_path": "/clinics/gauteng/tweefontein-a-clinic-tweefontein-a"
+    "url_path": "/clinics/mpumalanga/tweefontein-a-clinic-tweefontein-a"
   },
   {
     "facility_id": "zaf_node_9054706417",
@@ -11142,7 +11142,7 @@
     "facility_id": "zaf_node_9054708517",
     "name": "Buyisigugu Health Services",
     "type": "clinic",
-    "province": "Gauteng",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -11183,13 +11183,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "buyisigugu-health-services-thembisile-hani-local-municipality",
-    "url_path": "/clinics/gauteng/buyisigugu-health-services-thembisile-hani-local-municipality"
+    "url_path": "/clinics/mpumalanga/buyisigugu-health-services-thembisile-hani-local-municipality"
   },
   {
     "facility_id": "zaf_node_9054708518",
     "name": "Vlaklaagte 1 Clinic",
     "type": "clinic",
-    "province": "Gauteng",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -11230,13 +11230,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "vlaklaagte-1-clinic-thembisile-hani-local-municipality",
-    "url_path": "/clinics/gauteng/vlaklaagte-1-clinic-thembisile-hani-local-municipality"
+    "url_path": "/clinics/mpumalanga/vlaklaagte-1-clinic-thembisile-hani-local-municipality"
   },
   {
     "facility_id": "zaf_node_9054721217",
     "name": "Boekenhouthoek Clinic",
     "type": "clinic",
-    "province": "Gauteng",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -11277,7 +11277,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "boekenhouthoek-clinic-thembisile-hani-local-municipality",
-    "url_path": "/clinics/gauteng/boekenhouthoek-clinic-thembisile-hani-local-municipality"
+    "url_path": "/clinics/mpumalanga/boekenhouthoek-clinic-thembisile-hani-local-municipality"
   },
   {
     "facility_id": "zaf_node_9054730117",
@@ -11565,7 +11565,7 @@
     "facility_id": "zaf_node_9057208518",
     "name": "health care",
     "type": "clinic",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -11605,14 +11605,14 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "health-care-limpopo",
-    "url_path": "/clinics/limpopo/health-care-limpopo"
+    "slug": "health-care-mpumalanga-9",
+    "url_path": "/clinics/mpumalanga/health-care-mpumalanga-9"
   },
   {
     "facility_id": "zaf_node_9057223117",
     "name": "healthcare",
     "type": "district_hospital",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -11652,14 +11652,14 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "healthcare-limpopo",
-    "url_path": "/clinics/limpopo/healthcare-limpopo"
+    "slug": "healthcare-mpumalanga",
+    "url_path": "/clinics/mpumalanga/healthcare-mpumalanga"
   },
   {
     "facility_id": "zaf_node_9057223118",
     "name": "health care",
     "type": "clinic",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -11700,7 +11700,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "health-care-limpopo-2",
-    "url_path": "/clinics/limpopo/health-care-limpopo-2"
+    "url_path": "/clinics/mpumalanga/health-care-limpopo-2"
   },
   {
     "facility_id": "zaf_node_9057234817",
@@ -11753,7 +11753,7 @@
     "facility_id": "zaf_node_9057234818",
     "name": "health care",
     "type": "district_hospital",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -11794,7 +11794,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "health-care-limpopo-3",
-    "url_path": "/clinics/limpopo/health-care-limpopo-3"
+    "url_path": "/clinics/mpumalanga/health-care-limpopo-3"
   },
   {
     "facility_id": "zaf_node_9057234819",
@@ -11941,7 +11941,7 @@
     "facility_id": "zaf_node_9057241717",
     "name": "health care",
     "type": "clinic",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -11982,13 +11982,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "health-care-limpopo-4",
-    "url_path": "/clinics/limpopo/health-care-limpopo-4"
+    "url_path": "/clinics/mpumalanga/health-care-limpopo-4"
   },
   {
     "facility_id": "zaf_node_9057243517",
     "name": "health care",
     "type": "clinic",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -12029,13 +12029,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "health-care-limpopo-5",
-    "url_path": "/clinics/limpopo/health-care-limpopo-5"
+    "url_path": "/clinics/mpumalanga/health-care-limpopo-5"
   },
   {
     "facility_id": "zaf_node_9057243518",
     "name": "health care",
     "type": "clinic",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -12076,7 +12076,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "health-care-limpopo-6",
-    "url_path": "/clinics/limpopo/health-care-limpopo-6"
+    "url_path": "/clinics/mpumalanga/health-care-limpopo-6"
   },
   {
     "facility_id": "zaf_node_9057246117",
@@ -12129,7 +12129,7 @@
     "facility_id": "zaf_node_9057251917",
     "name": "health care",
     "type": "clinic",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -12170,13 +12170,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "health-care-limpopo-7",
-    "url_path": "/clinics/limpopo/health-care-limpopo-7"
+    "url_path": "/clinics/mpumalanga/health-care-limpopo-7"
   },
   {
     "facility_id": "zaf_node_9057262717",
     "name": "health care",
     "type": "clinic",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -12217,7 +12217,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "health-care-limpopo-8",
-    "url_path": "/clinics/limpopo/health-care-limpopo-8"
+    "url_path": "/clinics/mpumalanga/health-care-limpopo-8"
   },
   {
     "facility_id": "zaf_node_9057422021",
@@ -12364,7 +12364,7 @@
     "facility_id": "zaf_node_9057464817",
     "name": "Ikhutseng (Klipgat) Clinic",
     "type": "clinic",
-    "province": "Gauteng",
+    "province": "North West",
     "district": "",
     "sub_district": "",
     "address": {
@@ -12405,7 +12405,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "ikhutseng-klipgat-clinic-madibeng-local-municipality",
-    "url_path": "/clinics/gauteng/ikhutseng-klipgat-clinic-madibeng-local-municipality"
+    "url_path": "/clinics/north-west/ikhutseng-klipgat-clinic-madibeng-local-municipality"
   },
   {
     "facility_id": "zaf_node_9057473117",
@@ -13445,7 +13445,7 @@
     "facility_id": "zaf_node_9097768160",
     "name": "Naledi Health Centre",
     "type": "clinic",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -13486,7 +13486,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "naledi-health-centre-kroonstad",
-    "url_path": "/clinics/north-west/naledi-health-centre-kroonstad"
+    "url_path": "/clinics/free-state/naledi-health-centre-kroonstad"
   },
   {
     "facility_id": "zaf_node_9107560060",
@@ -13586,7 +13586,7 @@
     "facility_id": "zaf_node_9213371219",
     "name": "Piet Retief Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -13627,7 +13627,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "piet-retief-hospital-piet-ritief",
-    "url_path": "/clinics/kwazulu-natal/piet-retief-hospital-piet-ritief"
+    "url_path": "/clinics/mpumalanga/piet-retief-hospital-piet-ritief"
   },
   {
     "facility_id": "zaf_node_9256582448",
@@ -13727,7 +13727,7 @@
     "facility_id": "zaf_node_9315238633",
     "name": "KwaMhlanga Local Clinic",
     "type": "clinic",
-    "province": "Gauteng",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -13767,14 +13767,14 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "kwamhlanga-local-clinic-gauteng",
-    "url_path": "/clinics/gauteng/kwamhlanga-local-clinic-gauteng"
+    "slug": "kwamhlanga-local-clinic-mpumalanga",
+    "url_path": "/clinics/mpumalanga/kwamhlanga-local-clinic-mpumalanga"
   },
   {
     "facility_id": "zaf_node_9315238676",
     "name": "Men's Clinic International",
     "type": "clinic",
-    "province": "Gauteng",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -13814,14 +13814,14 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "mens-clinic-international-gauteng",
-    "url_path": "/clinics/gauteng/mens-clinic-international-gauteng"
+    "slug": "mens-clinic-international-mpumalanga",
+    "url_path": "/clinics/mpumalanga/mens-clinic-international-mpumalanga"
   },
   {
     "facility_id": "zaf_node_9448444562",
     "name": "Thebe District Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -13862,7 +13862,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "thebe-district-hospital-harrismith",
-    "url_path": "/clinics/kwazulu-natal/thebe-district-hospital-harrismith"
+    "url_path": "/clinics/free-state/thebe-district-hospital-harrismith"
   },
   {
     "facility_id": "zaf_node_9651271590",
@@ -13962,7 +13962,7 @@
     "facility_id": "zaf_node_9740726759",
     "name": "Jagersfontein Provincial Hospital",
     "type": "district_hospital",
-    "province": "Eastern Cape",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -14003,7 +14003,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "jagersfontein-provincial-hospital-jagersfontein",
-    "url_path": "/clinics/eastern-cape/jagersfontein-provincial-hospital-jagersfontein"
+    "url_path": "/clinics/free-state/jagersfontein-provincial-hospital-jagersfontein"
   },
   {
     "facility_id": "zaf_node_9758783923",
@@ -14150,7 +14150,7 @@
     "facility_id": "zaf_node_9938274450",
     "name": "Siyathemba Clinic",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -14191,7 +14191,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "siyathemba-clinic-balfour",
-    "url_path": "/clinics/kwazulu-natal/siyathemba-clinic-balfour"
+    "url_path": "/clinics/mpumalanga/siyathemba-clinic-balfour"
   },
   {
     "facility_id": "zaf_node_9944638415",
@@ -15560,7 +15560,7 @@
     "facility_id": "zaf_node_11767522434",
     "name": "Hobhouse Clinic",
     "type": "clinic",
-    "province": "Eastern Cape",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -15600,8 +15600,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "hobhouse-clinic-eastern-cape",
-    "url_path": "/clinics/eastern-cape/hobhouse-clinic-eastern-cape"
+    "slug": "hobhouse-clinic-free-state",
+    "url_path": "/clinics/free-state/hobhouse-clinic-free-state"
   },
   {
     "facility_id": "zaf_node_11805594953",
@@ -16077,7 +16077,7 @@
     "facility_id": "zaf_node_12298970901",
     "name": "Ratanda Clinic",
     "type": "clinic",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -16117,8 +16117,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "ratanda-clinic-north-west",
-    "url_path": "/clinics/north-west/ratanda-clinic-north-west"
+    "slug": "ratanda-clinic-gauteng",
+    "url_path": "/clinics/gauteng/ratanda-clinic-gauteng"
   },
   {
     "facility_id": "zaf_node_12598297001",
@@ -16171,7 +16171,7 @@
     "facility_id": "zaf_node_12620602473",
     "name": "Puremed Medical Centre",
     "type": "clinic",
-    "province": "Gauteng",
+    "province": "North West",
     "district": "",
     "sub_district": "",
     "address": {
@@ -16211,8 +16211,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "puremed-medical-centre-gauteng",
-    "url_path": "/clinics/gauteng/puremed-medical-centre-gauteng"
+    "slug": "puremed-medical-centre-north-west",
+    "url_path": "/clinics/north-west/puremed-medical-centre-north-west"
   },
   {
     "facility_id": "zaf_node_12705587594",
@@ -16406,7 +16406,7 @@
     "facility_id": "zaf_node_13240506506",
     "name": "Kimberley Eye Care Centre",
     "type": "clinic",
-    "province": "Free State",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -16447,7 +16447,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "kimberley-eye-care-centre-kimberley",
-    "url_path": "/clinics/free-state/kimberley-eye-care-centre-kimberley"
+    "url_path": "/clinics/northern-cape/kimberley-eye-care-centre-kimberley"
   },
   {
     "facility_id": "zaf_node_13242492721",
@@ -17252,7 +17252,7 @@
     "facility_id": "zaf_way_30136349",
     "name": "West End Hospital",
     "type": "district_hospital",
-    "province": "Free State",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -17293,7 +17293,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "west-end-hospital-west-end-kimberley",
-    "url_path": "/clinics/free-state/west-end-hospital-west-end-kimberley"
+    "url_path": "/clinics/northern-cape/west-end-hospital-west-end-kimberley"
   },
   {
     "facility_id": "zaf_way_30177297",
@@ -18380,7 +18380,7 @@
     "facility_id": "zaf_way_105465651",
     "name": "Libode Clinic",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -18421,7 +18421,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "libode-clinic-libode-village",
-    "url_path": "/clinics/kwazulu-natal/libode-clinic-libode-village"
+    "url_path": "/clinics/eastern-cape/libode-clinic-libode-village"
   },
   {
     "facility_id": "zaf_way_106314020",
@@ -19132,7 +19132,7 @@
     "facility_id": "zaf_way_147727753",
     "name": "Medivaal Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -19173,13 +19173,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "medivaal-hospital-vanderijilpark",
-    "url_path": "/clinics/north-west/medivaal-hospital-vanderijilpark"
+    "url_path": "/clinics/gauteng/medivaal-hospital-vanderijilpark"
   },
   {
     "facility_id": "zaf_way_147735143",
     "name": "Drs Reid and de Lange Eye Clinic",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -19220,7 +19220,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "drs-reid-and-de-lange-eye-clinic-vanderbijlpark",
-    "url_path": "/clinics/north-west/drs-reid-and-de-lange-eye-clinic-vanderbijlpark"
+    "url_path": "/clinics/gauteng/drs-reid-and-de-lange-eye-clinic-vanderbijlpark"
   },
   {
     "facility_id": "zaf_way_149766235",
@@ -19837,7 +19837,7 @@
     "facility_id": "zaf_way_219062624",
     "name": "St Lucy's Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -19878,7 +19878,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "st-lucys-hospital-tsoloeastern-cape",
-    "url_path": "/clinics/kwazulu-natal/st-lucys-hospital-tsoloeastern-cape"
+    "url_path": "/clinics/eastern-cape/st-lucys-hospital-tsoloeastern-cape"
   },
   {
     "facility_id": "zaf_way_220545296",
@@ -20589,7 +20589,7 @@
     "facility_id": "zaf_way_244925858",
     "name": "Tintswalo Hospital",
     "type": "district_hospital",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -20630,7 +20630,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "tintswalo-hospital-acornhoek",
-    "url_path": "/clinics/limpopo/tintswalo-hospital-acornhoek"
+    "url_path": "/clinics/mpumalanga/tintswalo-hospital-acornhoek"
   },
   {
     "facility_id": "zaf_way_255400974",
@@ -20871,7 +20871,7 @@
     "facility_id": "zaf_way_258804521",
     "name": "Northern Cape Mental Healthcare Hospital",
     "type": "district_hospital",
-    "province": "Free State",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -20911,8 +20911,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "northern-cape-mental-healthcare-hospital-free-state",
-    "url_path": "/clinics/free-state/northern-cape-mental-healthcare-hospital-free-state"
+    "slug": "northern-cape-mental-healthcare-hospital-northern-cape",
+    "url_path": "/clinics/northern-cape/northern-cape-mental-healthcare-hospital-northern-cape"
   },
   {
     "facility_id": "zaf_way_263350070",
@@ -23221,7 +23221,7 @@
     "facility_id": "zaf_way_334494958",
     "name": "Perth Clinic",
     "type": "clinic",
-    "province": "Western Cape",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -23262,7 +23262,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "perth-clinic-perth",
-    "url_path": "/clinics/western-cape/perth-clinic-perth"
+    "url_path": "/clinics/northern-cape/perth-clinic-perth"
   },
   {
     "facility_id": "zaf_way_334656394",
@@ -23315,7 +23315,7 @@
     "facility_id": "zaf_way_334662012",
     "name": "Iswepe Clinic",
     "type": "clinic",
-    "province": "KwaZulu-Natal",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -23356,7 +23356,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "iswepe-clinic-kwakhepa-village-iswepe",
-    "url_path": "/clinics/kwazulu-natal/iswepe-clinic-kwakhepa-village-iswepe"
+    "url_path": "/clinics/mpumalanga/iswepe-clinic-kwakhepa-village-iswepe"
   },
   {
     "facility_id": "zaf_way_334674784",
@@ -23644,7 +23644,7 @@
     "facility_id": "zaf_way_369398691",
     "name": "Amajuba Memorial Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -23685,7 +23685,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "amajuba-memorial-hospital-volksrust",
-    "url_path": "/clinics/kwazulu-natal/amajuba-memorial-hospital-volksrust"
+    "url_path": "/clinics/mpumalanga/amajuba-memorial-hospital-volksrust"
   },
   {
     "facility_id": "zaf_way_370149531",
@@ -23879,7 +23879,7 @@
     "facility_id": "zaf_way_378535219",
     "name": "Ermelo Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -23920,13 +23920,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "ermelo-hospital-ermelo",
-    "url_path": "/clinics/kwazulu-natal/ermelo-hospital-ermelo"
+    "url_path": "/clinics/mpumalanga/ermelo-hospital-ermelo"
   },
   {
     "facility_id": "zaf_way_383223219",
     "name": "Thusanong District Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -23967,7 +23967,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "thusanong-district-hospital-hospitaalpark",
-    "url_path": "/clinics/north-west/thusanong-district-hospital-hospitaalpark"
+    "url_path": "/clinics/free-state/thusanong-district-hospital-hospitaalpark"
   },
   {
     "facility_id": "zaf_way_383353764",
@@ -24302,7 +24302,7 @@
     "facility_id": "zaf_way_398737778",
     "name": "Tokollo Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -24343,7 +24343,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "tokollo-hospital-heilbron-free-state",
-    "url_path": "/clinics/north-west/tokollo-hospital-heilbron-free-state"
+    "url_path": "/clinics/free-state/tokollo-hospital-heilbron-free-state"
   },
   {
     "facility_id": "zaf_way_398951841",
@@ -24396,7 +24396,7 @@
     "facility_id": "zaf_way_403195888",
     "name": "Evander Hospital",
     "type": "district_hospital",
-    "province": "Gauteng",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -24437,7 +24437,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "evander-hospital-evander",
-    "url_path": "/clinics/gauteng/evander-hospital-evander"
+    "url_path": "/clinics/mpumalanga/evander-hospital-evander"
   },
   {
     "facility_id": "zaf_way_403593253",
@@ -24490,7 +24490,7 @@
     "facility_id": "zaf_way_404227500",
     "name": "Reitz Provincial Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -24531,7 +24531,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "reitz-provincial-hospital-reitz",
-    "url_path": "/clinics/north-west/reitz-provincial-hospital-reitz"
+    "url_path": "/clinics/free-state/reitz-provincial-hospital-reitz"
   },
   {
     "facility_id": "zaf_way_404385518",
@@ -24584,7 +24584,7 @@
     "facility_id": "zaf_way_405781291",
     "name": "Mount Ayliff Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -24625,13 +24625,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "mount-ayliff-hospital-eastern-cape-south-africa",
-    "url_path": "/clinics/kwazulu-natal/mount-ayliff-hospital-eastern-cape-south-africa"
+    "url_path": "/clinics/eastern-cape/mount-ayliff-hospital-eastern-cape-south-africa"
   },
   {
     "facility_id": "zaf_way_408592176",
     "name": "Beaufort West Hospital",
     "type": "district_hospital",
-    "province": "Northern Cape",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -24672,7 +24672,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "beaufort-west-hospital-beaufort-west",
-    "url_path": "/clinics/northern-cape/beaufort-west-hospital-beaufort-west"
+    "url_path": "/clinics/western-cape/beaufort-west-hospital-beaufort-west"
   },
   {
     "facility_id": "zaf_way_408816336",
@@ -24819,7 +24819,7 @@
     "facility_id": "zaf_way_410575186",
     "name": "Groblersdal Hospital",
     "type": "district_hospital",
-    "province": "Mpumalanga",
+    "province": "Limpopo",
     "district": "",
     "sub_district": "",
     "address": {
@@ -24860,7 +24860,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "groblersdal-hospital-groblersdal",
-    "url_path": "/clinics/mpumalanga/groblersdal-hospital-groblersdal"
+    "url_path": "/clinics/limpopo/groblersdal-hospital-groblersdal"
   },
   {
     "facility_id": "zaf_way_410867780",
@@ -25148,7 +25148,7 @@
     "facility_id": "zaf_way_414441700",
     "name": "Carletonville Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -25189,7 +25189,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "carletonville-hospital-carletonville",
-    "url_path": "/clinics/north-west/carletonville-hospital-carletonville"
+    "url_path": "/clinics/gauteng/carletonville-hospital-carletonville"
   },
   {
     "facility_id": "zaf_way_414723726",
@@ -25336,7 +25336,7 @@
     "facility_id": "zaf_way_418102991",
     "name": "Fritz Visser Hospital",
     "type": "district_hospital",
-    "province": "Eastern Cape",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -25377,7 +25377,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "fritz-visser-hospital-noupoort-northern-cape",
-    "url_path": "/clinics/eastern-cape/fritz-visser-hospital-noupoort-northern-cape"
+    "url_path": "/clinics/northern-cape/fritz-visser-hospital-noupoort-northern-cape"
   },
   {
     "facility_id": "zaf_way_418324510",
@@ -25665,7 +25665,7 @@
     "facility_id": "zaf_way_423390919",
     "name": "Brits Hospital",
     "type": "district_hospital",
-    "province": "Gauteng",
+    "province": "North West",
     "district": "",
     "sub_district": "",
     "address": {
@@ -25706,7 +25706,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "brits-hospital-britsnorthwest",
-    "url_path": "/clinics/gauteng/brits-hospital-britsnorthwest"
+    "url_path": "/clinics/north-west/brits-hospital-britsnorthwest"
   },
   {
     "facility_id": "zaf_way_423643436",
@@ -26041,7 +26041,7 @@
     "facility_id": "zaf_way_430290105",
     "name": "Boitumelo Regional Hospital",
     "type": "regional_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -26082,13 +26082,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "boitumelo-regional-hospital-kroonstad-free-state",
-    "url_path": "/clinics/north-west/boitumelo-regional-hospital-kroonstad-free-state"
+    "url_path": "/clinics/free-state/boitumelo-regional-hospital-kroonstad-free-state"
   },
   {
     "facility_id": "zaf_way_430704057",
     "name": "Madzikane Ka Zulu Memorial Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -26129,7 +26129,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "madzikane-ka-zulu-memorial-hospital-mount-frere-eastern-cape",
-    "url_path": "/clinics/kwazulu-natal/madzikane-ka-zulu-memorial-hospital-mount-frere-eastern-cape"
+    "url_path": "/clinics/eastern-cape/madzikane-ka-zulu-memorial-hospital-mount-frere-eastern-cape"
   },
   {
     "facility_id": "zaf_way_431032747",
@@ -26652,7 +26652,7 @@
     "facility_id": "zaf_way_437408105",
     "name": "Tayler Bequest Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -26693,7 +26693,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "tayler-bequest-hospital-mount-fletcher-eastern-cape",
-    "url_path": "/clinics/kwazulu-natal/tayler-bequest-hospital-mount-fletcher-eastern-cape"
+    "url_path": "/clinics/eastern-cape/tayler-bequest-hospital-mount-fletcher-eastern-cape"
   },
   {
     "facility_id": "zaf_way_440596450",
@@ -26840,7 +26840,7 @@
     "facility_id": "zaf_way_446516642",
     "name": "Bongani Regional Hospital",
     "type": "regional_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -26881,7 +26881,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "bongani-regional-hospital-thabong-free-state",
-    "url_path": "/clinics/north-west/bongani-regional-hospital-thabong-free-state"
+    "url_path": "/clinics/free-state/bongani-regional-hospital-thabong-free-state"
   },
   {
     "facility_id": "zaf_way_447018642",
@@ -27028,7 +27028,7 @@
     "facility_id": "zaf_way_461638664",
     "name": "St. Patrick's Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -27069,7 +27069,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "st-patricks-hospital-bizana",
-    "url_path": "/clinics/kwazulu-natal/st-patricks-hospital-bizana"
+    "url_path": "/clinics/eastern-cape/st-patricks-hospital-bizana"
   },
   {
     "facility_id": "zaf_way_461683581",
@@ -27169,7 +27169,7 @@
     "facility_id": "zaf_way_469265316",
     "name": "Kimberley Hospital",
     "type": "district_hospital",
-    "province": "Free State",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -27209,8 +27209,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "kimberley-hospital-free-state",
-    "url_path": "/clinics/free-state/kimberley-hospital-free-state"
+    "slug": "kimberley-hospital-northern-cape",
+    "url_path": "/clinics/northern-cape/kimberley-hospital-northern-cape"
   },
   {
     "facility_id": "zaf_way_469581447",
@@ -27498,7 +27498,7 @@
     "facility_id": "zaf_way_481212137",
     "name": "Elizabeth Ross Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -27539,7 +27539,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "elizabeth-ross-hospital-makong-village-phuthaditjhaba",
-    "url_path": "/clinics/kwazulu-natal/elizabeth-ross-hospital-makong-village-phuthaditjhaba"
+    "url_path": "/clinics/free-state/elizabeth-ross-hospital-makong-village-phuthaditjhaba"
   },
   {
     "facility_id": "zaf_way_483630294",
@@ -28062,7 +28062,7 @@
     "facility_id": "zaf_way_524086485",
     "name": "Orania Kliniek",
     "type": "clinic",
-    "province": "Eastern Cape",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -28103,7 +28103,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "orania-kliniek-orania",
-    "url_path": "/clinics/eastern-cape/orania-kliniek-orania"
+    "url_path": "/clinics/northern-cape/orania-kliniek-orania"
   },
   {
     "facility_id": "zaf_way_530024132",
@@ -28250,7 +28250,7 @@
     "facility_id": "zaf_way_544254973",
     "name": "Fezi Ngubentombi District Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -28291,7 +28291,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "fezi-ngubentombi-district-hospital-sasolburg",
-    "url_path": "/clinics/north-west/fezi-ngubentombi-district-hospital-sasolburg"
+    "url_path": "/clinics/free-state/fezi-ngubentombi-district-hospital-sasolburg"
   },
   {
     "facility_id": "zaf_way_544468714",
@@ -29378,7 +29378,7 @@
     "facility_id": "zaf_way_608975659",
     "name": "AFM Steynville Church",
     "type": "clinic",
-    "province": "Eastern Cape",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -29418,14 +29418,14 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "afm-steynville-church-eastern-cape",
-    "url_path": "/clinics/eastern-cape/afm-steynville-church-eastern-cape"
+    "slug": "afm-steynville-church-northern-cape",
+    "url_path": "/clinics/northern-cape/afm-steynville-church-northern-cape"
   },
   {
     "facility_id": "zaf_way_608975697",
     "name": "hopetown clinic",
     "type": "district_hospital",
-    "province": "Eastern Cape",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -29465,8 +29465,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "hopetown-clinic-eastern-cape",
-    "url_path": "/clinics/eastern-cape/hopetown-clinic-eastern-cape"
+    "slug": "hopetown-clinic-northern-cape",
+    "url_path": "/clinics/northern-cape/hopetown-clinic-northern-cape"
   },
   {
     "facility_id": "zaf_way_614957090",
@@ -30459,7 +30459,7 @@
     "facility_id": "zaf_way_633436898",
     "name": "Nevada Medical Center",
     "type": "clinic",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -30500,7 +30500,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "nevada-medical-center-sebokengvreeniging",
-    "url_path": "/clinics/north-west/nevada-medical-center-sebokengvreeniging"
+    "url_path": "/clinics/gauteng/nevada-medical-center-sebokengvreeniging"
   },
   {
     "facility_id": "zaf_way_635026823",
@@ -30929,7 +30929,7 @@
     "facility_id": "zaf_way_647489474",
     "name": "Mofumahadi Manapo Mopeli Regional Hospital",
     "type": "regional_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -30970,7 +30970,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "mofumahadi-manapo-mopeli-regional-hospital-phuthaditjhaba",
-    "url_path": "/clinics/kwazulu-natal/mofumahadi-manapo-mopeli-regional-hospital-phuthaditjhaba"
+    "url_path": "/clinics/free-state/mofumahadi-manapo-mopeli-regional-hospital-phuthaditjhaba"
   },
   {
     "facility_id": "zaf_way_648850584",
@@ -31117,7 +31117,7 @@
     "facility_id": "zaf_way_660760356",
     "name": "Abraham Esau Hospital",
     "type": "district_hospital",
-    "province": "Western Cape",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -31158,7 +31158,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "abraham-esau-hospital-calvinia",
-    "url_path": "/clinics/western-cape/abraham-esau-hospital-calvinia"
+    "url_path": "/clinics/northern-cape/abraham-esau-hospital-calvinia"
   },
   {
     "facility_id": "zaf_way_672266201",
@@ -31211,7 +31211,7 @@
     "facility_id": "zaf_way_682232295",
     "name": "Manu de Pico Hospital",
     "type": "district_hospital",
-    "province": "Eastern Cape",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -31252,7 +31252,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "manu-de-pico-hospital-colesberg-northern-cape",
-    "url_path": "/clinics/eastern-cape/manu-de-pico-hospital-colesberg-northern-cape"
+    "url_path": "/clinics/northern-cape/manu-de-pico-hospital-colesberg-northern-cape"
   },
   {
     "facility_id": "zaf_way_683271487",
@@ -31305,7 +31305,7 @@
     "facility_id": "zaf_way_685009009",
     "name": "Sutherland Hospital",
     "type": "district_hospital",
-    "province": "Western Cape",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -31346,7 +31346,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "sutherland-hospital-sutherland",
-    "url_path": "/clinics/western-cape/sutherland-hospital-sutherland"
+    "url_path": "/clinics/northern-cape/sutherland-hospital-sutherland"
   },
   {
     "facility_id": "zaf_way_689275254",
@@ -32386,7 +32386,7 @@
     "facility_id": "zaf_way_738363127",
     "name": "Holy Cross Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -32427,7 +32427,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "holy-cross-hospital-flagstaff",
-    "url_path": "/clinics/kwazulu-natal/holy-cross-hospital-flagstaff"
+    "url_path": "/clinics/eastern-cape/holy-cross-hospital-flagstaff"
   },
   {
     "facility_id": "zaf_way_738914225",
@@ -32856,7 +32856,7 @@
     "facility_id": "zaf_way_754718229",
     "name": "Bophelong Clinic Nw2 - Vanderbijlpark",
     "type": "clinic",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -32897,7 +32897,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "bophelong-clinic-nw2-vanderbijlpark-bophelong-vanderbijlpark",
-    "url_path": "/clinics/north-west/bophelong-clinic-nw2-vanderbijlpark-bophelong-vanderbijlpark"
+    "url_path": "/clinics/gauteng/bophelong-clinic-nw2-vanderbijlpark-bophelong-vanderbijlpark"
   },
   {
     "facility_id": "zaf_way_760847778",
@@ -33044,7 +33044,7 @@
     "facility_id": "zaf_way_764410117",
     "name": "Albert Nzula District Hospital",
     "type": "district_hospital",
-    "province": "Eastern Cape",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -33084,8 +33084,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "albert-nzula-district-hospital-eastern-cape",
-    "url_path": "/clinics/eastern-cape/albert-nzula-district-hospital-eastern-cape"
+    "slug": "albert-nzula-district-hospital-free-state",
+    "url_path": "/clinics/free-state/albert-nzula-district-hospital-free-state"
   },
   {
     "facility_id": "zaf_way_764638600",
@@ -33655,7 +33655,7 @@
     "facility_id": "zaf_way_785470994",
     "name": "Stoffel Coetzee Provincial Hospital",
     "type": "district_hospital",
-    "province": "Eastern Cape",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -33696,7 +33696,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "stoffel-coetzee-provincial-hospital-smithfield",
-    "url_path": "/clinics/eastern-cape/stoffel-coetzee-provincial-hospital-smithfield"
+    "url_path": "/clinics/free-state/stoffel-coetzee-provincial-hospital-smithfield"
   },
   {
     "facility_id": "zaf_way_785757083",
@@ -34595,7 +34595,7 @@
     "facility_id": "zaf_way_791745729",
     "name": "Vrede Hospital (Thebe/phumelela District Hospital)",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -34636,7 +34636,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "vrede-hospital-thebephumelela-district-hospital-vrede-free-state",
-    "url_path": "/clinics/kwazulu-natal/vrede-hospital-thebephumelela-district-hospital-vrede-free-state"
+    "url_path": "/clinics/free-state/vrede-hospital-thebephumelela-district-hospital-vrede-free-state"
   },
   {
     "facility_id": "zaf_way_791764878",
@@ -34783,7 +34783,7 @@
     "facility_id": "zaf_way_791817475",
     "name": "Prof ZK Mathews Hospital",
     "type": "district_hospital",
-    "province": "Free State",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -34824,7 +34824,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "prof-zk-mathews-hospital-barkly-west",
-    "url_path": "/clinics/free-state/prof-zk-mathews-hospital-barkly-west"
+    "url_path": "/clinics/northern-cape/prof-zk-mathews-hospital-barkly-west"
   },
   {
     "facility_id": "zaf_way_791823344",
@@ -35206,7 +35206,7 @@
     "facility_id": "zaf_way_791880261",
     "name": "Johan Heyns Community Health Centre",
     "type": "community_health_centre",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -35247,7 +35247,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "johan-heyns-community-health-centre-vanderbijlpark",
-    "url_path": "/clinics/north-west/johan-heyns-community-health-centre-vanderbijlpark"
+    "url_path": "/clinics/gauteng/johan-heyns-community-health-centre-vanderbijlpark"
   },
   {
     "facility_id": "zaf_way_792043313",
@@ -35347,7 +35347,7 @@
     "facility_id": "zaf_way_792058415",
     "name": "Mohau District Hospital - Hoopstad Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -35388,7 +35388,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "mohau-district-hospital-hoopstad-hospital-hoopstad-free-state",
-    "url_path": "/clinics/north-west/mohau-district-hospital-hoopstad-hospital-hoopstad-free-state"
+    "url_path": "/clinics/free-state/mohau-district-hospital-hoopstad-hospital-hoopstad-free-state"
   },
   {
     "facility_id": "zaf_way_792064645",
@@ -35770,7 +35770,7 @@
     "facility_id": "zaf_way_792484409",
     "name": "Old Welkom Provincial ( Not in Use)",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -35810,14 +35810,14 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "old-welkom-provincial-not-in-use-north-west",
-    "url_path": "/clinics/north-west/old-welkom-provincial-not-in-use-north-west"
+    "slug": "old-welkom-provincial-not-in-use-free-state",
+    "url_path": "/clinics/free-state/old-welkom-provincial-not-in-use-free-state"
   },
   {
     "facility_id": "zaf_way_792485694",
     "name": "Nelspoort Hospital",
     "type": "district_hospital",
-    "province": "Northern Cape",
+    "province": "Western Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -35858,13 +35858,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "nelspoort-hospital-nelspoort-beaufort-west",
-    "url_path": "/clinics/northern-cape/nelspoort-hospital-nelspoort-beaufort-west"
+    "url_path": "/clinics/western-cape/nelspoort-hospital-nelspoort-beaufort-west"
   },
   {
     "facility_id": "zaf_way_792509125",
     "name": "Tayler Bequest Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -35905,7 +35905,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "tayler-bequest-hospital-tlokoeng",
-    "url_path": "/clinics/kwazulu-natal/tayler-bequest-hospital-tlokoeng"
+    "url_path": "/clinics/eastern-cape/tayler-bequest-hospital-tlokoeng"
   },
   {
     "facility_id": "zaf_way_792511436",
@@ -36193,7 +36193,7 @@
     "facility_id": "zaf_way_792554734",
     "name": "Clinic",
     "type": "district_hospital",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -36233,8 +36233,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "clinic-limpopo",
-    "url_path": "/clinics/limpopo/clinic-limpopo"
+    "slug": "clinic-mpumalanga",
+    "url_path": "/clinics/mpumalanga/clinic-mpumalanga"
   },
   {
     "facility_id": "zaf_way_792560268",
@@ -36757,7 +36757,7 @@
     "facility_id": "zaf_way_792598506",
     "name": "Sigagule",
     "type": "district_hospital",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -36797,14 +36797,14 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "sigagule-limpopo",
-    "url_path": "/clinics/limpopo/sigagule-limpopo"
+    "slug": "sigagule-mpumalanga",
+    "url_path": "/clinics/mpumalanga/sigagule-mpumalanga"
   },
   {
     "facility_id": "zaf_way_792604323",
     "name": "Dihlabeng Regional Hospital",
     "type": "regional_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -36845,7 +36845,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "dihlabeng-regional-hospital-bethlehem",
-    "url_path": "/clinics/north-west/dihlabeng-regional-hospital-bethlehem"
+    "url_path": "/clinics/free-state/dihlabeng-regional-hospital-bethlehem"
   },
   {
     "facility_id": "zaf_way_792605110",
@@ -36945,7 +36945,7 @@
     "facility_id": "zaf_way_792850155",
     "name": "Galeshewe Day Hospital",
     "type": "district_hospital",
-    "province": "Free State",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -36986,13 +36986,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "galeshewe-day-hospital-galeshewe-kimberley",
-    "url_path": "/clinics/free-state/galeshewe-day-hospital-galeshewe-kimberley"
+    "url_path": "/clinics/northern-cape/galeshewe-day-hospital-galeshewe-kimberley"
   },
   {
     "facility_id": "zaf_way_792856128",
     "name": "Connie Vorster Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -37033,13 +37033,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "connie-vorster-hospital-hartswater",
-    "url_path": "/clinics/north-west/connie-vorster-hospital-hartswater"
+    "url_path": "/clinics/northern-cape/connie-vorster-hospital-hartswater"
   },
   {
     "facility_id": "zaf_way_792869861",
     "name": "Nala Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -37080,13 +37080,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "nala-hospital-bothaville",
-    "url_path": "/clinics/north-west/nala-hospital-bothaville"
+    "url_path": "/clinics/free-state/nala-hospital-bothaville"
   },
   {
     "facility_id": "zaf_way_792872127",
     "name": "Els Medsorg",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -37127,7 +37127,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "els-medsorg-vereeniging-gauteng",
-    "url_path": "/clinics/north-west/els-medsorg-vereeniging-gauteng"
+    "url_path": "/clinics/gauteng/els-medsorg-vereeniging-gauteng"
   },
   {
     "facility_id": "zaf_way_792873638",
@@ -37744,7 +37744,7 @@
     "facility_id": "zaf_way_792918496",
     "name": "Clinic",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -37784,8 +37784,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "clinic-kwazulu-natal",
-    "url_path": "/clinics/kwazulu-natal/clinic-kwazulu-natal"
+    "slug": "clinic-free-state",
+    "url_path": "/clinics/free-state/clinic-free-state"
   },
   {
     "facility_id": "zaf_way_792919598",
@@ -37979,7 +37979,7 @@
     "facility_id": "zaf_way_793243725",
     "name": "Mafube District Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -38020,13 +38020,13 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "mafube-district-hospital-frankfort",
-    "url_path": "/clinics/north-west/mafube-district-hospital-frankfort"
+    "url_path": "/clinics/free-state/mafube-district-hospital-frankfort"
   },
   {
     "facility_id": "zaf_way_797177741",
     "name": "Anglo Coal Highveld Hospital",
     "type": "district_hospital",
-    "province": "Gauteng",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -38067,7 +38067,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "anglo-coal-highveld-hospital-witbankemalahleni-local-municipality",
-    "url_path": "/clinics/gauteng/anglo-coal-highveld-hospital-witbankemalahleni-local-municipality"
+    "url_path": "/clinics/mpumalanga/anglo-coal-highveld-hospital-witbankemalahleni-local-municipality"
   },
   {
     "facility_id": "zaf_way_797177743",
@@ -38214,7 +38214,7 @@
     "facility_id": "zaf_way_821523083",
     "name": "Hebron Clinic",
     "type": "clinic",
-    "province": "Gauteng",
+    "province": "North West",
     "district": "",
     "sub_district": "",
     "address": {
@@ -38254,8 +38254,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "hebron-clinic-gauteng",
-    "url_path": "/clinics/gauteng/hebron-clinic-gauteng"
+    "slug": "hebron-clinic-north-west",
+    "url_path": "/clinics/north-west/hebron-clinic-north-west"
   },
   {
     "facility_id": "zaf_way_823582435",
@@ -38543,7 +38543,7 @@
     "facility_id": "zaf_way_862926984",
     "name": "Hartbeespoort Medical Centre",
     "type": "clinic",
-    "province": "Gauteng",
+    "province": "North West",
     "district": "",
     "sub_district": "",
     "address": {
@@ -38584,7 +38584,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "hartbeespoort-medical-centre-hartbeespoort",
-    "url_path": "/clinics/gauteng/hartbeespoort-medical-centre-hartbeespoort"
+    "url_path": "/clinics/north-west/hartbeespoort-medical-centre-hartbeespoort"
   },
   {
     "facility_id": "zaf_way_879888285",
@@ -38637,7 +38637,7 @@
     "facility_id": "zaf_way_883732975",
     "name": "Matibidi Hospital",
     "type": "district_hospital",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -38678,7 +38678,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "matibidi-hospital-graskop",
-    "url_path": "/clinics/limpopo/matibidi-hospital-graskop"
+    "url_path": "/clinics/mpumalanga/matibidi-hospital-graskop"
   },
   {
     "facility_id": "zaf_way_892989915",
@@ -39812,7 +39812,7 @@
     "facility_id": "zaf_way_970842952",
     "name": "Ndlovu Medical Centre",
     "type": "clinic",
-    "province": "Gauteng",
+    "province": "Limpopo",
     "district": "",
     "sub_district": "",
     "address": {
@@ -39852,8 +39852,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "ndlovu-medical-centre-gauteng",
-    "url_path": "/clinics/gauteng/ndlovu-medical-centre-gauteng"
+    "slug": "ndlovu-medical-centre-limpopo",
+    "url_path": "/clinics/limpopo/ndlovu-medical-centre-limpopo"
   },
   {
     "facility_id": "zaf_way_978414255",
@@ -39906,7 +39906,7 @@
     "facility_id": "zaf_way_981926606",
     "name": "Villiers Clinic",
     "type": "clinic",
-    "province": "KwaZulu-Natal",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -39947,7 +39947,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "villiers-clinic-villiers",
-    "url_path": "/clinics/kwazulu-natal/villiers-clinic-villiers"
+    "url_path": "/clinics/free-state/villiers-clinic-villiers"
   },
   {
     "facility_id": "zaf_way_983511845",
@@ -40611,7 +40611,7 @@
     "facility_id": "zaf_way_1010083323",
     "name": "CLINIC",
     "type": "district_hospital",
-    "province": "Gauteng",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -40652,7 +40652,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "clinic-emalahleni",
-    "url_path": "/clinics/gauteng/clinic-emalahleni"
+    "url_path": "/clinics/mpumalanga/clinic-emalahleni"
   },
   {
     "facility_id": "zaf_way_1010873531",
@@ -41551,7 +41551,7 @@
     "facility_id": "zaf_way_1053260030",
     "name": "Agincourt Community Health Center",
     "type": "community_health_centre",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -41592,7 +41592,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "agincourt-community-health-center-acornhoek",
-    "url_path": "/clinics/limpopo/agincourt-community-health-center-acornhoek"
+    "url_path": "/clinics/mpumalanga/agincourt-community-health-center-acornhoek"
   },
   {
     "facility_id": "zaf_way_1053976064",
@@ -41739,7 +41739,7 @@
     "facility_id": "zaf_way_1060193292",
     "name": "Thulamahashe Community Health Centre",
     "type": "community_health_centre",
-    "province": "Limpopo",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -41780,7 +41780,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "thulamahashe-community-health-centre-thulamahashe",
-    "url_path": "/clinics/limpopo/thulamahashe-community-health-centre-thulamahashe"
+    "url_path": "/clinics/mpumalanga/thulamahashe-community-health-centre-thulamahashe"
   },
   {
     "facility_id": "zaf_way_1062395929",
@@ -42115,7 +42115,7 @@
     "facility_id": "zaf_way_1085069052",
     "name": "Nthorwane Clinic",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Mpumalanga",
     "district": "",
     "sub_district": "",
     "address": {
@@ -42156,7 +42156,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "nthorwane-clinic-greylingstadmpumalanga",
-    "url_path": "/clinics/kwazulu-natal/nthorwane-clinic-greylingstadmpumalanga"
+    "url_path": "/clinics/mpumalanga/nthorwane-clinic-greylingstadmpumalanga"
   },
   {
     "facility_id": "zaf_way_1085114438",
@@ -42585,7 +42585,7 @@
     "facility_id": "zaf_way_1107797446",
     "name": "Leslie Williams Memorial Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -42625,8 +42625,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "leslie-williams-memorial-hospital-north-west",
-    "url_path": "/clinics/north-west/leslie-williams-memorial-hospital-north-west"
+    "slug": "leslie-williams-memorial-hospital-gauteng",
+    "url_path": "/clinics/gauteng/leslie-williams-memorial-hospital-gauteng"
   },
   {
     "facility_id": "zaf_way_1108161430",
@@ -42867,7 +42867,7 @@
     "facility_id": "zaf_way_1117581848",
     "name": "Sipetu Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -42907,8 +42907,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "sipetu-hospital-kwazulu-natal",
-    "url_path": "/clinics/kwazulu-natal/sipetu-hospital-kwazulu-natal"
+    "slug": "sipetu-hospital-eastern-cape",
+    "url_path": "/clinics/eastern-cape/sipetu-hospital-eastern-cape"
   },
   {
     "facility_id": "zaf_way_1118108911",
@@ -43431,7 +43431,7 @@
     "facility_id": "zaf_way_1163605957",
     "name": "Neo Clinic",
     "type": "clinic",
-    "province": "Limpopo",
+    "province": "North West",
     "district": "",
     "sub_district": "",
     "address": {
@@ -43471,8 +43471,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "neo-clinic-limpopo",
-    "url_path": "/clinics/limpopo/neo-clinic-limpopo"
+    "slug": "neo-clinic-north-west",
+    "url_path": "/clinics/north-west/neo-clinic-north-west"
   },
   {
     "facility_id": "zaf_way_1163629779",
@@ -43995,7 +43995,7 @@
     "facility_id": "zaf_way_1190384299",
     "name": "Orania Med 24",
     "type": "district_hospital",
-    "province": "Eastern Cape",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -44036,7 +44036,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "orania-med-24-orania",
-    "url_path": "/clinics/eastern-cape/orania-med-24-orania"
+    "url_path": "/clinics/northern-cape/orania-med-24-orania"
   },
   {
     "facility_id": "zaf_way_1192605828",
@@ -44606,7 +44606,7 @@
     "facility_id": "zaf_way_1237501603",
     "name": "Sebokeng Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -44646,8 +44646,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "sebokeng-hospital-north-west",
-    "url_path": "/clinics/north-west/sebokeng-hospital-north-west"
+    "slug": "sebokeng-hospital-gauteng",
+    "url_path": "/clinics/gauteng/sebokeng-hospital-gauteng"
   },
   {
     "facility_id": "zaf_way_1237566253",
@@ -44700,7 +44700,7 @@
     "facility_id": "zaf_way_1239193326",
     "name": "Lephoi Clinic",
     "type": "clinic",
-    "province": "Eastern Cape",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -44740,8 +44740,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "lephoi-clinic-eastern-cape",
-    "url_path": "/clinics/eastern-cape/lephoi-clinic-eastern-cape"
+    "slug": "lephoi-clinic-free-state",
+    "url_path": "/clinics/free-state/lephoi-clinic-free-state"
   },
   {
     "facility_id": "zaf_way_1240504271",
@@ -45170,7 +45170,7 @@
     "facility_id": "zaf_way_1266234611",
     "name": "Parys District Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Free State",
     "district": "",
     "sub_district": "",
     "address": {
@@ -45211,7 +45211,7 @@
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
     "slug": "parys-district-hospital-parys",
-    "url_path": "/clinics/north-west/parys-district-hospital-parys"
+    "url_path": "/clinics/free-state/parys-district-hospital-parys"
   },
   {
     "facility_id": "zaf_way_1270673476",
@@ -45358,7 +45358,7 @@
     "facility_id": "zaf_way_1278905117",
     "name": "Flagstaff Community Health Centre",
     "type": "community_health_centre",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -45398,8 +45398,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "flagstaff-community-health-centre-kwazulu-natal",
-    "url_path": "/clinics/kwazulu-natal/flagstaff-community-health-centre-kwazulu-natal"
+    "slug": "flagstaff-community-health-centre-eastern-cape",
+    "url_path": "/clinics/eastern-cape/flagstaff-community-health-centre-eastern-cape"
   },
   {
     "facility_id": "zaf_way_1281137984",
@@ -45640,7 +45640,7 @@
     "facility_id": "zaf_way_1303589744",
     "name": "Khotsong TB Hospital",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -45680,8 +45680,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "khotsong-tb-hospital-kwazulu-natal",
-    "url_path": "/clinics/kwazulu-natal/khotsong-tb-hospital-kwazulu-natal"
+    "slug": "khotsong-tb-hospital-eastern-cape",
+    "url_path": "/clinics/eastern-cape/khotsong-tb-hospital-eastern-cape"
   },
   {
     "facility_id": "zaf_way_1306991171",
@@ -45969,7 +45969,7 @@
     "facility_id": "zaf_way_1317140811",
     "name": "Sharpeville Community Health Centre",
     "type": "community_health_centre",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -46009,8 +46009,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "sharpeville-community-health-centre-north-west",
-    "url_path": "/clinics/north-west/sharpeville-community-health-centre-north-west"
+    "slug": "sharpeville-community-health-centre-gauteng",
+    "url_path": "/clinics/gauteng/sharpeville-community-health-centre-gauteng"
   },
   {
     "facility_id": "zaf_way_1317573717",
@@ -46674,7 +46674,7 @@
     "facility_id": "zaf_way_1365586445",
     "name": "Philedalphia Hospital",
     "type": "district_hospital",
-    "province": "Gauteng",
+    "province": "Limpopo",
     "district": "",
     "sub_district": "",
     "address": {
@@ -46714,8 +46714,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "philedalphia-hospital-gauteng",
-    "url_path": "/clinics/gauteng/philedalphia-hospital-gauteng"
+    "slug": "philedalphia-hospital-limpopo",
+    "url_path": "/clinics/limpopo/philedalphia-hospital-limpopo"
   },
   {
     "facility_id": "zaf_way_1367284683",
@@ -47332,7 +47332,7 @@
     "facility_id": "zaf_way_1420812273",
     "name": "Heidelberg Hospital",
     "type": "district_hospital",
-    "province": "North West",
+    "province": "Gauteng",
     "district": "",
     "sub_district": "",
     "address": {
@@ -47372,8 +47372,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "heidelberg-hospital-north-west",
-    "url_path": "/clinics/north-west/heidelberg-hospital-north-west"
+    "slug": "heidelberg-hospital-gauteng",
+    "url_path": "/clinics/gauteng/heidelberg-hospital-gauteng"
   },
   {
     "facility_id": "zaf_way_1424755083",
@@ -47990,7 +47990,7 @@
     "facility_id": "zaf_way_1479069589",
     "name": "Moutse East Clinic",
     "type": "clinic",
-    "province": "Mpumalanga",
+    "province": "Limpopo",
     "district": "",
     "sub_district": "",
     "address": {
@@ -48030,8 +48030,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "moutse-east-clinic-mpumalanga",
-    "url_path": "/clinics/mpumalanga/moutse-east-clinic-mpumalanga"
+    "slug": "moutse-east-clinic-limpopo",
+    "url_path": "/clinics/limpopo/moutse-east-clinic-limpopo"
   },
   {
     "facility_id": "zaf_way_1481731495",
@@ -48272,7 +48272,7 @@
     "facility_id": "zaf_way_1492412439",
     "name": "Mvenyane Clinic",
     "type": "district_hospital",
-    "province": "KwaZulu-Natal",
+    "province": "Eastern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -48312,8 +48312,8 @@
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
-    "slug": "mvenyane-clinic-kwazulu-natal",
-    "url_path": "/clinics/kwazulu-natal/mvenyane-clinic-kwazulu-natal"
+    "slug": "mvenyane-clinic-eastern-cape",
+    "url_path": "/clinics/eastern-cape/mvenyane-clinic-eastern-cape"
   },
   {
     "facility_id": "zaf_way_1495951059",
@@ -50199,7 +50199,7 @@
     "facility_id": "zaf_node_13064379914",
     "name": "Betesda Gesondheidhuis",
     "type": "clinic",
-    "province": "Eastern Cape",
+    "province": "Northern Cape",
     "district": "",
     "sub_district": "",
     "address": {
@@ -50240,7 +50240,7 @@
     "data_quality_score": 3,
     "last_verified": "2026-04-14",
     "slug": "betesda-gesondheidhuis-orania",
-    "url_path": "/clinics/eastern-cape/betesda-gesondheidhuis-orania"
+    "url_path": "/clinics/northern-cape/betesda-gesondheidhuis-orania"
   },
   {
     "facility_id": "zaf_way_632368625",

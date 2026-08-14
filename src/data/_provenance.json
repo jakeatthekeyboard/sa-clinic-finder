@@ -1,12 +1,12 @@
 {
   "$comment": "Provenance manifest for clinicfinder.co.za data. Declares, per VALUE CLASS, where each value came from. Modelled on SDMX observation-status flags (Eurostat/IMF/FAO).",
-  "updated_at": "2026-07-19T18:35:00+02:00",
+  "updated_at": "2026-08-14T21:10:00+02:00",
   "levels": {
     "sourced": "Taken from a named third-party open-data source.",
     "derived": "Computed from other values in this dataset.",
     "ai_authored": "Explanatory prose written by AI over sourced material.",
     "observed": "Directly measured by our own tooling at a point in time.",
-    "config": "Site configuration or build artefact authored by our own tooling \u2014 sitemap priorities, routing. Not a factual claim about the world."
+    "config": "Site configuration or build artefact authored by our own tooling — sitemap priorities, routing. Not a factual claim about the world."
   },
   "datasets": {
     "facilities.json": {
@@ -14,7 +14,7 @@
       "facility_id": "sourced",
       "operator": "sourced",
       "operator_type": "sourced",
-      "province": "sourced",
+      "province": "sourced, with 130 records corrected to derived (see notes)",
       "district": "sourced",
       "address": "sourced",
       "coordinates": "sourced",
@@ -42,11 +42,12 @@
     }
   },
   "primary_sources": [
-    "OpenStreetMap via the Overpass API (1,058 facilities) \u2014 community-maintained open data, ODbL licensed.",
+    "OpenStreetMap via the Overpass API (1,058 facilities) — community-maintained open data, ODbL licensed.",
     "Humanitarian OpenStreetMap Team / HOTOSM exports (18 facilities)."
   ],
   "notes": [
-    "Facility records are SOURCED from open data, not modelled \u2014 do not hedge them as estimates. The honest caveat here is different: OpenStreetMap is community-maintained, so completeness and currency vary by area. That is a coverage caveat, not a provenance one, and data_quality_score plus last_verified exist to expose it.",
-    "This is a humanitarian site. A wrong clinic address costs someone a trip they may not be able to afford, so the coverage caveat matters more here than anywhere else in the portfolio."
+    "Facility records are SOURCED from open data, not modelled — do not hedge them as estimates. The honest caveat here is different: OpenStreetMap is community-maintained, so completeness and currency vary by area. That is a coverage caveat, not a provenance one, and data_quality_score plus last_verified exist to expose it.",
+    "This is a humanitarian site. A wrong clinic address costs someone a trip they may not be able to afford, so the coverage caveat matters more here than anywhere else in the portfolio.",
+    "2026-08-14 21:10 SAST — `province` was wrong on 130 of 1,076 facility records (12%), always naming a NEIGHBOURING province. Found by point-in-polygon testing each record's own sourced `coordinates` against the 52 SA district-municipality boundaries (click_that_hood south-africa.geojson) mapped to their provinces. The 130 sit a median 26 km inside the province their coordinates fall in, so this is not boundary noise: Kimberley Hospital was filed under Free State, Ermelo Hospital under KwaZulu-Natal, Sebokeng Hospital under North West, Beaufort West Hospital under Northern Cape. For those records `province` is now DERIVED from `coordinates`, which remain sourced and untouched; the sourced value is not otherwise edited anywhere. 8 of the 130 sit within 3 km of the old province's border and were each confirmed against the town named in their own `address.city` before being changed."
   ]
 }
