@@ -43,15 +43,15 @@ function isStructural(path) {
   // this site" is a first-order E-E-A-T signal. It has zero impressions, so it can never
   // enter the impressions-derived manifest on its own; the structural list is the only
   // place a deliberate nomination survives a manifest refresh.
-  // Translated locales (#2/#3): only the locale homepage and its guides hub are
-  // nominated. Both are <=2 clicks from the English homepage via the language
+  // Translated locales (#1 isiXhosa / #2 isiZulu): only the locale homepage and its guides
+  // hub are nominated. Both are <=2 clicks from the English homepage via the language
   // switcher, so they meet the sitemap-growth criterion. The individual translated
-  // guides are deliberately NOT nominated — per pipeline sitemap discipline a new
-  // URL earns inclusion by demonstrating demand, and these are reachable through
-  // internal links and the switcher in the meantime.
+  // guides, /xh|zu/clinics and /xh|zu/services are deliberately NOT nominated — per
+  // pipeline sitemap discipline a new URL earns inclusion by demonstrating demand, and
+  // these are reachable through internal links and the switcher in the meantime.
   if (['/', '/clinics', '/services', '/guide', '/guides', '/search',
        '/how-this-site-is-made', '/about',
-       '/zu', '/zu/guides'].includes(path)) return true;
+       '/xh', '/xh/guides', '/zu', '/zu/guides'].includes(path)) return true;
   for (const prefix of structuralPrefixes) {
     if (path.startsWith(prefix) && path.split('/').length <= 3) return true;
   }

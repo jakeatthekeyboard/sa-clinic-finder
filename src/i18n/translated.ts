@@ -18,7 +18,25 @@ import type { Locale } from './config';
  * so the manifest cannot drift ahead of reality.
  */
 export const TRANSLATED: Record<Exclude<Locale, 'en'>, string[]> = {
-  xh: [],
+  xh: [
+    '/',
+    '/clinics',
+    '/services',
+    '/guides',
+    '/guides/ccmdd-chronic-meds-pickup',
+    '/guides/child-immunisation-schedule',
+    '/guides/chronic-medication-management',
+    '/guides/dental-care-public-clinics',
+    '/guides/family-planning-contraception',
+    '/guides/find-nearest-clinic',
+    '/guides/free-maternity-care',
+    '/guides/hiv-testing-guide',
+    '/guides/hospital-referral-system',
+    '/guides/how-to-get-arvs',
+    '/guides/medical-emergency-guide',
+    '/guides/mental-health-services',
+    '/guides/tb-treatment-what-to-expect',
+  ],
   zu: [
     '/',
     '/clinics',

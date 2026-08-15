@@ -57,7 +57,31 @@ export const STRINGS: Record<Locale, ChromeStrings | null> = {
       'Do not make a treatment decision from this page. Confirm with a health worker at the clinic.',
     disclaimerReadEnglish: 'Read this page in English',
   },
-  xh: null,
+  xh: {
+    brand: 'Clinic Finder SA',
+    navProvinces: 'Amaphondo',
+    navServices: 'Iinkonzo',
+    navSearch: 'Khangela',
+    navGuides: 'Izikhokelo',
+    switcherLabel: 'Ulwimi',
+    footerTagline:
+      'Clinic Finder SA — Uluhlu lwasimahla lwamaziko empilo karhulumente aseMzantsi Afrika.',
+    footerSource:
+      'Idatha ithathwe kwa-OpenStreetMap nakwa-HOTOSM. Ihlaziywe okokugqibela ngo-Aprili 2026. Ayilophepha likarhulumente elisemthethweni.',
+    footerNotAdvice:
+      'Olu luluhlu lwamaziko, asilocebiso lezonyango. Iinkonzo, imithi ekhoyo namaxesha okuvula ziyahluka kwiziko ngeziko nangosuku ngosuku — nceda ufowune kuqala uqinisekise phambi kokuba uhambe, uze uthethe nomsebenzi wezempilo malunga nonyango.',
+    footerCorrections: 'Ukuba inkcazelo ayichanekanga,',
+    footerCorrectionsLink: 'sazise',
+    disclaimerHeading: 'Malunga nolu guqulelo',
+    disclaimerMachine:
+      'Eli phepha liguqulelwe ngumatshini. ALIKHANGELWANGA ngumntu othetha isiXhosa njengolwimi lwakhe lweenkobe.',
+    disclaimerSpelling:
+      'Upelo namagama asetyenzisiweyo asenokuba aphosakele okanye angangqinelani. Apho kungekho gama lesiXhosa elimiselweyo lentetho yezonyango, igama lesiNgesi lishiywe phakathi kwezibiyeli.',
+    disclaimerAuthoritative: 'Iphepha lesiNgesi lelona lichanekileyo.',
+    disclaimerClinical:
+      'Musa ukuthatha isigqibo ngonyango usekele kweli phepha. Qinisekisa nomsebenzi wezempilo ekliniki.',
+    disclaimerReadEnglish: 'Funda eli phepha ngesiNgesi',
+  },
   zu: {
     brand: 'Clinic Finder SA',
     navProvinces: 'Izifundazwe',

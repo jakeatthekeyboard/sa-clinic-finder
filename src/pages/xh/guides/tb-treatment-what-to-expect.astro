@@ -1,0 +1,238 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { facilities } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const L = (p: string) => localePath(p, 'xh');
+
+const tbClinics = facilities.filter(f => f.services.tb_treatment);
+
+const faqs = [
+  {
+    question: 'Unyango lwe-TB lusimahla?',
+    answer: 'Ewe. Konke ukufunyaniswa nokunyangwa kwe-TB kusimahla kumaziko empilo karhulumente eMzantsi Afrika. Oku kubandakanya uvavanyo lweqhwitha, i-X-ray yesifuba, amayeza, kunye nee-appointment zokulandelela. I-TB sisifo ekufuneka sixelwe kurhulumente — urhulumente uhlawulela unyango kuba ukuphilisa isigulana ngasinye kukhusela uluntu.',
+  },
+  {
+    question: 'Ndingasebenza ngelixa ndisemayezeni e-TB?',
+    answer: 'Kwiimeko ezininzi, ewe. Emva kweeveki ezi-2 zonyango, awusosuleli kwaye ungabuyela emsebenzini. Abanye abaqeshi bafuna incwadi kagqirha eqinisekisa ukuba usemayezeni kwaye awusosuleli. Ukhuselwe ngumthetho ekugxothweni ngenxa ye-TB — kuwela phantsi kocalucalulo ngenxa yokukhubazeka.',
+  },
+  {
+    question: 'Kuthekani ukuba ndiphoswa ziidosi ze-TB?',
+    answer: 'Ukuphoswa ziidosi sesona sizathu siqhelekileyo se-TB emelana namayeza. Ukuba uphoswe lusuku okanye ezimbini, buyela ekliniki ngoko nangoko. Umongikazi uya kujonga ukuba ungaqhubeka apho ubuyeke khona okanye ufuna ukuqala kwakhona. Ungalindi de kufike i-appointment yakho elandelayo — yiya ngokukhawuleza. Akukho sohlwayo sokubuya.',
+  },
+  {
+    question: 'Yintoni i-MDR-TB?',
+    answer: 'I-multi-drug resistant TB (i-MDR-TB) yenzeka xa iintsholongwane ze-TB zimelana namayeza amabini aphambili (i-isoniazid ne-rifampicin), ngesiqhelo ngenxa yonyango olungagqitywanga. I-MDR-TB ifuna unyango olude (iinyanga ezi-9-18 endaweni yezi-6) ngamayeza anamandla anokuba neziphumo ezingafunwayo ezingaphezulu. Iyeza elitsha i-bedaquiline liyiphucule kakhulu imiphumo ye-MDR-TB eMzantsi Afrika ukususela ngo-2018.',
+  },
+  {
+    question: 'Ndingayifumana i-TB ukuba ndine-HIV?',
+    answer: 'Abantu abane-HIV banamathuba aphindwe ka-15-22 okuba ne-TB esebenzayo kunabantu abangenayo i-HIV. I-TB sesona sizathu siphambili sokufa phakathi kwabantu abaphila ne-HIV eMzantsi Afrika. Ukuba une-HIV, ikliniki yakho kufuneka ikukhangele i-TB kulo lonke utyelelo kwaye ikunike i-isoniazid preventive therapy (IPT) ukuba awunayo i-TB esebenzayo. Oku kunciphisa umngcipheko wakho we-TB ngama-33-67%.',
+  },
+];
+
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Unyango lwe-TB eMzantsi Afrika — Okulindelekileyo',
+  description: 'Uhambo lupheleleyo lonyango lwe-TB ekliniki karhulumente: uvavanyo, ukufunyaniswa, unyango lwe-DOTS lweenyanga ezi-6, nokulandelela.',
+  totalTime: 'P6M',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Vavanywa', text: 'Tyelela nayiphi na ikliniki karhulumente ukuba unokhohlokhohlo olungaphezu kweeveki ezi-2, ukubila ebusuku, okanye ukwehla kobunzima. Iziphumo zovavanyo lweqhwitha zithatha iiyure ezi-2-48 nge-GeneXpert.' },
+    { '@type': 'HowToStep', position: 2, name: 'Qala unyango', text: 'Unyango lwe-TB lusimahla. Isigaba esiqinileyo (iinyanga ezi-2) sisebenzisa amayeza ama-4: i-rifampicin, i-isoniazid, i-pyrazinamide, ne-ethambutol — athathwa yonke imihla.' },
+    { '@type': 'HowToStep', position: 3, name: 'Ukujongwa kwe-DOTS', text: 'Sela amayeza akho ujongwa (DOTS) ekliniki okanye nomxhasi wonyango. Oku kuqinisekisa ukuba uyasela kwaye kubamba iziphumo ezingafunwayo kwangethuba.' },
+    { '@type': 'HowToStep', position: 4, name: 'Isigaba sokuqhubeka', text: 'Emva kweenyanga ezi-2, utshintshela kumayeza ama-2 (i-rifampicin + i-isoniazid) iinyanga ezi-4 ezongezelelweyo. Utyelela ikliniki nyanga zonke ukujongwa kweqhwitha.' },
+    { '@type': 'HowToStep', position: 5, name: 'Gqiba iinyanga ezi-6', text: 'Gqiba zonke iinyanga ezi-6 nokuba uziva ubhetele. Ukuyeka kwangoko kubangela i-TB emelana namayeza enzima kwaye ethatha ixesha elide ukunyangwa.' },
+  ],
+};
+
+const jsonLd = [
+  howToLd,
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Unyango lwe-TB eMzantsi Afrika — Okulindelekileyo',
+    description: 'Isikhokelo esipheleleyo sonyango lwesifo sephepha kwiikliniki zikarhulumente zaseMzantsi Afrika: ukufunyaniswa, i-DOTS, i-TB emelana namayeza, nokuqhubeka de kuphele.',
+    url: 'https://clinicfinder.co.za/xh/guides/tb-treatment-what-to-expect',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhaya', item: 'https://clinicfinder.co.za/xh/' }, { '@type': 'ListItem', position: 2, name: 'Izikhokelo', item: 'https://clinicfinder.co.za/xh/guides' }, { '@type': 'ListItem', position: 3, name: 'Unyango lwe-TB' }] },
+];
+---
+<Base
+  title="Unyango lwe-TB — Okulindelekileyo — Clinic Finder SA"
+  description="Isikhokelo esipheleleyo sonyango lwesifo sephepha kwiikliniki zikarhulumente zaseMzantsi Afrika. Ukufunyaniswa, inkqubo ye-DOTS, i-TB emelana namayeza, iziphumo ezingafunwayo, nendlela yokugqiba iinyanga ezi-6."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={L('/')}>Ikhaya</a> &rsaquo; <a href={L('/guides')}>Izikhokelo</a> &rsaquo; Unyango lwe-TB
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Unyango lwe-TB — Okulindelekileyo</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      UMzantsi Afrika ngomnye wamazwe anezinga eliphezu kunazo zonke le-TB ehlabathini, kodwa esi sifo siyaphiliswa. Unyango lusimahla, luthatha iinyanga ezi-6 kwi-TB engamelaniyo namayeza, kwaye lunezinga lokuphilisa elingaphezu kwama-85% xa lugqityiwe. Esi sikhokelo sihamba nawe kulo lonke uhambo lonyango.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ukufunyaniswa</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Ukuba unokhohlokhohlo olungaphezu kweeveki ezi-2, ukubila ebusuku, ukwehla kobunzima okungachazekiyo, okanye ukufudumala komzimba, yiya kwikliniki ekufuphi nawe ucele uvavanyo lwe-TB. Ikliniki iza kuthatha isampulu yeqhwitha (ukhohlela kwibhotile encinci) iyithumele kuvavanyo lwe-GeneXpert. Iziphumo zibuya kwiiyure ezi-2 kwiikliniki ezinemitshini, okanye kwiiyure ezingama-48 ukuba ithunyelwe elebhu.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        I-GeneXpert lolona vavanyo lokuqala lusemgangathweni eMzantsi Afrika. Libona iintsholongwane ze-TB kwaye ngaxeshanye lijonge ukumelana ne-rifampicin (elona yeza libalulekileyo). Ukuba uvavanyo lubonisa ukuba unayo, ikliniki inokuyalela i-X-ray yesifuba nezinye iisampulu zeqhwitha ukukhokela unyango.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Inkqubo yonyango</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Unyango olusemgangathweni lwe-TB engamelaniyo namayeza luthatha <strong>iinyanga ezi-6</strong> kwizigaba ezibini:
+      </p>
+      <div style="margin-top: 12px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+        <div style="display: grid; grid-template-columns: 1fr 2fr; font-size: 0.9rem;">
+          <div style="padding: 12px; background: var(--primary-light); font-weight: 600; border-bottom: 1px solid var(--border);">Isigaba esiqinileyo</div>
+          <div style="padding: 12px; border-bottom: 1px solid var(--border); line-height: 1.6;">Iinyanga 1-2: amayeza amane (i-isoniazid, i-rifampicin, i-pyrazinamide, i-ethambutol). Athathwa yonke imihla. Oku kubulala uninzi lweentsholongwane ze-TB.</div>
+          <div style="padding: 12px; background: var(--primary-light); font-weight: 600;">Isigaba sokuqhubeka</div>
+          <div style="padding: 12px; line-height: 1.6;">Iinyanga 3-6: amayeza amabini (i-isoniazid, i-rifampicin). Athathwa yonke imihla. Oku kususa iintsholongwane eziseleyo ezithothiswe sisigaba esiqinileyo.</div>
+        </div>
+      </div>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        Onke amayeza anikwa kwipilisi enye edibeneyo (fixed-dose combination) — usela ipilisi enye ngemini, hayi iipilisi ezine ezahlukeneyo. Iipilisi zisimahla.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">I-DOTS — Unyango Olujongwa Ngokuthe Ngqo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        UMzantsi Afrika usebenzisa isicwangciso se-DOTS: ngexesha lesigaba esiqinileyo, umsebenzi wezempilo, ivolontiya yoluntu, okanye umxhasi wonyango uyakubukela usela idosi nganye. Oku akuthethi ukuba awuthenjwa — yeyona ndlela ingqinisisiweyo ehlabathini yokuqinisekisa ukuba unyango luyagqitywa.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Umxhasi wakho we-DOTS unokuba ngumongikazi wasekliniki, umsebenzi wezempilo woluntu otyelela ekhaya kwakho, igosa lezempilo emsebenzini, okanye nelungu losapho elithenjiweyo eliqeqeshwe yikliniki. Injongo kukwenza unyango lwemihla ngemihla lube lula kangangoko kuwe — ukuba indlela esetyenziswayo ngoku ayisebenzi, xelela umongikazi kwaye baza kufumana enye indlela.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Iziphumo ezingafunwayo omawuzilinde</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        Abantu abaninzi bawanyamezela kakuhle amayeza e-TB, kodwa ezinye iziphumo ezingafunwayo ziqhelekile kwiiveki zokuqala:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Umchamo oorenji/obomvu</strong> — oku kuqhelekile kwaye kubangelwa yi-rifampicin. Akwenzi ngozi. Kunokudaka nee-contact lenses nokubila.</li>
+        <li><strong>Isicaphucaphu</strong> — sela amayeza nokutya okuncinci ukuba kuyimfuneko. Ngesiqhelo siyaphela emva kweeveki ezi-2 zokuqala.</li>
+        <li><strong>Iintlungu zamalungu omzimba</strong> — zibangelwa yi-pyrazinamide. Ngesiqhelo azikho zimbi. Xelela umongikazi kutyelelo lwakho olulandelayo.</li>
+        <li><strong>Ukungcangcazela ezandleni/ezinyaweni</strong> — kubangelwa yi-isoniazid. Ikliniki kufuneka ikunike i-pyridoxine (vitamin B6) ukuthintela oku.</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        <strong>Yiya ekliniki ngoko nangoko</strong> ukuba unale nto: amehlo okanye ulusu olutyheli (ityhefu esebeni), utshintsho embonweni (i-ethambutol inokuchaphazela amehlo), irhashalala elibi, okanye ukugabha okungapheliyo. Ezi zinto azifane zenzeke kodwa zifuna ingqwalasela ekhawulezileyo.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Kutheni kubalulekile ukugqiba unyango</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Abantu abaninzi baziva bebhetele phakathi kweeveki ezi-2-4 emva kokuqala unyango. Eli lelona xesha liyingozi — kuba uziva ubhetele, kulula ukuba ufune ukuyeka. Kodwa iintsholongwane ze-TB zisaphila, zithothile nje. Ukuyeka kwangoko kuphantse kuqinisekise ukuba i-TB iza kubuya, kwaye inokubuya njenge-TB emelana namayeza, enzima kwaye ethatha ixesha elide ukunyangwa.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Gqiba zonke iinyanga ezi-6. Akukho mntu okhethiweyo. Ingxaki ye-TB yaseMzantsi Afrika ibangelwa ikakhulu lunyango olungagqitywanga nokumelana namayeza okuvela apho.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ukukhusela usapho lwakho ngexesha lonyango</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        I-TB isasazeka ngomoya xa umntu onayo ekhohlela, ethimla, okanye ethetha. Uyosulela kwiiveki ezi-2 zokuqala zonyango — emva koko, amayeza acinezela iintsholongwane ngokwaneleyo kangangokuba ukusuleleka kuba nzima. Kwezo veki ezi-2 zokuqala:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li><strong>Vula iifestile.</strong> Iintsholongwane ze-TB ziqokelelana kwiindawo ezivalekileyo ezingangeni moya kakuhle. Gcina iifestile zivuliwe kuwo onke amagumbi ochitha ixesha kuwo, ngakumbi kwigumbi lokulala. Nokuvuleka okuncinci kwenza umahluko omkhulu.</li>
+        <li><strong>Gquma ukukhohlela kwakho.</strong> Khohlela engqinibeni okanye kwithishu, hayi esandleni. Lahla iithishu kwingxowa evaliweyo.</li>
+        <li><strong>Lala wedwa ukuba kunokwenzeka.</strong> Kwiiveki ezi-2 zokuqala, phepha ukulala ebhedini enye nabantwana okanye namalungu osapho ane-HIV, abasemngciphekweni ngakumbi.</li>
+        <li><strong>Bonke abahlala nawe ekhaya kufuneka bakhangelwe.</strong> Ikliniki kufuneka inike iibhotile zeqhwitha kuye wonke umntu okhaya lakho, ngakumbi abantwana abangaphantsi kweminyaka emi-5 nabani na one-HIV. Ukukhangelwa kwe-TB kwabo bahlala nesigulana kusimahla kwaye kuyimfuneko kwinkqubo yesizwe — kucele ngamandla ukuba ikliniki ayikunikezeli.</li>
+        <li><strong>Abantwana abangaphantsi kweminyaka emi-5</strong> abahlala nomntu oqinisekisiweyo ukuba une-TB kufuneka bafumane i-isoniazid preventive therapy (IPT) iinyanga ezi-6, nokuba uvavanyo lwabo lubonisa ukuba abanayo — ikliniki iza kukulungiselela oku.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">I-TB ngexesha lokukhulelwa</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        I-TB inokunyangwa kwaye kufuneka inyangwe ngexesha lokukhulelwa — i-TB engenyangwayo iyingozi kakhulu kusana kunamayeza e-TB. Inkqubo eqhelekileyo yamayeza amane (i-isoniazid, i-rifampicin, i-pyrazinamide, i-ethambutol) isetyenziswa kulo lonke ixesha lokukhulelwa. I-streptomycin lilo lodwa iyeza le-TB elingavumelekanga ncam ekukhulelweni ngenxa yokonakalisa ukuva kosana, kodwa alisayonxalenye yenkqubo eqhelekileyo.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Izinto ezibalulekileyo: i-rifampicin inciphisa ukusebenza kwamayeza ehomoni okuthintela ukukhulelwa — sebenzisa iikhondom njengonqando olongezelelweyo. Ukwanyisa kukhuselekile ngelixa usemayezeni e-TB, kodwa usana kufuneka lukhangelwe lunikwe namayeza okuthintela. Xelela umongikazi wakho we-TB nomongikazi wakho wabakhulelweyo ukuze bakwazi ukusebenzisana ekukhathaleleni kwakho — utyelelo lwe-TB nolwabakhulelweyo lunokudityaniswa kwikliniki enye kwiimeko ezininzi.
+      </p>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Amalungelo akho njengesigulana se-TB</h2>
+      <ul style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li><strong>Awunakugxothwa</strong> emsebenzini ngenxa yokuba une-TB. I-TB kukukhubazeka kwexeshana phantsi komthetho wezabasebenzi waseMzantsi Afrika. Umqeshi wakho kufuneka akunike ikhefu lokugula noncedo olufanelekileyo.</li>
+        <li>Ungakwazi <strong>ukufaka isicelo sesibonelelo sokukhubazeka sexeshana</strong> (R2,190 ngenyanga ngo-2026) ukuba i-TB ikuthintela ekusebenzeni. Faka isicelo kwi-ofisi ye-SASSA ekufuphi nawe unengxelo yonyango evela ekliniki.</li>
+        <li><strong>Isifo sakho siyimfihlo</strong> — ikliniki ayinakusabelana ngaso nomqeshi wakho ngaphandle kokuba unike imvume ebhaliweyo.</li>
+        <li>Ukuba <strong>ungumsebenzi wasemgodini okanye owayesebenza emgodini</strong>, unokufaneleka ukufumana imbuyekezo kwiTshiamiso Trust (imigodi yegolide) okanye kwiCompensation Commissioner for Occupational Diseases (CCOD). I-TB efunyanwe emsebenzini wasemigodini iyahlawulelwa.</li>
+      </ul>
+    </section>
+
+    <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Fumana ikliniki enyanga i-TB</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Amaziko angu-{tbClinics.length} kwidatabase yethu anikeza unyango lwe-TB.
+      </p>
+      <a href="/services/tb" class="btn btn--primary" style="font-size: 0.9rem;">Khangela iikliniki ze-TB</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Rhoqo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Imithombo:</strong> Izikhokelo zeNkqubo yeSizwe ye-TB yoMzantsi Afrika (2024). WHO End TB Strategy. Ingxelo yokusetyenziswa kwe-GeneXpert — National Health Laboratory Service. Isikhokelo sokusetyenziswa kwesicwangciso se-DOTS — Sebe leZempilo leSizwe. Global Tuberculosis Report 2025 — WHO.
+    </section>
+      <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Izikhokelo Ezinxulumeneyo</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={L('/guides/hiv-testing-guide')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Isikhokelo Sovavanyo lwe-HIV</a>
+      <a href={L('/guides/how-to-get-arvs')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Indlela Yokufumana ii-ARV</a>
+      <a href={L('/guides/chronic-medication-management')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukulawulwa Kwamayeza Aqhubekayo</a>
+      <a href={L('/guides/hospital-referral-system')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Inkqubo Yokuthunyelwa Esibhedlele</a>
+      </div>
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Fumana Iikliniki ngePhondo</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,299 @@
+---
+/**
+ * isiXhosa — sentence-for-sentence translation of src/pages/guides/find-nearest-clinic.astro.
+ * Slugs stay English (they are the join key for hreflang and the language switcher).
+ */
+import Base from '../../../layouts/Base.astro';
+import { facilities, PROVINCES, provinceSlug } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const L = (p: string) => localePath(p, 'xh');
+
+const totalFacilities = facilities.length;
+const totalClinics = facilities.filter(f => f.type === 'clinic').length;
+const totalCHC = facilities.filter(f => f.type === 'community_health_centre').length;
+const total24h = facilities.filter(f => f.operating_hours?.is_24_hour).length;
+
+const provinceCounts = PROVINCES.map(p => ({
+  name: p,
+  slug: provinceSlug(p),
+  total: facilities.filter(f => f.province === p).length,
+  clinics: facilities.filter(f => f.province === p && f.type === 'clinic').length,
+}));
+
+const faqs = [
+  {
+    question: 'Ndinyanzelekile ukuba ndiye kwikliniki ekufuphi apho ndihlala khona?',
+    answer: 'Hayi. Ungatyelela nayiphi na ikliniki karhulumente kulo naliphi na iphondo. Kodwa kunyango oluqhubekayo (amayeza angunaphakade, ii-ARV, unyango lwabakhulelweyo) kubhetele ukuba ubhalise kwiziko elinye ukuze imbali yakho yonyango ihlale kwifayile enye. Ukuba uyafuduka, cela incwadi yokutshintshela kwelinye iziko.',
+  },
+  {
+    question: 'Kuthekani ukuba akukho kliniki ikufuphi nam?',
+    answer: 'Iindawo ezininzi zasemaphandleni zisebenzelwa ngamaqela eekliniki ezihambayo atyelelayo ngeentsuku ezimisiweyo — buza kunozakuzaku wewadi yakho okanye kumsebenzi wezempilo woluntu ukuba yeyiphi ishedyuli. Izibhedlele zesithili nazo zamkela izigulana ezingabhukishanga kunyango lokuqala ukuba akukho kliniki ifikelelekayo.',
+  },
+  {
+    question: 'Ndingaya ngqo esibhedlele endaweni yokuya ekliniki?',
+    answer: 'Kungxamiseko, ewe — yiya kwisibhedlele esikufuphi esine-casualty evulekileyo iiyure ezingama-24. Kwizinto ezingengomngxamiseko, izibhedlele zidla ngokucela incwadi yokuthunyelwa evela ekliniki. Ukuqala ekliniki kukwathetha amaxesha okulinda amafutshane kwizinto eziqhelekileyo.',
+  },
+  {
+    question: 'Ndifuna ukubhukisha i-appointment?',
+    answer: 'Iikliniki ezininzi zikarhulumente zisebenza ngokwabantu abangabhukishanga — akukho appointment ifunekayo. Iikliniki ezimbalwa zasedolophini ziqalisile iinkqubo ze-appointment ukunciphisa imigca. Xa ufika, yiya kwidesika yokwamkelwa uze uchaze ukuba ufikeleni. Uya kuhlelwa ngokungxamiseka (uhlolwe ngokobungxamiseko) uze ubonwe ngokolandelelwano.',
+  },
+  {
+    question: 'Kubiza malini ukutyelela ikliniki karhulumente?',
+    answer: 'Unyango lokuqala kwiikliniki zikarhulumente lusimahla kuye wonke umntu — abemi boMzantsi Afrika, abahlali abasisigxina, iimbacu, nabafuna indawo yokusabela. Oku kubandakanya ukubonana nomongikazi okanye ugqirha, amayeza asisiseko, ukulawulwa kwezifo ezingunaphakade, ugonyo, ucwangciso losapho, neenkonzo ze-TB/HIV. Awusoze ucelwe ukuba uhlawule ekliniki.',
+  },
+  {
+    question: 'Kuthekani ukuba ikliniki iyandigxotha?',
+    answer: 'Iikliniki zikarhulumente azinakwala ngokomthetho ukukubona. Ukuba uyagxothwa (ngaphandle kokuba uthunyelwa esibhedlele ngento engaphaya kwamandla ekliniki), bhala phantsi umhla, ixesha, negama lomsebenzi, uze uxele oku kwisebe lezempilo lephondo okanye ufowunele umnxeba wezikhalazo zezempilo kazwelonke ku-0800 029 999.',
+  },
+];
+
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Indlela Yokufumana Ikliniki Karhulumente Ekufuphi Nawe eMzantsi Afrika',
+  description: 'Fumana uze utyelele ikliniki yezempilo karhulumente ekufuphi nawe. Unyango lwasimahla kubo bonke abantu baseMzantsi Afrika.',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Khangela ngendawo', text: 'Sebenzisa i-Clinic Finder SA ukukhangela ngephondo, ngelokishi, okanye ngendawo ye-GPS. Cwangcisa ngeenkonzo ozifunayo (ii-ARV, unyango lwabakhulelweyo, amazinyo).' },
+    { '@type': 'HowToStep', position: 2, name: 'Jonga iinkonzo namaxesha', text: 'Jonga iphepha leziko ukubona iinkonzo ezinikezelwayo, amaxesha okusebenza, nokuba lisebenza na iiyure ezingama-24.' },
+    { '@type': 'HowToStep', position: 3, name: 'Lungisa amaxwebhu akho', text: 'Yiza nesazisi sakho saseMzantsi Afrika okanye ipasipoti, ikhadi lekliniki (ikhadi eliluhlaza), nawo nawaphi na amayeza owasebenzisayo. Abantwana abangaphantsi kweminyaka emi-5 bafuna incwadi ye-Road to Health.' },
+    { '@type': 'HowToStep', position: 4, name: 'Fika kwangethuba', text: 'Iikliniki ezininzi zivula ngo-07:00. Fika phambi kokuvulwa ukuphepha imigca emide. Thatha inombolo yomgca uze ulinde kwindawo yokulinda.' },
+    { '@type': 'HowToStep', position: 5, name: 'Bonana nomongikazi okanye ugqirha', text: 'Uya kuhlelwa ngokungxamiseka uze ubonwe ngumongikazi okanye ugqirha. Izigulana ezinezifo ezingunaphakade zinokuya kumgca wazo owodwa. Zonke iinkonzo zisimahla.' },
+  ],
+};
+
+const jsonLd = [
+  howToLd,
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Indlela Yokufumana Ikliniki Ekufuphi Nawe eMzantsi Afrika',
+    description: 'Isikhokelo ngenyathelo nenyathelo sokufumana nokutyelela ikliniki yezempilo karhulumente eMzantsi Afrika. Sibandakanya onke amaphondo ali-9, into omawuyilindele, nento omawuze nayo.',
+    url: 'https://clinicfinder.co.za/xh/guides/find-nearest-clinic',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-22',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhaya', item: 'https://clinicfinder.co.za/xh' }, { '@type': 'ListItem', position: 2, name: 'Izikhokelo', item: 'https://clinicfinder.co.za/xh/guides' }, { '@type': 'ListItem', position: 3, name: 'Indlela Yokufumana Ikliniki Ekufuphi Nawe' }] },
+];
+---
+<Base
+  title="Indlela Yokufumana Ikliniki Ekufuphi Nawe — Clinic Finder SA"
+  description="Fumana ikliniki yezempilo karhulumente ekufuphi nawe eMzantsi Afrika. Khangela amaziko angaphezu kwe-1,000 kuwo onke amaphondo ali-9 — unyango lwasimahla, akukho appointment ifunekayo."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={L('/')}>Ikhaya</a> &rsaquo; <a href={L('/guides')}>Izikhokelo</a> &rsaquo; Fumana Ikliniki Ekufuphi Nawe
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Indlela Yokufumana Ikliniki Ekufuphi Nawe</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      UMzantsi Afrika unamaziko empilo karhulumente angaphezu kwe-{totalFacilities.toLocaleString()} — iikliniki ezingu-{totalClinics}, amaziko ezempilo oluntu angu-{totalCHC}, namakhulu ezibhedlele — onke enikeza unyango lokuqala lwasimahla. Esi sikhokelo sichaza indlela yokufumana elifanelekileyo, into omawuyilindele xa ufika, nento omawuze nayo.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Inyathelo 1: Khangela ngephondo okanye ngendawo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Eyona ndlela ikhawulezayo yokufumana ikliniki kukukhangela ngephondo lakho. Iphepha lephondo ngalinye libhala lonke iziko likarhulumente — iikliniki, amaziko ezempilo oluntu, nezibhedlele — kunye needilesi, iinombolo zefowuni, neenkonzo ezinikezelwayo. Ungakhangela nangegama <a href="/clinics">kwiphepha eliphambili lokukhangela</a>.
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; margin-top: 16px;">
+        {provinceCounts.map(p => (
+          <a href={`/clinics/${p.slug}`} style="display: block; padding: 10px 14px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none; font-size: 0.9rem;">
+            <strong>{p.name}</strong>
+            <span style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">amaziko angu-{p.total}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Inyathelo 2: Khetha uhlobo lweziko olufanelekileyo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Ayafani onke amaziko. Ukukhetha elifanelekileyo kukusindisa ixesha kwaye kukuthintela ekubeni uthunyelwe kwenye indawo.
+      </p>
+      <div style="display: grid; gap: 12px; margin-top: 16px;">
+        <div style="padding: 14px; border: 1px solid var(--border); border-radius: var(--radius);">
+          <strong style="font-size: 0.95rem;">Ikliniki</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">
+            Indawo yakho yokuqala kwiimfuno zempilo ezininzi. Iikliniki zijongana nogonyo, amayeza angunaphakade, ucwangciso losapho, uvavanyo nonyango lwe-HIV/TB, ukonzakala okuncinci, nokubonana ngokubanzi. Ezininzi zisebenza ngeentsuku zeveki ngo-07:00–16:00; ezinye zivula ngoMgqibelo.
+          </p>
+        </div>
+        <div style="padding: 14px; border: 1px solid var(--border); border-radius: var(--radius);">
+          <strong style="font-size: 0.95rem;">Iziko Lezempilo Loluntu (CHC)</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">
+            Likhulu ngaphezu kwekliniki, kwaye linogqirha okhoyo (iikliniki rhoqo zikhokelwa ngabongikazi). Ii-CHC zijongana neemeko ezinzima ngakumbi — ukukhutshwa kwamazinyo, utyando oluncinci, ukubonana ngempilo yengqondo — kwaye ezininzi zisebenza iiyure ezingama-24.
+          </p>
+        </div>
+        <div style="padding: 14px; border: 1px solid var(--border); border-radius: var(--radius);">
+          <strong style="font-size: 0.95rem;">Isibhedlele Sesithili</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">
+            Kungxamiseko, ukubeleka, utyando, nayo nantoni na engaphaya kwamandla ekliniki. Ngokuqhelekileyo uya kufuna incwadi yokuthunyelwa evela ekliniki kutyelelo lwesibhedlele olungengolomngxamiseko. Izibhedlele zesithili zinamacandelo e-casualty avulekileyo iiyure ezingama-24.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Inyathelo 3: Jonga amaxesha okuvula neenkonzo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Iphepha leziko ngalinye kule sayithi libonisa amaxesha alo okusebenza neenkonzo elizinikezayo. Amaziko angu-{total24h} kuwo angu-{totalFacilities.toLocaleString()} abhalwe apha asebenza iiyure ezingama-24. Ukuba ufuna unyango ngaphandle kwamaxesha aqhelekileyo, khangela <a href="/services/emergency">iziko longxamiseko elivulekileyo iiyure ezingama-24</a> okanye uye kwi-casualty yesibhedlele esikufuphi.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Iinkonzo ziyahluka phakathi kwamaziko. Ayingayo yonke ikliniki enikeza unyango lwamazinyo, iinkonzo zempilo yengqondo, okanye ukuqalisa ii-ARV. Cwangcisa ngenkonzo <a href="/clinics">kwiphepha lokukhangela</a>, okanye ujonge iphepha leziko elilodwa phambi kokuba uhambe.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Inyathelo 4: Into omawuze nayo kutyelelo lwakho lokuqala</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Isazisi saseMzantsi Afrika, ipasipoti, okanye imvume yokusabela</strong> — ukuze kuvulwe ifayile yakho yekliniki. Ukuba awunanto, ikliniki kufuneka ikubone. Awusayi kugxothwa xa kukho ungxamiseko nokuba unamaphi na amaxwebhu.</li>
+        <li><strong>Ubungqina bedilesi</strong> — buyanceda ekubhaliseni kodwa abunyanzelekanga ngokomthetho ukuze ufumane unyango.</li>
+        <li><strong>Incwadi ye-Road to Health</strong> — inyanzelekile kubantwana abangaphantsi kweminyaka emi-5. Le ncwadi ityheli ilandelela ugonyo nokukhula. Ukuba uyilahlile, cela ikliniki ikunike entsha.</li>
+        <li><strong>Nawaphi na amayeza owasebenzisayo okanye izincwadi zamayeza</strong> — yiza neebhotile zamapilisi okanye uluhlu olubhaliweyo ukuze ugqirha akwazi ukujonga ukungahambelani kwamayeza aze aphephe ukukunika amayeza aphindiweyo.</li>
+        <li><strong>Incwadi yokuthunyelwa (ukuba uya esibhedlele)</strong> — ayifuneki kutyelelo lwekliniki, kodwa izibhedlele zifuna incwadi yokuthunyelwa evela ekliniki kunyango olungengolomngxamiseko.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Inyathelo 5: Kwenzeka ntoni xa ufika</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Ekliniki, yiya kwindawo yokwamkelwa uze uchaze ukuba ufikeleni. Umongikazi uya kukuhlela ngokungxamiseka — ajonge ukuba imeko yakho ingxamisekile na — aze akubeke kumgca. Iimeko ezingxamisekileyo (iintlungu ezimandundu, ukusokola ukuphefumla, ukopha kakhulu) zibonwa kuqala, kungakhathaliseki ixesha ofike ngalo.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Amaxesha okulinda ayahluka kakhulu. Iikliniki ezixakekileyo zasedolophini eGauteng nakwiCape Flats zinokuba nokulinda kweeyure ezi-2-4; iikliniki ezincinci zasemaphandleni zidla ngokukhawuleza. Ukufika kwangethuba (phambi kwe-07:30) kunciphisa kakhulu ixesha lakho lokulinda kwiikliniki ezinabantu abaninzi.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Emva kokubonana nogqirha okanye umongikazi, unokufumana amayeza kwikhemisti yekliniki (simahla), incwadi yokuthunyelwa esibhedlele, okanye umhla we-appointment yokulandela. Gcina ikhadi lakho lekliniki eliluhlaza — luxwebhu lwakho lonyango oluhamba nawe kwaye lukhawulezisa lonke utyelelo lwakho lwexesha elizayo.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Amacebiso kwiindawo zasemaphandleni</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Kumaphondo anjengeNorthern Cape, iLimpopo, ne-Eastern Cape, ikliniki ekufuphi inokuba kwiikhilomitha ezingama-30–60 ukusuka kuwe. Nazi izinto ezimbalwa ezincedayo:
+      </p>
+      <ul style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px; margin-top: 8px;">
+        <li><strong>Iikliniki ezihambayo</strong> zityelela iindawo ezikude ngeshedyuli emisiweyo. Buza umsebenzi wezempilo woluntu okanye unozakuzaku wewadi ukuba yiyiphi imihla.</li>
+        <li><strong>Iindawo zokulanda ze-CCMDD</strong> zivumela izigulana ezizinzileyo ezinezifo ezingunaphakade ukuba zilande amayeza kwiindawo zangaphandle (iikhemisti, iiholo zoluntu) endaweni yokuhamba ziye ekliniki inyanga nganye. <a href={L('/guides/ccmdd-chronic-meds-pickup')}>Funda indlela yokubhalisa</a>.</li>
+        <li><strong>Ukubonana ngefowuni</strong> kuyafumaneka kwezinye iikliniki kutyelelo lokulandela olungafuni ukuhlolwa ngokwasemzimbeni. Buza ekliniki yakho.</li>
+        <li><strong>Isithuthi sezigulana</strong> siyafumaneka kwezinye izithili kuma-appointment esibhedlele. Cela ikliniki ukuba isilungiselele xa ikunika incwadi yokuthunyelwa.</li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Iinkonzo Ezifumanekayo Kwiindidi Ezahlukeneyo Zamaziko</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">Ayingawo onke amaziko anikeza iinkonzo ezifanayo. Ukwazi umahluko kukunceda uye kwindawo efanelekileyo kuqala.</p>
+      <div style="overflow-x: auto; margin-bottom: 16px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+          <thead><tr style="border-bottom: 2px solid var(--border);">
+            <th style="text-align: left; padding: 10px 8px;">Uhlobo Lweziko</th>
+            <th style="text-align: left; padding: 10px 8px;">Amaxesha</th>
+            <th style="text-align: left; padding: 10px 8px;">Iinkonzo Eziphambili</th>
+            <th style="text-align: left; padding: 10px 8px;">Ezingakwazi Ukuzenza</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px; font-weight: 600;">Ikliniki</td><td style="padding: 8px;">NgoMvulo-Lwesihlanu 07:00-16:00</td><td style="padding: 8px;">Amayeza angunaphakade, ugonyo, unyango lwabakhulelweyo (ANC), uvavanyo lwe-HIV, amanxeba amancinci, unyango lwe-TB</td><td style="padding: 8px;">Ii-X-ray, utyando, ukulaliswa ubusuku, unyango emva kwamaxesha omsebenzi</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px; font-weight: 600;">Iziko Lezempilo Loluntu (CHC)</td><td style="padding: 8px;">iiyure ezingama-24</td><td style="padding: 8px;">Yonke into eyenziwa yikliniki + ii-X-ray, ukuzinziswa kongxamiseko, ukubeleka okuqhelekileyo, ukukhutshwa kwamazinyo</td><td style="padding: 8px;">Unyango lweengcali, ukutyandwa kwabakhulelweyo, utyando olunzima</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px; font-weight: 600;">Isibhedlele Sesithili</td><td style="padding: 8px;">iiyure ezingama-24</td><td style="padding: 8px;">Ukulaliswa, ukutyandwa kwabakhulelweyo, utyando jikelele, i-ICU esisiseko, ukufakelwa igazi, izigulana ezithunyelweyo</td><td style="padding: 8px;">Utyando lweengcali (amathambo, ingqondo, intliziyo), unyango lomhlaza, ukufakelwa kwamalungu omzimba</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px; font-weight: 600;">Isibhedlele Sengingqi / Esiphezulu</td><td style="padding: 8px;">iiyure ezingama-24</td><td style="padding: 8px;">Amacandelo eengcali, uvavanyo oluphambili (i-CT, i-MRI), utyando olunzima, i-ICU</td><td style="padding: 8px;">Ukungena ungenayo incwadi yokuthunyelwa (ngaphandle kongxamiseko)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted);">Xa kukho ungxamiseko, yiya kwiziko elikufuphi elineenkonzo zeeyure ezingama-24 — i-CHC okanye isibhedlele. Kunyango oluqhelekileyo, qala ngamaxesha onke kwikliniki yendawo yakho. Jonga <a href={L('/guides/hospital-referral-system')}>isikhokelo sethu senkqubo yokuthunyelwa</a> ukubona indlela yokuhamba phakathi kwamanqanaba.</p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Iindleko — Yintoni Esimahla Neyintoni Engeyiyo</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">Unyango lokuqala karhulumente eMzantsi Afrika lusimahla xa ulufumana. Nantsi kanye into elubandakanyayo nendawo onokuhlawula kuyo.</p>
+      <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px; color: var(--primary-dark);">Simahla ngamaxesha onke</div>
+          <ol style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; padding-left: 1.2rem; margin: 0;">
+            <li>Ukubonana ekliniki nokulandela</li>
+            <li>Amayeza angunaphakade (akwi-Essential Drugs List)</li>
+            <li>Uvavanyo lwe-HIV, i-ART, nokujongwa kwe-viral load</li>
+            <li>Unyango lwe-TB (ikhosi epheleleyo yeenyanga ezi-6)</li>
+            <li>Ugonyo (yonke ishedyuli ye-EPI)</li>
+            <li>Unyango lwabakhulelweyo nokubeleka okuqhelekileyo</li>
+            <li>Ucwangciso losapho (zonke iindlela)</li>
+            <li>Abantwana abangaphantsi kweminyaka emi-6 — zonke iinkonzo kuwo onke amaziko karhulumente</li>
+          </ol>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Kunokubakho intlawulo (imiselwa ngokwengeniso)</div>
+          <ol style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; padding-left: 1.2rem; margin: 0;">
+            <li>Ukulaliswa esibhedlele (isikali esisekelwe kwingeniso)</li>
+            <li>Utyelelo lweengcali esibhedlele ungalaliswanga</li>
+            <li>Amalungu e-medical aid — ahlawuliswa ngamaxabiso esibhedlele</li>
+            <li>Isithuthi se-ambulensi (amanye amaphondo ahlawulisa i-R40-R300)</li>
+          </ol>
+          <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin: 8px 0 0;">Ukuba awukwazi ukuhlawula, cela ukubona unontlalontle wesibhedlele ukuze uxolelwe (Uniform Patient Fee Schedule exemption). Abadala abathatha umhlala-phantsi nabafumana izibonelelo ze-SASSA bayafaneleka ngokuzenzekelayo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Qala ukukhangela</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Khangela onke amaziko empilo karhulumente angu-{totalFacilities.toLocaleString()} kuwo onke amaphondo ali-9 oMzantsi Afrika.
+      </p>
+      <a href="/clinics" class="btn btn--primary" style="font-size: 0.9rem;">Fumana ikliniki ekufuphi nawe</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Rhoqo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Izikhokelo Ezinxulumeneyo</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={L('/guides/medical-emergency-guide')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Isikhokelo Songxamiseko Lwempilo</a>
+      <a href={L('/guides/hospital-referral-system')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Inkqubo Yokuthunyelwa Esibhedlele</a>
+      <a href={L('/guides/chronic-medication-management')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukulawulwa Kwamayeza Angunaphakade</a>
+      <a href={L('/guides/ccmdd-chronic-meds-pickup')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">CCMDD — Ukulandwa Kwamayeza Angunaphakade</a>
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-top: 24px;">
+      <strong style="color: var(--text);">Imithombo:</strong> South African National Health Act (Act 61 of 2003). National Department of Health — Ideal Clinic framework. District Health Information System (DHIS). National Health Insurance white paper (2017). Uvimba weenkcukacha wamaziko we-Clinic Finder SA (amaziko angu-{totalFacilities.toLocaleString()} aqinisekisiwe ngo-2026).
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Fumana Iikliniki ngePhondo</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

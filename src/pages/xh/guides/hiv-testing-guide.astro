@@ -1,0 +1,245 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { facilities } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const L = (p: string) => localePath(p, 'xh');
+
+const hivClinics = facilities.filter(f => f.services.hiv_testing);
+
+const faqs = [
+  {
+    question: 'Luthatha ixesha elingakanani uvavanyo lwe-HIV?',
+    answer: 'Uvavanyo olukhawulezayo lokuhlatywa komnwe luthatha malunga nemizuzu engama-20 ukusuka ekuqaleni ukuya kwisiphumo. Lolona vavanyo lusetyenziswayo kwiikliniki zikarhulumente eMzantsi Afrika. Umongikazi uhlaba umnwe wakho, abeke ithontsi legazi kwistrip sovavanyo, aze alinde imizuzu eli-15. Ukuba uvavanyo lokuqala olukhawulezayo lubonisa ukuba unayo, kwenziwa olwesibini ngoko nangoko ukuqinisekisa. Ukuba omabini abonisa ukuba unayo, unikwa unyango lwee-ARV ngayo kwangayo imini.',
+  },
+  {
+    question: 'Ndingavavanywa ngaphandle kokuchaza igama lam?',
+    answer: 'Ewe. Unelungelo lokuvavanywa i-HIV ngaphandle kokuchaza igama lakho. Ungacela ukuba igama lakho lingabhalwa — ikliniki ikunika inombolo endaweni yoko. Isiphumo sakho asiyi kwaziswa umqeshi wakho, usapho, nakubani na ngaphandle kwemvume yakho ebhaliweyo. Oku kukhuselwe yiNational Health Act nomGaqo-siseko. Ukuba umsebenzi wezempilo uchaza isimo sakho ngaphandle kwemvume, lulwaphulo-mthetho.',
+  },
+  {
+    question: 'Kuthekani ukuba kufunyaniswa ukuba ndinayo?',
+    answer: 'UMzantsi Afrika ulandela ukuqaliswa kwee-ARV ngayo kwangayo imini. Ukuba kufunyaniswa ukuba unayo: (1) umongikazi wenza uvavanyo lwempilo (ubunzima, uxinzelelo lwegazi, ukukhangela i-TB), (2) athathe igazi le-CD4 count kunye ne-viral load, (3) akuqalise kwi-TLD (ipilisi enye, kanye ngemini) ngayo kwangayo imini. Akudingeki ulinde iziphumo zegazi. Ii-ARV zisimahla, zisebenza kakhulu, kwaye abantu abaninzi baphila ubomi obude obuqhelekileyo besemayezeni. Bona isikhokelo sethu esipheleleyo: Indlela Yokufumana ii-ARV Ekliniki Karhulumente.',
+  },
+  {
+    question: 'Kufuneka ndivavanywe kangaphi?',
+    answer: 'Izikhokelo zaseMzantsi Afrika zicebisa oku: abantu abadala abalalanayo — ubuncinane kanye ngonyaka. Abasemngciphekweni ophezulu (amaqabane amaninzi, ukungasebenzisi ikhondom rhoqo, isimo seqabane singaziwa) — rhoqo kwiinyanga ezi-3-6. Abafazi abakhulelweyo — kutyelelo lokuqala lwabakhulelweyo, kwakhona kwiiveki ezingama-32, nangexesha lokuzala. Amadoda alalana namanye amadoda — rhoqo kwiinyanga ezi-3. Abantu abane-TB — kulo lonke utyelelo lwe-TB (ukuvavanywa kwe-TB ne-HIV kunye kuyinto eqhelekileyo).',
+  },
+  {
+    question: 'Yintoni i-PrEP kwaye ndingayifumana phi?',
+    answer: 'I-PrEP (Pre-Exposure Prophylaxis) yipilisi yemihla ngemihla (amayeza afanayo nalawo asetyenziswa kwii-ARV) eselwa ngabantu abangenayo i-HIV ukuthintela ukosuleleka yi-HIV. Isebenza ngama-99% xa iselwa rhoqo. I-PrEP ifumaneka simahla kwiikliniki zikarhulumente eMzantsi Afrika kuye nabani na osemngciphekweni omkhulu we-HIV. Kufuneka kuqala uvavanywe kufunyaniswe ukuba awunayo, uze ufumane inqaku lamayeza kumongikazi wasekliniki. Ubuyela rhoqo kwiinyanga ezi-3 ukuze uphinde uvavanywe i-HIV ufumane namayeza amatsha.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Uvavanyo lwe-HIV eMzantsi Afrika — Phi, Njani, Nokulindelekileyo',
+    description: 'Isikhokelo esipheleleyo sovavanyo lwe-HIV lwasimahla kwiikliniki zikarhulumente zaseMzantsi Afrika: uvavanyo olukhawulezayo, ukuvavanywa ngaphandle kwegama, iikhithi zokuzivavanya, i-PrEP, nokwenzeka emva koko.',
+    url: 'https://clinicfinder.co.za/xh/guides/hiv-testing-guide',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'Indlela Yokufumana Uvavanyo lwe-HIV Lwasimahla Ekliniki Karhulumente eMzantsi Afrika',
+    description: 'Inkqubo enamanyathelo ama-5 ukusuka ekungeneni ekliniki ukuya ekufumaneni isiphumo namanyathelo alandelayo.',
+    step: [
+      { '@type': 'HowToStep', position: 1, name: 'Yiya nakweyiphi na ikliniki karhulumente — akudingeki i-appointment', text: 'Ngena nakweyiphi na ikliniki karhulumente, iziko lezempilo loluntu, okanye isibhedlele ngamaxesha omsebenzi. Uvavanyo lwe-HIV lufumaneka kuwo onke amaziko empilo karhulumente eMzantsi Afrika. Ungavavanywa nakwiindawo zovavanyo ezihamba ngezithuthi, kwiiphulo zoluntu, nakwezinye iindawo zokusebenza. Akufuneki ncwadi yokuthunyelwa, i-medical aid, okanye i-ID. Unelungelo lokuvavanywa ngaphandle kokuchaza igama lakho.' },
+      { '@type': 'HowToStep', position: 2, name: 'Cela uvavanyo lwe-HIV — i-HCT okanye i-VCT', text: 'Xelela umongikazi ukuba ufuna uvavanyo lwe-HIV. Ungalucela njengenxalenye yotyelelo oluqhelekileyo okanye ngenjongo yokuvavanywa kuphela. I-HCT (HIV Counselling and Testing) ibandakanya ucweyo lwangaphambi kovavanyo apho umongikazi echaza inkqubo, ixesha lefestile, nemfihlo. Ucweyo luthatha imizuzu emi-5 ukuya kweli-10. Ungalwala ucweyo kodwa luyacetyiswa, ngakumbi kwabo bavavanywa okokuqala.' },
+      { '@type': 'HowToStep', position: 3, name: 'Yenza uvavanyo olukhawulezayo lokuhlatywa komnwe (imizuzu engama-20)', text: 'Umongikazi uhlaba umnwe wakho, abeke ithontsi legazi kwistrip sovavanyo olukhawulezayo, aze alinde imizuzu eli-15 isiphumo. Ukuba uvavanyo lokuqala lubonisa ukuba unayo, kwenziwa olwesibini olukhawulezayo ngoko nangoko ukuqinisekisa. Ukuba omabini abonisa ukuba unayo, unikwa unyango lwee-ARV ngayo kwangayo imini. Ukuba awunayo, ufumana isiphumo esibonisa oko kunye neengcebiso zokuzikhusela (iikhondom, i-PrEP ukuba usemngciphekweni ophezulu).' },
+      { '@type': 'HowToStep', position: 4, name: 'Ukuba unayo — qala unyango ngayo kwangayo imini', text: 'UMzantsi Afrika ulandela ukuqaliswa kwee-ARV ngayo kwangayo imini (Universal Test and Treat). Ukuba kuqinisekisiwe ukuba unayo: umongikazi wenza uvavanyo lwempilo (ubunzima, uxinzelelo lwegazi, ukukhangela i-TB), athathe igazi le-CD4 count ne-viral load, aze akuqalise kwi-TLD (tenofovir + lamivudine + dolutegravir — ipilisi enye, kanye ngemini). Akudingeki ulinde iziphumo zegazi. Ii-ARV zisimahla kwaye zisebenza kakhulu.' },
+      { '@type': 'HowToStep', position: 5, name: 'Ukuba awunayo — cinga nge-PrEP kwaye uphinde uvavanywe rhoqo', text: 'Ukuba usemngciphekweni omkhulu we-HIV (amaqabane amaninzi, iqabane line-HIV, ukungasebenzisi ikhondom rhoqo), buza umongikazi nge-PrEP — ipilisi yemihla ngemihla esebenza ngama-99% ekuthinteleni ukosuleleka yi-HIV. I-PrEP isimahla kwiikliniki zikarhulumente. Phinda uvavanywe rhoqo kwiinyanga ezi-3-6 ukuba usemngciphekweni ophezulu, okanye ubuncinane kanye ngonyaka ukuba uyalalana. Ukuvavanywa lelona nyathelo libalulekileyo ekuphelisweni kwesi sifo.' },
+    ],
+  },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhaya', item: 'https://clinicfinder.co.za/xh/' }, { '@type': 'ListItem', position: 2, name: 'Izikhokelo', item: 'https://clinicfinder.co.za/xh/guides' }, { '@type': 'ListItem', position: 3, name: 'Uvavanyo lwe-HIV' }] },
+];
+---
+<Base
+  title="Uvavanyo lwe-HIV — Phi, Njani & Okulindelekileyo — Clinic Finder SA"
+  description="Uvavanyo lwe-HIV lwasimahla kwiikliniki zikarhulumente zaseMzantsi Afrika: uvavanyo olukhawulezayo, ukuvavanywa ngaphandle kwegama, iikhithi zokuzivavanya, i-PrEP, nokwenzekayo ukuba kufunyaniswa ukuba unayo."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={L('/')}>Ikhaya</a> &rsaquo; <a href={L('/guides')}>Izikhokelo</a> &rsaquo; Uvavanyo lwe-HIV
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Uvavanyo lwe-HIV — Phi, Njani & Okulindelekileyo</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      UMzantsi Afrika unenkqubo enkulu kunazo zonke ehlabathini yonyango lwe-HIV — abantu abangaphezu kwezigidi ezi-5.7 basela ii-ARV. Kodwa kuqikelelwa ukuba izigidi ezi-1.5 zabantu abaphila ne-HIV abasazi isimo sabo. Ukuvavanywa kusimahla, kukhawuleza, kuyimfihlo, kwaye lelona nyathelo libalulekileyo onokulithatha. Esi sikhokelo sithetha ngayo yonke into ekufuneka uyazi.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Apho ungavavanyelwa khona</h2>
+      <div style="display: grid; gap: 12px;">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">Iikliniki nezibhedlele zikarhulumente</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Ngena ucele uvavanyo lwe-HIV. Simahla. Akudingeki i-appointment. Lufumaneka kulo lonke iziko lempilo karhulumente elizweni. Iziphumo ngemizuzu engama-20.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">Iindawo zovavanyo ezihamba ngezithuthi</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Iintente zovavanyo eziqhutywa ngurhulumente nemibutho engekho phantsi korhulumente ematanksini eeteksi, kwiivenkile ezinkulu, kwimicimbi yoluntu, nasemsebenzini. Simahla. Zidla ngokufumaneka ngeempelaveki nangokuhlwa xa iikliniki zivaliwe.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">Iikhithi zokuzivavanya i-HIV</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">I-OraQuick neekhithi ezinjalo zokuzivavanya ziyafumaneka emakhemesti (R100-R150) kwaye ngamanye amaxesha zisimahla kwimibutho engekho phantsi korhulumente nakwiikliniki. Kusetyenziswa i-swab yasemlonyeni — akufuneki gazi. Iziphumo ngemizuzu engama-20. Ukuba ibonisa ukuba unayo, kufuneka uyiqinisekise ekliniki ngovavanyo lwegazi phambi kokuba uqale unyango.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">Oogqirha babucala neelebhu zepathology</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Lufumaneka koogqirha babucala nakwiilebhu zepathology (Lancet, Ampath, PathCare). Lubiza i-R200-R500 kuxhomekeka kuhlobo lovavanyo. Iibhalwa ziinkqubo ezininzi ze-medical aid. Akukho sizathu sonyango sokukhetha ababucala kunabakarhulumente — uvavanyo olukhawulezayo luyafana.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Kwenzeka ntoni ngexesha lovavanyo ekliniki</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Ucweyo lwangaphambi kovavanyo</strong> — umcebisi okanye umongikazi uchaza ukuba uvavanyo lubandakanya ntoni, iziphumo ezinokubakho zithetha ntoni, aze aphendule imibuzo yakho. Oku kuthatha malunga nemizuzu emi-5. Ungalwala uvavanyo nangaliphi na ixesha.</li>
+        <li><strong>Uvavanyo</strong> — umongikazi uhlaba umnwe wakho abeke ithontsi legazi kwistrip sovavanyo olukhawulezayo. Ulinda malunga nemizuzu eli-15.</li>
+        <li><strong>Isiphumo sokuqala</strong> — ukuba awunayo, uyacetyiswa ngokuhlala ungenayo (iikhondom, i-PrEP, ukuvavanywa kweqabane). Ukuba unayo, kwenziwa olunye uvavanyo olukhawulezayo ngoko nangoko kwikhithi eyahlukileyo ukuqinisekisa.</li>
+        <li><strong>Kuqinisekisiwe ukuba unayo</strong> — umongikazi wenza uvavanyo lwempilo (ubunzima, uxinzelelo lwegazi, ukukhangela i-TB), athathe igazi le-CD4 ne-viral load, aze akunikeze ukuqaliswa kwee-ARV ngayo kwangayo imini. Ungaqala unyango namhlanje.</li>
+        <li><strong>Ucweyo lwasemva kovavanyo</strong> — nokuba unayo okanye awunayo, umcebisi uthetha ngamanyathelo alandelayo, ukwazisa iqabane (ngokuzithandela), nezicwangciso zokulandelela.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ixesha lefestile — kutheni ixesha libalulekile</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Akukho vavanyo lwe-HIV olunokuyibona intsholongwane kwangoko emva kokuchukumiseka. <strong>Ixesha lefestile (window period)</strong> lixesha eliphakathi kokuchukumiseka nexesha apho uvavanyo lunokuyibona ngokuthembekileyo i-HIV. Kweli xesha, unokuba nentsholongwane kodwa uvavanyo lubonise ukuba awunayo.
+      </p>
+      <div style="overflow-x: auto; margin-top: 12px;">
+        <table style="width: 100%; font-size: 0.88rem; border-collapse: collapse; line-height: 1.6;">
+          <thead>
+            <tr style="background: var(--bg-alt); text-align: left;">
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Uhlobo lovavanyo</th>
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Ixesha lefestile</th>
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Lufumaneka phi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px; font-weight: 600;">Ukuhlatywa komnwe okukhawulezayo (antibody)</td><td style="padding: 10px 12px;">iiveki ezi-6-12 emva kokuchukumiseka</td><td style="padding: 10px 12px;">Zonke iikliniki zikarhulumente (uvavanyo oluqhelekileyo)</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px; font-weight: 600;">Uvavanyo lwelebhu lwesizukulwana sesi-4 (antigen + antibody)</td><td style="padding: 10px 12px;">iiveki ezi-2-4 emva kokuchukumiseka</td><td style="padding: 10px 12px;">Iilebhu (Lancet, Ampath), ezinye izibhedlele</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px; font-weight: 600;">I-NAT / PCR (viral RNA)</td><td style="padding: 10px 12px;">iintsuku ezili-10-14 emva kokuchukumiseka</td><td style="padding: 10px 12px;">Kwiilebhu kuphela. Isetyenziselwa ukufumanisa kwiintsana nokukhangelwa kwegazi kwibhanki yegazi</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">Ukuba wachukumiseka ngendlela ethile (ukulalana ungakhuselekanga, ukuhlatywa yinaliti, ikhondom eqhawukileyo), vavanywa kwiiveki ezi-6 uze uphinde kwiiveki ezili-12 ukufumana isiphumo esiqinisekileyo. Uvavanyo olubonisa ukuba awunayo kwiiveki ezili-12 luthetha ukuba akosulelekanga kuloo nto yenzekayo. Ukuba loo nto yayinomngcipheko omkhulu kwaye isandul' ukwenzeka (kwiiyure ezingama-72), yiya ngqo ekliniki ucele i-PEP — bona ngezantsi.</p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">I-PEP — ukhuselo longxamiseko emva kokuchukumiseka</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        I-PEP (Post-Exposure Prophylaxis) yikhosi yeentsuku ezingama-28 zee-ARV ezithathwa emva kokuchukumiseka okunokubakho yi-HIV ukuthintela ukosuleleka. Kufuneka iqalwe <strong>kwiiyure ezingama-72</strong> emva kokuchukumiseka — okukhawulezayo kokona kulungileyo (ngokufanelekileyo kwiiyure ezi-2). I-PEP isimahla kuwo onke amaziko empilo karhulumente.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;"><strong>Xa kufuneka ucele i-PEP:</strong></p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 4px; margin-top: 8px;">
+        <li>Uhlaselo lwesini okanye udlwengulo (yiya kwiThuthuzela Care Centre okanye kulo naliphi na igumbi longxamiseko lesibhedlele — i-PEP iyinxalenye yenkqubo eqhelekileyo emva kodlwengulo)</li>
+        <li>Ikhondom eqhawukileyo ngexesha lokulalana neqabane eline-HIV okanye elingaziwayo isimo salo</li>
+        <li>Ukuhlatywa yinaliti (abasebenzi bezempilo)</li>
+        <li>Iinaliti ezisetyenziswa ngabantu abaninzi</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        I-PEP yikhosi epheleleyo yeentsuku ezingama-28 — kufuneka uzigqibe zonke iintsuku ezingama-28 ukuze isebenze. Iziphumo ezingafunwayo (isicaphucaphu, ukudinwa) ziqhelekile kodwa ziyanyamezeleka. Emva kokugqiba i-PEP, vavanywa i-HIV kwiiveki ezi-6 nakwiiveki ezili-12 ukuqinisekisa isiphumo.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">I-PrEP — ukhuselo lwabantu abangenayo i-HIV</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        I-PrEP (Pre-Exposure Prophylaxis) yipilisi yemihla ngemihla ethintela ukosuleleka yi-HIV. Iqulethe amayeza afanayo nalawo asetyenziswa kwii-ARV (tenofovir + emtricitabine) kwaye <strong>isebenza ngama-99%</strong> xa iselwa rhoqo. UMzantsi Afrika wenza i-PrEP ifumaneke simahla kwiikliniki zikarhulumente kuye nabani na osemngciphekweni omkhulu we-HIV.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        <strong>Ngubani ekufuneka ecinge nge-PrEP:</strong>
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 4px; margin-top: 8px;">
+        <li>Abantu abaneqabane eline-HIV (izibini apho omnye enayo omnye engenayo)</li>
+        <li>Abantu abanamaqabane amaninzi</li>
+        <li>Abantu abangasebenzisi iikhondom rhoqo</li>
+        <li>Amadoda alalana namanye amadoda</li>
+        <li>Abasebenzi ngesondo</li>
+        <li>Nabani na oziva esemngciphekweni kwaye efuna ukhuselo olongezelelweyo</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        Ukuqala i-PrEP: yiya nakweyiphi na ikliniki karhulumente enikeza iinkonzo ze-HIV, uvavanywe kufunyaniswe ukuba awunayo, uze ucele i-PrEP. Kuya kufuneka ubuye rhoqo kwiinyanga ezi-3 ukuze uphinde uvavanywe i-HIV ufumane namayeza amatsha. I-PrEP ayikhuseli kwezinye izifo ezosulelwa ngesondo — iikhondom zisacetyiswa kunye ne-PrEP.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Amalungelo akho</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li><strong>Imvume:</strong> Akukho mntu onokukuvavanya i-HIV ngaphandle kwemvume yakho oyinike wazi (ngaphandle kwezigulana zongxamiseko ezingaphaphamanga).</li>
+        <li><strong>Imfihlo:</strong> Isiphumo sakho siyimfihlo. Asinakuchazwa nakubani na — umqeshi, usapho, iqabane — ngaphandle kwemvume yakho ebhaliweyo.</li>
+        <li><strong>Akukho calucalulo:</strong> Awunakugxothwa emsebenzini, ualelwe imfundo, ualelwe i-inshorensi, okanye uphathwe ngokwahlukileyo ngenxa yesimo sakho se-HIV. Oku kukhuselwe yi-Employment Equity Act neyi-Promotion of Equality Act.</li>
+        <li><strong>Ukwazisa iqabane:</strong> Ukuxelela iqabane lakho kukhuthazwa kakhulu kodwa kungokuzithandela. Ikliniki inganceda ekwaziseni iqabane ukuba uyafuna — umcebisi uqhagamshelana neqabane lakho engachazi ukuba ngubani ocele oku.</li>
+      </ol>
+    </section>
+
+    <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Fumana ikliniki yovavanyo lwe-HIV</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Amaziko angu-{hivClinics.length} kwidatabase yethu anikeza uvavanyo lwe-HIV.
+      </p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="/services/hiv-testing" class="btn btn--primary" style="font-size: 0.9rem;">Khangela iikliniki zovavanyo lwe-HIV</a>
+        <a href={L('/guides/how-to-get-arvs')} class="btn btn--outline" style="font-size: 0.9rem;">Isikhokelo sonyango lwee-ARV</a>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Rhoqo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Imithombo:</strong> National HIV Testing Services Policy (NDoH, 2016). National HIV Self-Testing Framework (2018). Izikhokelo zokusetyenziswa kwe-PrEP — NDoH. Iithagethi ze-UNAIDS ezingu-90-90-90 kunye nengxelo yenkqubela yoMzantsi Afrika. National Health Act — amalungiselelo amalungelo ezigulana. Employment Equity Act — ukungacalulwa ngenxa ye-HIV.
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Izikhokelo Ezinxulumeneyo</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={L('/guides/how-to-get-arvs')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Indlela Yokufumana ii-ARV</a>
+      <a href={L('/guides/family-planning-contraception')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukucwangcisa Usapho &amp; Ukuthintela Ukukhulelwa</a>
+      <a href={L('/guides/mental-health-services')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Iinkonzo Zempilo Yengqondo</a>
+      <a href={L('/guides/find-nearest-clinic')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Fumana Ikliniki Ekufuphi Nawe</a>
+      </div>
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Fumana Iikliniki ngePhondo</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

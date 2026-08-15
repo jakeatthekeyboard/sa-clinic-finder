@@ -1,0 +1,146 @@
+---
+/**
+ * isiXhosa services index — sentence-for-sentence translation of src/pages/services/index.astro.
+ * Programme names (CCMDD, NHI, ART), the EDL and UPFS acronyms, and the R100,000 figure
+ * are carried across unchanged. Per-service pages are English only, so those links stay
+ * un-prefixed.
+ */
+import Base from '../../../layouts/Base.astro';
+import { facilities, SERVICE_MAP } from '../../../data/helpers';
+import { SERVICE_EDITORIAL } from '../../../data/service-editorial';
+import { localePath } from '../../../i18n/config';
+
+const L = (p: string) => localePath(p, 'xh');
+
+const services = Object.entries(SERVICE_MAP).map(([key, svc]) => ({
+  key,
+  ...svc,
+  count: facilities.filter(f => f.services[key]).length,
+  hasEditorial: !!SERVICE_EDITORIAL[key],
+  guideSlug: SERVICE_EDITORIAL[key]?.guideSlug,
+})).sort((a, b) => b.count - a.count);
+
+/** isiXhosa labels for the service names. Slugs and target pages stay English. */
+const SERVICE_PLAIN_XH: Record<string, string> = {
+  arv_treatment: 'HIV / ARVs',
+  tb_treatment: 'Unyango lwe-TB',
+  maternity_antenatal: 'Ukuzala umntwana',
+  chronic_medication: 'Amayeza aqhubekayo',
+  emergency_24h: 'Ingxaki engxamisekileyo yeeyure ezingama-24',
+  dental: 'Unyango lwamazinyo',
+  mental_health: 'Impilo yengqondo',
+  child_health: 'Impilo yomntwana',
+  family_planning: 'Ucwangciso losapho',
+  immunisation: 'Izitofu zokugonya',
+  hiv_testing: 'Uvavanyo lwe-HIV',
+};
+
+const SERVICE_DESCRIPTIONS: Record<string, string> = {
+  arv_treatment: 'Unyango lwee-antiretrovirals (antiretrovirals) lwe-HIV. Ukuqala ngayo loo mini kuyafumaneka kuzo zonke iikliniki ukususela ngo-2017.',
+  tb_treatment: 'Ukujongwa kwe-TB, uvavanyo lwe-GeneXpert, nonyango lwe-DOTS. Unyango lwasimahla lweenyanga ezi-6.',
+  maternity_antenatal: 'Ukhathalelo lwasimahla lwangaphambi kokubeleka, ukubeleka, nokujongwa emva kokubeleka. Akufuneki i-medical aid.',
+  chronic_medication: 'Uxinzelelo lwegazi, iswekile, isifo sokuwa, umbefu, ukudandatheka. Amayeza asimahla obomi bonke.',
+  emergency_24h: 'I-casualty yeeyure ezingama-24 nokuzinzisa isigulana esingxamisekileyo. Lilungelo lomgaqo-siseko — akukho mntu ubuyiswayo.',
+  dental: 'Ukukhutshwa kwamazinyo, ukuvalwa kwemingxunya, amazinyo okufakela, ukudambisa iintlungu ngokungxamisekileyo. Ungangena nje xa kungxamisekile.',
+  mental_health: 'Ukudandatheka, uxinzelelo lwengqondo, i-PTSD, ukusebenzisa kakubi iziyobisi. Ukujongwa, amayeza, nokuthunyelwa kucebiso.',
+  child_health: 'Ukujongwa kokukhula, uncedo lwesondlo, uvavanyo lwe-IMCI. Simahla kubo bonke abangaphantsi kweminyaka emi-6.',
+  family_planning: 'Inaliti, i-implant, iipilisi, i-IUD, iikhondom. Simahla kuye wonke umntu. Ukususela kwiminyaka eli-12 ngaphandle kwemvume yabazali.',
+  immunisation: 'Ithimetheybhile epheleleyo ye-EPI-SA: ukusuka ekuzalweni ukuya kwiminyaka eli-12, izifo ezili-13. Izitofu zokubuyela emva kuyo nayiphi na iminyaka.',
+  hiv_testing: 'Uvavanyo olukhawulezayo lokuhlatywa emnweni (imizuzu eli-15). Simahla, luyimfihlo, alucheli gama lakho. Izixhobo zokuzivavanya ziyafumaneka.',
+};
+
+const totalFacilities = facilities.filter(f => f.province !== '').length;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Iinkonzo Zempilo Kwiikliniki Zikarhulumente — Clinic Finder SA',
+  description: `Fumana iikliniki zikarhulumente ngenkonzo kumaziko angama-${totalFacilities} eMzantsi Afrika.`,
+  url: 'https://clinicfinder.co.za/xh/services',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: services.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `https://clinicfinder.co.za/services/${s.slug}`,
+      name: SERVICE_PLAIN_XH[s.key] ?? s.plain,
+    })),
+  },
+};
+---
+<Base
+  title="Iinkonzo Kwiikliniki Zikarhulumente — Clinic Finder SA"
+  description="Fumana iikliniki zikarhulumente ngenkonzo: ii-ARV, unyango lwe-TB, ukhathalelo lokukhulelwa, ungxamiseko, amazinyo, impilo yengqondo, amayeza aqhubekayo, izitofu zokugonya, nokunye."
+  jsonLd={[jsonLd, { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhaya', item: 'https://clinicfinder.co.za/xh' }, { '@type': 'ListItem', position: 2, name: 'Iinkonzo' }] }]}
+>
+  <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={L('/')}>Ikhaya</a> &rsaquo; Iinkonzo
+    </nav>
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Fumana Iikliniki ngeNkonzo</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; max-width: 640px; line-height: 1.6;">
+      Zonke iinkonzo zempilo zoqala kwiikliniki zikarhulumente zisimahla kubantu abahlala eMzantsi Afrika. Khetha inkonzo apha ngezantsi ukufumana amaziko ayinikayo, kunye neenkcukacha zoko omawukulindele nokuba ngubani ofanelekayo.
+    </p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;">
+      {services.map(s => (
+        <a href={`/services/${s.slug}`} class="card" style="text-decoration: none; color: var(--text);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+            <div>
+              <strong style="font-size: 1.05rem;">{SERVICE_PLAIN_XH[s.key] ?? s.plain}</strong>
+              {SERVICE_DESCRIPTIONS[s.key] && (
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">{SERVICE_DESCRIPTIONS[s.key]}</p>
+              )}
+              <div style="font-size: 0.85rem; color: var(--primary-dark); margin-top: 8px; font-weight: 600;">
+                amaziko angama-{s.count} &rarr;
+              </div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <section style="margin-top: 40px; background: var(--bg-alt); border-radius: var(--radius); padding: 24px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">Awuqinisekanga ukuba ufuna nkonzo ni?</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 16px;">
+        Ngena nakweyiphi na ikliniki karhulumente uze uxelele umongikazi ngeempawu zakho. Baza kukuhlola, bagqibe ukuba ufuna lunyango luni, baze bakunyange apho okanye bakuthumele kwiziko elifanelekileyo. Akufuneki ulazi "igama lenkonzo" — chaza nje into ekukhathazayo.
+      </p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="/search" class="btn btn--primary" style="font-size: 0.9rem;">Fumana ikliniki ekufuphi nawe</a>
+        <a href={L('/guides')} class="btn btn--outline" style="font-size: 0.9rem;">Jonga izikhokelo zempilo</a>
+      </div>
+    </section>
+
+    <section style="margin-top: 32px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">Lusebenza njani unyango lwasimahla eMzantsi Afrika</h2>
+      <div style="font-size: 0.9rem; line-height: 1.7; display: grid; gap: 12px;">
+        <p>
+          UMgaqo-siseko waseMzantsi Afrika (iCandelo 27) uqinisekisa ilungelo lokufumana iinkonzo zempilo. Kwinqanaba lekliniki yoqala, zonke iinkonzo ezidweliswe ngasentla zisimahla — akukho medical aid, akukho vavanyo lengeniso, akukho mfuneko yamaxwebhu kunyango olungxamisekileyo. Oku kuquka ukubonana nomongikazi, amayeza akuluhlu lwe-Essential Drugs List (EDL), uvavanyo lwaselebhu, nemisebenzi enokwenziwa ekliniki.
+        </p>
+        <p>
+          I-<strong>Essential Drugs List</strong> imisela ukuba ngawaphi amayeza afumaneka simahla kumaziko karhulumente. Iquka amayeza angaphezu kwama-600 ajongene nezifo eziqhubekayo (uxinzelelo lwegazi, iswekile, isifo sokuwa, i-HIV, ukudandatheka), usulelo olukhawulezayo, ukulawulwa kweentlungu, namayeza abantwana. Ukuba iyeza likuluhlu lwe-EDL, ikliniki yakho iya kulinika ngaphandle kwentlawulo. Amayeza angekho kolu luhlu afuna incwadi yengcali kwaye asenokufumaneka kuphela kwinqanaba lesibhedlele.
+        </p>
+        <p>
+          Unyango lwenqanaba lesibhedlele (izibhedlele zesithili, zengingqi, nezisezantsi) lusebenzisa <strong>ubume bemali obuxhomekeke kwingeniso</strong> obubizwa ngokuba yi-Uniform Patient Fee Schedule (UPFS). Abaguli abafumana ngaphantsi komda — malunga ne-R100,000 ngonyaka kumntu omnye — bangena kwinqanaba u-H0 (bencediswa ngokupheleleyo, bengahlawuli nto). Abafumana ngaphezulu bahlawula imali ekhwelayo. Nangona kunjalo, unyango olungxamisekileyo, abantwana abangaphantsi kweminyaka emi-6, abafazi abakhulelweyo, nabaguli abanezifo ezimele zixelwe (i-TB, ikholera, imasisi) bahlala bekhululwe ekuhlawuleni.
+        </p>
+        <p>
+          Umthetho oyilwayo we-<strong>National Health Insurance (NHI)</strong>, owasayinelwa ukuba ngumthetho ngoMeyi 2024, ujolise ekudaleni ingxowa-mali enye yokugubungela wonke umntu ngonyango. Ukuphunyezwa okupheleleyo kwenziwa ngamanyathelo kwiminyaka. Okwangoku, inkqubo esele ikho yekliniki-isibhedlele-ukuthunyelwa echazwe apha isengundlela abemi boMzantsi Afrika abafumana ngayo unyango lukarhulumente.
+        </p>
+      </div>
+    </section>
+
+    <section style="margin-top: 32px; max-width: 720px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">Iinkonzo zenqanaba lekliniki kunezenqanaba lesibhedlele</h2>
+      <div style="font-size: 0.9rem; line-height: 1.7; display: grid; gap: 12px;">
+        <p>
+          Ayizizo zonke iinkonzo ezifumaneka kulo lonke uhlobo lweziko. Iikliniki zijongana malunga nama-80% eemfuno zempilo: amayeza aqhubekayo, izitofu zokugonya, unyango lwe-HIV nele-TB, ucwangciso losapho, utyelelo lwabakhulelweyo, nokwenzakala okuncinci. Iinkonzo ezifuna utyando, i-X-ray, umsebenzi waselebhu, okanye ukulaliswa ubusuku zifuna isibhedlele — kwaye zidla ngokufuna incwadi yokuthunyelwa evela ekliniki yakho.
+        </p>
+        <p>
+          <strong>Into iikliniki ezinokuyenza engenakwenziwa zizibhedlele:</strong> ukungena nje ngaloo mini ngengxaki yoqala (ngaphandle kwe-appointment), ukulandwa ngokukhawuleza kwamayeza aqhubekayo, ukubhaliselwa i-CCMDD ukuze ulande amayeza ngaphandle, nokulandelelwa ekuhlaleni ngabasebenzi bempilo basekuhlaleni.
+        </p>
+        <p>
+          <strong>Into izibhedlele ezinayo engenakwenziwa ziikliniki:</strong> utyando ngokunyangwa ngentlungu, ukuvuselelwa kwesigulana esingxamisekileyo, i-X-ray ne-ultrasound, iziphumo zaselebhu apho, ukufakelwa igazi, ukujongwa ubusuku, uvavanyo lwengcali (amathambo, indlebe-impumlo-umqala, amehlo, ingqondo), nokhathalelo olunzulu (intensive care).
+        </p>
+      </div>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,137 @@
+---
+/**
+ * isiXhosa guides index — sentence-for-sentence translation of src/pages/guides/index.astro.
+ * Slugs stay English (they are the join key for hreflang and the language switcher).
+ */
+import Base from '../../../layouts/Base.astro';
+import { localePath } from '../../../i18n/config';
+
+const L = (p: string) => localePath(p, 'xh');
+
+const guides = [
+  {
+    title: 'Indlela Yokufumana Ikliniki Ekufuphi Nawe',
+    slug: 'find-nearest-clinic',
+    description: 'Isikhokelo ngenyathelo nenyathelo sokufumana ikliniki karhulumente efanelekileyo, into omawuze nayo, into omawuyilindele, namacebiso kwiindawo zasemaphandleni.',
+    category: 'Jikelele',
+  },
+  {
+    title: 'Indlela Yokufumana Ii-ARV Ekliniki Karhulumente',
+    slug: 'how-to-get-arvs',
+    description: 'Isikhokelo ngenyathelo nenyathelo sokuqala unyango lwee-antiretrovirals (antiretrovirals) ekliniki karhulumente, ukusuka kuvavanyo ukuya kunyango lobomi bonke.',
+    category: 'HIV / ARVs',
+  },
+  {
+    title: 'Unyango lwe-TB — Yintoni Omawuyilindele',
+    slug: 'tb-treatment-what-to-expect',
+    description: 'Uhambo lonke lonyango lwe-TB: ukufunyaniswa, i-DOTS, i-TB engaphenduliyo emayezeni, nendlela yokubambelela kulo iinyanga ezi-6.',
+    category: 'TB',
+  },
+  {
+    title: 'Ukhathalelo Lwasimahla Lokukhulelwa Ezibhedlele Zikarhulumente',
+    slug: 'free-maternity-care',
+    description: 'Yonke into abafazi abakhulelweyo abanokuyifumana simahla: utyelelo lwangaphambi kokubeleka, ukubeleka, ukhathalelo emva kokubeleka, nento omawuze nayo.',
+    category: 'Ukukhulelwa',
+  },
+  {
+    title: 'CCMDD — Ukulanda Amayeza Aqhubekayo Ngaphandle Komgca',
+    slug: 'ccmdd-chronic-meds-pickup',
+    description: 'Indlela esebenza ngayo inkqubo ye-Central Chronic Medicine: ngubani ofanelekayo, iindawo zokulanda, nendlela yokubhalisa.',
+    category: 'Amayeza aqhubekayo',
+  },
+  {
+    title: 'Iinkonzo Zempilo Yengqondo Kwiikliniki Zikarhulumente',
+    slug: 'mental-health-services',
+    description: 'Apho ungafumana khona uncedo lokudandatheka, uxinzelelo lwengqondo, i-PTSD, nokusebenzisa kakubi iziyobisi kwinkqubo yempilo karhulumente.',
+    category: 'Impilo yengqondo',
+  },
+  {
+    title: 'Ithimetheybhile Yokugonya Abantwana (eMzantsi Afrika)',
+    slug: 'child-immunisation-schedule',
+    description: 'Ithimetheybhile epheleleyo ye-EPI-SA yokugonya ukusuka ekuzalweni ukuya kwiminyaka eli-12, kubandakanya izitofu zokubuyela emva nendawo omawuye kuyo.',
+    category: 'Impilo yomntwana',
+  },
+  {
+    title: 'Yintoni Omawuyenze Xa Kukho Ingxaki Engxamisekileyo Yempilo',
+    slug: 'medical-emergency-guide',
+    description: 'Ixesha lokuya ekliniki kunexesha lokuya kwigumbi longxamiseko, indlela yokubiza i-ambulensi, nokwenzekayo kwa-casualty.',
+    category: 'Ungxamiseko',
+  },
+  {
+    title: 'Indlela Esebenza Ngayo Inkqubo Yokuthunyelwa Esibhedlele eMzantsi Afrika',
+    slug: 'hospital-referral-system',
+    description: 'Ikhonkco lokuthunyelwa ukusuka ekliniki ukuya esibhedlele: xa uyifuna, indlela yokuyifumana, nokwenzekayo xa uyitsiba.',
+    category: 'Jikelele',
+  },
+  {
+    title: 'Ucwangciso Losapho Nokuthintela Ukumitha',
+    slug: 'family-planning-contraception',
+    description: 'Zonke iindlela zokuthintela ukumitha ezifumaneka simahla: inaliti, i-implant, iipilisi, i-IUD, iikhondom. Abantwana abakwishumi elivisayo bangazifumana ngaphandle kwemvume yabazali.',
+    category: 'Ucwangciso losapho',
+  },
+  {
+    title: 'Unyango Lwamazinyo Kwiikliniki Zikarhulumente',
+    slug: 'dental-care-public-clinics',
+    description: 'Zeziphi iinkonzo zamazinyo ezikhoyo, umawuye phi, ukudambisa iintlungu ngokungxamisekileyo, nenyaniso yamaxesha okulinda.',
+    category: 'Amazinyo',
+  },
+  {
+    title: 'Uvavanyo lwe-HIV — Phi, Njani & Yintoni Omawuyilindele',
+    slug: 'hiv-testing-guide',
+    description: 'Uvavanyo olukhawulezayo, uvavanyo olungachazi gama lakho, izixhobo zokuzivavanya, ukuthintela nge-PrEP, nokwenzekayo xa ufunyaniswa unentsholongwane.',
+    category: 'HIV / ARVs',
+  },
+  {
+    title: 'Amayeza Aqhubekayo Kwiikliniki Zikarhulumente',
+    slug: 'chronic-medication-management',
+    description: 'Indlela iikliniki ezijongana ngayo noxinzelelo lwegazi, iswekile, isifo sokuwa, umbefu, nokudandatheka. Amayeza asimahla nokujongwa.',
+    category: 'Amayeza aqhubekayo',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Izikhokelo Zempilo — Clinic Finder SA',
+  description: 'Izikhokelo ezilula zokusebenzisa inkqubo yempilo karhulumente yaseMzantsi Afrika: ii-ARV, i-TB, ukukhulelwa, amayeza aqhubekayo, ungxamiseko, izitofu zokugonya.',
+  url: 'https://clinicfinder.co.za/xh/guides',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: guides.map((g, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `https://clinicfinder.co.za/xh/guides/${g.slug}`,
+      name: g.title,
+    })),
+  },
+};
+---
+<Base
+  title="Izikhokelo Zempilo — Clinic Finder SA"
+  description="Izikhokelo ezilula zenkqubo yempilo karhulumente yaseMzantsi Afrika. Indlela yokufumana ii-ARV, unyango lwe-TB, ukhathalelo lokukhulelwa, amayeza aqhubekayo, iinkonzo zempilo yengqondo, nokunye."
+  jsonLd={[jsonLd, { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhaya', item: 'https://clinicfinder.co.za/xh' }, { '@type': 'ListItem', position: 2, name: 'Izikhokelo' }] }]}
+>
+  <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={L('/')}>Ikhaya</a> &rsaquo; Izikhokelo
+    </nav>
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Izikhokelo Zempilo</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; max-width: 640px; line-height: 1.6;">
+      Izikhokelo ezilula zokusebenzisa inkqubo yempilo karhulumente yaseMzantsi Afrika. Akukho ntetho enzima yezonyango, akukho kubhalisa — yinkcazelo ecacileyo nje yento onokuyifumana simahla nendlela yokuyifumana.
+    </p>
+
+    <div style="display: grid; gap: 16px;">
+      {guides.map(g => (
+        <a href={L(`/guides/${g.slug}`)} class="card" style="text-decoration: none; color: var(--text);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+            <div>
+              <strong style="font-size: 1.05rem;">{g.title}</strong>
+              <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">{g.description}</p>
+            </div>
+            <span class="chip" style="flex-shrink: 0;">{g.category}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

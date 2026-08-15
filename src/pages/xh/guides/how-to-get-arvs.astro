@@ -1,0 +1,231 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { facilities, SERVICE_MAP } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const L = (p: string) => localePath(p, 'xh');
+
+const arvClinics = facilities.filter(f => f.services.arv_treatment);
+const provinceCounts: Record<string, number> = {};
+arvClinics.forEach(f => { provinceCounts[f.province] = (provinceCounts[f.province] || 0) + 1; });
+
+const faqs = [
+  {
+    question: 'Ndingazifumana ii-ARV ngaphandle kwe-ID?',
+    answer: 'Ewe. Akunakwaliwa uvavanyo lwe-HIV okanye unyango ngenxa yokuba ungenayo i-ID. Iikliniki zinokucela esinye isazisi (i-asylum permit, uxwebhu lwembacu, i-affidavit yasesikhululweni samapolisa) ukuze zenze ifayile yakho, kodwa unyango alunakubanjwa. Ukuba ikliniki iyakwala, tsalela umnxeba kwi-helpline yeTreatment Action Campaign: 0800 322 322.',
+  },
+  {
+    question: 'Zixabisa malini ii-ARV ekliniki karhulumente?',
+    answer: 'Unyango lwee-ARV lusimahla ngokupheleleyo kuwo onke amaziko empilo karhulumente eMzantsi Afrika. Oku kubandakanya amayeza, uvavanyo lwegazi (i-CD4 count kunye ne-viral load), kunye nokubonana nabasebenzi bezempilo. Awuyidingi i-medical aid.',
+  },
+  {
+    question: 'Ndingaqala ii-ARV ngayo kwangayo imini endifunyaniswe ndinayo?',
+    answer: 'Ewe. UMzantsi Afrika ulandela umgaqo-nkqubo wokuqalisa unyango ngayo kwangayo imini ukususela ngo-2017. Ukuba uvavanyo lubonisa ukuba une-HIV, umongikazi angakuqalisa kwii-ARV ngayo kwangayo imini emva kovavanyo olufutshane lwempilo nokuthathwa kwegazi. Akudingeki ulinde iziphumo zegazi ukuze uqale.',
+  },
+  {
+    question: 'Kwenzeka ntoni ukuba ndiphoswa ziidosi zam zee-ARV?',
+    answer: 'Ukuphoswa ziidosi kwandisa umngcipheko wokuba intsholongwane imelane namayeza, oko kuthetha ukuba unyango olusebenzisayo lunokuyeka ukusebenza. Ukuba uphoswe yidosi, yithathe ngokukhawuleza xa ukhumbula (ngaphandle kokuba ixesha ledosi elandelayo sele lisondele). Ukuba ungaphandle konyango ngaphezu kwenyanga, buyela ekliniki — baza kukuqalisa kwakhona, mhlawumbi bathathe igazi kuqala. Akukho sohlwayo okanye kugwebwa xa ubuyela.',
+  },
+  {
+    question: 'Ndingazilanda ii-ARV ekhemesti endaweni yekliniki?',
+    answer: 'Ewe, ukuba uzinzile kunyango (umlinganiselo wentsholongwane egazini ucinyiwe iinyanga ezili-12 nangaphezulu). Inkqubo ye-CCMDD ikuvumela ukuba ulande ii-ARV zakho kwiindawo zokulanda ezingaphandle ezingaphezu kwe-3,000, kubandakanya iikhemesti zabucala, iiholo zoluntu, neendawo zokusebenza. Cela umongikazi wakho wasekliniki akubhalise kwi-CCMDD.',
+  },
+];
+
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Indlela Yokufumana ii-ARV Ekliniki Karhulumente eMzantsi Afrika',
+  description: 'Isikhokelo esinamanyathelo sokuqala unyango lwee-antiretroviral simahla ekliniki karhulumente. Ukuqala ngayo kwangayo imini kuyafumaneka.',
+  totalTime: 'PT2H',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Vavanywa', text: 'Ngena nakweyiphi na ikliniki karhulumente ucele uvavanyo lwe-HIV simahla. Iziphumo zifika ngemizuzu engama-20 ngovavanyo olukhawulezayo lokuhlatywa komnwe.' },
+    { '@type': 'HowToStep', position: 2, name: 'Ukuqala ngayo kwangayo imini', text: 'Ukuba unayo, umongikazi wenza uvavanyo lwempilo aze akuqalise kwii-ARV ngayo kwangayo imini. Unyango olusemgangathweni: i-TLD — ipilisi enye, kanye ngemini.' },
+    { '@type': 'HowToStep', position: 3, name: 'Ziza namaxwebhu akho', text: 'Yiza ne-ID yakho yaseMzantsi Afrika okanye ipasipoti, nawaphi na amayeza owaselayo ngoku, kunye nekhadi lakho lekliniki ukuba unalo.' },
+    { '@type': 'HowToStep', position: 4, name: 'Iindwendwelo zokulandelela', text: 'Buyela emva kwenyanga enye, iinyanga ezintathu, uze emva koko ubuye rhoqo kwiinyanga ezintandathu xa sele uzinzile. Uvavanyo lwegazi lujonga i-viral load kunye nokusebenza kwezintso.' },
+    { '@type': 'HowToStep', position: 5, name: 'Landa amayeza nyanga zonke', text: 'Landa amayeza nyanga zonke kwikhemesti yasekliniki. Izigulana ezizinzileyo zingajoyina i-CCMDD ukuze zilande emakhemesti okanye kwii-ATM.' },
+  ],
+};
+
+const jsonLd = [
+  howToLd,
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Indlela Yokufumana ii-ARV Ekliniki Karhulumente eMzantsi Afrika',
+    description: 'Isikhokelo esinamanyathelo sokuqala unyango lwee-antiretroviral ekliniki karhulumente yaseMzantsi Afrika.',
+    url: 'https://clinicfinder.co.za/xh/guides/how-to-get-arvs',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhaya', item: 'https://clinicfinder.co.za/xh/' }, { '@type': 'ListItem', position: 2, name: 'Izikhokelo', item: 'https://clinicfinder.co.za/xh/guides' }, { '@type': 'ListItem', position: 3, name: 'Indlela Yokufumana ii-ARV Ekliniki Karhulumente' }] },
+];
+---
+<Base
+  title="Indlela Yokufumana ii-ARV Ekliniki Karhulumente — Clinic Finder SA"
+  description="Isikhokelo esinamanyathelo sokuqala unyango lwee-ARV ekliniki karhulumente yaseMzantsi Afrika. Ukuqala ngayo kwangayo imini, into oza nayo, uvavanyo lwegazi, namayeza asimahla."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={L('/')}>Ikhaya</a> &rsaquo; <a href={L('/guides')}>Izikhokelo</a> &rsaquo; Indlela Yokufumana ii-ARV
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Indlela Yokufumana ii-ARV Ekliniki Karhulumente</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      Unyango lwee-antiretroviral (ii-ARV) lusimahla kuyo yonke ikliniki karhulumente eMzantsi Afrika. Ungaqala ngayo kwangayo imini ovavanywe ngayo wafunyaniswa unayo. Esi sikhokelo sikuhambisa kuyo yonke inkqubo — ukususela ekufikeni ekliniki ukuya ekulandeni kwakho amayeza inyanga nenyanga.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Inyathelo 1: Vavanywa</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Ngena nakweyiphi na ikliniki karhulumente ucele uvavanyo lwe-HIV. Uvavanyo lusimahla, luyimfihlo, kwaye luthatha malunga nemizuzu engama-20 (uvavanyo olukhawulezayo lokuhlatywa komnwe). Akudingeki ube ne-appointment. Iziphumo unikwa wena wedwa — azaziswa umqeshi wakho, usapho, nakubani na ngaphandle kwemvume yakho.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Ukuba akufuni ukuya kwikliniki yasekuhlaleni kwakho, naliphi na iziko karhulumente kulo naliphi na iphondo liya kukuvavanya. Ungavavanywa nakwiindawo zovavanyo ezihamba ngezithuthi (khangela iintente zempilo zikarhulumente ematanksini eeteksi nakwiivenkile ezinkulu) okanye ucele umsebenzi wezempilo woluntu kwindawo ohlala kuyo.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Inyathelo 2: Ukuqala ngayo kwangayo imini</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Ukuba uvavanyo lubonisa ukuba unayo, umongikazi uya kwenza uvavanyo olufutshane lwempilo: ubunzima, uxinzelelo lwegazi, ukujonga iimpawu ze-TB, aze athathe igazi le-CD4 count kunye novavanyo lomlinganiselo wentsholongwane egazini (viral load). Umgaqo-nkqubo waseMzantsi Afrika ukususela ngoSeptemba 2017 <strong>ngowokuqalisa ii-ARV ngayo kwangayo imini</strong> — akudingeki ulinde iziphumo zegazi ukuze uqale unyango.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Unyango lokuqala olusemgangathweni yi-TLD (tenofovir + lamivudine + dolutegravir) — ipilisi enye, kanye ngemini. Lusebenza kakhulu, lunezimo ezimbalwa eziphumela emzimbeni, kwaye lucinezela intsholongwane kubantu abaninzi phakathi kweenyanga ezi-3-6.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Inyathelo 3: Into oza nayo</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>I-ID yaseMzantsi Afrika, ipasipoti, okanye i-asylum permit</strong> — ukwenza ifayile yakho yasekliniki. Ukuba akunanto nanye kwezi, ikliniki kufuneka isakunyanga (bona imibuzo ngezantsi).</li>
+        <li><strong>Ubungqina bedilesi</strong> — abusoloko bufuneka, kodwa bunceda ikliniki ikubhalisele kwiziko elikufuphi ngokweendwendwelo zokulandelela.</li>
+        <li><strong>Nawaphi na amayeza owaselayo ngoku</strong> — ngakumbi ukuba usemayezeni e-TB, awesifo seswekile, okanye awesifo sokuwa. Amanye amayeza ayaphazamisana nee-ARV kwaye umongikazi kufuneka azi.</li>
+        <li><strong>Ikhadi eliluhlaza lekliniki</strong> — ukuba sele unalo kutyelelo lwangaphambili. Ukuba akunalo, ikliniki iza kwenza ifayile entsha yesigulana.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Inyathelo 4: Iindwendwelo zokulandelela</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Kwiinyanga ezi-6 zokuqala, uza kuya ekliniki nyanga zonke uyokulanda amayeza akho nokubonana nomongikazi. Uvavanyo lwegazi lwenzeka kwinyanga yesi-3 (viral load) nakwinyanga yesi-6 (viral load + ukusebenza kwezintso). Xa sele uzinzile — i-viral load icinyiwe, akukho ziphumo zingafunwayo — iindwendwelo ziya kuba kanye kwiinyanga ezi-2-3.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Emva kweenyanga ezili-12 ne-viral load ecinyiweyo, ungabhalisela i-<a href={L('/guides/ccmdd-chronic-meds-pickup')}>CCMDD</a> (Central Chronic Medicine Dispensing and Distribution). Le nkqubo ikuvumela ukuba ulande ii-ARV zakho ekhemesti yabucala, eholweni yoluntu, okanye kwindawo yokulanda emsebenzini — akusekho migca yasekliniki kumayeza aqhelekileyo.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Inyathelo 5: Ukuhlala kunyango</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Ii-ARV lunyango lobomi bonke — akukho nyango lupheleleyo lwe-HIV, kodwa unyango lucinezela intsholongwane ngendlela eyiyo kangangokuba abantu abasela ii-ARV baphila ubomi obude obuqhelekileyo kwaye abanakuyosulela i-HIV ngesondo (U=U: Undetectable = Untransmittable).
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Eyona nto ibaluleke kakhulu kukusela ipilisi yakho ngexesha elinye yonke imihla. Beka i-alarm efowunini. Ukuba uyahamba, thatha amayeza aneleyo uhambe nawo. Ukuba aphelelwa, yiya kwikliniki ekufuphi naphi na elizweni — banokukunika amayeza ongxamiseko ngelixa ifayile yakho idluliselwa.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Iziphumo ezingafunwayo eziqhelekileyo ze-TLD</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        I-TLD (tenofovir + lamivudine + dolutegravir) iyanyamezeleka kubantu abaninzi, kodwa ezinye iziphumo ezingafunwayo ziqhelekile kwiiveki ezi-2-4 zokuqala. Phantse zonke ziyaphela ngokwazo.
+      </p>
+      <ul style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li><strong>Ukungalali okanye amaphupha acacileyo</strong> — sesona siphumo esingafunwayo sixelwa kakhulu se-dolutegravir. Ngesiqhelo siphela phakathi kweeveki ezi-2-4. Ukusela ipilisi yakho kusasa endaweni yasebusuku kunganceda.</li>
+        <li><strong>Intloko ebuhlungu nesiyezi</strong> — kuqhelekile kwiiveki ezi-1-2 zokuqala. I-paracetamol oyithenga ngaphandle kwenqaku likagqirha ikhuselekile ukuyisela nee-ARV.</li>
+        <li><strong>Isicaphucaphu</strong> — sela ipilisi yakho nokutya ukunciphisa oku. Ukuba isicaphucaphu siyaqhubeka ngaphaya kwenyanga, xelela umongikazi.</li>
+        <li><strong>Ukwenyuka kobunzima</strong> — i-dolutegravir inxulunyaniswa nokwenyuka kobunzima kwabanye abantu, ngakumbi kubafazi. Uphando lubonisa ukuba kubakho i-3-5 kg kunyaka wokuqala ngokwesiqhelo. Le yinto eyaziwayo emalunga neyeza eliphumelele kakhulu kwezinye iindawo.</li>
+        <li><strong>Iingxaki zezintso (azifane zenzeke)</strong> — i-tenofovir inokuchaphazela ukusebenza kwezintso, yiyo loo nto ikliniki ivavanya izintso zakho kwiinyanga ezi-3 nezi-6. Ukuba sele unesifo sezintso, xelela umongikazi phambi kokuba uqale.</li>
+      </ul>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;"><strong>Buyela ekliniki ngokungxamisekileyo ukuba:</strong> uba nerhashalala, iintlungu ezinzima esiswini, amehlo okanye ulusu oluba tyheli, okanye ukugabha okungapheliyo okukuthintelayo ukuba ugcine ipilisi yakho. Ezi zinto azifane zenzeke kodwa zifuna ingqwalasela ngoko nangoko.</p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Kuthekani ukuba i-viral load yam ayicinywa?</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Abantu abaninzi abasela i-TLD bafikelela kwi-viral load engabonakaliyo (ngaphantsi kwe-50 copies/mL) phakathi kweenyanga ezi-3-6. Ukuba uvavanyo lwegazi lwenyanga yesi-3 lubonisa i-viral load engaphezu kwe-1,000 copies/mL, ikliniki iza kukunika ucweyo lokusela ngokuchanekileyo — esona sizathu siqhelekileyo sokungaphumeleli kukuphoswa ziidosi, hayi ukumelana namayeza.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Uza kuphinda uvavanywe i-viral load kwiinyanga ezi-3 kamva. Ukuba isengaphezu kwe-1,000 emva kokuqinisekiswa ukuba usela kakuhle, ikliniki iza ku-odola uvavanyo lokumelana namayeza. Ukuba ukumelana kuqinisekisiwe, udlulela kunyango lomgangatho wesibini — lusengasimahla, luyipilisi enye ngemini kwiimeko ezininzi (zidovudine + lamivudine + dolutegravir okanye afanayo). Unyango lomgangatho wesithathu lukhona kwiimeko ezinqabileyo apho unyango lomgangatho wesibini nalo lungaphumelelanga, kodwa olu lufuna incwadi yokuthunyelwa kwingcali.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Eyona nto ibalulekileyo: ukungaphumeleli kunyango lokuqala ayisiyongxaki enkulu. Inkqubo inolunye unyango olusekelweyo. Kodwa ukuthetha inyaniso nomongikazi wakho ngeedosi ophoswe zizo kuthintela ukutshintsha okungeyomfuneko kwaye kugcina amathuba akho onyango angomso.
+      </p>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Amalungelo akho njengesigulana esisela ii-ARV</h2>
+      <ul style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li>Unelungelo <strong>lemfihlo</strong> — akukho mntu ekliniki onokuxelela nabani na ngesimo sakho se-HIV ngaphandle kwemvume yakho ebhaliweyo.</li>
+        <li>Unelungelo <strong>lesidima</strong> — abasebenzi bekliniki abanakukuhlazisa, bakukhalimele, okanye bakwalele unyango nangasiphi na isizathu, kubandakanya ukubuya emva kokuyeka unyango.</li>
+        <li>Unelungelo <strong>lokutshintsha ikliniki</strong> — ungayisa ifayile yakho yee-ARV nakweyiphi na ikliniki karhulumente kulo naliphi na iphondo nanini na.</li>
+        <li>Unelungelo <strong>lonyango nokuba ungowaliphi na ilizwe</strong> — abafuna indawo yokusabela, iimbacu, nabantu abangenamaxwebhu banelungelo lonyango lwee-ARV.</li>
+        <li>Ukuba amalungelo akho ayaphulwa, qhagamshelana ne-<strong>Treatment Action Campaign</strong> ku-0800 322 322 okanye i-<strong>Health Ombud</strong> ku-012 942 7808.</li>
+      </ul>
+    </section>
+
+    <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Fumana ikliniki enikeza ii-ARV</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Amaziko angu-{arvClinics.length} kwidatabase yethu anikeza unyango lwee-ARV kuwo onke amaphondo ali-9.
+      </p>
+      <a href="/services/arvs" class="btn btn--primary" style="font-size: 0.9rem;">Khangela iikliniki zee-ARV</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Rhoqo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Imithombo:</strong> Izikhokelo zonyango lwee-ARV zeSebe leZempilo leSizwe loMzantsi Afrika (uhlaziyo luka-2023). Treatment Action Campaign. Iprofayile yelizwe ye-UNAIDS — uMzantsi Afrika. Izikhokelo ezidibeneyo ze-WHO ngokuthintelwa, uvavanyo, nonyango lwe-HIV. Isakhelo sokusetyenziswa kwe-CCMDD (Sebe leZempilo leSizwe, 2018).
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Izikhokelo Ezinxulumeneyo</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={L('/guides/hiv-testing-guide')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Isikhokelo Sovavanyo lwe-HIV</a>
+      <a href={L('/guides/ccmdd-chronic-meds-pickup')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukulanda Amayeza Aqhubekayo nge-CCMDD</a>
+      <a href={L('/guides/tb-treatment-what-to-expect')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Unyango lwe-TB: Okulindelekileyo</a>
+      <a href={L('/guides/find-nearest-clinic')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Fumana Ikliniki Ekufuphi Nawe</a>
+      </div>
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Fumana Iikliniki ngePhondo</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

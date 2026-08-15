@@ -1,0 +1,231 @@
+---
+/**
+ * isiXhosa — inguqulelo yesivakalisi-nge-sivakalisi ye src/pages/guides/family-planning-contraception.astro
+ */
+import Base from '../../../layouts/Base.astro';
+import { facilities } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const L = (p: string) => localePath(p, 'xh');
+
+const fpClinics = facilities.filter(f => f.services.family_planning);
+
+const methods = [
+  { name: 'Inaliti (Depo-Provera / Nur-Isterate)', duration: 'Rhoqo ngeenyanga ezi-2-3', how: 'Inaliti ekliniki. I-Depo-Provera rhoqo ngeenyanga ezi-3, i-Nur-Isterate rhoqo ngeenyanga ezi-2.', pros: 'Eyona ithandwayo eMzantsi Afrika. Iyimfihlo. Akukho pilisi yemihla ngemihla. Isebenza kakhulu (99.7%).', cons: 'Isenokubangela ukopha okungahambelaniyo, ukonyuka kobunzima. Ukubuya kwamandla okumitha kuthatha iinyanga ezi-6-12 emva kokuyeka. Kufuneka ubuyele ekliniki kwinaliti nganye.' },
+  { name: 'Ipilisi yokuthintela ukumitha (contraceptive pill)', duration: 'Yemihla ngemihla', how: 'Sela ipilisi enye ngexesha elinye yonke imihla. Iipilisi eziyi-21 ezisebenzayo + ezi-7 ezingasebenziyo, okanye iipakethi eziqhubekayo.', pros: 'Kulula ukuqala nokuyeka. Inganciphisa i-acne neentlungu zexesha. Amandla okumitha abuya ngokukhawuleza.', cons: 'Kufuneka uyikhumbule yonke imihla. Ayisebenzi kakuhle ukuba iphosiwe (91% ekusetyenzisweni okuqhelekileyo). Ayikhuseli kwizifo ezosulelwa ngesondo (STIs).' },
+  { name: 'I-implant efakwa phantsi kolusu (Implanon NXT)', duration: 'Iminyaka emi-3', how: 'Intonga encinci efakwa phantsi kolusu lwengalo yakho ngaphezulu. Ithatha imizuzu emi-2. Kunikwa isidikidiki sendawo leyo.', pros: 'Eyona ndlela isebenzayo ekhoyo (99.95%). Akukho nto omawuyikhumbule iminyaka emi-3. Isimahla kwiikliniki zikarhulumente ukususela ngo-2014.', cons: 'Ukopha okungahambelaniyo kuqhelekile kwiinyanga ezi-6 zokuqala. Kufuneka umongikazi oqeqeshiweyo ukuyifaka nokuyikhupha. Abanye abafazi bathi bayatshintsha kwimo yengqondo.' },
+  { name: 'I-IUD — yobhedu (Copper-T)', duration: 'Iminyaka emi-5-10', how: 'Isixhobo esincinci esimile njenge-T esifakwa esibelekweni ngumongikazi okanye ugqirha oqeqeshiweyo.', pros: 'Ayinazo iihomoni. Isebenza kude kube yiminyaka eli-10. Amandla okumitha abuya ngoko nangoko emva kokukhutshwa.', cons: 'Isenokubangela amaxesha anzima ngakumbi. Ukufakwa kwayo kunokungakhululi. Kufuneka umnikezeli oqeqeshiweyo — asizo zonke iikliniki ezinayo.' },
+  { name: 'Ikhondom yamadoda', duration: 'Isetyenziswa kanye', how: 'Isimahla kuzo zonke iikliniki zikarhulumente, kumaziko empilo oluntu, ezibhedlele, nakwiindawo ezininzi zoluntu.', pros: 'Kuphela kwendlela ethintela izifo ezosulelwa ngesondo (STIs) ne-HIV. Akufuneki incwadi kagqirha. Isimahla kwaye ifumaneka ndawo zonke.', cons: 'Kufuneka isetyenziswe ngendlela eyiyo ngamaxesha onke. Abanye abantu bathi ayikhululi. Isebenza nge-85% ekusetyenzisweni okuqhelekileyo.' },
+  { name: 'Ikhondom yabafazi', duration: 'Isetyenziswa kanye', how: 'Ifumaneka simahla kwezinye iikliniki. Ingafakwa kwiiyure ezisi-8 phambi kwesondo.', pros: 'Ilawulwa ngumfazi. Ikhusela kwizifo ezosulelwa ngesondo. Ingasetyenziswa ukuba unengxaki nelatex (yenziwe nge-nitrile).', cons: 'Ayifumaneki kakhulu njengeekhondom zamadoda. Ifuna ukuqhelana ukuze uyifake ngendlela eyiyo.' },
+  { name: 'Ukuthintela ukumitha ngokungxamisekileyo (ipilisi yakusasa)', duration: 'Idosi enye ngaphakathi kweeyure ezingama-72', how: 'Ifumaneka nakuyiphi na ikliniki karhulumente okanye kwikhemesti. Ekliniki isimahla. Kwiikhemesti ixabisa i-R30-R80.', pros: 'Inganqanda ukumitha emva kwesondo esingakhuselekanga. Akufuneki ncwadi kagqirha ezikhemesti.', cons: 'Ayenzelwanga ukusetyenziswa rhoqo. Ayisebenzi kakuhle xa ulinda ixesha elide (95% ngaphakathi kweeyure ezingama-24, 58% kwiiyure ezingama-72). Isenokubangela isicaphucaphu.' },
+];
+
+const faqs = [
+  {
+    question: 'Ngaba abantwana abakwishumi elivisayo bangazifumana izinto zokuthintela ukumitha ngaphandle kwemvume yabazali?',
+    answer: 'Ewe. Phantsi koMthetho waBantwana (iCandelo 134), nawuphi na umntwana oneminyaka eli-12 nangaphezulu angazifumana izinto zokuthintela ukumitha neengcebiso ngaphandle kwemvume yabazali. Oku kubandakanya iikhondom, iipilisi, iinaliti, nee-implant. Ikliniki ayinakubazisa abazali okanye ifune imvume yabazali. Lo mthetho ukhona kuba ukumitha kwabantwana abakwishumi elivisayo yingxaki enkulu yempilo neyemfundo eMzantsi Afrika — ukufumana izinto zokuthintela ukumitha kusindisa ubomi.',
+  },
+  {
+    question: 'Yeyiphi indlela elungele mna?',
+    answer: 'Akukho ndlela inye "elungileyo" — kuxhomekeka kumzimba wakho, kwindlela ophila ngayo, nakwizicwangciso zakho. I-implant (Implanon) yeyona isebenzayo kwaye ayifuni nto yenziwa yonke imihla, kodwa abanye abafazi abakuthandi ukopha okungahambelaniyo. Iinaliti zezona zithandwayo eMzantsi Afrika kuba ziyimfihlo kwaye zifuna nje utyelelo lwasekliniki rhoqo ngeenyanga ezi-2-3. Ipilisi ikunika ulawulo kodwa ifuna ukuzeyisa mihla le. Iikhondom kuphela kwendlela ethintela izifo ezosulelwa ngesondo. Thetha nomongikazi wasekliniki — uya kukunceda ukhethe ngokweemeko zakho.',
+  },
+  {
+    question: 'Ngaba ucwangciso losapho lusimahla ngokwenene?',
+    answer: 'Ewe. Zonke iindlela zokuthintela ukumitha ezidweliswe apha ngasentla zisimahla kumaziko empilo karhulumente, kubandakanya i-implant (Implanon), ebeya kuxabisa i-R3,000-R5,000 kugqirha wabucala. Iikhondom zisimahla nazo kwiikliniki, ezibhedlele, kwiiyunivesithi, nakwiindawo ezininzi zoluntu. Ekuphela kokwahlukileyo kukuthintela ukumitha ngokungxamisekileyo kwikhemesti yabucala (R30-R80) — kodwa kusimahla kwiikliniki zikarhulumente.',
+  },
+  {
+    question: 'Ngaba amadoda anokuzifumana iinkonzo zocwangciso losapho?',
+    answer: 'Ewe. Amadoda angafumana: iikhondom zasimahla nakuyiphi na ikliniki, ukwaluswa ngokwezonyango ngokuzithandela (voluntary medical male circumcision, VMMC) okunciphisa umngcipheko we-HIV nge-60%, ukuthunyelwa kwi-vasectomy (kokwaphakade, kufuna iingcebiso nemvume), novavanyo nonyango lwezifo ezosulelwa ngesondo. Amadoda ayamkelekile kwiikliniki zocwangciso losapho — le nkonzo ayiyoyabafazi bodwa.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Ucwangciso Losapho Nokuthintela Ukumitha Kusimahla Kwiikliniki Zikarhulumente eMzantsi Afrika',
+    description: 'Zonke iindlela zokuthintela ukumitha ezifumaneka simahla kwiikliniki zikarhulumente zoMzantsi Afrika: iinaliti, i-implant, iipilisi, i-IUD, iikhondom, nokuthintela ukumitha ngokungxamisekileyo.',
+    url: 'https://clinicfinder.co.za/xh/guides/family-planning-contraception',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'Indlela Yokufumana Izinto Zokuthintela Ukumitha Simahla Ekliniki Karhulumente eMzantsi Afrika',
+    description: 'Inkqubo yamanyathelo ama-5 yokukhetha nokuqala indlela yokuthintela ukumitha nakuliphi na iziko lempilo karhulumente eMzantsi Afrika.',
+    step: [
+      { '@type': 'HowToStep', position: 1, name: 'Yiya nakuyiphi na ikliniki karhulumente — akukho bhukisho lufunekayo', text: 'Ngena nakuyiphi na ikliniki karhulumente okanye kwiziko lempilo loluntu ngamaxesha omsebenzi (idla ngokuba ngo-7:30am–4pm). Iinkonzo zocwangciso losapho ziyafumaneka kuwo onke amaziko karhulumente. Akufuneki i-appointment, incwadi yokuthunyelwa, okanye i-medical aid. Abantwana abaneminyaka eli-12+ bangazifumana izinto zokuthintela ukumitha ngaphandle kwemvume yabazali (uMthetho waBantwana, iCandelo 134).' },
+      { '@type': 'HowToStep', position: 2, name: 'Xelela umongikazi ukuba ufuna ucwangciso losapho', text: 'Cela inkonzo yocwangciso losapho. Umongikazi uya kuthetha ngeenketho zakho: inaliti (rhoqo ngeenyanga ezi-2–3, eyona ithandwayo eMzantsi Afrika), ipilisi yokuthintela ukumitha (yemihla ngemihla), i-implant efakwa phantsi kolusu (iminyaka emi-3, eyona isebenzayo — 99.95%), i-IUD yobhedu (iminyaka emi-5–10, ayinazo iihomoni), iikhondom (zisimahla, kuphela kwendlela ethintela izifo ezosulelwa ngesondo), okanye ukuthintela ukumitha ngokungxamisekileyo (ngaphakathi kweeyure ezingama-72 emva kwesondo esingakhuselekanga).' },
+      { '@type': 'HowToStep', position: 3, name: 'Fumana uhlolo lwempilo olusisiseko', text: 'Umongikazi uya kujonga uxinzelelo lwegazi lakho, akubuze ngembali yakho yezonyango (amahlwili egazi, ii-migraine, isifo sesibindi), aze ajonge ukuba ixesha lakho lokugqibela beliphi na. Oku kuthatha imizuzu emi-5–10. Akukho vavanyo lwegazi lufunekayo ukuqala iindlela ezininzi zokuthintela ukumitha. Ukuba ufuna i-IUD okanye i-implant, umongikazi angadinga ukumisela utyelelo lwesibini ukuba akukho mfaki uqeqeshiweyo ngaloo mini.' },
+      { '@type': 'HowToStep', position: 4, name: 'Qala indlela oyikhethileyo ngoko nangoko', text: 'Iindlela ezininzi ziqala ngaloo mini: iinaliti (inaliti enye), ipilisi (ipakethi yokuqala inikwa), iikhondom (thatha ezininzi ngangoko uzifunayo). Ukufakwa kwe-implant kuthatha imizuzu emi-2 phantsi kwesidikidiki sendawo leyo. Ukufakwa kwe-IUD kuthatha imizuzu eli-10–15. Ukuthintela ukumitha ngokungxamisekileyo kunikwa njengedosi enye. Zonke iindlela zisimahla ngokupheleleyo kwiikliniki zikarhulumente — kubandakanya i-implant, exabisa i-R3,000–R5,000 koogqirha babucala.' },
+      { '@type': 'HowToStep', position: 5, name: 'Buya uze kolandelayo utyelelo njengoko kucwangcisiwe', text: 'Iinaliti: buya rhoqo ngeenyanga ezi-2 (Nur-Isterate) okanye ezi-3 (Depo-Provera). Ipilisi: buya uzokongeza rhoqo ngeenyanga ezi-3–6. I-implant: buya kuphela xa ikhutshwa emva kweminyaka emi-3 okanye ngaphambili ukuba ufuna ukuyeka. I-IUD: uhlolo kwiiveki ezi-6, emva koko minyaka le. Ukuba unazo iziphumo ezingafunwayo (ukopha okungahambelaniyo, utshintsho lwemo yengqondo), buyela ekliniki — umongikazi angayilungisa indlela yakho okanye akutshintshele kwenye.' },
+    ],
+  },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhaya', item: 'https://clinicfinder.co.za/xh' }, { '@type': 'ListItem', position: 2, name: 'Izikhokelo', item: 'https://clinicfinder.co.za/xh/guides' }, { '@type': 'ListItem', position: 3, name: 'Ucwangciso Losapho Nokuthintela Ukumitha Kusimahla Kwiikliniki ...' }] },
+];
+---
+<Base
+  title="Ucwangciso Losapho Nokuthintela Ukumitha Kusimahla Kwiikliniki Zikarhulumente — Clinic Finder SA"
+  description="Zonke iindlela zokuthintela ukumitha ezifumaneka simahla kwiikliniki zikarhulumente zoMzantsi Afrika: iinaliti, i-implant, iipilisi, i-IUD, iikhondom. Indlela yokuzifumana, into omawuyilindele, namalungelo abantwana abakwishumi elivisayo."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={L('/')}>Ikhaya</a> &rsaquo; <a href={L('/guides')}>Izikhokelo</a> &rsaquo; Ucwangciso Losapho
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Ucwangciso Losapho Nokuthintela Ukumitha Kusimahla</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      Yonke ikliniki karhulumente eMzantsi Afrika inikeza iinkonzo zocwangciso losapho simahla. Ungazifumana izinto zokuthintela ukumitha (contraception) ngaphandle kwe-medical aid, ngaphandle kwencwadi yokuthunyelwa, kwaye — ukuba uneminyaka eli-12 nangaphezulu — ngaphandle kwemvume yabazali. Esi sikhokelo sichaza yonke indlela ekhoyo nendlela yokuzifumana.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--primary-dark);">Iindlela ezifumaneka kwiikliniki zikarhulumente</h2>
+      <div style="display: grid; gap: 16px;">
+        {methods.map(m => (
+          <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+            <strong style="font-size: 1rem; color: var(--primary-dark);">{m.name}</strong>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">Ixesha: {m.duration}</div>
+            <p style="font-size: 0.9rem; margin-top: 8px; line-height: 1.6;"><strong>Isebenza njani:</strong> {m.how}</p>
+            <p style="font-size: 0.9rem; margin-top: 6px; line-height: 1.6; color: var(--primary-dark);"><strong>Izinto ezilungileyo:</strong> {m.pros}</p>
+            <p style="font-size: 0.9rem; margin-top: 6px; line-height: 1.6; color: #856404;"><strong>Izinto ezingalunganga:</strong> {m.cons}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Indlela yokuqala</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Ngena nakuyiphi na ikliniki karhulumente.</strong> Akukho appointment ifunekayo. Xelela umongikazi ukuba ufuna iinkonzo zocwangciso losapho.</li>
+        <li><strong>Umongikazi uya kubuza ngempilo yakho.</strong> Ukujongwa koxinzelelo lwegazi, uvavanyo lokumitha (ukuqinisekisa ukuba awukhulelwanga okwangoku), imbali emfutshane yezonyango. Oku kuthatha imizuzu eli-10-15.</li>
+        <li><strong>Khethani indlela kunye.</strong> Umongikazi uya kucacisa iinketho aze akuncede ukhethe ngokomzimba wakho, indlela ophila ngayo, nezicwangciso zakho. Akukho kunyanzelwa — ungatshintsha ingqondo nanini na.</li>
+        <li><strong>Qala ngoko nangoko.</strong> Iindlela ezininzi zingaqalwa ngaloo mini. I-implant ne-IUD zifuna umnikezeli oqeqeshiweyo — ukuba ikliniki yakho ayinaye, iya kukuthumela kwenye enaye.</li>
+        <li><strong>Utyelelo lokulandela.</strong> Umongikazi uya kumisela uhlolo (ngokuqhelekileyo iinyanga ezi-3 kwiindlela ezintsha) ukuqinisekisa ukuba yonke into ihamba kakuhle nokuba ukhululekile.</li>
+      </ol>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--primary-dark);">Ukhuseleko oluphindwe kabini — kutheni iikhondom zisabalulekile</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7;">
+        Ukuthintela ukumitha ngeehomoni (ipilisi, inaliti, i-implant, i-IUD) kuthintela ukumitha kodwa <strong>akukhuseli kwi-HIV okanye kwezinye izifo ezosulelwa ngesondo (STIs)</strong>. EMzantsi Afrika — elelinye lamazwe anezinga eliphezulu kakhulu le-HIV ehlabathini — ukusebenzisa ikhondom kunye nendlela oyikhethileyo (ukhuseleko oluphindwe kabini) kucetyiswa kakhulu. Iikhondom zasimahla ziyafumaneka kuyo yonke ikliniki karhulumente nakwiindawo ezininzi zoluntu.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Iziphumo ezingafunwayo — okuqhelekileyo nokuba umawubuyele nini</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 12px;">Iziphumo ezingafunwayo ezininzi zincinci kwaye ziyaphela kwiinyanga ezi-3-6. Le thebhile ikunceda wahlule phakathi kokuqhelana okuqhelekileyo nesizathu sokubuyela ekliniki.</p>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; font-size: 0.88rem; border-collapse: collapse; line-height: 1.6;">
+          <thead>
+            <tr style="background: var(--bg-alt); text-align: left;">
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Indlela</th>
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Okuqhelekileyo kwiinyanga ezi-3 zokuqala</th>
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Buyela ekliniki ukuba…</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 10px 12px; font-weight: 600;">Inaliti</td>
+              <td style="padding: 10px 12px;">Ukopha okuncinci okungahambelaniyo, iintloko ezibuhlungu kancinci, ukonyuka okuncinci kobunzima (1-2 kg)</td>
+              <td style="padding: 10px 12px;">Akukho xesha iinyanga ezi-6+ emva kokuyeka, iintloko ezibuhlungu kakhulu, ukonyuka kobunzima ngequbuliso ngaphezu kwe-5 kg</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 10px 12px; font-weight: 600;">Ipilisi</td>
+              <td style="padding: 10px 12px;">Isicaphucaphu, amabele abuhlungu, ukopha phakathi kwamaxesha</td>
+              <td style="padding: 10px 12px;">Isifuba esibuhlungu, ukudumba komlenze, utshintsho ekuboneni, isisu esibuhlungu kakhulu</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 10px 12px; font-weight: 600;">I-implant</td>
+              <td style="padding: 10px 12px;">Ukopha okungahambelaniyo (okona kuqhelekileyo), ukudumba kwengalo apho ifakwe khona</td>
+              <td style="padding: 10px 12px;">Usulelo apho ifakwe khona (ukubomvu, ubomvu, ubushushu), intonga ye-implant ivakala igobile okanye ishukumile, ukopha okuninzi okuqhubekayo ngaphaya kweenyanga ezi-6</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 10px 12px; font-weight: 600;">I-IUD yobhedu</td>
+              <td style="padding: 10px 12px;">Amaxesha anzima ngakumbi, ukubanjwa okuncinci</td>
+              <td style="padding: 10px 12px;">Iintlungu ezimbi, into ephumayo enevumba elibi, umkhuhlane, uyayiva i-IUD emlonyeni wesibeleko okanye awusaziva izintambo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">Ukuba unayo nayiphi na kwezi mpawu "zokubuyela", tyelela ikliniki okanye iziko lempilo loluntu elikufuphi nawe ngoko nangoko — musa ukulinda i-appointment emisiweyo. Iimpawu zongxamiseko (isifuba esibuhlungu, ukudumba komlenze, utshintsho ekuboneni) zifuna ukuba uye kwiziko elivulekileyo iiyure ezingama-24.</p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ukutshintsha iindlela</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 12px;">Awukho tywinwe kwindlela ethile. Ukuba indlela oyisebenzisayo ngoku ikubangela iziphumo ezingafunwayo ongenakuzinyamezela, okanye iimeko zakho ziyatshintsha (ucwangcisa ukumitha kungekudala, iqabane elitsha, uyancancisa), ungatshintsha nakuluphi na utyelelo lwekliniki karhulumente.</p>
+      <ul style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li><strong>Inaliti → ipilisi okanye i-implant:</strong> Qala indlela entsha ngomhla wenaliti yakho elandelayo okanye phambi kwawo. Akukho sikhewu ekukhuselweni.</li>
+        <li><strong>Ipilisi → inaliti okanye i-implant:</strong> Fumana inaliti okanye i-implant usasela ipilisi. Sebenzisa iikhondom iintsuku ezi-7 ukuba utshintsha phakathi kwepakethi.</li>
+        <li><strong>I-implant → inaliti okanye ipilisi:</strong> Qala indlela entsha phambi kokuba i-implant ikhutshwe, okanye sebenzisa iikhondom iintsuku ezi-7 emva kokuyikhupha.</li>
+        <li><strong>Nayiphi na indlela → i-IUD yobhedu:</strong> Ingafakwa nangaliphi na ixesha lomjikelo wakho. Isebenza ngoko nangoko.</li>
+        <li><strong>Nayiphi na indlela → iikhondom kuphela:</strong> Ihlala iyinketho. Khumbula: iikhondom zodwa zinezinga lokungasebenzi le-15% ekusetyenzisweni okuqhelekileyo ekuthinteleni ukumitha, ngoko cinga kakuhle ukuba ukuthintela ukumitha kubalulekile.</li>
+      </ul>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">Xelela umongikazi into oyisebenzisayo ngoku nokuba idosi yakho yokugqibela beyinini — uya kubala utshintsho olukhuselekileyo. Ungaze uyeke indlela ngequbuliso ngaphandle kwesicwangciso.</p>
+    </section>
+
+    <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Fumana ikliniki eneenkonzo zocwangciso losapho</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Amaziko angu-{fpClinics.length} kwidatabase yethu anikeza ucwangciso losapho.
+      </p>
+      <a href="/services/family-planning" class="btn btn--primary" style="font-size: 0.9rem;">Khangela iikliniki zocwangciso losapho</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Rhoqo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Imithombo:</strong> National Contraception Clinical Guidelines (NDoH, 2019). Children's Act 38 of 2005, Section 134. National Contraception and Fertility Planning Policy and Service Delivery Guidelines (2012). WHO Medical Eligibility Criteria for Contraceptive Use. South African Demographic and Health Survey 2016.
+    </section>
+      <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Izikhokelo Ezinxulumeneyo</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={L('/guides/free-maternity-care')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukhathalelo Lwasimahla Lokukhulelwa</a>
+      <a href={L('/guides/child-immunisation-schedule')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ithimetheybhile Yokugonya Abantwana</a>
+      <a href={L('/guides/hiv-testing-guide')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Isikhokelo Sovavanyo lwe-HIV</a>
+      <a href={L('/guides/hospital-referral-system')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Inkqubo Yokuthunyelwa Esibhedlele</a>
+      </div>
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Fumana Iikliniki ngePhondo</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

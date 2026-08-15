@@ -1,0 +1,165 @@
+---
+/**
+ * isiXhosa provinces index — sentence-for-sentence translation of src/pages/clinics/index.astro.
+ * Province names, facility counts and the emergency numbers 10177 / 112 are carried across
+ * unchanged. Per-province pages are English only, so those links stay un-prefixed.
+ */
+import Base from '../../../layouts/Base.astro';
+import { facilities, PROVINCES, SERVICE_MAP, provinceSlug } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const L = (p: string) => localePath(p, 'xh');
+
+const totalFacilities = facilities.filter(f => f.province !== '').length;
+const total24h = facilities.filter(f => f.operating_hours?.is_24_hour).length;
+
+const typeBreakdown = facilities.reduce((acc, f) => {
+  if (f.province) {
+    acc[f.type] = (acc[f.type] || 0) + 1;
+  }
+  return acc;
+}, {} as Record<string, number>);
+
+const provinceStats = PROVINCES.map(p => {
+  const pFacilities = facilities.filter(f => f.province === p);
+  const p24h = pFacilities.filter(f => f.operating_hours?.is_24_hour).length;
+  return {
+    name: p,
+    slug: provinceSlug(p),
+    count: pFacilities.length,
+    twentyFourHour: p24h,
+  };
+});
+
+/** isiXhosa facility-type labels for the breakdown chips. */
+const TYPE_LABEL_XH: Record<string, string> = {
+  clinic: 'Ikliniki',
+  district_hospital: 'Isibhedlele Sesithili',
+  community_health_centre: 'Iziko Lempilo Loluntu',
+  regional_hospital: 'Isibhedlele Sengingqi',
+  tertiary_hospital: 'Isibhedlele Esiphakamileyo',
+  central_hospital: 'Isibhedlele Esiphakathi',
+  specialised_hospital: 'Isibhedlele Esikhethekileyo',
+  mobile_clinic: 'Ikliniki Ehambayo',
+  satellite_clinic: 'Ikliniki Esecaleni',
+};
+
+/** isiXhosa labels for the service chips. Slugs and target pages stay English. */
+const SERVICE_PLAIN_XH: Record<string, string> = {
+  arv_treatment: 'HIV / ARVs',
+  tb_treatment: 'Unyango lwe-TB',
+  maternity_antenatal: 'Ukuzala umntwana',
+  chronic_medication: 'Amayeza aqhubekayo',
+  emergency_24h: 'Ingxaki engxamisekileyo yeeyure ezingama-24',
+  dental: 'Unyango lwamazinyo',
+  mental_health: 'Impilo yengqondo',
+  child_health: 'Impilo yomntwana',
+  family_planning: 'Ucwangciso losapho',
+  immunisation: 'Izitofu zokugonya',
+  hiv_testing: 'Uvavanyo lwe-HIV',
+};
+
+const faqs = [
+  {
+    q: 'Yakhiwe njani inkqubo yempilo karhulumente yaseMzantsi Afrika?',
+    a: `Inkqubo ilandela ulandelelwano lokuthunyelwa: iikliniki zoqala (${typeBreakdown['clinic'] || 0}) zijongana nonyango lwemihla ngemihla, amaziko empilo ekuhlaleni (${typeBreakdown['community_health_centre'] || 0}) anamaxesha amade nemisebenzi emincinci, izibhedlele zesithili (${typeBreakdown['district_hospital'] || 0}) zenza utyando nonyango olungxamisekileyo, izibhedlele zengingqi (${typeBreakdown['regional_hospital'] || 0}) zineengcali ezihlala apho, kwaye izibhedlele eziphakamileyo (${typeBreakdown['tertiary_hospital'] || 0}) zijongana neemeko ezinzima ezifuna iingcali ezikhethekileyo. Uqala kwinqanaba lekliniki uze uthunyelwe phezulu njengoko kufuneka — ngaphandle kweemeko ezingxamisekileyo, apho unokuya ngqo kulo naliphi na icandelo le-casualty lesibhedlele.`,
+  },
+  {
+    q: 'Ngaba unyango lukarhulumente eMzantsi Afrika lusimahla ngokwenene?',
+    a: 'Ukhathalelo lwempilo lokuqala kwiikliniki lusimahla kuye wonke umntu — abemi, abahlala apha ngokusisigxina, nabantu bamanye amazwe. Unyango lwasesibhedlele luxhomekeke kwingeniso yakho: ukuba ufumana ngaphantsi komda othile (olungiswa minyaka le), akuhlawuli nto. Ngaphezu komda, imali ibekwa ngokwe-Uniform Patient Fee Schedule (UPFS). Unyango olungxamisekileyo luhlala lusimahla nokuba ufumana malini — eli lilungelo lomgaqo-siseko phantsi kweCandelo 27(3). Abantwana abangaphantsi kweminyaka emi-6 nabafazi abakhulelweyo bafumana unyango lwasimahla kuwo onke amanqanaba.',
+  },
+  {
+    q: 'Uyintoni umahluko phakathi kwekliniki nesibhedlele?',
+    a: 'Iikliniki ngamaziko onyango lokuqala aqhutywa ngabongikazi kwaye awabalali abaguli ubusuku. Ajongana nezitofu zokugonya, amayeza aqhubekayo, unyango lwe-HIV nele-TB, ucwangciso losapho, nokwenzakala okuncinci. Izibhedlele zinoogqirha, amagumbi otyando, i-X-ray, iilebhu, kwaye zingabalalisa abaguli. Ukuba ikliniki ayikwazi ukujongana nemeko yakho, ikunika incwadi yokuthunyelwa esibhedlele esikufuphi.',
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
+---
+<Base
+  title="Iikliniki Zikarhulumente ngePhondo — Clinic Finder SA"
+  description={`Jonga iikliniki nezibhedlele zikarhulumente ezingama-${totalFacilities} kuwo onke amaphondo ali-9 oMzantsi Afrika. Fumana amaziko anee-ARV, ukhathalelo lokukhulelwa, unyango lwe-TB, neenkonzo ezingxamisekileyo.`}
+  jsonLd={[faqJsonLd, { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhaya', item: 'https://clinicfinder.co.za/xh' }, { '@type': 'ListItem', position: 2, name: 'Amaphondo' }] }]}
+>
+  <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={L('/')}>Ikhaya</a> &rsaquo; Amaphondo
+    </nav>
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Iikliniki Zikarhulumente ngePhondo</h1>
+    <p style="color: var(--text-muted); margin-bottom: 24px; max-width: 640px; line-height: 1.6;">
+      Inkqubo yempilo karhulumente yaseMzantsi Afrika ikhonza malunga nama-84% abemi ngamaziko angama-{totalFacilities.toLocaleString()} kumaphondo ali-9. Kuwo, angama-{total24h} asebenza iiyure ezingama-24. Khetha iphondo apha ngezantsi ukubona zonke iikliniki, amaziko empilo ekuhlaleni, nezibhedlele kuloo ndawo — kunye neenkcukacha zeenkonzo, amacebiso empilo, neenombolo zongxamiseko.
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 32px;">
+      {provinceStats.map(p => (
+        <a href={`/clinics/${p.slug}`} class="card" style="text-decoration: none; color: var(--text);">
+          <strong style="font-size: 1.1rem;">{p.name}</strong>
+          <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
+            amaziko angama-{p.count} · angama-{p.twentyFourHour} avula iiyure ezingama-24
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 24px; margin-bottom: 32px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--primary-dark);">Ulandelelwano lokuthunyelwa — umawuqale phi</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px;">
+        Inkqubo yempilo karhulumente yenzelwe ukuba abaguli baqale kwinqanaba eliphantsi elifanelekileyo lonyango baze bathunyelwe phezulu kuphela xa kuyimfuneko. Ukuya ngqo esibhedlele ngento enokwenziwa yikliniki kutshabalalisa amandla asele enqabile esibhedlele kwaye kusenokwenza ukuba ubuyiswe ungenayo incwadi yokuthunyelwa.
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.9rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Ikliniki</strong> ({typeBreakdown['clinic'] || 0} eMzantsi Afrika) — Indawo yakho yokuqala kulo lonke unyango olungengxamisekanga. Iqhutywa ngabongikazi. Akulalwa ubusuku.</li>
+        <li><strong>Iziko Lempilo Loluntu</strong> ({typeBreakdown['community_health_centre'] || 0}) — Ikliniki eyandisiweyo eneenkonzo zeeyure ezingama-24, ukubeleka okuqhelekileyo, nemisebenzi emincinci.</li>
+        <li><strong>Isibhedlele Sesithili</strong> ({typeBreakdown['district_hospital'] || 0}) — Inqanaba lokuqala lesibhedlele. Utyando, i-X-ray, ilebhu, icandelo longxamiseko, nokulaliswa.</li>
+        <li><strong>Isibhedlele Sengingqi</strong> ({typeBreakdown['regional_hospital'] || 0}) — Iingcali ezihlala apho. I-CT scan, utyando olunzima, i-ICU, nokukhulelwa okunobungozi.</li>
+        <li><strong>Isibhedlele Esiphakamileyo</strong> ({typeBreakdown['tertiary_hospital'] || 0}) — Utyando lwengqondo, utyando lwentliziyo, ukufakelwa kwamalungu omzimba, unyango lwe-radiation. Ngokuthunyelwa kuphela.</li>
+      </ol>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">
+        Okwahlukileyo: xa kukho ingxaki engxamisekileyo yempilo, yiya ngqo kwisibhedlele esikufuphi esinecandelo le-casualty elivula iiyure ezingama-24. Akufuneki ncwadi yokuthunyelwa. Fowunela <a href="tel:10177">10177</a> ufuna i-ambulensi okanye u-<a href="tel:112">112</a> kwifowuni nayiphi na (isebenza nangaphandle kwe-airtime).
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 16px;">Uhlalutyo lwamaziko elizwe lonke</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+        {Object.entries(typeBreakdown).sort((a, b) => b[1] - a[1]).map(([type, count]) => (
+          <span class="chip chip--type">{TYPE_LABEL_XH[type] ?? type} ({count})</span>
+        ))}
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+        Idatha ithathwe kwa-OpenStreetMap nakwi-Humanitarian Data Exchange. Amaziko aphawulwe njengavula iiyure ezingama-24 aqinisekisiwe ngokuchasaniswa noluhlu olusemthethweni olukhoyo. Ukufumaneka kweenkonzo kusekelwe kuhlobo lweziko nakwidatha yephondo — qinisekisa iinkonzo ezithile ngokufowunela iziko phambi kokuba utyelele.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 16px;">Imibuzo Ebuzwa Rhoqo</h2>
+      {faqs.map(f => (
+        <details style="border-bottom: 1px solid var(--border); padding: 12px 0;">
+          <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem;">{f.q}</summary>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">{f.a}</p>
+        </details>
+      ))}
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Fumana ngenkonzo endaweni yoko</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+        Ukhangela inkonzo ethile endaweni yephondo? Jonga amaziko ngokweenkonzo awanikayo:
+      </p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        {Object.entries(SERVICE_MAP).map(([key, svc]) => (
+          <a href={`/services/${svc.slug}`} class="chip" style="text-decoration: none; font-size: 0.85rem; padding: 6px 12px;">
+            {SERVICE_PLAIN_XH[key] ?? svc.plain}
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>
