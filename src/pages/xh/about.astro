@@ -1,0 +1,43 @@
+---
+/**
+ * isiXhosa "About" page — sentence-for-sentence translation of src/pages/about.astro.
+ * The site name, the email address, the source-data organisations (OpenStreetMap, HOTOSM,
+ * National Department of Health) and the National Health Hotline number 0800 029 999 are
+ * carried across unchanged, as is the facility count.
+ */
+import Base from '../../layouts/Base.astro';
+import { localeHrefFor } from '../../i18n/links';
+
+const L = localeHrefFor('xh');
+---
+
+<Base title="Malunga Nathi — Clinic Finder SA" description="Funda ngeClinic Finder SA — uluhlu lwasimahla olunceda abantu baseMzantsi Afrika ukufumana iziko lempilo karhulumente elikufuphi nabo." jsonLd={[{ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhaya', item: 'https://clinicfinder.co.za/xh' }, { '@type': 'ListItem', position: 2, name: 'Malunga Nathi' }] }]}>
+  <div class="container" style="padding: 2rem 0 3rem;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+      <a href={L('/')} style="color: var(--primary-dark);">Ikhaya</a> › Malunga Nathi
+    </nav>
+
+    <h1 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Malunga neClinic Finder SA</h1>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Senza ntoni</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">IClinic Finder SA luluhlu lwasimahla, olwenzelwe ifowuni kuqala, lwamaziko empilo karhulumente aseMzantsi Afrika. Sinceda abantu bafumane ikliniki, isibhedlele, okanye iziko lempilo loluntu elikufuphi nabo — kunye nolwalathiso, amaxesha okusebenza, neenkonzo ezikhoyo — ukuze bafumane unyango abaludingayo ngaphandle kokufowuna okanye ukuqashela.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Kutheni siyakhe le nto</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">UMzantsi Afrika unamaziko empilo karhulumente angaphezu kwe-3,500, kodwa ukufumana elifanelekileyo akusoloko kulula. Inkcazelo isasazeke kumasebe amaphondo, ihlala ingasahlaziywanga, kwaye ayifane ikhangeleke. Abantu abaninzi — ngakumbi kwiindawo zasemaphandleni okanye kwiindawo ezingekho semthethweni — abazi ukuba maziphi amaziko akufuphi nabo okanye anika ziphi iinkonzo. Esi sixhobo sibeka loo nkcazelo kwindawo enye, efumaneka kuyo nayiphi na ifowuni.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Idatha yethu</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Idatha yamaziko ivela kwa-OpenStreetMap nakwiHumanitarian OpenStreetMap Team (HOTOSM), yongezelelwa yinkcazelo evela kuluhlu lwamaziko lweNational Department of Health. Sinika amagama amaziko, iidilesi, iintlobo, iinkonzo ezinikwayo, neekhowudinethi zendawo. Idatha ihlaziywa rhoqo kodwa isenokungabonisi ukuvalwa kwamaziko okanye utshintsho lweenkonzo lwamva nje.</p>
+      <p style="line-height: 1.7; color: var(--text-muted); margin-top: 0.75rem;">Eli ayilophepha likarhulumente elisemthethweni. Ukuze ufumane eyona nkcazelo yamva nje yamaziko, qhagamshelana neSebe lezeMpilo lephondo lakho okanye ufowunele iNational Health Hotline ku-<strong>0800 029 999</strong>.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Uqhagamshelwano</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Ufumene inkcazelo engachanekanga? Ufuna ukucebisa iziko elingekhoyo? Sithumelele i-imeyile ku-<a href="mailto:hello@clinicfinder.co.za" style="color: var(--primary-dark);">hello@clinicfinder.co.za</a> okanye utyelele <a href={L('/contact')} style="color: var(--primary-dark);">iphepha lethu loqhagamshelwano</a>.</p>
+    </section>
+  </div>
+</Base>

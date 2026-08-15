@@ -59,6 +59,18 @@ export const COVERAGE: Record<Exclude<Locale, 'en'>, LocaleCoverage> = {
       '/guides/tb-treatment-what-to-expect',
       '/clinics',
       '/services',
+      // The remaining standalone pages. /contact, /privacy and /terms are noindex in
+      // English and their isiXhosa versions keep that flag, so they will never be
+      // crawled — they are declared here anyway because COVERAGE is what the language
+      // SWITCHER reads, and a reader who has just read the terms in isiXhosa and clicks
+      // through to the privacy policy should not be dropped back into English.
+      '/about',
+      '/contact',
+      '/privacy',
+      '/terms',
+      '/search',
+      '/guide',
+      '/how-this-site-is-made',
     ],
     // All 9. PROVINCE_EDITORIAL is translated in full in
     // src/data/i18n/province-editorial.xh.ts, so every province page may ship.

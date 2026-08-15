@@ -1,0 +1,155 @@
+---
+/**
+ * isiXhosa "How This Site Is Made" — sentence-for-sentence translation of
+ * src/pages/how-this-site-is-made.astro.
+ *
+ * The page is generated from src/data/_provenance.json so the table cannot drift from
+ * the manifest. Two things are therefore deliberately left in English: the provenance
+ * CLASS NAMES (sourced, derived, ai_authored, observed, config) — they are record keys
+ * rendered as code, not prose — and the primary-source citations, which name
+ * OpenStreetMap, the Overpass API, HOTOSM and the ODbL licence and carry the facility
+ * counts. Class DESCRIPTIONS are translated through a keyed map that falls back to the
+ * manifest's English text, so a class added later still renders rather than going blank.
+ *
+ * Also left in English: OpenStreetMap, the email address hello@clinicfinder.co.za, and
+ * the manifest's last-updated date. The contact link resolves through `localeHref`,
+ * which asks `hasTranslation()` rather than assuming — /xh/contact now exists.
+ */
+import Base from '../../layouts/Base.astro';
+import provenance from '../../data/_provenance.json';
+import { localeHrefFor } from '../../i18n/links';
+
+const L = localeHrefFor('xh');
+
+// Generated from src/data/_provenance.json so the table cannot drift from the manifest
+// the data tooling reads.
+const LEVEL_ORDER = ['sourced', 'derived', 'ai_authored', 'observed', 'config'];
+
+/** isiXhosa descriptions for the provenance classes, keyed by class name. */
+const LEVEL_DESC_XH: Record<string, string> = {
+  sourced: 'Ithathwe kumthombo wedatha evulekileyo wequmrhu lesithathu elichaziweyo.',
+  derived: 'Ibalwe ngamanye amaxabiso akule dathasethi.',
+  ai_authored: 'Umbhalo ocacisayo obhalwe yi-AI usekelwe kumbandela othathwe kumthombo.',
+  observed: 'Ilinganiswe ngokuthe ngqo zizixhobo zethu ngexesha elithile.',
+  config: 'Useto lwesayithi okanye isiphumo sokwakha esibhalwe zizixhobo zethu — iindawo eziphambili kwisitemap, ukujonga iindlela. Ayilotyala malunga nehlabathi.',
+};
+
+const used = new Set();
+for (const fields of Object.values(provenance.datasets ?? {})) {
+  if (fields && typeof fields === 'object') {
+    for (const v of Object.values(fields)) if (typeof v === 'string') used.add(v);
+  }
+}
+const levels = LEVEL_ORDER
+  .filter((k) => used.has(k) && provenance.levels?.[k])
+  .map((k) => ({ label: k.replace(/_/g, ' '), desc: LEVEL_DESC_XH[k] ?? provenance.levels[k] }));
+
+const sources = provenance.primary_sources ?? [];
+const updated = (provenance.updated_at ?? '').slice(0, 10);
+---
+
+<Base
+  title="Indlela Eyakhiwe Ngayo Le Sayithi — ClinicFinder"
+  description="Indlela i-ClinicFinder eyakhiwe ngayo: idatha yamaziko ivela kwidatha evulekileyo ye-OpenStreetMap, oko kuthetha ntoni ngokuchaneka nangobubanzi bengqokelela, ngubani onoxanduva, nendlela yokuxela idilesi engachanekanga."
+>
+  <div class="container">
+    <h1>Indlela Eyakhiwe Ngayo Le Sayithi</h1>
+    <p class="lead">
+      Apho ivela khona inkcazelo yamaziko, into eyigubungelayo nengayigubungeliyo, nendlela
+      yokusazisa xa kukho into engalunganga.
+    </p>
+
+    <h2>Umbhalo okule sayithi ubhalwe yi-AI waze wajongwa ngumntu</h2>
+    <p>
+      Umbhalo ocacisayo okule sayithi — into eyenziwa luhlobo oluthile lwekliniki, into
+      omawuyilindele eziko, indlela yokulungiselela utyelelo — ubhalwe yi-AI waza wajongwa
+      ngumntu. Iirekhodi zamaziko ngokwazo azibhalwanga yi-AI: zivela kwidatha evulekileyo,
+      njengoko kuchaziwe ngezantsi.
+    </p>
+
+    <h2>Ngubani onoxanduva ngayo</h2>
+    <p>
+      Uxanduva lokuhlela i-ClinicFinder lusezandleni zomqhubi wesayithi, umntu wokwenene
+      ojonga oko kupapashwa apha kwaye ophendula kwidilesi yoqhagamshelwano engezantsi. I-AI
+      ibhala umbhalo ocacisayo; ayigqibi ngaphandle kolawulo ukuba yintoni epapashwayo, kwaye
+      ayilolo qumrhu linoxanduva ngayo.
+    </p>
+
+    {sources.length > 0 && (
+      <>
+        <h2>Ivela phi idatha yamaziko</h2>
+        <ul>
+          {sources.map((s) => <li>{s}</li>)}
+        </ul>
+      </>
+    )}
+
+    <h2>Yintoni ethathwe kumthombo, yintoni ebhaliweyo</h2>
+    <p>
+      Indawo nganye inodidi lomthombo. Ezi zezi didi zisetyenziswayo ngokwenene, zithathwe
+      kwimanifesto le sayithi eyakhiwe ngayo:
+    </p>
+    <dl class="provenance-list">
+      {levels.map((l) => (
+        <div class="provenance-row">
+          <dt><code>{l.label}</code></dt>
+          <dd>{l.desc}</dd>
+        </div>
+      ))}
+    </dl>
+    <p>
+      Amagama amaziko, iidilesi neekhowudinethi <strong>zithathwe kumthombo</strong> — azizizo
+      izilinganiso, kwaye azilungiswanga sithi. Asilibhali ngokutsha igama leziko nokuba
+      libhalwe gwenxa ngokucacileyo, kuba ukutshintsha ixabiso elithathwe kumthombo lisemi
+      njengelithathwe kumthombo yimpazamo yalo uhlobo lwayo.
+    </p>
+
+    <h2>Inyaniso emawuyazi: ububanzi bengqokelela, hayi ukuqamba</h2>
+    <p>
+      Umda apha asikokuba amanani aqanjiwe — kukuba i-OpenStreetMap igcinwa luluntu, ngoko
+      ukugqibelela nokuhlaziyeka kwedatha kwahluka kakhulu ngokwendawo. Isixeko esibhalwe
+      kakuhle emaphepheni sinokuba nalo lonke iziko nanamanani eefowuni namaxesha okuvula;
+      isithili sasemaphandleni sinokuba neepini ezimbalwa kungabikho nto yimbi. Iphepha
+      ngalinye leziko libonisa isalathiso somgangatho wedatha nokuba ijongwe nini okokugqibela
+      irekhodi, ukuze ubone ukuba ujonge eliphi.
+    </p>
+    <p>
+      Oku kubaluleke ngakumbi apha kunakwisayithi eqhelekileyo yokuthelekisa. Idilesi
+      engachanekanga ibiza umntu uhambo angenakukwazi ukulubhatala. <strong>Nceda ufowune
+      kuqala phambi kokuba uhambe</strong>, ngakumbi kwiziko elinerekhodi elibonakala
+      lingapheleli, kwaye amaxesha okuvula mawathathwe njengesiqalo, hayi njengesiqinisekiso.
+    </p>
+
+    <h2>Ufumene into engalunganga? Nceda usixelele</h2>
+    <p>
+      Izilungiso zamkelekile ngokwenene kwaye zinceda wonke umntu ojonga iziko elinye emva
+      kwakho. Thumela i-imeyile ku-
+      <a href="mailto:hello@clinicfinder.co.za">hello@clinicfinder.co.za</a> okanye usebenzise
+      <a href={L('/contact')}>iphepha loqhagamshelwano</a> unegama leziko nokuba yintoni engalunganga —
+      inombolo yefowuni etshintshileyo, iziko elivaliweyo, indawo engachanekanga — kwaye
+      iya kujongwa ilungiswe.
+    </p>
+
+    <p class="meta">Imanifesto yomthombo yagqityelwa ukuhlaziywa: {updated}</p>
+  </div>
+
+  <style>
+    .lead { font-size: 1.05rem; line-height: 1.7; }
+    h2 { margin-top: 2rem; }
+    p, li { line-height: 1.7; }
+    .meta { margin-top: 2.5rem; font-size: 0.85rem; opacity: 0.7; }
+    .provenance-list { margin: 1.25rem 0; }
+    .provenance-row {
+      display: grid;
+      grid-template-columns: 8rem 1fr;
+      gap: 1rem;
+      padding: 0.7rem 0;
+      border-top: 1px solid rgba(128, 128, 128, 0.25);
+    }
+    .provenance-row dt code { font-size: 0.85rem; white-space: nowrap; }
+    .provenance-row dd { margin: 0; line-height: 1.6; }
+    @media (max-width: 640px) {
+      .provenance-row { grid-template-columns: 1fr; gap: 0.25rem; }
+    }
+  </style>
+</Base>

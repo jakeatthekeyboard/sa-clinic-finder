@@ -1,0 +1,42 @@
+---
+/**
+ * isiXhosa "Privacy Policy" page — sentence-for-sentence translation of
+ * src/pages/privacy.astro. The last-updated date, the email address and the service
+ * name Vercel Analytics are carried across unchanged, as is the noindex directive.
+ */
+import Base from '../../layouts/Base.astro';
+import { localeHrefFor } from '../../i18n/links';
+
+const L = localeHrefFor('xh');
+---
+
+<Base title="Umgaqo-nkqubo Wabucala — Clinic Finder SA" description="Umgaqo-nkqubo wabucala weClinic Finder SA. Indlela esiyisebenzisa ngayo idatha yabatyeleli neenkonzo zabanye." noindex={true}>
+  <div class="container" style="padding: 2rem 0 3rem;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+      <a href={L('/')} style="color: var(--primary-dark);">Ikhaya</a> › Ubucala
+    </nav>
+
+    <h1 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Umgaqo-nkqubo Wabucala</h1>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Ihlaziywe okokugqibela: 9 Meyi 2026</p>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Isishwankathelo</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">IClinic Finder SA sisixhobo sempilo karhulumente sasimahla. Asifuni ubhaliso, ukungena, okanye nayiphi na inkcazelo yakho buqu ukuze usebenzise le sayithi.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Siqokelela ntoni</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Siqokelela iinkcukacha ezisisiseko zokusetyenziswa (amaphepha ajongiweyo, uhlobo lwesixhobo, umthombo wokungena) sisebenzisa i-Vercel Analytics — inkonzo egxile ekukhuseleni ubucala engasebenzisi ii-cookie kwaye engagcini nkcazelo yakho buqu. Ukuba usithumelela i-imeyile, siyawugcina umyalezo wakho ukuze siphendule kwaye siphucule le sayithi.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Idatha yendawo</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Iimpawu ezithi "Fumana ekufuphi" zisebenzisa i-geolocation API yebhrawuza yakho ukufumana iikliniki ezikufuphi nawe. Le datha yendawo isetyenzwa kwibhrawuza yakho kuphela — ayithunyelwa kwiiseva zethu kwaye ayigcinwa.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Uqhagamshelwano</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Ngemibuzo yobucala, thumela i-imeyile ku-<a href="mailto:hello@clinicfinder.co.za" style="color: var(--primary-dark);">hello@clinicfinder.co.za</a>.</p>
+    </section>
+  </div>
+</Base>

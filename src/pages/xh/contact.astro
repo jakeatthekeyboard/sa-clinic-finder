@@ -1,0 +1,36 @@
+---
+/**
+ * isiXhosa "Contact" page — sentence-for-sentence translation of src/pages/contact.astro.
+ * The email address and the numbers 10177, 112 and 0800 029 999 are carried across
+ * unchanged, as is the noindex directive on the English page.
+ */
+import Base from '../../layouts/Base.astro';
+import { localeHrefFor } from '../../i18n/links';
+
+const L = localeHrefFor('xh');
+---
+
+<Base title="Qhagamshelana Nathi — Clinic Finder SA" description="Qhagamshelana neClinic Finder SA. Xela idatha yamaziko engachanekanga, cebisa iikliniki ezingekhoyo, okanye ubuze imibuzo." noindex={true}>
+  <div class="container" style="padding: 2rem 0 3rem;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+      <a href={L('/')} style="color: var(--primary-dark);">Ikhaya</a> › Qhagamshelana Nathi
+    </nav>
+
+    <h1 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Qhagamshelana Nathi</h1>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Sithethe nathi</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Sithumelele i-imeyile ku-<a href="mailto:hello@clinicfinder.co.za" style="color: var(--primary-dark);">hello@clinicfinder.co.za</a>. Siyawufunda wonke umyalezo kwaye sizama ukuphendula kwiiyure ezingama-48.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Ukulungiswa kwedatha</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Ukuba ubona inkcazelo yeziko engachanekanga — idilesi engeyiyo, iinkonzo ezishiyekileyo, iziko elivaliweyo elisadwelisiwe, okanye iziko elitsha esingekaloneli — nceda usazise. Faka igama leziko kunye noko kufuneka kulungiswe. Ukulungiswa kunceda wonke umntu osebenzisa esi sixhobo.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Ungxamiseko</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Ukuba unengxaki engxamisekileyo yezonyango, fowunela u-<strong>10177</strong> (i-ambulensi) okanye u-<strong>112</strong> (kwiselula). Ungafowunela kwakhona iNational Health Hotline ku-<strong>0800 029 999</strong> ngemibuzo enxulumene nempilo.</p>
+    </section>
+  </div>
+</Base>
