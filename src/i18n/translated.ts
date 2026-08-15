@@ -74,7 +74,27 @@ export const COVERAGE: Record<Exclude<Locale, 'en'>, LocaleCoverage> = {
       'Northern Cape',
       'Western Cape',
     ],
-    services: [],
+    // All 11 SERVICE_MAP keys. SERVICE_EDITORIAL is translated in full in
+    // src/data/i18n/service-editorial.xh.ts, which — like the English module — covers
+    // 10 of the 11: `emergency_24h` has no editorial entry in EITHER language, and its
+    // page renders from the route's own generic prose, which is translated. So all 11
+    // pages are genuinely isiXhosa and all 11 are declared. Listing only the 10 would
+    // leave /services/emergency English-only while its 10 siblings were translated,
+    // which is the one page a reader in an emergency is most likely to open.
+    // SERVICE_MAP KEYS, not slugs — the keys are the join key (see SERVICE_PATH_TO_KEY).
+    services: [
+      'arv_treatment',
+      'tb_treatment',
+      'maternity_antenatal',
+      'chronic_medication',
+      'emergency_24h',
+      'dental',
+      'mental_health',
+      'child_health',
+      'family_planning',
+      'immunisation',
+      'hiv_testing',
+    ],
     facilities: false,
   },
   zu: {
