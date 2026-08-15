@@ -1,0 +1,46 @@
+{
+  "_comment": "Accepted numeric-parity differences, identity-keyed as page|value|delta. A language may render a STANDALONE numeral as a word — isiXhosa and isiZulu both do, and forcing a digit there would be worse language, not better data. Multi-digit figures are never acceptable as words and the loader REJECTS any attempt to baseline one: no language spells 140/90, 10177 or 10,000 in running prose, so a missing multi-digit figure is always a real defect. Every entry below was read in context against its English source before being accepted, on 2026-08-15. Fixing the prose changes the key and self-clears; a NEW omission mints a new key and fires.",
+  "_verified": "2026-08-15 16:20 SAST — all 2,240 translated pages compared; these 10 are the complete set of differences and every one is a numeral-as-word rendering. No multi-digit figure differs anywhere on the site.",
+  "accepted": [
+    {
+      "key": "/xh/guides/ccmdd-chronic-meds-pickup|2|-1",
+      "reason": "English 'miss 2 consecutive pickups' -> isiXhosa 'uphoswa kukulanda kabini kulandelelana' ('twice consecutively'). The count is carried by the adverb kabini."
+    },
+    {
+      "key": "/xh/guides/chronic-medication-management|1|-3",
+      "reason": "'1 in 3 adults', '1 in 100 people' and '1-month supply' render the leading numeral as a word (omnye / inyanga enye). The denominators 3 and 100 and every clinical figure are preserved."
+    },
+    {
+      "key": "/xh/guides/chronic-medication-management|3|-1",
+      "reason": "'1 in 3 South African adults' -> 'omnye kwabathathu'. The ordinal step numbers 1/2/3 in the cycle list are preserved as digits."
+    },
+    {
+      "key": "/xh/guides/dental-care-public-clinics|1|-2",
+      "reason": "'1 dentist per 10,000' and '1 per 2,000' -> 'ugqirha wamazinyo omnye kubantu abali-10,000 ... nomnye kubantu abangama-2,000'. Both multi-digit ratios survive intact; only the numeral one becomes omnye."
+    },
+    {
+      "key": "/xh/guides/medical-emergency-guide|7|-1",
+      "reason": "'24/7' -> 'iiyure ezingama-24 ngosuku' ('24 hours a day'). isiXhosa has no 24/7 idiom; the 24 is preserved and the sentence's meaning (no doctors on site around the clock) is carried."
+    },
+    {
+      "key": "/xh/services/chronic-medication|2|+1",
+      "reason": "INVERSE case: English writes 'bi-monthly' as a word where isiXhosa writes 'rhoqo kwiinyanga ezi-2' ('every 2 months'). The translation is more explicit than the source, not divergent from it."
+    },
+    {
+      "key": "/zu/guides/chronic-medication-management|1|-2",
+      "reason": "'1 in 3 adults' and '1 in 100 people' render the leading numeral as a word. Denominators and all clinical figures preserved."
+    },
+    {
+      "key": "/zu/guides/chronic-medication-management|3|-1",
+      "reason": "'1 in 3 South African adults' -> 'oyedwa kwabathathu'. Cycle step digits preserved."
+    },
+    {
+      "key": "/zu/guides/dental-care-public-clinics|1|-2",
+      "reason": "'1 dentist per 10,000' and '1 per 2,000' render the numeral one as a word; both multi-digit ratios survive."
+    },
+    {
+      "key": "/zu/guides/medical-emergency-guide|7|-1",
+      "reason": "'24/7' -> 'amahora angu-24 ngosuku'. Same idiom gap as isiXhosa; the 24 is preserved."
+    }
+  ]
+}

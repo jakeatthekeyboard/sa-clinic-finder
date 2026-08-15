@@ -41,7 +41,35 @@ if ! python3 /Users/jake/dev/product-pipeline-1/tools/dead-link-scan.py "$SITE_D
     exit 1
 fi
 
+# ── Numeric parity (translations vs English) ─────────────────────
+# The one translation defect the machine-translation disclaimer cannot cover:
+# a dosage, threshold, fee or emergency number that lost a digit. The page still
+# returns 200, builds clean, validates its schema and resolves its links — no
+# other gate here can see it. Reuses the dist just built above.
+# 2,240 translated pages, 0 unaccepted differences when added (2026-08-15).
+echo ""
+echo "▸ Running numeric-parity check (translated pages vs English)..."
+if ! python3 "$SITE_DIR/tools/numeric-parity-check.py"; then
+    echo ""
+    echo "✗ PUSH BLOCKED — a translated page's figures differ from its English source."
+    echo "  Read each finding in context before acting. If the difference is a numeral"
+    echo "  legitimately rendered as a word, add it to tools/numeric-parity-baseline.json"
+    echo "  WITH A REASON. Multi-digit figures can never be baselined — those are real."
+    exit 1
+fi
+
+# ── Guard unit tests ─────────────────────────────────────────────
+# The only proof the gates above can still go RED. A guard whose tests
+# never run is one refactor away from passing unconditionally.
+echo ""
+echo "▸ Running guard unit tests (tools/tests)..."
+if ! python3 -m pytest "$SITE_DIR/tools/tests" -q; then
+    echo ""
+    echo "✗ PUSH BLOCKED — guard unit tests failed."
+    exit 1
+fi
+
 echo ""
 echo "═══════════════════════════════════════════════════"
-echo "  ✓ ClinicFinder build + link verification passed."
+echo "  ✓ ClinicFinder build + link + parity checks passed."
 echo "═══════════════════════════════════════════════════"
