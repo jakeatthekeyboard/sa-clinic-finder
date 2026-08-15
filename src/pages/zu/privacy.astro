@@ -1,0 +1,37 @@
+---
+// isiZulu translation of src/pages/privacy.astro (issue #2).
+// noindex mirrors the English page.
+import Base from '../../layouts/Base.astro';
+import { zuHref } from '../../data/i18n/zu';
+---
+
+<Base title="Inqubomgomo Yobumfihlo — Clinic Finder SA" description="Inqubomgomo yobumfihlo ye-Clinic Finder SA. Indlela esiphatha ngayo imininingwane yezivakashi nezinsizakalo zabanye." noindex={true}>
+  <div class="container" style="padding: 2rem 0 3rem;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+      <a href={zuHref('/')} style="color: var(--primary-dark);">Ikhasi Lokuqala</a> › Ubumfihlo
+    </nav>
+
+    <h1 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Inqubomgomo Yobumfihlo</h1>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Igcine ukubuyekezwa: 9 May 2026</p>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Uhlolojikelele</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">I-Clinic Finder SA iyithuluzi lezempilo lomphakathi lamahhala. Asidingi ukubhalisa, ukungena, noma noma yiluphi ulwazi lomuntu siqu ukuze usebenzise le sayithi.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Yini Esiyiqoqayo</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Siqoqa izibalo eziyisisekelo zokusetshenziswa (amakhasi abukiwe, uhlobo lwedivayisi, umthombo wokufika) nge-Vercel Analytics — insizakalo egxile ebumfihlweni engasebenzisi ama-cookie futhi engagcini lwazi lomuntu siqu. Uma usithumelela i-imeyili, sigcina umyalezo wakho ukuze siphendule futhi sithuthukise isayithi.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Imininingwane Yendawo</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Izici ezithi "Thola eziseduze" zisebenzisa i-geolocation API yesiphequluli sakho ukuthola imitholampilo eseduze nawe. Le mininingwane yendawo icutshungulwa esipheqululini sakho kuphela — ayithunyelwa kumasevha ethu futhi ayigcinwa.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Ukuxhumana</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Ngemibuzo ephathelene nobumfihlo, thumela i-imeyili ku-<a href="mailto:hello@clinicfinder.co.za" style="color: var(--primary-dark);">hello@clinicfinder.co.za</a>.</p>
+    </section>
+  </div>
+</Base>

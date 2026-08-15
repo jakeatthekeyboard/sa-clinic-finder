@@ -1,0 +1,184 @@
+---
+// isiZulu translation of src/pages/search.astro (issue #2).
+// The search index carries facility names, addresses and province names verbatim —
+// they are what a reader types and reads back. Only the UI strings are translated, and
+// the result links are resolved through zuHref so a search result lands on the isiZulu
+// facility page rather than dropping the reader back into English.
+import Base from '../../layouts/Base.astro';
+import { facilities, PROVINCES, SERVICE_MAP } from '../../data/helpers';
+import { servicePlainZu, zuHref } from '../../data/i18n/zu';
+
+const searchData = facilities
+  .filter(f => f.province !== '')
+  .map(f => ({
+    n: f.name,
+    p: f.province,
+    t: f.type,
+    s: Object.entries(f.services).filter(([,v]) => v).map(([k]) => k),
+    u: zuHref(f.url_path),
+    h: f.operating_hours.is_24_hour,
+    lt: f.coordinates.lat,
+    lg: f.coordinates.lng,
+    c: f.address.city || '',
+    st: f.address.street || '',
+    sb: f.address.suburb || '',
+  }));
+---
+<Base
+  title="Sesha Imitholampilo — Clinic Finder SA"
+  description="Sesha imitholampilo nezibhedlela zomphakathi kulo lonke elaseNingizimu Afrika ngegama, ngesifundazwe, noma ngensizakalo. Thola ama-ARV, ukubeletha, ukwelashwa kwe-TB, nokunakekelwa okuphuthumayo eduze nawe."
+  jsonLd={[{ '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Clinic Finder Search', description: 'Sesha imitholampilo nezibhedlela zomphakathi kulo lonke elaseNingizimu Afrika ngegama, ngesifundazwe, noma ngensizakalo.', applicationCategory: 'HealthApplication', operatingSystem: 'Web', offers: { '@type': 'Offer', price: '0', priceCurrency: 'ZAR' } }, { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Sesha' }] }]}
+>
+  <div class="container" style="padding: 32px 0;">
+    <h1 style="font-size: 1.5rem; margin-bottom: 16px;">Sesha Imitholampilo</h1>
+
+    <div style="margin-bottom: 16px;">
+      <input
+        type="text"
+        id="q"
+        placeholder="Sesha ngegama lomtholampilo, idolobha, noma umgwaqo..."
+        style="width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: var(--radius); font-size: 1rem; outline: none;"
+      />
+    </div>
+
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;">
+      <select id="prov" style="padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.9rem;">
+        <option value="">Zonke izifundazwe</option>
+        {PROVINCES.map(p => <option value={p}>{p}</option>)}
+      </select>
+      <select id="svc" style="padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.9rem;">
+        <option value="">Zonke izinsizakalo</option>
+        {Object.keys(SERVICE_MAP).map(key => <option value={key}>{servicePlainZu(key)}</option>)}
+      </select>
+      <button id="nearMe" class="btn btn--outline" style="padding: 8px 16px; font-size: 0.9rem;">
+        Eduze nami
+      </button>
+    </div>
+
+    <div id="results"></div>
+    <p id="count" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 16px;"></p>
+  </div>
+
+  <script define:vars={{ searchData }}>
+    const data = searchData;
+    const q = document.getElementById('q');
+    const prov = document.getElementById('prov');
+    const svc = document.getElementById('svc');
+    const results = document.getElementById('results');
+    const count = document.getElementById('count');
+    const nearMe = document.getElementById('nearMe');
+
+    const typeLabels = {
+      clinic: 'Umtholampilo', district_hospital: 'Isibhedlela Sesifunda',
+      community_health_centre: 'Isikhungo Sezempilo Somphakathi',
+      regional_hospital: 'Isibhedlela Sesifunda Esikhulu', tertiary_hospital: 'Isibhedlela Esikhulu',
+      satellite_clinic: 'Umtholampilo Oyingxenye',
+    };
+
+    function locationStr(f) {
+      const parts = [];
+      if (f.st) parts.push(f.st);
+      if (f.sb) parts.push(f.sb);
+      if (f.c) parts.push(f.c);
+      return parts.join(', ');
+    }
+
+    function render(items) {
+      const show = items.slice(0, 50);
+      results.innerHTML = show.map(f => {
+        const loc = locationStr(f);
+        return `
+        <a href="${f.u}" style="display:block;padding:14px 16px;border:1px solid #e0e0e0;border-radius:8px;margin-bottom:8px;text-decoration:none;color:#1a1a1a;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+            <div>
+              <strong>${f.n}</strong>
+              ${loc ? `<div style="font-size:0.85rem;color:#555;margin-top:2px;">${loc}</div>` : ''}
+              <div style="font-size:0.8rem;color:#888;margin-top:2px;">${typeLabels[f.t]||f.t} · ${f.p}${f.h?' · amahora angu-24':''}</div>
+            </div>
+            ${f._dist != null ? `<span style="font-size:0.85rem;color:#b91c1c;font-weight:600;white-space:nowrap;">${f._dist.toFixed(1)} km</span>` : ''}
+          </div>
+        </a>`;
+      }).join('');
+      count.textContent = `Kukhonjiswa ${show.length} kwemiphumela engu-${items.length}`;
+    }
+
+    function filter() {
+      const query = q.value.toLowerCase();
+      const provVal = prov.value;
+      const svcVal = svc.value;
+      let filtered = data;
+      if (query) filtered = filtered.filter(f => f.n.toLowerCase().includes(query) || f.c.toLowerCase().includes(query) || f.st.toLowerCase().includes(query));
+      if (provVal) filtered = filtered.filter(f => f.p === provVal);
+      if (svcVal) filtered = filtered.filter(f => f.s.includes(svcVal));
+      // Add distance if user location is available
+      if (userLat != null && userLng != null) {
+        filtered = filtered.map(f => ({
+          ...f,
+          _dist: (f.lt && f.lg) ? haversine(userLat, userLng, f.lt, f.lg) : null
+        })).sort((a, b) => (a._dist ?? 99999) - (b._dist ?? 99999));
+      }
+      render(filtered);
+    }
+
+    q.addEventListener('input', filter);
+    prov.addEventListener('change', filter);
+    svc.addEventListener('change', filter);
+
+    let userLat = null, userLng = null;
+
+    function haversine(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) ** 2 +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) ** 2;
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    function markNearMeActive() {
+      nearMe.textContent = 'Eduze nami ✓';
+      nearMe.style.background = 'var(--primary)';
+      nearMe.style.color = '#fff';
+    }
+
+    nearMe.addEventListener('click', () => {
+      if (!navigator.geolocation) { count.textContent = 'I-geolocation ayisekelwe kule divayisi.'; return; }
+      nearMe.textContent = 'Sithola indawo okuyo...';
+      navigator.geolocation.getCurrentPosition(pos => {
+        userLat = pos.coords.latitude;
+        userLng = pos.coords.longitude;
+        try {
+          sessionStorage.setItem('cf_user_loc', JSON.stringify({ lat: userLat, lng: userLng, ts: Date.now() }));
+        } catch (e) {}
+        markNearMeActive();
+        filter();
+      }, () => {
+        nearMe.textContent = 'Eduze nami';
+        count.textContent = 'Asikwazanga ukuthola indawo okuyo. Sicela uvumele ukufinyelela endaweni kuzilungiselelo zesiphequluli sakho.';
+      });
+    });
+
+    // Pick up location handed over from the landing-page "List clinics near me" button.
+    try {
+      const stored = sessionStorage.getItem('cf_user_loc');
+      if (stored) {
+        const loc = JSON.parse(stored);
+        // Trust location for 30 min within the session
+        if (loc && typeof loc.lat === 'number' && typeof loc.lng === 'number' && (Date.now() - (loc.ts || 0)) < 30 * 60 * 1000) {
+          userLat = loc.lat;
+          userLng = loc.lng;
+          markNearMeActive();
+        }
+      }
+    } catch (e) {}
+
+    // Read URL params for SearchAction support
+    const params = new URLSearchParams(window.location.search);
+    const urlQ = params.get('q');
+    if (urlQ) { q.value = urlQ; }
+
+    // Initial render
+    filter();
+  </script>
+</Base>

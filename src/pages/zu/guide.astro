@@ -1,0 +1,116 @@
+---
+// isiZulu translation of src/pages/guide.astro (issue #2).
+import Base from '../../layouts/Base.astro';
+import { facilities } from '../../data/helpers';
+import { zuHref } from '../../data/i18n/zu';
+
+const totalFacilities = facilities.filter(f => f.province !== '').length;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Ungawuthola kanjani umtholampilo womphakathi usebenzisa i-Clinic Finder SA',
+  description: `Sebenzisa i-Clinic Finder SA ukusesha izikhungo zezempilo zomphakathi ezingu-${totalFacilities} kulo lonke elaseNingizimu Afrika ngesifundazwe, ngensizakalo, noma ngendawo.`,
+  step: [
+    {
+      '@type': 'HowToStep',
+      name: 'Sesha ngegama',
+      text: 'Yiya ekhasini lokusesha ubhale igama lomtholampilo noma lesibhedlela. Imiphumela ihlungwa njengoba ubhala.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Bheka ngesifundazwe',
+      text: 'Khetha isifundazwe ekhasini lokuqala noma ekhasini lezifundazwe ukuze ubone zonke izikhungo kuleyo ndawo.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Hlunga ngensizakalo',
+      text: 'Sebenzisa ikhasi lezinsizakalo noma uhlu lokwehla lwezinsizakalo ekhasini lokusesha ukuthola imitholampilo enikeza ama-ARV, ukubeletha, amazinyo, nezinye izinsizakalo.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Khombisa indlela nge-Google Maps',
+      text: 'Kunoma yiliphi ikhasi lesikhungo, cindezela u-"Khombisa Indlela Nge-Google Maps" ukuvula i-Google Maps enezindlela zokushayela usuka lapho ukhona njengamanje.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Yabelana nge-WhatsApp',
+      text: 'Cindezela inkinobho ye-WhatsApp kunoma yiliphi ikhasi lesikhungo ukuthumela imininingwane yomtholampilo nesixhumanisi kumngane noma kwilungu lomndeni.',
+    },
+  ],
+};
+---
+<Base
+  title="Ukusebenzisa I-Clinic Finder SA — Umhlahlandlela"
+  description={`Funda ukuthi ungasesha kanjani imitholampilo nezibhedlela zomphakathi ezingu-${totalFacilities} kulo lonke elaseNingizimu Afrika. Thola izikhungo ngegama, ngesifundazwe, ngensizakalo, noma nge-GPS.`}
+  jsonLd={[jsonLd, { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Umhlahlandlela' }] }]}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zuHref('/')}>Ikhasi Lokuqala</a> &rsaquo; Umhlahlandlela
+    </nav>
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Ukusebenzisa I-Clinic Finder SA</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      Le sayithi ikusiza uthole umtholampilo noma isibhedlela somphakathi esifanele, ubheke ukuthi sinikeza ziphi izinsizakalo, uthole indlela yokuya khona, futhi wabelane ngolwazi nomuntu oludingayo. Konke kusebenza kunoma yimuphi umakhalekhukhwini, kusebenzisa idatha encane, futhi akudingeki ukubhalisa.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">1. Sesha ngegama lomtholampilo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Yiya <a href={zuHref('/search')}>ekhasini lokusesha</a> uqale ubhale igama lomtholampilo noma lesibhedlela. Imiphumela ihlungwa ngokushesha njengoba ubhala — akudingeki ucindezele u-Enter noma ulinde ikhasi lilayishe. Ukusesha kubheka kuzo zonke izikhungo ezingu-{totalFacilities.toLocaleString()} ezisemininingwaneni yethu.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">2. Bheka ngesifundazwe</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Usuka <a href={zuHref('/')}>ekhasini lokuqala</a> noma <a href={zuHref('/clinics')}>ekhasini lezifundazwe</a>, khetha isifundazwe sakho. Ikhasi ngalinye lesifundazwe libala sonke isikhungo somphakathi kuleyo ndawo, sihlelwe ngokulandelana kwezinhlamvu. Uzobona futhi ukwehlukaniswa kwezinhlobo zezikhungo (imitholampilo, izibhedlela zesifunda, izikhungo zezempilo zomphakathi) nezinsizakalo ezikhona. Amakhasi ezifundazwe afaka amathiphu ezempilo endawo nohlu lwalokho okufanele ukuphathe lapho uvakasha.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">3. Hlunga ngensizakalo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Udinga insizakalo ethile — ama-ARV, ukunakekelwa kokubeletha, amazinyo, impilo yengqondo? Sebenzisa <a href={zuHref('/services')}>ikhasi lezinsizakalo</a> ukuze ubone izikhungo ezinikeza lokho okudingayo kuphela. Ekhasini lokusesha, uhlu lokwehla lwezinsizakalo lukuvumela uhlanganise ukusesha ngombhalo nokuhlunga ngensizakalo. Isibonelo, sesha u-"Soweto" bese uhlunga ngo-"Ukwelashwa kwe-TB" ukuthola izikhungo ezelapha i-TB eSoweto.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">4. Thola imitholampilo eseduze nawe (i-GPS)</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        <a href={zuHref('/search')}>Ekhasini lokusesha</a>, cindezela inkinobho ethi <strong>"Eduze nami"</strong>. Isiphequluli sakho sizocela imvume yendawo — lokhu kwenziwa ngokuphelele kwidivayisi yakho futhi indawo okuyo ayithunyelwa kithi noma igcinwe. Uma usunikeze imvume, imiphumela ihlelwa ngebanga ukuze ubone isikhungo esiseduze kuqala. Lokhu kusebenza kumakhalekhukhwini, kumathebulethi, nakumalaptop anezinsizakalo zendawo ezivuliwe.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">5. Thola indlela eya esikhungweni</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Ikhasi ngalinye lesikhungo linesixhumanisi esithi "Khombisa Indlela Nge-Google Maps" esivula i-Google Maps sinesikhungo njengendawo oya kuyo. I-Google Maps izobala indlela isuka lapho ukhona. Uma ungenayo idatha ye-Google Maps, bhala phansi ikheli lesikhungo ekhasini — izikhungo eziningi zikhombisa ikheli lomgwaqo nendawo.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">6. Yabelana ngomtholampilo nge-WhatsApp</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Uthole umtholampilo ofanele umngane noma ilungu lomndeni? Cindezela inkinobho eluhlaza ethi <strong>"Yabelana Nge-WhatsApp"</strong> kunoma yiliphi ikhasi lesikhungo. Lokhu kwakha umyalezo osubhaliwe onegama lomtholampilo, izinsizakalo ezibalulekile, nesixhumanisi esiqondile. Lowo omthumelayo angavula isixhumanisi kunoma yimuphi umakhalekhukhwini abone imininingwane ephelele athole nendlela — akudingeki afake lutho.
+      </p>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 24px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">Amathiphu kwabanedatha encane</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li>Le sayithi yakhelwe ukuba lula. Ikhasi elivamile lisebenzisa idatha engaphansi kuka-100 KB.</li>
+        <li>Gcina ikhasi lesikhungo njengebhukhimakhi noma ulifake esikrinini sakho sasekhaya ukuze ulifinyelele ngaphandle kwe-inthanethi.</li>
+        <li>Ukwabelana nge-WhatsApp kuthumela isixhumanisi sombhalo, hhayi isithombe — kubiza idatha encane kakhulu.</li>
+        <li>Uma unohlelo lwedatha olulinganiselwe, sebenzisa amakhasi ezifundazwe kunokusesha — alayisha kanye akhombise konke.</li>
+      </ol>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 24px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">Mayelana nemininingwane yethu</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7;">
+        I-Clinic Finder SA ithatha ku-OpenStreetMap nakwi-Humanitarian Data Exchange (HOTOSM). Siqinisekisa ngokumelene nezinhlu ezisemthethweni zoMnyango Wezempilo lapho kwenzeka, kodwa asisiyo isayithi kahulumeni futhi asikwazi ukuqinisekisa ukunemba okungu-100%. Uma isikhungo sithuthile, sishintshe amahora aso, noma sengeze izinsizakalo ezintsha, <a href="mailto:hello@clinicfinder.co.za">sithumelele i-imeyili</a> sizosibuyekeza.
+      </p>
+    </section>
+  </div>
+</Base>

@@ -137,6 +137,13 @@ export const COVERAGE: Record<Exclude<Locale, 'en'>, LocaleCoverage> = {
       '/guides/tb-treatment-what-to-expect',
       '/clinics',
       '/services',
+      '/about',
+      '/contact',
+      '/privacy',
+      '/terms',
+      '/search',
+      '/guide',
+      '/how-this-site-is-made',
     ],
     provinces: [
       'Eastern Cape',

@@ -1,0 +1,38 @@
+---
+// isiZulu translation of src/pages/about.astro (issue #2).
+// The National Health Hotline number, the email address and the source names
+// (OpenStreetMap, HOTOSM, National Department of Health) are identifiers and stay as-is.
+import Base from '../../layouts/Base.astro';
+import { zuHref } from '../../data/i18n/zu';
+---
+
+<Base title="Mayelana Nathi — Clinic Finder SA" description="Funda ngeClinic Finder SA — uhlu lwamahhala olusiza abantu baseNingizimu Afrika bathole isikhungo sezempilo somphakathi esiseduze nabo." jsonLd={[{ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Mayelana Nathi' }] }]}>
+  <div class="container" style="padding: 2rem 0 3rem;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+      <a href={zuHref('/')} style="color: var(--primary-dark);">Ikhasi Lokuqala</a> › Mayelana Nathi
+    </nav>
+
+    <h1 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Mayelana ne-Clinic Finder SA</h1>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Yini Esiyenzayo</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">I-Clinic Finder SA uhlu lwamahhala, olwenzelwe umakhalekhukhwini kuqala, lwezikhungo zezempilo zomphakathi zaseNingizimu Afrika. Sisiza abantu bathole umtholampilo, isibhedlela, noma isikhungo sezempilo somphakathi esiseduze nabo — kanye nezindlela zokuya khona, amahora okusebenza, nezinsizakalo ezikhona — ukuze bathole ukunakekelwa abakudingayo ngaphandle kwezingcingo noma ukuqagela.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Kungani Sakha Lokhu</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">INingizimu Afrika inezikhungo zezempilo zomphakathi ezingaphezu kuka-3,500, kodwa ukuthola esifanele akulula njalo. Ulwazi lusakazekile kuyo yonke iminyango yezifundazwe, luvame ukuba ludala, futhi kuyivelakancane ukuthi lube nokusesha. Abantu abaningi — ikakhulukazi ezindaweni zasemakhaya noma emijondolo — abazi ukuthi yiziphi izikhungo eziseduze nabo noma zinikeza ziphi izinsizakalo. Leli thuluzi libeka lolo lwazi endaweni eyodwa, lutholakala kunoma yimuphi umakhalekhukhwini.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Imininingwane Yethu</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Imininingwane yezikhungo ivela ku-OpenStreetMap nakwi-Humanitarian OpenStreetMap Team (HOTOSM), yengezwe ngolwazi oluvela kurejista yezikhungo yoMnyango Wezempilo Kazwelonke. Sikhombisa amagama ezikhungo, amakheli, izinhlobo, izinsizakalo ezinikezwayo, nezixhumanisi zendawo. Imininingwane ibuyekezwa njalo kodwa ingase ingabonisi ukuvalwa kwakamuva noma izinguquko zezinsizakalo.</p>
+      <p style="line-height: 1.7; color: var(--text-muted); margin-top: 0.75rem;">Leli akulona iwebhusayithi esemthethweni kahulumeni. Ukuze uthole ulwazi lwakamuva lwesikhungo, thintana noMnyango Wezempilo wesifundazwe sakho noma ushayele i-National Health Hotline ku-<strong>0800 029 999</strong>.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Ukuxhumana</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Uthole ulwazi olungalungile? Ufuna ukuphakamisa isikhungo esingekho? Sithumelele i-imeyili ku-<a href="mailto:hello@clinicfinder.co.za" style="color: var(--primary-dark);">hello@clinicfinder.co.za</a> noma uvakashele <a href={zuHref('/contact')} style="color: var(--primary-dark);">ikhasi lethu lokuxhumana</a>.</p>
+    </section>
+  </div>
+</Base>

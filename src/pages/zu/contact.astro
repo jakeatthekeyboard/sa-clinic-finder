@@ -1,0 +1,31 @@
+---
+// isiZulu translation of src/pages/contact.astro (issue #2).
+// noindex mirrors the English page.
+import Base from '../../layouts/Base.astro';
+import { zuHref } from '../../data/i18n/zu';
+---
+
+<Base title="Xhumana Nathi — Clinic Finder SA" description="Xhumana ne-Clinic Finder SA. Bika imininingwane yezikhungo engalungile, phakamisa imitholampilo engekho, noma ubuze imibuzo." noindex={true}>
+  <div class="container" style="padding: 2rem 0 3rem;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+      <a href={zuHref('/')} style="color: var(--primary-dark);">Ikhasi Lokuqala</a> › Xhumana Nathi
+    </nav>
+
+    <h1 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Xhumana Nathi</h1>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Thintana Nathi</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Sithumelele i-imeyili ku-<a href="mailto:hello@clinicfinder.co.za" style="color: var(--primary-dark);">hello@clinicfinder.co.za</a>. Siyawufunda wonke umyalezo futhi sizama ukuphendula ngaphakathi kwamahora angu-48.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Ukulungiswa Kwemininingwane</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Uma ubona ulwazi lwesikhungo olungalungile — ikheli elingalungile, izinsizakalo ezingekho, isikhungo esivaliwe kodwa sisabhaliwe, noma isikhungo esisha esingakafakwa — sicela usazise. Faka igama lesikhungo nalokho okudinga ukulungiswa. Ukulungiswa kusiza wonke umuntu osebenzisa leli thuluzi.</p>
+    </section>
+
+    <section style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem; color: var(--primary-dark);">Iziphuthumayo</h2>
+      <p style="line-height: 1.7; color: var(--text-muted);">Uma unesimo esiphuthumayo sezempilo, shayela u-<strong>10177</strong> (i-ambulensi) noma u-<strong>112</strong> (kumakhalekhukhwini). Ungashayela futhi i-National Health Hotline ku-<strong>0800 029 999</strong> ngemibuzo ephathelene nezempilo.</p>
+    </section>
+  </div>
+</Base>

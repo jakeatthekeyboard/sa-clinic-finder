@@ -1,0 +1,150 @@
+---
+// isiZulu translation of src/pages/how-this-site-is-made.astro (issue #2).
+//
+// The provenance table is generated from src/data/_provenance.json so it cannot drift
+// from the manifest the data tooling reads. The manifest is English (it is read by the
+// tooling, not by readers), so the level names and their descriptions are translated
+// HERE, keyed on the manifest's own level key — the English class name still appears in
+// the <code> tag because it is the term used in the data itself, and a reader comparing
+// this page to a field's provenance class must see the same token.
+import Base from '../../layouts/Base.astro';
+import provenance from '../../data/_provenance.json';
+import { zuHref } from '../../data/i18n/zu';
+
+const LEVEL_ORDER = ['sourced', 'derived', 'ai_authored', 'observed', 'config'];
+
+const LEVEL_DESC_ZU: Record<string, string> = {
+  sourced: 'Ithathwe emthonjeni wemininingwane evulekile wenkampani yangaphandle oqanjiwe.',
+  derived: 'Ibalwe kusukela kwamanye amanani akule mininingwane.',
+  ai_authored: 'Umbhalo ochazayo obhalwe yi-AI usekelwe kwimininingwane ethathwe emthonjeni.',
+  observed: 'Ikalwe ngqo ngamathuluzi ethu ngesikhathi esithile.',
+  config: 'Ukulungiselelwa kwesayithi noma umkhiqizo wokwakha owenziwe ngamathuluzi ethu — okubalulekile kumephu yesayithi, ukuhamba kwamakhasi. Akulona ibango ngeqiniso ngomhlaba.',
+};
+
+const SOURCE_ZU: Record<string, string> = {
+  'OpenStreetMap via the Overpass API (1,058 facilities) — community-maintained open data, ODbL licensed.':
+    'I-OpenStreetMap nge-Overpass API (izikhungo ezingu-1,058) — imininingwane evulekile egcinwa umphakathi, inelayisensi ye-ODbL.',
+  'Humanitarian OpenStreetMap Team / HOTOSM exports (18 facilities).':
+    'Okuthunyelwe yi-Humanitarian OpenStreetMap Team / HOTOSM (izikhungo ezingu-18).',
+};
+
+const used = new Set();
+for (const fields of Object.values(provenance.datasets ?? {})) {
+  if (fields && typeof fields === 'object') {
+    for (const v of Object.values(fields)) if (typeof v === 'string') used.add(v);
+  }
+}
+const levels = LEVEL_ORDER
+  .filter((k) => used.has(k) && provenance.levels?.[k])
+  .map((k) => ({ label: k.replace(/_/g, ' '), desc: LEVEL_DESC_ZU[k] ?? provenance.levels[k] }));
+
+const sources = (provenance.primary_sources ?? []).map((s: string) => SOURCE_ZU[s] ?? s);
+const updated = (provenance.updated_at ?? '').slice(0, 10);
+---
+
+<Base
+  title="Yakhiwe Kanjani Le Sayithi — ClinicFinder"
+  description="Indlela i-ClinicFinder eyakhiwe ngayo: imininingwane yezikhungo ivela kwimininingwane evulekile ye-OpenStreetMap, lokho okusho ukuthini ngokunemba nangobubanzi, ubani onesibopho, nokuthi ungalibika kanjani ikheli elingalungile."
+>
+  <div class="container">
+    <h1>Yakhiwe Kanjani Le Sayithi</h1>
+    <p class="lead">
+      Ivelaphi imininingwane yezikhungo, yini eyihlanganisayo nengayihlanganisi, nokuthi
+      ungasitshela kanjani lapho kukhona okungalungile.
+    </p>
+
+    <h2>Okuqukethwe okubhaliwe kubhalwe yi-AI kwaqashwa ngumuntu</h2>
+    <p>
+      Umbhalo ochazayo kule sayithi — ukuthi uhlobo lomtholampilo lwenzani, okulindelekile
+      esikhungweni, ukuthi ungazilungiselela kanjani ukuvakasha — ubhalwa yi-AI bese
+      ubuyekezwa umuntu. Amarekhodi ezikhungo uqobo awabhalwanga yi-AI: avela
+      kwimininingwane evulekile, njengoba kuchaziwe ngezansi.
+    </p>
+
+    <h2>Ubani onesibopho ngayo</h2>
+    <p>
+      Isibopho sokuhlela i-ClinicFinder siphethwe umqhubi wesayithi, umuntu wangempela
+      obuyekeza lokho okushicilelwa lapha futhi ophendula ikheli lokuxhumana elingezansi.
+      I-AI ibhala umbhalo ochazayo; ayinqumi ngaphandle kokuqashwa ukuthi yini
+      eshicilelwayo, futhi akuyona ephendulayo ngayo.
+    </p>
+
+    {sources.length > 0 && (
+      <>
+        <h2>Ivelaphi imininingwane yezikhungo</h2>
+        <ul>
+          {sources.map((s) => <li>{s}</li>)}
+        </ul>
+      </>
+    )}
+
+    <h2>Yini ethathwe emthonjeni, neyini ebhaliwe</h2>
+    <p>
+      Inkambu ngayinye iphethe isigaba somthombo. Yilezi izigaba ezisetshenziswayo
+      ngempela, zithathwe ohlwini lwemininingwane le sayithi eyakhiwe kulo:
+    </p>
+    <dl class="provenance-list">
+      {levels.map((l) => (
+        <div class="provenance-row">
+          <dt><code>{l.label}</code></dt>
+          <dd>{l.desc}</dd>
+        </div>
+      ))}
+    </dl>
+    <p>
+      Amagama ezikhungo, amakheli nezixhumanisi zendawo <strong>athathwe emthonjeni</strong> —
+      awalinganiselwa, futhi awalungiswa yithi. Asilibhali kabusha igama lesikhungo
+      ngisho noma libhalwe ngephutha ngokusobala, ngoba ukushintsha inani elithathwe
+      emthonjeni lisabhalwe njengelithathwe emthonjeni kuwuhlobo lwephutha ngokwalo.
+    </p>
+
+    <h2>Isexwayiso esiqotho: ububanzi, hhayi ukusungula</h2>
+    <p>
+      Umkhawulo lapha akusiwo ukuthi izibalo ziqanjiwe — ukuthi i-OpenStreetMap igcinwa
+      umphakathi, ngakho ukuphelela nokuvuselelwa kwemininingwane kuyehluka kakhulu
+      ngokwendawo. Idolobha elimephwe kahle lingaba nesikhungo ngasinye sinezinombolo
+      zocingo namahora okuvula; isifunda sasemakhaya singaba nezimpawu ezimbalwa nje
+      kungabikho okunye. Ikhasi ngalinye lesikhungo likhombisa isikhombi sezinga
+      lemininingwane nokuthi irekhodi lagcina ukuhlolwa nini, ukuze ubone ukuthi ubheka
+      okuphi.
+    </p>
+    <p>
+      Lokhu kubaluleke kakhulu lapha kunakwisayithi evamile yokuqhathanisa. Ikheli
+      elingalungile libiza umuntu uhambo angase angakwazi ukulukhokhela. <strong>Sicela
+      ushayele ucingo ngaphambi kokuhamba</strong>, ikakhulukazi esikhungweni esinerekhodi
+      elibukeka lincane, futhi uthathe amahora okuvula njengesiqalo hhayi isiqinisekiso.
+    </p>
+
+    <h2>Uthole okungalungile? Sicela usitshele</h2>
+    <p>
+      Ukulungiswa kwamukelekile ngempela futhi kusiza wonke umuntu obheka isikhungo
+      esifanayo ngemva kwakho. Thumela i-imeyili ku-
+      <a href="mailto:hello@clinicfinder.co.za">hello@clinicfinder.co.za</a> noma usebenzise
+      <a href={zuHref('/contact')}>ikhasi lokuxhumana</a> unikeze igama lesikhungo nalokho
+      okungalungile — inombolo yocingo eshintshile, isikhungo esivaliwe, indawo
+      engalungile — futhi kuzohlolwa kulungiswe.
+    </p>
+
+    <p class="meta">Uhlu lwemithombo lugcine ukubuyekezwa: {updated}</p>
+  </div>
+
+  <style>
+    .lead { font-size: 1.05rem; line-height: 1.7; }
+    h2 { margin-top: 2rem; }
+    p, li { line-height: 1.7; }
+    .meta { margin-top: 2.5rem; font-size: 0.85rem; opacity: 0.7; }
+    .provenance-list { margin: 1.25rem 0; }
+    .provenance-row {
+      display: grid;
+      grid-template-columns: 8rem 1fr;
+      gap: 1rem;
+      padding: 0.7rem 0;
+      border-top: 1px solid rgba(128, 128, 128, 0.25);
+    }
+    .provenance-row dt code { font-size: 0.85rem; white-space: nowrap; }
+    .provenance-row dd { margin: 0; line-height: 1.6; }
+    @media (max-width: 640px) {
+      .provenance-row { grid-template-columns: 1fr; gap: 0.25rem; }
+    }
+  </style>
+</Base>
