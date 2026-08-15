@@ -1,0 +1,270 @@
+---
+// isiZulu translation of src/pages/guides/free-maternity-care.astro (issue #2).
+// Sentence-for-sentence. Locale comes off the URL — no locale prop is passed.
+import Base from '../../../layouts/Base.astro';
+import { facilities } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const maternityClinics = facilities.filter(f => f.services.maternity_antenatal);
+
+const zu = (p: string) => localePath(p, 'zu');
+
+const faqs = [
+  {
+    question: 'Kufanele ngiye nini ekuvakasheni kwami kokuqala kwabakhulelwe?',
+    answer: 'Ngokushesha ngangokunokwenzeka — kungcono ngaphambi kwamasonto angu-12 okukhulelwa. Ukubhalisa kusenesikhathi kuvumela umtholampilo ukuthi uthole ukukhulelwa okusengcupheni enkulu (ukukhulelwa ngaphandle kwesibeletho (ectopic pregnancy), i-pre-eclampsia, i-HIV, ukushoda kwegazi (anaemia)), uqale imithi ye-folic acid, futhi uhlele ukunakekelwa kwakho. INingizimu Afrika incoma okungenani ukuvakasha kwabakhulelwe okungu-8 sekukonke. Ungabhalisa kunoma yimuphi umtholampilo womphakathi onikeza izinsizakalo zokubeletha.',
+  },
+  {
+    question: 'Ingabe ukubeletha esibhedlela somphakathi kumahhala ngempela?',
+    answer: 'Yebo. Ukubeletha esibhedlela somphakathi noma eyunithi yabelethisi (midwife obstetric unit, MOU) kumahhala kubo bonke abesifazane, kungakhathaliseki ukuthi bangabaliphi izwe noma banawo yini umshwalense wezempilo (medical aid). Lokhu kufaka ukubeletha okujwayelekile, ukubeletha okusizwayo, kanye nokuhlinzwa (caesarean section) uma kudingeka ngokwezokwelapha. Ukuphela kwesikhathi lapho kukhokhwa khona imali yilapho ukhetha iwadi elizimele (lapho likhona) noma ungehlali kuleli lizwe futhi ufuna izinsizakalo ozikhethele zona.',
+  },
+  {
+    question: 'Ngingakhetha ukuthi ngibelethelaphi?',
+    answer: 'Ukukhulelwa okungasengcupheni enkulu kunakekelwa emayunithi abelethisi (MOUs) noma ezibhedlela zesifunda eziseduze nekhaya lakho. Ukukhulelwa okusengcupheni enkulu (amawele, i-pre-eclampsia, i-HIV enezinkinga, ukuhlinzwa kwangaphambilini) kuthunyelwa ezibhedlela zesifundazwe noma ezinkulu kunazo zonke. Awukwazi ukukhetha isibhedlela esingasilungele izinga lengcuphe yakho, kodwa ungacela isikhungo esithile esisezingeni elifanayo. Xoxa ngezinketho zakho nomhlengikazi wakho wabakhulelwe.',
+  },
+  {
+    question: 'Kuthiwani uma nginegciwane le-HIV futhi ngikhulelwe?',
+    answer: 'Bonke abesifazane abakhulelwe bayahlolelwa i-HIV ekuvakasheni kokuqala kwabakhulelwe. Uma kutholakala ukuthi unegciwane, ama-ARV (antiretrovirals) aqalwa ngokushesha (ukuqala ngalo lolo suku). Uhlelo lwe-PMTCT lwaseNingizimu Afrika (Prevention of Mother-to-Child Transmission) lwehlise ukudluliselwa kwegciwane kumntwana kwaya ngaphansi kuka-1% uma omama besebenzisa imithi. Ingane yakho izothola umthamo we-ARV wokuvikela ekuzalweni bese ihlolwa ekuzalweni, emasontweni angu-10, nasezinyangeni ezingu-18. Ukuncelisa ibele kuyanconywa — ama-ARV enza ubisi lwebele luphephe.',
+  },
+  {
+    question: 'Ngidinga ukuphatha okuthile yini esibhedlela lapho ngiyobeletha?',
+    answer: 'Phatha: irekhodi lakho lokukhulelwa (incwadi eluhlaza), umazisi noma ipasipoti, izinto zokugeza, ukushintsha kwangaphansi okungu-2-3, amaphedi (awegazi eliningi), ingubo yokulala noma izingubo ozizwa ukhululekile kuzo, izingubo zokugoduka zakho, kanye nezengane: amavesti angu-2, ama-sleepsuit angu-2, ingubo, amanabukeni, nekepisi. Isibhedlela sinikeza ukudla nezinto eziyisisekelo zokwelapha. Ungaphathi izinto eziyigugu.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Ukunakekelwa Kokubeletha Mahhala Ezibhedlela Zomphakathi eNingizimu Afrika',
+    description: 'Konke abesifazane abakhulelwe abangakuthola mahhala emitholampilo yomphakathi yaseNingizimu Afrika: ukunakekelwa kwabakhulelwe, ukubeletha, nosizo ngemva kokubeletha.',
+    url: 'https://clinicfinder.co.za/zu/guides/free-maternity-care',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'Ungakuthola Kanjani Ukunakekelwa Kokubeletha Mahhala Esibhedlela Somphakathi eNingizimu Afrika',
+    description: 'Izinyathelo ezingu-5 kusukela ekuvakasheni kokuqala kwabakhulelwe kuya ekubelethiseni nasekunakekelweni ngemva kokubeletha — konke kumahhala ezikhungweni zomphakathi.',
+    step: [
+      { '@type': 'HowToStep', position: 1, name: 'Bhalisela ukuvakasha kwakho kokuqala kwabakhulelwe ngaphambi kwamasonto angu-12', text: 'Yiya emtholampilo womphakathi oseduze nawe onikeza izinsizakalo zokubeletha/zabakhulelwe ngokushesha ngangokunokwenzeka — kungcono ngaphambi kwamasonto angu-12 okukhulelwa. Ukubhalisa kusenesikhathi kuvumela umtholampilo ukuthi uthole izimo ezisengcupheni enkulu (ukukhulelwa ngaphandle kwesibeletho (ectopic pregnancy), i-pre-eclampsia, i-HIV, ukushoda kwegazi (anaemia)), uqale imithi ye-folic acid, futhi uhlele ukunakekelwa kwakho. Phatha umazisi wakho namarekhodi anoma yikuphi ukukhulelwa kwangaphambilini. Ayidingeki i-apotimende.' },
+      { '@type': 'HowToStep', position: 2, name: 'Yiya okungenani ekuvakasheni kwabakhulelwe okungu-8', text: 'Imihlahlandlela yaseNingizimu Afrika incoma okungenani ukuvakasha kwabakhulelwe okungu-8 ngesikhathi ukhulelwe. Kukho konke ukuvakasha: ukuhlolwa komfutho wegazi (blood pressure), ukuhlolwa komchamo, ukukala ukushaya kwenhliziyo nokukhula kwengane, kanye nokuhlolelwa i-HIV nesifo se-syphilis (ekuvakasheni kokuqala). Uthola irekhodi lokukhulelwa (incwadi eluhlaza) — liphathe kukho konke ukuvakasha nasesibhedlela lapho ubeletha. Konke ukuvakasha kumahhala.' },
+      { '@type': 'HowToStep', position: 3, name: 'Yazi isikhungo ozobelethela kuso', text: 'Ukukhulelwa okungasengcupheni enkulu kubelethelwa eyunithi yabelethisi (MOU) noma esibhedlela sesifunda eseduze nekhaya lakho. Ukukhulelwa okusengcupheni enkulu (amawele, i-pre-eclampsia, i-HIV enezinkinga, ukuhlinzwa kwangaphambilini) kuthunyelwa ezibhedlela zesifundazwe noma ezinkulu kunazo zonke. Umhlengikazi wakho wabakhulelwe uzokutshela ukuthi uye kuphi ngokwezinga lengcuphe yakho. Bhalisa esikhungweni ozobelethela kuso ngaphambi kosuku olulindelwe ukuze babe namarekhodi akho.' },
+      { '@type': 'HowToStep', position: 4, name: 'Yiya esibhedlela lapho kuqala ukubeletha', text: 'Yiya esikhungweni sakho esimisiwe lapho imihelo ivama (njalo ngemizuzu emi-5 ihora lonke) noma amanzi ephuka. Phatha: irekhodi lokukhulelwa, umazisi, izinto zokugeza, amaphedi, ukushintsha kwangaphansi, izingubo ozizwa ukhululekile kuzo, nezengane — amavesti angu-2, ama-sleepsuit angu-2, ingubo, amanabukeni, nekepisi. Ukubeletha kumahhala kubo bonke abesifazane, kufaka nokuhlinzwa (caesarean section) uma kudingeka ngokwezokwelapha.' },
+      { '@type': 'HowToStep', position: 5, name: 'Buya ekuvakasheni kwangemva kokubeletha ezinsukwini ezingu-3, emasontweni angu-6, nasezinyangeni ezingu-6', text: 'Ngemva kokubeletha, buyela emtholampilo ezinsukwini ezingu-3 (noma ngaphakathi kwesonto lokuqala) ukuze uhlolwe wena nengane, emasontweni angu-6 ukuze uhlolwe ngokugcwele, nasezinyangeni ezingu-6. Ukuvakasha kwamasonto angu-6 kubalulekile: kufaka imijovo yengane (uhlelo lwe-EPI-SA lwamasonto angu-6), ukwelulekwa ngokuhlela umndeni, kanye nokuhlolelwa i-HIV kwengane uma umama enegciwane le-HIV. Konke ukunakekelwa kwangemva kokubeletha kumahhala.' },
+    ],
+  },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Imihlahlandlela', item: 'https://clinicfinder.co.za/zu/guides' }, { '@type': 'ListItem', position: 3, name: 'Ukunakekelwa Kokubeletha Mahhala Ezibhedlela Zomphakathi' }] },
+];
+---
+<Base
+  title="Ukunakekelwa Kokubeletha Mahhala Ezibhedlela Zomphakathi — Clinic Finder SA"
+  description="Umhlahlandlela ophelele wokunakekelwa kokukhulelwa nokubeletha mahhala eNingizimu Afrika: ukuvakasha kwabakhulelwe, ukubeletha esibhedlela, ukunakekelwa ngemva kokubeletha, i-PMTCT, nokufanele ukuphathe."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zu('/')}>Ikhasi Lokuqala</a> &rsaquo; <a href={zu('/guides')}>Imihlahlandlela</a> &rsaquo; Ukunakekelwa Kokubeletha Mahhala
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Ukunakekelwa Kokubeletha Mahhala Ezibhedlela Zomphakathi</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      Wonke owesifazane okhulelwe eNingizimu Afrika unelungelo lokunakekelwa kwabakhulelwe, ukubeletha, nosizo ngemva kokubeletha mahhala ezikhungweni zezempilo zomphakathi. Awudingi umshwalense wezempilo (medical aid). Lo mhlahlandlela uchaza okulindelekile kusukela ekuvakasheni kwakho kokuqala emtholampilo kuze kube ubuyela ekhaya nengane yakho.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ukunakekelwa kwabakhulelwe (ngaphambi kokubeletha)</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Bhalisela ukuvakasha kwakho kokuqala kwabakhulelwe ngokushesha ngangokunokwenzeka — ngaphambi kwamasonto angu-12 kungcono. Ekuvakasheni kokuqala, umhlengikazi uzo:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px; margin-top: 8px;">
+        <li>Qinisekisa ukukhulelwa futhi alinganise usuku olulindelwe</li>
+        <li>Hlola umfutho wegazi (blood pressure), isisindo, nomchamo wakho</li>
+        <li>Athathe igazi lokuhlolela i-HIV, i-syphilis, ukushoda kwegazi (anaemia), nohlobo lwegazi</li>
+        <li>Aqale imithi ye-folic acid neye-iron</li>
+        <li>Akunike irekhodi lokukhulelwa (incwadi eluhlaza) — leli liphathe kukho konke ukuvakasha</li>
+        <li>Ahlole izinto ezingaletha ingcuphe futhi akuthumele esibhedlela uma kudingeka</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        INingizimu Afrika incoma <strong>okungenani ukuvakasha kwabakhulelwe okungu-8</strong>: kanye ngenyanga kuze kufike emasontweni angu-28, bese kuba njalo emasontweni ama-2 kuze kufike emasontweni angu-36, bese kuba kanye ngesonto kuze kube uyabeletha. Kukho konke ukuvakasha kuhlolwa ukukhula kwengane, umfutho wegazi wakho, futhi kuhlolwe izinkinga ezinjenge-pre-eclampsia nesifo sikashukela sokukhulelwa.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Lapho uzobeletha khona</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Lapho ubeletha khona kuncike ezingeni lengcuphe yokukhulelwa kwakho:
+      </p>
+      <div style="margin-top: 12px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+        <div style="display: grid; grid-template-columns: 1fr 2fr; font-size: 0.9rem;">
+          <div style="padding: 12px; background: var(--primary-light); font-weight: 600; border-bottom: 1px solid var(--border);">Ingcuphe ephansi</div>
+          <div style="padding: 12px; border-bottom: 1px solid var(--border); line-height: 1.6;">Iyunithi yabelethisi (Midwife Obstetric Unit, MOU) noma isibhedlela sesifunda. Isetshenzwa abelethisi. Ibhekelela ukubeletha okujwayelekile. Uma kuvela izinkinga ngesikhathi ubeletha, udluliselwa esibhedlela.</div>
+          <div style="padding: 12px; background: var(--primary-light); font-weight: 600; border-bottom: 1px solid var(--border);">Ingcuphe emaphakathi</div>
+          <div style="padding: 12px; border-bottom: 1px solid var(--border); line-height: 1.6;">Isibhedlela sesifunda esinodokotela abasesibhedlela. Sibhekelela ukubeletha okusizwayo (i-vacuum/i-forceps) nokunye ukuhlinzwa (caesarean section). Uthunyelwa lapha uma une-pre-eclampsia, ingane ihlezi ngezinqe, noma wake wahlinzwa.</div>
+          <div style="padding: 12px; background: var(--primary-light); font-weight: 600;">Ingcuphe enkulu</div>
+          <div style="padding: 12px; line-height: 1.6;">Isibhedlela sesifundazwe noma esikhulu kunazo zonke. Sinezinsizakalo ezigcwele zokuhlinza, i-ICU, nokunakekelwa okunzulu kwezinsana. Ngokukhulelwa kwezingane eziningi, i-pre-eclampsia enzima, i-placenta praevia, nokubeletha kusenesikhathi.</div>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Okufanele ukuphathe uya esibhedlela</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px;">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="font-size: 0.95rem; color: var(--primary-dark);">Okwakho</strong>
+          <ol style="padding-left: 16px; font-size: 0.9rem; line-height: 1.6; margin-top: 8px; display: grid; gap: 4px;">
+            <li>Irekhodi lokukhulelwa (incwadi eluhlaza)</li>
+            <li>Umazisi noma ipasipoti</li>
+            <li>Ingubo yokulala noma izingubo ozizwa ukhululekile kuzo</li>
+            <li>Ukushintsha kwangaphansi okungu-2-3</li>
+            <li>Amaphedi awegazi eliningi</li>
+            <li>Izinto zokugeza</li>
+            <li>Izingubo zokugoduka ozizwa ukhululekile kuzo</li>
+            <li>Ukudla okulula namanzi</li>
+          </ol>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="font-size: 0.95rem; color: var(--primary-dark);">Okwengane</strong>
+          <ol style="padding-left: 16px; font-size: 0.9rem; line-height: 1.6; margin-top: 8px; display: grid; gap: 4px;">
+            <li>Amavesti angu-2 ekotini</li>
+            <li>Ama-sleepsuit angu-2 (ama-babygrow)</li>
+            <li>Ikepisi elifudumele</li>
+            <li>Ingubo yokugoqa ingane</li>
+            <li>Amanabukeni osana</li>
+            <li>Izingubo zokugoduka</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ngemva kokubeletha — ukunakekelwa kwangemva kokubeletha</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Ngemva kokubeletha okujwayelekile, uzohlala esibhedlela amahora angu-6-24. Ngemva kokuhlinzwa (caesarean section), lindela izinsuku ezingu-3-4. Ngaphambi kokuba ukhishwe, umhlengikazi uzo:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px; margin-top: 8px;">
+        <li>Hlola ukuthi ingane incela kahle yini (usizo lokuncelisa ibele luyatholakala)</li>
+        <li>Anike ingane i-BCG (umjovo we-TB) nomjovo we-polio ophuzwayo — imijovo emibili yokuqala</li>
+        <li>Akhiphe incwadi ye-Road to Health yengane (irekhodi lemijovo nokukhula)</li>
+        <li>Ahlele ukuvakasha kwangemva kokubeletha ezinsukwini ezingu-3-6</li>
+        <li>Axoxe ngezinketho zokuhlela umndeni</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        Kufanele ubuyele emtholampilo phakathi nezinsuku ezingu-6 ubelethile, bese ubuya futhi emasontweni angu-6. Ukuvakasha kwamasonto angu-6 kubalulekile: umhlengikazi uhlola ukululama kwakho, ukukhula kwengane, uqhubeka nemijovo, futhi angathola ukucindezeleka kwengqondo kwangemva kokubeletha kusenesikhathi. Ungakweqi lokhu kuvakasha.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Ukukhulelwa Okusengcupheni Enkulu — Lapho Uthola Ukunakekelwa Okwengeziwe</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">Ezinye izimo zikususa Ekunakekelweni Okuyisisekelo Kwabakhulelwe (ukuvakasha okungu-4-8) zikuyise endleleni enakekela ngokujulile. Umhlengikazi omkhulu womtholampilo uzibona lezi zimo ekuvakasheni kwakho kokuqala kokubhalisa bese ekuthumela emtholampilo wabakhulelwe osezingeni lesibhedlela.</p>
+      <div style="overflow-x: auto; margin-bottom: 16px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+          <thead><tr style="border-bottom: 2px solid var(--border);">
+            <th style="text-align: left; padding: 10px 8px;">Okuletha Ingcuphe</th>
+            <th style="text-align: left; padding: 10px 8px;">Okwenzekayo</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Unegciwane le-HIV</td><td style="padding: 8px;">I-ART kusukela ekuvakasheni kokuqala (indlela ye-PMTCT), izinga legciwane egazini (viral load) ezinyangeni ezingu-3 nasemasontweni angu-36, ingane ihlolwe ekuzalweni nasemasontweni angu-10</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Umfutho wegazi ophezulu / i-pre-eclampsia</td><td style="padding: 8px;">Ukulandelelwa komfutho wegazi njalo emasontweni ama-2, ukuhlolwa kwamaprotheni emchameni, ukubeletha kuhlelwe emasontweni angu-37-38 uma kunzima</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Isifo sikashukela (esokukhulelwa noma obusuvele unaso)</td><td style="padding: 8px;">Ukulandelelwa kukashukela, ukuthunyelwa kudokotela wokudla, i-insulin uma kudingeka, ukubeletha kungakapheli amasonto angu-38-39</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Ukuhlinzwa kwangaphambilini (caesarean section)</td><td style="padding: 8px;">Ubhaliswa esibhedlela sesifunda, uhlolwe ukuthi ungazama ukubeletha noma kuhlelwe ukuhlinzwa futhi</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Intsha (engaphansi kweminyaka engu-18)</td><td style="padding: 8px;">Ukuhlolwa ngusonhlalakahle, usizo lokudla okunomsoco, uhlelo lokubuyela esikoleni</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Iminyaka engaphezu kuka-35 noma ingane yokuqala ngaphezu kuka-40</td><td style="padding: 8px;">Ukuskeniswa okwengeziwe kokukhula, ukuhlelwa kokubeletha kusenesikhathi uma kudingeka</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Izimpawu Eziphuthumayo Ngesikhathi Ukhulelwe</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">Yiya ngokushesha ewadini lokubeletha lesibhedlela eseduze nawe (hhayi emtholampilo) uma uba nanoma yikuphi kwalokhu. Ungalindi i-apotimende.</p>
+      <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <div style="border: 1px solid var(--border); border-left: 3px solid #c0392b; border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px; color: #c0392b;">Ngaphambi kokubeletha</div>
+          <ol style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; padding-left: 1.2rem; margin: 0;">
+            <li>Ukopha esithweni sangasese (noma kungakanani)</li>
+            <li>Ikhanda elibuhlungu kakhulu nokungaboni kahle noma ukubona amachashazi</li>
+            <li>Ukuvuvukala ngokuzumayo kobuso nezandla</li>
+            <li>Ingane enganyakazi amahora angu-12+ (ngemva kwamasonto angu-28)</li>
+            <li>Amanzi aphuka ngaphambi kwamasonto angu-37</li>
+            <li>Umkhuhlane ongaphezu kuka-38°C nomzimba obuhlungu</li>
+          </ol>
+        </div>
+        <div style="border: 1px solid var(--border); border-left: 3px solid #c0392b; border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px; color: #c0392b;">Ngemva kokubeletha</div>
+          <ol style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; padding-left: 1.2rem; margin: 0;">
+            <li>Ukopha okukhulu okumanzisa ngaphezu kwephedi elingu-1 ngehora</li>
+            <li>Amanzi anuka kabi aphuma esithweni sangasese</li>
+            <li>Umkhuhlane ongaphezu kuka-38°C</li>
+            <li>Inxeba lokuhlinzwa elibomvu, elishisayo, noma eliphuma ubovu</li>
+            <li>Imicabango engapheli yokuzilimaza noma yokulimaza ingane</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Thola umtholampilo onezinsizakalo zokubeletha</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Izikhungo ezingu-{maternityClinics.length} kuhlu lwethu zinikeza ukunakekelwa kokubeletha nokwabakhulelwe.
+      </p>
+      <a href="/services/maternity" class="btn btn--primary" style="font-size: 0.9rem;">Bheka imitholampilo yokubeletha</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Njalo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Imithombo:</strong> Guidelines for Maternity Care in South Africa (National Department of Health, 2016). Saving Mothers Report 2020-2022. PMTCT guidelines (NDoH, 2019). WHO recommendations on antenatal care (2016). Basic Antenatal Care approach — SA adaptation.
+    </section>
+      <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Imihlahlandlela Ehlobene</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={zu('/guides/child-immunisation-schedule')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Uhlelo Lwemijovo Yezingane</a>
+      <a href={zu('/guides/family-planning-contraception')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukuhlela Umndeni &amp; Izindlela Zokuvimbela Ukukhulelwa</a>
+      <a href={zu('/guides/hospital-referral-system')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Uhlelo Lokuthunyelwa Esibhedlela</a>
+      <a href={zu('/guides/medical-emergency-guide')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Umhlahlandlela Wesimo Esiphuthumayo Sezempilo</a>
+      </div>
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Thola Imitholampilo Ngesifundazwe</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

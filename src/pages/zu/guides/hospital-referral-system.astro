@@ -1,0 +1,265 @@
+---
+// isiZulu translation of src/pages/guides/hospital-referral-system.astro (issue #2).
+// Sentence-for-sentence. Locale comes off the URL — no locale prop is passed.
+import Base from '../../../layouts/Base.astro';
+import { localePath } from '../../../i18n/config';
+
+const zu = (p: string) => localePath(p, 'zu');
+
+const faqs = [
+  {
+    question: 'Ngingaya ngqo esibhedlela ngaphandle kwencwadi yokuthunyelwa?',
+    answer: 'Ezimweni eziphuthumayo — yebo, njalo. Yiya ngqo egumbini lezimo eziphuthumayo lesibhedlela esiseduze. Ezimweni ezingaphuthumi — ngokomthetho cha. Izibhedlela zomphakathi kufanele zidinge incwadi yokuthunyelwa evela emtholampilo noma esikhungweni sezempilo somphakathi. Empeleni, ezinye izibhedlela ziyabamukela abangenele nje kodwa uzolinda isikhathi eside kakhulu kunalabo abathunyelwe, futhi ungase ubuyiselwe emtholampilo wakho. Uhlelo lusebenza kangcono uma uqala emtholampilo.',
+  },
+  {
+    question: 'Kuthatha isikhathi esingakanani ukuthola incwadi yokuthunyelwa?',
+    answer: 'Incwadi yokuthunyelwa uqobo lwayo ibhalwa ngesikhathi uvakashele umtholampilo — umhlengikazi noma udokotela uyibhala ngokusekelwe kulokho akubonile. Okulindwayo yi-apotimende yesibhedlela. Ukuthunyelwa okuphuthumayo (kusolwa umdlavuza, kudingeka ukuhlinzwa, izimo ezingazinzile) kungabonwa phakathi kwezinsuku ezimbalwa. Ukuthunyelwa okujwayelekile (umbono kachwepheshe, ukuhlinzwa okungaphuthumi, ukuhlolwa kwesifo esingamahlalakhona) kungathatha izinyanga ezingu-2-12 kuye ngesibhedlela, ngomkhakha, nangesifundazwe.',
+  },
+  {
+    question: 'Ngingazikhethela isibhedlela engithunyelwa kuso?',
+    answer: 'Ngokuvamile cha. Indlela yokuthunyelwa ikuyisa esibhedlela esisebenza endaweni ohlala kuyo. Umtholampilo ngamunye uthumela esibhedlela sesifunda esithile, sona bese sithumela esibhedlela sesifundazwana esithile. Ungacela esinye isikhungo, kodwa umtholampilo awuphoqelekile ukukwenzela lokho ngaphandle uma kunesizathu sezokwelapha (isibonelo, isibhedlela sendawo yakho asinaye uchwepheshe odingekayo).',
+  },
+  {
+    question: 'Kwenzenjani uma umtholampilo ungakwazi ukungisiza kodwa ungafuni ukungithumela?',
+    answer: 'Uma ukholelwa ukuthi udinga ukunakekelwa kochwepheshe umtholampilo ongenakukunikeza, unelungelo lokubuza isizathu sokwenqatshwa kokuthunyelwa. Uma unganelisekile, yenyusa udaba: (1) Cela ukubona umphathi womtholampilo. (2) Xhumana nehhovisi lezempilo lesifunda. (3) Faka isikhalazo ku-Health Ombud: 012 366 7599. Akufanele udinge ukwenza lokhu njalo — iningi lemitholampilo liyathumela ngendlela efanele — kodwa kuyilungelo lakho.',
+  },
+  {
+    question: 'Ngidinga incwadi yokuthunyelwa entsha njalo uma ngiya esibhedlela?',
+    answer: 'Cha ekwelashweni okuqhubekayo esibhedlela esifanayo. Uma usungene ohlelweni lwesibhedlela ngesimo esithile (isibonelo, uya emtholampilo kashukela esibhedlela), unikezwa ama-apotimende okubuya ngqo. Udinga incwadi yokuthunyelwa entsha kuphela uma: (a) ubona omunye umkhakha wochwepheshe, (b) sekudlule izinyanga ezingaphezu kuka-6-12 ungavakashelanga, noma (c) ushintsha isibhedlela.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Lusebenza Kanjani Uhlelo Lokuthunyelwa Ezibhedlela eNingizimu Afrika',
+    description: 'Uchungechunge lokuthunyelwa kusuka emtholampilo kuya esibhedlela: ukuthi uyidinga nini, uyithola kanjani, nokwenzekayo uma uyeqa.',
+    url: 'https://clinicfinder.co.za/zu/guides/hospital-referral-system',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    'name': 'Ungayithola Kanjani Incwadi Yokuthunyelwa Esibhedlela eNingizimu Afrika',
+    'description': 'Hamba uchungechunge lokuthunyelwa lwezempilo lomphakathi kusuka emtholampilo kuya ku-apotimende yesibhedlela sochwepheshe.',
+    'step': [
+      {'@type': 'HowToStep', 'position': 1, 'name': 'Vakashela umtholampilo wakho oyisisekelo kuqala', 'text': 'Yiya emtholampilo oseduze nawe noma esikhungweni sezempilo somphakathi — yilapha okungenwa khona ochungechungeni lokuthunyelwa. Phatha umazisi wakho nanoma yimuphi umuthi owuphuzayo njengamanje. Umhlengikazi uzohlola isimo sakho abone ukuthi ukunakekelwa ezingeni lomtholampilo kwanele yini noma udinga umbono kachwepheshe wesibhedlela.'},
+      {'@type': 'HowToStep', 'position': 2, 'name': 'Cela incwadi yokuthunyelwa uma isimo sakho sidinga ukunakekelwa kochwepheshe', 'text': 'Uma umtholampilo ungakwazi ukubhekana nesimo sakho, umhlengikazi noma udokotela ubhala incwadi yokuthunyelwa. Uma ukholelwa ukuthi udinga incwadi yokuthunyelwa futhi ungayinikezwa, cela ngqo. Uma wenqatshwa, yenyusa udaba kumphathi womtholampilo noma ehhovisi lezempilo lesifunda. Unelungelo lokubuza izizathu.'},
+      {'@type': 'HowToStep', 'position': 3, 'name': 'Thola incwadi yakho yokuthunyelwa', 'text': 'Incwadi yokuthunyelwa iqukethe ukutholakala kwesifo sakho, umlando wokwelashwa, kanye nesibhedlela esinconyiwe. Uthunyelwa esibhedlela esisendaweni ohlala kuyo — umtholampilo uthumela esibhedlela sesifunda, sona sithumele kwesesifundazwana, bese kuya kwesiphakeme. Ngokuvamile awukwazi ukukhetha esinye isibhedlela ngaphandle uma kunesizathu sezokwelapha.'},
+      {'@type': 'HowToStep', 'position': 4, 'name': 'Linda i-apotimende yakho yesibhedlela', 'text': 'Ukuthunyelwa okuphuthumayo (kusolwa umdlavuza, kudingeka ukuhlinzwa, izimo ezingazinzile) kungabonwa phakathi kwezinsuku ezimbalwa. Ukuthunyelwa okujwayelekile (umbono kachwepheshe, ukuhlinzwa okungaphuthumi) kungathatha izinyanga ezingu-2-12 kuye ngesibhedlela, ngomkhakha, nangesifundazwe. Xhumana nesibhedlela ukuqinisekisa usuku lwe-apotimende yakho.'},
+      {'@type': 'HowToStep', 'position': 5, 'name': 'Ya ku-apotimende yakho yesibhedlela', 'text': 'Phatha incwadi yakho yokuthunyelwa, umazisi, nayo yonke imithi oyiphuzayo njengamanje uye ku-apotimende. Uma usungene ohlelweni lwesibhedlela ngesimo esithile, uthola ama-apotimende okubuya ngqo ngaphandle kokudinga izincwadi zokuthunyelwa ezintsha — ngaphandle uma ubona omunye umkhakha wochwepheshe noma sekudlule izinyanga ezingaphezu kuka-6-12.'},
+    ],
+  },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Imihlahlandlela', item: 'https://clinicfinder.co.za/zu/guides' }, { '@type': 'ListItem', position: 3, name: 'Lusebenza Kanjani Uhlelo Lokuthunyelwa Ezibhedlela eNingizimu Afrika' }] },
+];
+---
+<Base
+  title="Lusebenza Kanjani Uhlelo Lokuthunyelwa Ezibhedlela eNingizimu Afrika — Clinic Finder SA"
+  description="Uhlelo lokuthunyelwa ezibhedlela zaseNingizimu Afrika luchaziwe: kusuka emtholampilo kuya esifundeni, kuya esifundazwaneni, kuya esibhedlela esiphakeme. Uyidinga nini incwadi yokuthunyelwa, uyithola kanjani, nokulindele."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zu('/')}>Ikhasi Lokuqala</a> &rsaquo; <a href={zu('/guides')}>Imihlahlandlela</a> &rsaquo; Uhlelo Lokuthunyelwa Esibhedlela
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Lusebenza Kanjani Uhlelo Lokuthunyelwa Ezibhedlela eNingizimu Afrika</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      Uhlelo lwezempilo lomphakathi laseNingizimu Afrika lwakhelwe phezu kochungechunge lokuthunyelwa: uqala emtholampilo, bese kuthi uma umtholampilo ungakwazi ukubhekana nesimo sakho, ukuthumele phezulu esibhedlela. Ukuluqonda lolu hlelo kukusiza uthole ukunakekelwa okufanele ngokushesha.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Uchungechunge lokuthunyelwa</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 16px;">
+        Uhlelo lunamazinga amane. Izinga ngalinye libhekana nezimo izinga elingaphansi kwalo elingakwazi ukubhekana nazo:
+      </p>
+      <div style="display: grid; gap: 12px;">
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 40px; height: 40px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-dark);">1</div>
+          <div>
+            <strong style="font-size: 1rem;">Umtholampilo oyisisekelo / Isikhungo sezempilo somphakathi</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">Kusebenza abahlengikazi kanti ngezinye izikhathi kuba nodokotela ovakashelayo. Kubhekana: nezifo ezingamahlalakhona (i-HIV, umfutho wegazi ophezulu, ushukela), izifo ezincane, ukuhlela umndeni, ukunakekelwa kwabakhulelwe, imijovo, ukwelashwa kwe-TB, nokunakekelwa kwamanxeba okuyisisekelo. Yilapha okufanele kubhekwane khona nama-90% ezidingo zezempilo.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 40px; height: 40px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-dark);">2</div>
+          <div>
+            <strong style="font-size: 1rem;">Isibhedlela sesifunda (district hospital)</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">Sinodokotela, ukuhlinzwa okuyisisekelo, i-X-ray, ilebhu, newodi lokubeletha. Sibhekana: nokukhulelwa okunezinkinga, ukwephuka kwamathambo, ukukhishwa kwe-appendix, ukuzinzisa iziguli ezisesimweni esiphuthumayo, nezimo ezidinga ukulaliswa. Ngokuvamile yisona sitoshi sokuqala kulabo abathunyelwe emtholampilo.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 40px; height: 40px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-dark);">3</div>
+          <div>
+            <strong style="font-size: 1rem;">Isibhedlela sesifundazwana (regional hospital)</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">Sinodokotela abangochwepheshe (odokotela abahlinzayo, odokotela bezingane, odokotela bezifo zangaphakathi, odokotela bokubeletha, odokotela bengqondo). Sibhekana: nokuhlinzwa okuyinkimbinkimbi, ukuqalwa kokwelashwa komdlavuza, ukukhulelwa okusengozini enkulu, nezimo zezokwelapha ezidinga ochwepheshe. Kuthunyelwa kuso kusuka ezibhedlela zesifunda.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 40px; height: 40px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-dark);">4</div>
+          <div>
+            <strong style="font-size: 1rem;">Isibhedlela esiphakeme / esimaphakathi</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">Izibhedlela zemfundo ephakeme ezinochwepheshe abagxile kakhulu (ukuhlinzwa kwengqondo, izinhliziyo namaphaphu, umdlavuza, ukufakwa kwezitho). Zibhekana: nezimo ezinzima kunazo zonke, izifo ezingavamile, ukuhlinzwa okuthuthukile, ukufundisa nocwaningo. Izibonelo: Chris Hani Baragwanath, Groote Schuur, Inkosi Albert Luthuli, Steve Biko, Tygerberg.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Uma umtholampilo ukuthumela</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Izizathu ezivamile zokuthi umtholampilo ukuthumele esibhedlela:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px; margin-top: 8px;">
+        <li><strong>Ukutholakala kwesifo esingaphezu kwamandla omtholampilo</strong> — kusolwa umdlavuza, ithumba elingaziwa, imiphumela yegazi engajwayelekile engapheli</li>
+        <li><strong>Kudingeka ukuhlinzwa</strong> — i-hernia, inyongo, izinqubo zamathambo, ukuthathwa kwesampula yenyama (biopsy)</li>
+        <li><strong>Izinkinga zokukhulelwa</strong> — i-pre-eclampsia, ingane ehleli ngokungalungile, ukuhlinzwa kwangaphambilini kokubeletha, ukukhulelwa amawele nangaphezulu</li>
+        <li><strong>Umuthi ongasebenzi</strong> — i-TB emelana nemithi, ukwehluleka kokwelashwa kwe-HIV, ushukela ongalawuleki nakuba kusetshenziswe imithi ephezulu yezinga lomtholampilo</li>
+        <li><strong>Ukuhlolwa uchwepheshe</strong> — ukuhlolwa kwenhliziyo, i-endoscopy, i-MRI, izimo zamehlo noma zezindlebe ezidinga uchwepheshe</li>
+        <li><strong>Isimo esibucayi sempilo yengqondo</strong> — ukuphambana kwengqondo, ingozi yokuzibulala, ukuyekwa kwezidakamizwa okunzima</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Iqukethe ini incwadi yokuthunyelwa</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Umtholampilo ukunika incwadi yokuthunyelwa ebhaliwe. Iqukethe:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px; margin-top: 8px;">
+        <li>Imininingwane yakho (igama, inombolo kamazisi, inombolo yomtholampilo)</li>
+        <li>Isifo sakho noma isimo esisolwayo</li>
+        <li>Lokho umtholampilo osuvele ukwenzile (ukuhlolwa, imithi, ukwelashwa okuzanyiwe)</li>
+        <li>Isizathu sokuthunyelwa (lokho umtholampilo ongakwazi ukubhekana nakho)</li>
+        <li>Izinga lokuphuthuma</li>
+        <li>Ukuthi uthunyelwa kusiphi isibhedlela/kumuphi umnyango</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        <strong>Ungayilahli le ncwadi.</strong> Isibhedlela siyidinga ukuze sazi ukuthi ulapho ngani nokuthi yini esivele yenziwe. Ngaphandle kwayo, ungase ubuyiselwe emtholampilo uyolanda enye — okuchitha uhambo futhi kubambezele ukunakekelwa kwakho.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Okulindele esibhedlela</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Ukubhalisa</strong> — yiya edeskini lokwamukelwa nencwadi yakho yokuthunyelwa, umazisi, nekhadi lomtholampilo. Bazokwenzela ifayela lesibhedlela (noma balande elikhona).</li>
+        <li><strong>Ukulinda</strong> — imitholampilo yezigulane ezingalaliswa yasezibhedlela imatasa. Kubekwa phambili abathunyelwe ngokuphuthumayo. Abathunyelwe ngokujwayelekile bangalinda amahora ambalwa. Phatha amanzi, ukudla okuncane, ishaja yefoni, nokuthile ongakufunda.</li>
+        <li><strong>Ukuhlolwa</strong> — udokotela (imvamisa i-registrar noma isikhulu sezokwelapha) uzokuhlola, abheke incwadi yokuthunyelwa yomtholampilo, futhi angase acele okunye ukuhlolwa.</li>
+        <li><strong>Umphumela</strong> — kuzokwenzeka okukodwa kwalokhu: welashwe bese ubuyiselwa emtholampilo wakho ukuze uqhubeke unakekelwe, unikezwe i-apotimende yokubuya esibhedlela, noma ulaliswe.</li>
+      </ol>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--primary-dark);">Amasu okwenza uhlelo lukusebenzele</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Qala emtholampilo.</strong> Ungalweqi uhlelo uye ngqo esibhedlela — uzolinda isikhathi eside futhi ungase ubuyiselwe emuva.</li>
+        <li><strong>Gcina wonke amaphepha akho ndawonye.</strong> Incwadi yokuthunyelwa, ikhadi lomtholampilo, umazisi, uhlu lwemithi, imiphumela yegazi. Kufake esikhwameni sepulasitiki noma efayeleni.</li>
+        <li><strong>Buza ngezikhathi zokulinda.</strong> Uma uthola incwadi yokuthunyelwa, buza umhlengikazi: "Kuzothatha isikhathi esingakanani ukuthola i-apotimende yesibhedlela?" Lokhu kwenza wazi okulindele.</li>
+        <li><strong>Landelela.</strong> Uma ungakayitholi i-apotimende ngesikhathi obekulindeleke ngaso, buyela emtholampilo ubacele ukuthi balandelele nesibhedlela.</li>
+        <li><strong>Ya ku-apotimende yakho.</strong> Izinga labantu abangafiki ema-apotimende asezibhedlela liphezulu, okwenza kuchitheke izikhala futhi kwandise izikhathi zokulinda kuwo wonke umuntu. Uma ungakwazi ukufika, shayela isibhedlela ubhukhe olunye usuku.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Izikhathi Zokulinda — Yini Engenzeka Ngempela</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">Izikhathi zokulinda zehluka kakhulu ngokwesifundazwe, ngomkhakha, nangokuphuthuma. Lezi yizinga ezijwayelekile — akuzona izithembiso.</p>
+      <div style="overflow-x: auto; margin-bottom: 16px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+          <thead><tr style="border-bottom: 2px solid var(--border);">
+            <th style="text-align: left; padding: 10px 8px;">Umkhakha</th>
+            <th style="text-align: left; padding: 10px 8px;">Ukuthunyelwa Okuphuthumayo</th>
+            <th style="text-align: left; padding: 10px 8px;">Ukuthunyelwa Okujwayelekile</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Ukuhlinzwa (okujwayelekile)</td><td style="padding: 8px;">1-2 weeks</td><td style="padding: 8px;">3-12 months</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Amathambo (inqulu/idolo)</td><td style="padding: 8px;">2-4 weeks</td><td style="padding: 8px;">6-24 months</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Amehlo (i-cataract)</td><td style="padding: 8px;">4-8 weeks</td><td style="padding: 8px;">6-18 months</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">ENT (indlebe, ikhala, umphimbo)</td><td style="padding: 8px;">2-4 weeks</td><td style="padding: 8px;">3-12 months</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Impilo yengqondo</td><td style="padding: 8px;">Ngalo lolo suku (isimo esibucayi)</td><td style="padding: 8px;">4-12 weeks</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Umdlavuza</td><td style="padding: 8px;">1-2 weeks</td><td style="padding: 8px;">2-6 weeks</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted);">Uma isimo sakho siba sibi usalindile, buyela emtholampilo — bangayenyusa incwadi yokuthunyelwa noma bakuthumele emnyangweni wezimo eziphuthumayo. Ungavele uhlale ubuhlungu ulindile.</p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Amalungelo Akho Uma Uthunyelwa</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">I-Patients' Rights Charter kanye ne-National Health Act ziyakuvikela kuyo yonke inqubo yokuthunyelwa.</p>
+      <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Ilungelo lolwazi</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">Ungacela ukubona incwadi yakho yokuthunyelwa, wazi ukuthi uthunyelwa kusiphi isibhedlela, futhi uthole isilinganiso sesikhathi sokulinda. Umtholampilo kumele uchaze ukuthi kungani uthunyelwa.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Ilungelo lokwenqaba</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">Ungakwenqaba ukuthunyelwa noma inqubo yokwelashwa. Udokotela kumele achaze izingozi zokwenqaba futhi abhale phansi isinqumo sakho, kodwa akakwazi ukukuphoqa ukuthi welashwe (ngaphandle kwezimo eziphuthumayo zempilo yengqondo ngaphansi kwe-Mental Health Act).</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Ilungelo lokukhalaza</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">Uma isibhedlela silahla incwadi yakho yokuthunyelwa, sikhansela njalo, noma sinikeza ukunakekelwa okubi: khalaza ehhovisi le-CEO yesibhedlela kuqala, bese kuya ku-Health Ombud wesifundazwe, bese kuya ku-Office of Health Standards Compliance (OHSC). Ucingo: 080 011 6472.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Ilungelo lokunakekelwa okuphuthumayo</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">Isigaba 27 soMthethosisekelo siqinisekisa ukwelashwa okuphuthumayo kwezempilo kungakhathaliseki isimo sokuthunyelwa, ukukwazi ukukhokha, noma amaphepha. Asikho isibhedlela esingamnqabela isiguli esisesimweni esiphuthumayo. Bheka uhlu lwethu <a href="/services/emergency">lwezikhungo zezimo eziphuthumayo ezisebenza amahora angu-24</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Njalo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Imithombo:</strong> National Health Act 61 of 2003. District Health System policy framework — National Department of Health. Hospital referral guidelines — NDoH. Health Ombud — Office of Health Standards Compliance. Patient Rights Charter — Department of Health.
+    </section>
+      <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Imihlahlandlela Ehlobene</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={zu('/guides/medical-emergency-guide')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Umhlahlandlela Wezimo Eziphuthumayo Zezempilo</a>
+      <a href={zu('/guides/chronic-medication-management')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukuphathwa Kwemithi Yesifo Esingamahlalakhona</a>
+      <a href={zu('/guides/free-maternity-care')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukunakekelwa Kokubeletha Mahhala</a>
+      <a href={zu('/guides/dental-care-public-clinics')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukunakekelwa Kwamazinyo Emitholampilo Yomphakathi</a>
+      </div>
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Thola Imitholampilo Ngesifundazwe</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

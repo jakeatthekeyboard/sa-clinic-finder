@@ -1,0 +1,289 @@
+---
+// isiZulu translation of src/pages/guides/mental-health-services.astro (issue #2).
+// Sentence-for-sentence. Locale comes off the URL — no locale prop is passed.
+import Base from '../../../layouts/Base.astro';
+import { facilities } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const mhClinics = facilities.filter(f => f.services.mental_health);
+
+const zu = (p: string) => localePath(p, 'zu');
+
+const faqs = [
+  {
+    question: 'Ngingaya yini emtholampilo ngenxa yokucindezeleka engqondweni (depression) ngaphandle kwencwadi yokuthunyelwa?',
+    answer: 'Yebo. Ungangena kunoma yimuphi umtholampilo womphakathi utshele umhlengikazi ukuthi unenkinga ngempilo yakho yengqondo. Awudingi incwadi yokuthunyelwa, ukutholakala kwesifo, noma isizathu esithile — ukuzizwa ukhungathekile, ukwehluleka ukulala, ukwehluleka ukusebenza emsebenzini, noma ukuzizwa ungenathemba konke kuyizizathu ezizwakalayo zokufuna usizo. Umhlengikazi uzokuhlola kuqala bese ekwelapha ezingeni lomtholampilo noma akuthumele kusosayikholoji noma kudokotela wengqondo (psychiatrist).',
+  },
+  {
+    question: 'Ingabe ukwelashwa kwempilo yengqondo kumahhala?',
+    answer: 'Yebo. Impilo yengqondo ifakiwe ekunakekelweni kwezempilo okuyisisekelo eNingizimu Afrika. Ukubonana nodokotela, imithi (eyokucindezeleka engqondweni, eyokukhathazeka, neyokuphambana kwengqondo), kanye nokwelulekwa kwengqondo ezikhungweni zomphakathi kumahhala. Ukunakekelwa okukhethekile kwempilo yengqondo ezingeni lesibhedlela kungase kukhokhelwe imali encike kokungenayo, kodwa ukunakekelwa ezingeni lomtholampilo oyisisekelo kuhlala kumahhala.',
+  },
+  {
+    question: 'Yimuphi umuthi engingawuthola emtholampilo?',
+    answer: 'Imitholampilo eyisisekelo ingabhala: i-fluoxetine (i-SSRI enjenge-Prozac yokucindezeleka engqondweni nokukhathazeka), i-amitriptyline (yokucindezeleka engqondweni, ubuhlungu obungamahlalakhona, nokungalali), kanye ne-haloperidol noma i-risperidone (yokuphambana kwengqondo). Lokhu kumboza izifo ezivame kakhulu. Uma isimo sakho sidinga umuthi okhethekile, umtholampilo uzokuthumela kudokotela wengqondo esibhedlela sesifunda (district hospital) onohlu lwemithi olubanzi.',
+  },
+  {
+    question: 'Ngingakuthola yini ukwelulekwa, hhayi umuthi kuphela?',
+    answer: 'Yebo. Imitholampilo eminingi manje inabo abeluleki abangeyona ochwepheshe (lay counsellors) noma ososayikholoji ngohlelo oluhlanganisiwe lwezempilo ezikoleni noma ngamaqembu empilo yengqondo esifunda. Izinga nokutholakala kuyehluka ngokwesifundazwe — i-Gauteng ne-Western Cape zinezinsiza eziningi kunazo zonke. Uma umtholampilo wakho ungakunikezi ukwelulekwa, cela incwadi yokuthunyelwa esikhungweni sezempilo somphakathi esiseduze noma esibhedlela sesifunda esinomnyango wesayikholoji.',
+  },
+  {
+    question: 'Kwenzenjani uma umuntu esesimweni esibucayi sempilo yengqondo?',
+    answer: 'Uma umuntu eyingozi kuye noma kwabanye: shayela u-10111 (SAPS) noma u-10177 (i-ambulensi). Mthathe umyise eyunithi yezimo eziphuthumayo esebenza amahora angu-24 eseduze — ungalindi i-apotimende yomtholampilo. Ngaphansi koMthetho Wokunakekelwa Kwempilo Yengqondo (Mental Health Care Act), umuntu osesimweni esibucayi angamukelwa ukuze abhekwe futhi ahlolwe amahora angu-72 esikhungweni esikhethiwe sempilo yengqondo. Ilungu lomndeni, ilungu le-SAPS, noma isisebenzi sezempilo singaqalisa ukwamukelwa ngaphandle kwemvume yesiguli uma isiguli sinqaba usizo kodwa kusobala ukuthi sisengozini.',
+  },
+];
+
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Ungazithola kanjani izinsizakalo zempilo yengqondo esikhungweni sezempilo somphakathi saseNingizimu Afrika',
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Ngena kunoma yimuphi umtholampilo womphakathi — ayidingeki incwadi yokuthunyelwa',
+      text: 'Yiya emtholampilo oyisisekelo womphakathi oseduze nawe ngamahora okusebenza (imvamisa u-07:30-16:00 phakathi nesonto). Tshela umamukeli izihambeli noma umhlengikazi ukuthi ufuna ukukhuluma nomuntu ngempilo yakho yengqondo. Ayidingeki i-apotimende, incwadi yokuthunyelwa, noma ukutholakala kwesifo — ukuzizwa ukhungathekile, ukwehluleka ukulala, noma ukwehluleka ukwenza izinto konke kuyizizathu ezizwakalayo. Phatha umazisi wakho waseNingizimu Afrika.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Qedela ukuhlolwa kwempilo yengqondo',
+      text: 'Umhlengikazi uzokuyisa egumbini eliyimfihlo asebenzise amathuluzi okuhlola avamile — uhlu lwemibuzo lwe-PHQ-9 lokucindezeleka engqondweni kanye ne-GAD-7 yokukhathazeka. Phendula ngokwethembeka; azikho izimpendulo ezingalungile. Ukuhlolwa kuthatha cishe imizuzu engu-15-20 futhi kusiza umhlengikazi ukuthi abone ubukhulu besimo sakho anqume izinga lokunakekelwa elifanele.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Thola umuthi kanye/noma ukwelulekwa emtholampilo',
+      text: 'Uma ukuhlolwa kukhombisa ukucindezeleka engqondweni noma ukukhathazeka, umhlengikazi noma udokotela angabhala umuthi ngalo lolo suku — imvamisa i-fluoxetine (i-SSRI) yokucindezeleka engqondweni nokukhathazeka, noma i-amitriptyline yokucindezeleka engqondweni okuhambisana nokungalali. Yonke imithi yempilo yengqondo emitholampilo yomphakathi imahhala. Uma abeluleki abangeyona ochwepheshe noma ososayikholoji betholakala emtholampilo (kuyehluka ngokwesifundazwe — i-Gauteng ne-Western Cape zinabo abaningi kunazo zonke), uzobhalelwa izikhathi zokwelulekwa.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 4,
+      name: 'Buyela ekuhlolweni okulandelayo ukuze kubhekwe inqubekela phambili',
+      text: 'Buyela emtholampilo ngesikhathi obhalelwe sona — imvamisa njalo emavikini angu-2-4 ekuqaleni, bese kuba nyanga zonke uma usuzinzile. Umhlengikazi uzophinda amathuluzi okuhlola ukuze alandelele inqubekela phambili yakho futhi ashintshe umuthi uma kudingeka. Abantu abaningi babona ushintsho oluhle emavikini angu-4-6 ngemva kokuqala umuthi. Ukwelashwa kuqhubeka okungenani izinyanga ezingu-12 ngemva kokuthi izimpawu ziphelile. Ungawuyeki umuthi ngaphandle kokukhuluma nomhlengikazi noma udokotela wakho.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 5,
+      name: 'Thunyelwa kuchwepheshe uma kudingeka',
+      text: 'Uma isimo sakho sidinga okungaphezu kokunakekelwa komtholampilo oyisisekelo, umhlengikazi uzokuthumela phezulu ochungechungeni: kuqala esikhungweni sezempilo somphakathi noma esibhedlela sesifunda (usosayikholoji, umhlengikazi wempilo yengqondo, uhlu lwemithi olubanzi), bese kuya kudokotela wengqondo wesibhedlela sesifundazwana uma kudingeka. Esimweni esibucayi sempilo yengqondo — uyingozi kuwe noma kwabanye — yiya ngqo eyunithi yezimo eziphuthumayo esebenza amahora angu-24 noma ushayele i-SADAG ku-0800 567 567 (mahhala, 24/7).',
+    },
+  ],
+};
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Izinsizakalo Zempilo Yengqondo Emitholampilo Yomphakathi eNingizimu Afrika',
+    description: 'Ungaluthola kuphi usizo lokucindezeleka engqondweni, ukukhathazeka, i-PTSD, nokusetshenziswa kabi kwezidakamizwa ohlelweni lwezempilo lomphakathi laseNingizimu Afrika.',
+    url: 'https://clinicfinder.co.za/zu/guides/mental-health-services',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  howToLd,
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Imihlahlandlela', item: 'https://clinicfinder.co.za/zu/guides' }, { '@type': 'ListItem', position: 3, name: 'Izinsizakalo Zempilo Yengqondo Emitholampilo Yomphakathi' }] },
+];
+---
+<Base
+  title="Izinsizakalo Zempilo Yengqondo Emitholampilo Yomphakathi — Clinic Finder SA"
+  description="Ungaluthola kuphi usizo lokucindezeleka engqondweni, ukukhathazeka, i-PTSD, nokusetshenziswa kabi kwezidakamizwa ohlelweni lwezempilo lomphakathi laseNingizimu Afrika. Ukwelashwa mahhala, okulindele, nezinsiza zezimo ezibucayi."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zu('/')}>Ikhasi Lokuqala</a> &rsaquo; <a href={zu('/guides')}>Imihlahlandlela</a> &rsaquo; Izinsizakalo Zempilo Yengqondo
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Izinsizakalo Zempilo Yengqondo Emitholampilo Yomphakathi</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      Oyedwa kwabathathu baseNingizimu Afrika uzoba nesifo sempilo yengqondo empilweni yakhe, kodwa abangaphansi kuka-25% yibona abathola ukwelashwa. Imitholampilo yomphakathi ingasiza — ukucindezeleka engqondweni, ukukhathazeka, i-PTSD, nokusetshenziswa kabi kwezidakamizwa konke kuyelashwa mahhala. Lo mhlahlandlela uchaza okutholakalayo nokuthi ungakuthola kanjani.
+    </p>
+
+    <section style="background: #fef3cd; border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: #856404;">Usesimweni esibucayi? Thola usizo manje</h2>
+      <div style="font-size: 0.95rem; line-height: 1.7; color: #856404;">
+        <p><strong>Ucingo lwe-SADAG:</strong> 0800 567 567 (mahhala, 24/7)</p>
+        <p><strong>Ucingo lwabafuna ukuzibulala:</strong> 0800 567 567</p>
+        <p><strong>Ucingo lwe-SMS:</strong> 31393 (Cipla 24/7)</p>
+        <p><strong>Isimo esiphuthumayo:</strong> 10177 (i-ambulensi) noma 10111 (SAPS)</p>
+        <p style="margin-top: 8px;">Uma wena noma omaziyo esengozini khona manje, yiya <a href="/services/emergency" style="color: #856404; font-weight: 600;">esikhungweni sezimo eziphuthumayo esisebenza amahora angu-24</a> esiseduze.</p>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ongakuthola emtholampilo oyisisekelo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Imitholampilo yomphakathi iyisango lokungena ekunakekelweni kwempilo yengqondo eNingizimu Afrika. Emtholampilo, ungathola:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px; margin-top: 8px;">
+        <li><strong>Ukuhlolwa nokulinganiswa kwesimo</strong> — umhlengikazi usebenzisa amathuluzi avamile (i-PHQ-9 yokucindezeleka engqondweni, i-GAD-7 yokukhathazeka) ukuze abone isimo sakho</li>
+        <li><strong>Umuthi</strong> — imithi yokucindezeleka engqondweni (i-fluoxetine, i-amitriptyline), imithi yokukhathazeka, kanye nemithi eyisisekelo yokuphambana kwengqondo iyatholakala ezingeni lomtholampilo</li>
+        <li><strong>Ukwelulekwa</strong> — ukwelulekwa okuyisisekelo okusekelayo okuvela kubeluleki abaqeqeshiwe abangeyona ochwepheshe (ukutholakala kuyehluka ngokwesifundazwe)</li>
+        <li><strong>Incwadi yokuthunyelwa</strong> — kusosayikholoji, kudokotela wengqondo, noma esibhedlela sempilo yengqondo uma isimo sakho sidinga ukunakekelwa okukhethekile</li>
+        <li><strong>Incwadi yokugula</strong> — yokuphuma emsebenzini ngenxa yempilo yengqondo (ukucindezeleka engqondweni, ukukhathazeka, nokukhathala ngokweqile kuyizifo zangempela zezokwelapha)</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ungacela kanjani usizo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Ngena kunoma yimuphi umtholampilo womphakathi. Awudingi i-apotimende. Tshela umamukeli izihambeli noma umhlengikazi ukuthi ufuna ukukhuluma nomuntu ngempilo yakho yengqondo. Uma kunzima ukukusho lokhu ngomlomo, ungakubhala ephepheni: "Ngidinga usizo ngempilo yami yengqondo" — bese ulinika umhlengikazi.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Umhlengikazi uzokuyisa egumbini eliyimfihlo. Ayikho indlela engalungile yokuchaza lokho okuzwayo. Izinto ezivamile abantu abazishoyo ekuvakasheni kokuqala:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 4px; margin-top: 8px; color: var(--text-muted);">
+        <li>"Angikwazi ukulala futhi angikwazi ukuyeka ukukhathazeka"</li>
+        <li>"Ngizizwa sengathi angikwazi ukuvuka embhedeni noma ukwenza noma yini"</li>
+        <li>"Ngiphuza kakhulu futhi ngifuna ukuyeka"</li>
+        <li>"Ngihlala ngiphindelwa yizithombe zesehlakalo / amaphupho amabi"</li>
+        <li>"Angizizwa ngingumina futhi angazi ukuthi kungani"</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        Konke lokhu kuyizizathu ezizwakalayo zokufuna usizo. Umhlengikazi ngeke akwahlulele.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Izifo ezivame ukwelashwa</h2>
+      <div style="display: grid; gap: 12px;">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">Ukucindezeleka engqondweni (depression)</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Usizi olungapheli, ukulahlekelwa yintshisekelo, ukukhathala, ubunzima bokugxila, ushintsho esifisweni sokudla noma ekulaleni. Ukwelashwa: umuthi we-SSRI (imvamisa i-fluoxetine) + ukwelulekwa. Abantu abaningi bathuthuka kakhulu emavikini angu-4-6 ngemva kokuqala umuthi.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">Izifo zokukhathazeka (anxiety disorders)</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Ukukhathazeka okungapheli, ukwesaba okuhlasela ngokuzuma (panic attacks), ukwesaba abantu, ukwesaba okuthile. Ukwelashwa: umuthi we-SSRI, ngezinye izikhathi imithi ye-benzodiazepine yesikhashana yokwesaba okuhlasela ngamandla, kanye namasu okuguqula ukucabanga nokuziphatha avela kumeluleki.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">Ingcindezi engemva kokulimala kwengqondo (PTSD)</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Ukuphindelwa yizithombe zesehlakalo, amaphupho amabi, ukuhlala uqaphile ngokweqile, nokungezwa lutho emoyeni ngemva kwesehlakalo esibuhlungu (udlame, ingozi, ukuhlaselwa, inhlekelele). Kuvame kakhulu eNingizimu Afrika — kulinganiselwa ukuthi abantu abayizigidi ezingu-3.5 baphila ne-PTSD. Ukwelashwa: ukwelulekwa okugxile ekulimaleni kwengqondo + umuthi wokulala nowezimpawu ezingenayo engqondweni.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">Izifo zokusebenzisa izidakamizwa</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Utshwala, insangu, i-methamphetamine (tik), i-heroin (nyaope), nokusetshenziswa kabi kwemithi ebhalwe udokotela. Imitholampilo ingaqalisa ukwelashwa futhi ikuthumele ezinhlelweni zokululama ezisemphakathini. Ukululama ulaliswe esibhedlela ohlelweni lomphakathi kudinga incwadi yokuthunyelwa evela kunompilo wezenhlalakahle noma emtholampilo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Indlela yokuthunyelwa</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Uma isimo sakho sidinga okungaphezu kwalokho umtholampilo ongakunikeza, umhlengikazi uzokuthumela phezulu ochungechungeni:
+      </p>
+      <div style="margin-top: 12px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+        <div style="display: grid; grid-template-columns: auto 1fr; font-size: 0.9rem;">
+          <div style="padding: 12px; background: var(--primary-light); font-weight: 600; border-bottom: 1px solid var(--border);">Izinga 1</div>
+          <div style="padding: 12px; border-bottom: 1px solid var(--border); line-height: 1.6;"><strong>Umtholampilo oyisisekelo</strong> — ukuhlolwa, imithi eyisisekelo, ukwelulekwa okuyisisekelo, incwadi yokuthunyelwa</div>
+          <div style="padding: 12px; background: var(--primary-light); font-weight: 600; border-bottom: 1px solid var(--border);">Izinga 2</div>
+          <div style="padding: 12px; border-bottom: 1px solid var(--border); line-height: 1.6;"><strong>Isikhungo sezempilo somphakathi / isibhedlela sesifunda (district hospital)</strong> — usosayikholoji, umhlengikazi wempilo yengqondo, uhlu lwemithi olubanzi</div>
+          <div style="padding: 12px; background: var(--primary-light); font-weight: 600; border-bottom: 1px solid var(--border);">Izinga 3</div>
+          <div style="padding: 12px; border-bottom: 1px solid var(--border); line-height: 1.6;"><strong>Isibhedlela sesifundazwana (regional hospital)</strong> — udokotela wengqondo, ukulaliswa esibhedlela, izinhlelo ezikhethekile (izifo zokudla, ukutholakala kwezifo ezimbili ngasikhathi sinye)</div>
+          <div style="padding: 12px; background: var(--primary-light); font-weight: 600;">Izinga 4</div>
+          <div style="padding: 12px; line-height: 1.6;"><strong>Isibhedlela esiphakeme / sempilo yengqondo</strong> — izimo ezinzima, i-forensic psychiatry, ukululama kwesikhathi eside</div>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Amalungelo akho emsebenzini</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        Izifo zempilo yengqondo zibhekwa njengokukhubazeka ngaphansi komthetho waseNingizimu Afrika. Lokhu kusho ukuthi umqashi wakho unezibopho ezithile:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li><strong>Awukwazi ukuxoshwa ngenxa yokuba nesifo sempilo yengqondo.</strong> Ukucindezeleka engqondweni, ukukhathazeka, i-PTSD, ne-bipolar disorder konke kuyizimo ezivikelwe ngaphansi kwe-Employment Equity Act. Ukuxoshwa ngalezi zizathu akulungile ngokuzenzakalelayo.</li>
+        <li><strong>Unelungelo lekhefu lokugula.</strong> Impilo yengqondo iyisizathu esizwakalayo sezokwelapha sekhefu lokugula. Umhlengikazi womtholampilo noma udokotela angakunikeza incwadi yokugula. Umqashi wakho akanalo ilungelo lokufuna ukwazi ukuthi ugula ngani — kuphela ukuthi ubungakwazi ukusebenza ngezizathu zezempilo.</li>
+        <li><strong>Ukulungiselelwa okufanele.</strong> Uma isimo sakho sithatha isikhathi eside, umqashi wakho kumele akwenzele izilungiselelo ezifanele: amahora aguqukayo, umsebenzi omncane ngezikhathi ezimbi, indawo yokusebenza ethule, noma isikhathi sokuya kubelulekayo.</li>
+        <li><strong>Izinhlelo Zokusiza Abasebenzi (ama-EAP).</strong> Abaqashi abaningi abaphakathi nabakhulu banikeza ukwelulekwa kwamahhala okuyimfihlo nge-EAP — buza kwa-HR. Izikhathi ze-EAP imvamisa zingu-6-8 ngenkinga ngayinye, zenziwa ososayikholoji ababhalisiwe, futhi zihlukile ekwelashweni kwakho komtholampilo.</li>
+        <li><strong>Isibonelelo sokukhubazeka sesikhashana.</strong> Uma isimo sakho sempilo yengqondo sikuvimba ngokuphelele ukuthi usebenze, ungase ufaneleke ukuthola isibonelelo sokukhubazeka sesikhashana (R2,190/inyanga ngo-2026). Faka isicelo kwa-SASSA nombiko wezokwelapha ovela kudokotela wengqondo okwelaphayo noma kudokotela wakho.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Izingcingo zamahhala nezinhlangano ezisizayo</h2>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; font-size: 0.88rem; border-collapse: collapse; line-height: 1.6;">
+          <thead>
+            <tr style="background: var(--bg-alt); text-align: left;">
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Inhlangano</th>
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Ukuxhumana</th>
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Igxile kuphi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px; font-weight: 600;">SADAG</td><td style="padding: 10px 12px;">0800 567 567 (24/7)</td><td style="padding: 10px 12px;">Ukucindezeleka engqondweni, ukukhathazeka, ukuvimbela ukuzibulala, impilo yengqondo ngokuvamile</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px; font-weight: 600;">Lifeline SA</td><td style="padding: 10px 12px;">0861 322 322</td><td style="padding: 10px 12px;">Ukwelulekwa esimweni esibucayi, ukulimala kwengqondo, ukuhlukunyezwa, ukudabuka okujwayelekile</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px; font-weight: 600;">Childline SA</td><td style="padding: 10px 12px;">116 (toll-free)</td><td style="padding: 10px 12px;">Izingane nentsha — ukuhlukunyezwa, ukubhuqwa, impilo yengqondo, ukuphepha ku-inthanethi</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px; font-weight: 600;">SANCA</td><td style="padding: 10px 12px;">086 14 SANCA (72622)</td><td style="padding: 10px 12px;">Ukusetshenziswa kabi kwezidakamizwa — utshwala, izidakamizwa, ukugembula. Ukuthunyelwa ekululameni</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px; font-weight: 600;">Rape Crisis Cape Town</td><td style="padding: 10px 12px;">021 447 9762</td><td style="padding: 10px 12px;">Ukudlwengulwa — ukwelulekwa, ukwesekwa enkantolo, i-PTSD ngemva kokudlwengulwa</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px; font-weight: 600;">People Opposing Women Abuse</td><td style="padding: 10px 12px;">011 642 4345</td><td style="padding: 10px 12px;">Udlame olusekelwe ebulilini — indawo yokukhosela, ukwelulekwa, usizo lwezomthetho</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">Zonke izingcingo ezibalulwe ngenhla zimahhala kuma-landline nakwiningi lezinkampani zeselula. I-SADAG inayo nomugqa wengxoxo we-WhatsApp — thumela u-"Hi" ku-076 882 2775 ngamahora omsebenzi.</p>
+    </section>
+
+    <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Thola umtholampilo onezinsizakalo zempilo yengqondo</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Izikhungo ezingu-{mhClinics.length} esizindeni sethu semininingwane zinikeza izinsizakalo zempilo yengqondo.
+      </p>
+      <a href="/services/mental-health" class="btn btn--primary" style="font-size: 0.9rem;">Bheka imitholampilo yempilo yengqondo</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Njalo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Imithombo:</strong> Mental Health Care Act 17 of 2002 (South Africa). National Mental Health Policy Framework and Strategic Plan 2023-2030. South African Depression and Anxiety Group (SADAG). WHO Mental Health Atlas — South Africa. South African Stress and Health (SASH) study. Essential Drugs List — Primary Healthcare (NDoH).
+    </section>
+      <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Imihlahlandlela Ehlobene</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={zu('/guides/hospital-referral-system')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Uhlelo Lokuthunyelwa Esibhedlela</a>
+      <a href={zu('/guides/chronic-medication-management')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukuphathwa Kwemithi Yesifo Esingamahlalakhona</a>
+      <a href={zu('/guides/medical-emergency-guide')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Umhlahlandlela Wezimo Eziphuthumayo Zezempilo</a>
+      <a href={zu('/guides/hiv-testing-guide')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Umhlahlandlela Wokuhlolela I-HIV</a>
+      </div>
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Thola Imitholampilo Ngesifundazwe</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

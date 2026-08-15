@@ -1,0 +1,221 @@
+---
+// isiZulu translation of src/pages/index.astro (issue #2).
+// Sentence-for-sentence. Locale comes off the URL — no locale prop is passed.
+import Base from '../../layouts/Base.astro';
+import { facilities, PROVINCES, SERVICE_MAP, provinceSlug } from '../../data/helpers';
+import { localePath } from '../../i18n/config';
+
+const totalFacilities = facilities.filter(f => f.province !== '').length;
+const provinceStats = PROVINCES.map(p => ({
+  name: p,
+  slug: provinceSlug(p),
+  count: facilities.filter(f => f.province === p).length,
+}));
+
+const zu = (path: string) => localePath(path, 'zu');
+
+const faqs = [
+  {
+    question: 'Ingabe imitholampilo yomphakathi eNingizimu Afrika imahhala?',
+    answer: 'Yebo. Zonke izinsizakalo zezempilo eziyisisekelo emitholampilo yomphakathi zimahhala kuzo zonke izakhamuzi zaseNingizimu Afrika nakubantu abahlala unomphela. Lokhu kufaka ukubonana nodokotela noma nomhlengikazi, imithi eyisisekelo, ukuhlolela i-HIV, ukwelashwa kwe-TB, imijovo, ukuhlela umndeni, kanye nokunakekelwa kwabakhulelwe. Awudingi umshwalense wezempilo (medical aid). Izibhedlela zingase zikukhokhise imali encike kokungenayo, kodwa ukwelashwa okuphuthumayo akulokothi kwenqatshwe.',
+  },
+  {
+    question: 'Iziphi izinsizakalo ezitholakala emitholampilo yomphakathi?',
+    answer: 'Imitholampilo yomphakathi inikeza ukunakekelwa kwezempilo okuyisisekelo, okufaka imithi yesifo esingamahlalakhona (umfutho wegazi, ushukela, isithuthwane), ukuhlolela i-HIV nokwelashwa ngama-ARV, ukuhlolela nokwelapha i-TB, ukunakekelwa kwabakhulelwe nokubeletha, imijovo yezingane, ukuhlela umndeni, ukunakekelwa kwamazinyo, izinsizakalo zempilo yengqondo, kanye nempilo yezingane (ukulandelela ukukhula, usizo lokudla okunomsoco). Akuwona wonke umtholampilo onikeza zonke izinsizakalo — sebenzisa i-Clinic Finder SA ukubona okutholakalayo esikhungweni esithile.',
+  },
+  {
+    question: 'Ngidinga i-apotimende ukuze ngivakashele umtholampilo womphakathi?',
+    answer: 'Iningi lemitholampilo yomphakathi lisebenza ngokuthi ungene nje — akudingeki i-apotimende. Fika ekuseni (ngaphambi kuka-07:00 uma kwenzeka) ukugwema imigqa emide. Ezinye izinsizakalo ezifana nokunakekelwa kwamazinyo nokwelulekwa kwempilo yengqondo zingase zidinge i-apotimende noma incwadi yokuthunyelwa. Iziguli eziphuza imithi yesifo esingamahlalakhona ngezinye izikhathi zingabhukha isikhathi esithile sokulanda ngohlelo lwe-CCMDD.',
+  },
+  {
+    question: 'Angakanani amahora okusebenza emitholampilo yomphakathi?',
+    answer: 'Amahora ajwayelekile omtholampilo ngoMsombuluko kuya kuLwesihlanu, kusukela ngo-07:00 kuya ku-16:00. Eminye imitholampilo yelula amahora ize ifike ku-19:00. Izikhungo zezempilo zomphakathi (community health centres) nezibhedlela zesifunda ngokuvamile zinikeza izinsizakalo amahora angu-24, kufaka nokwelashwa okuphuthumayo. Bheka ikhasi lesikhungo esithile ku-Clinic Finder SA ukubona ukuthi sivuliwe amahora angu-24 yini.',
+  },
+  {
+    question: 'Ingabe abantu bangaphandle bangayisebenzisa imitholampilo yomphakathi eNingizimu Afrika?',
+    answer: 'Yebo. Ukwelashwa okuphuthumayo akunqatshelwa noma ngabe ungowaliphi izwe noma unamaphi amaphepha. Izingane ezingaphansi kweminyaka engu-6, abesifazane abakhulelwe, kanye nabantu abanezifo okumele zibikwe (njenge-TB) banelungelo lokwelashwa mahhala. Ezinye izinsizakalo ezingaphuthumi zingase zidinge inkokhelo ngokwenani lesibhedlela. Phatha ipasipoti yakho, imvume yokukhosela (asylum permit), noma amaphepha esimo sakho sokuba yimbacu.',
+  },
+  {
+    question: 'Kufanele ngiphathe ini uma ngiya emtholampilo?',
+    answer: 'Phatha umazisi wakho waseNingizimu Afrika noma ipasipoti, ikhadi lakho eliluhlaza lomtholampilo (irekhodi eliphethwe isiguli), kanye nanoma yimuphi umuthi okuwuphuzayo njengamanje. Ezinganeni ezingaphansi kweminyaka emi-5, phatha incwadi ye-Road to Health. Uma uya esibhedlela hhayi emtholampilo oyisisekelo, ngokuvamile uzodinga incwadi yokuthunyelwa evela emtholampilo. Abesifazane abakhulelwe kufanele baphathe irekhodi labo lokukhulelwa ngemva kokuvakasha kokuqala kwabakhulelwe.',
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(faq => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
+
+const webSiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Clinic Finder SA',
+  url: 'https://clinicfinder.co.za/zu',
+  description: `Uhlu lwamahhala lwezikhungo zezempilo zomphakathi ezingu-${totalFacilities} eNingizimu Afrika yonke.`,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://clinicfinder.co.za/search?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+const datasetJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  'name': 'Uhlu Lwezikhungo Zezempilo Zomphakathi ZaseNingizimu Afrika',
+  'description': `Uhlu lwezikhungo zezempilo zomphakathi ezingu-${totalFacilities} kuzo zonke izifundazwe ezingu-9 zaseNingizimu Afrika. Lufaka imitholampilo, izikhungo zezempilo zomphakathi, nezibhedlela kanye nezinsizakalo ezitholakalayo, amahora okusebenza, izikhombisi ze-GPS, nemininingwane yokuxhumana. Imininingwane ithathwe kurejista yezikhungo yoMnyango Kazwelonke Wezempilo.`,
+  'url': 'https://clinicfinder.co.za/zu',
+  'license': 'https://creativecommons.org/licenses/by-nc/4.0/',
+  'temporalCoverage': '2026',
+  'spatialCoverage': { '@type': 'Place', 'name': 'South Africa' },
+  'variableMeasured': ['facility_type', 'services_offered', 'operating_hours', 'gps_coordinates', 'contact_number'],
+  'creator': { '@type': 'Organization', 'name': 'Clinic Finder SA', 'url': 'https://clinicfinder.co.za' },
+};
+---
+<Base
+  title="Clinic Finder SA — Thola Umtholampilo Noma Isibhedlela Somphakathi Eduze Nawe"
+  description={`Sesha imitholampilo nezibhedlela zomphakathi ezingu-${totalFacilities} eNingizimu Afrika yonke. Hlunga ngesifundazwe, ngezinsizakalo ezifana nama-ARV, ukubeletha, nokwelashwa kwe-TB, futhi uthole izikhombisi zendlela.`}
+  jsonLd={[faqJsonLd, webSiteJsonLd, datasetJsonLd]}
+>
+  <section style="background: var(--primary); color: #fff; padding: 48px 0 40px;">
+    <div class="container" style="text-align: center;">
+      <h1 style="font-size: 1.8rem; margin-bottom: 8px;">Thola Umtholampilo Womphakathi Eduze Nawe</h1>
+      <p style="font-size: 1.1rem; opacity: 0.9; max-width: 540px; margin: 0 auto 24px;">
+        Sesha imitholampilo nezibhedlela zikahulumeni ezingu-{totalFacilities.toLocaleString()} eNingizimu Afrika yonke. Mahhala. Akudingeki ukubhalisa.
+      </p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; align-items: center;">
+        <button id="heroNearMe" class="btn" style="background: #fff; color: var(--primary); font-size: 1.05rem; padding: 14px 28px; font-weight: 700; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Bhala imitholampilo eseduze nami
+        </button>
+        <a href="/search" class="btn btn--outline" style="border-color: #fff; color: #fff; font-size: 0.95rem; padding: 12px 22px;">
+          Noma bheka &amp; useshe
+        </a>
+      </div>
+      <p id="heroNearMeStatus" style="font-size: 0.85rem; opacity: 0.85; margin-top: 14px; min-height: 1.2em;"></p>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      const btn = document.getElementById('heroNearMe');
+      const status = document.getElementById('heroNearMeStatus');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        if (!navigator.geolocation) {
+          status.textContent = 'Indawo yakho ayitholakali kule divayisi — sikuyisa ekuseshweni.';
+          window.location.href = '/search';
+          return;
+        }
+        const original = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = 'Sithola indawo okuyo…';
+        status.textContent = 'Sicela uvumele ukufinyelela endaweni okuyo uma ucelwa.';
+        navigator.geolocation.getCurrentPosition(function (pos) {
+          try {
+            sessionStorage.setItem('cf_user_loc', JSON.stringify({
+              lat: pos.coords.latitude,
+              lng: pos.coords.longitude,
+              ts: Date.now(),
+            }));
+          } catch (e) {}
+          window.location.href = '/search?near=1';
+        }, function () {
+          btn.disabled = false;
+          btn.innerHTML = original;
+          status.textContent = 'Asikwazanga ukuthola indawo okuyo. Usengabheka noma uvule ukufinyelela endaweni kuzilungiselelo zesiphequluli sakho.';
+        }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 });
+      });
+    })();
+  </script>
+
+  <section class="container" style="padding: 40px 0;">
+    <h2 style="font-size: 1.3rem; margin-bottom: 20px;">Bheka Ngesifundazwe</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px;">
+      {provinceStats.map(p => (
+        <a href={`/clinics/${p.slug}`} class="card" style="text-decoration: none; color: var(--text);">
+          <strong>{p.name}</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+            izikhungo ezingu-{p.count}
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container" style="padding: 0 0 40px;">
+    <h2 style="font-size: 1.3rem; margin-bottom: 20px;">Thola Ngensizakalo</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      {Object.entries(SERVICE_MAP).map(([key, svc]) => (
+        <a href={`/services/${svc.slug}`} class="chip" style="font-size: 0.9rem; padding: 8px 16px; text-decoration: none;">
+          {svc.plain}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section style="background: var(--bg-alt); padding: 40px 0;">
+    <div class="container">
+      <h2 style="font-size: 1.3rem; margin-bottom: 24px;">Imibuzo Ebuzwa Njalo</h2>
+      <div style="max-width: 720px; display: grid; gap: 20px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius); padding: 0;">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 16px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="font-size: 1.2rem; color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 16px 16px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 40px 0;">
+    <div class="container">
+      <h2 style="font-size: 1.3rem; margin-bottom: 20px;">Imihlahlandlela Yezempilo</h2>
+      <p style="color: var(--text-muted); margin-bottom: 16px; font-size: 0.95rem;">Imihlahlandlela elula ngokuthola ukunakekelwa ohlelweni lwezempilo lomphakathi.</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-bottom: 16px;">
+        <a href={zu('/guides/how-to-get-arvs')} class="card" style="text-decoration: none; color: var(--text);">
+          <strong>Ungawathola Kanjani Ama-ARV</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Ukuqala ngalo lolo suku, okufanele ukuphathe, ukubuya futhi</div>
+        </a>
+        <a href={zu('/guides/tb-treatment-what-to-expect')} class="card" style="text-decoration: none; color: var(--text);">
+          <strong>Ukwelashwa Kwe-TB</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Ukutholakala kwesifo, uhlelo lwezinyanga ezingu-6, i-DOTS, imiphumela emibi</div>
+        </a>
+        <a href={zu('/guides/free-maternity-care')} class="card" style="text-decoration: none; color: var(--text);">
+          <strong>Ukunakekelwa Kokubeletha Mahhala</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Ukuvakasha ngaphambi kokubeletha, ukubeletha, ukunakekelwa ngemva kokubeletha</div>
+        </a>
+        <a href={zu('/guides/medical-emergency-guide')} class="card" style="text-decoration: none; color: var(--text);">
+          <strong>Izimo Eziphuthumayo Zezempilo</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Ushayela bani, uya kuphi, amalungelo akho</div>
+        </a>
+      </div>
+      <a href={zu('/guides')} style="font-size: 0.9rem; font-weight: 600;">Bheka yonke imihlahlandlela &rarr;</a>
+    </div>
+  </section>
+
+  <section style="padding: 40px 0;">
+    <div class="container">
+      <h2 style="font-size: 1.3rem; margin-bottom: 16px;">Mayelana ne-Clinic Finder SA</h2>
+      <div style="max-width: 640px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.7;">
+        <p>Amaphesenti angu-84% abantu baseNingizimu Afrika bathembele ohlelweni lwezempilo lomphakathi. Ukuthola umtholampilo ofanele akufanele kube nzima.</p>
+        <p style="margin-top: 12px;">I-Clinic Finder SA iwuhlu lwamahhala, oluzimele, lwemitholampilo nezibhedlela zomphakathi. Sikukhombisa izinsizakalo ezitholakalayo, ukuthi isikhungo sikuphi, nokuthi ungafika kanjani lapho — kunoma yiluphi ucingo, kusetshenziswa idatha encane.</p>
+        <p style="margin-top: 12px;">Asihlangene nanoma yimuphi umnyango kahulumeni. Imininingwane yethu ivela ku-OpenStreetMap nakwi-Humanitarian Data Exchange, iqinisekiswa ngemithombo esemthethweni lapho kwenzeka khona.</p>
+        <p style="margin-top: 12px;"><a href="/guide">Funda ukuthi ulisebenzisa kanjani leli sayithi</a> — sesha, bheka, hlunga, thola izikhombisi zendlela, futhi wabelane nge-WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+</Base>

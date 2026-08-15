@@ -1,0 +1,234 @@
+---
+// isiZulu translation of src/pages/guides/ccmdd-chronic-meds-pickup.astro (issue #2).
+// Sentence-for-sentence. Locale comes off the URL — no locale prop is passed.
+import Base from '../../../layouts/Base.astro';
+import { facilities } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const chronicClinics = facilities.filter(f => f.services.chronic_medication);
+
+const zu = (p: string) => localePath(p, 'zu');
+
+const faqs = [
+  {
+    question: 'Yiziphi izifo ezifanelekela i-CCMDD?',
+    answer: 'Izifo ezivame kakhulu ezibhaliswa ku-CCMDD yilezi: i-HIV (uzinzile kuma-ARV (antiretrovirals) futhi izinga legciwane egazini (viral load) licindezelwe), umfutho wegazi ophakeme (umfutho wegazi (blood pressure) ulawuleka), ushukela (Type 1 no-2, i-HbA1c ezinzile), isithuthwane (awusenazo izinkanuko usebenzisa umuthi), i-asthma (ilawuleka ngama-inhaler), izifo zempilo yengqondo (uzinzile emithini yengqondo), kanye ne-hypothyroidism. Noma yisiphi isifo esingamahlalakhona esidinga imithi ephindaphindwayo singafaneleka uma uzinzile ngokwezokwelapha.',
+  },
+  {
+    question: 'Ngibhalisa kanjani ku-CCMDD?',
+    answer: 'Awukwazi ukuzibhalisa wena. Umhlengikazi noma udokotela wakho emtholampilo kumele aqinisekise ukuthi uzinzile ekwelashweni bese ekubhalisa ohlelweni lwe-elekthronikhi lwe-CCMDD. Ekuvakasheni kwakho okulandelayo emtholampilo, buza umhlengikazi: "Ngiyafaneleka yini ku-CCMDD?" Uma uzinzile (ngokuvamile izinyanga ezingu-6-12 usekwelashweni futhi izimpawu zilawuleka), bazokubhalisa futhi bakusize ukhethe indawo yokulanda. Ukubhalisa kuthatha cishe imizuzu engu-10.',
+  },
+  {
+    question: 'Ngingayishintsha indawo yami yokulanda?',
+    answer: 'Yebo. Tshela umtholampilo wakho ekuvakasheni kwakho okulandelayo okuhleliwe kokubuyekezwa, bese beshintsha indawo yakho yokulanda ohlelweni. Izizathu ezivamile zokushintsha: ukuthuthela endaweni entsha, ikhemisi elilula kakhulu eduze komsebenzi, noma indawo yamanje yokulanda enemigqa emide. Izinguquko ziqala ukusebenza kusukela emjikelezweni wakho olandelayo wokulanda imithi (ngokuvamile inyanga elandelayo).',
+  },
+  {
+    question: 'Kwenzekani uma ngingayilandi imithi yami?',
+    answer: 'Uma ungalandi phakathi kwesikhathi sokulanda (ngokuvamile izinsuku ezingu-5 zomsebenzi kusukela osukwini lokulethwa), imithi iyabuyiselwa. Umtholampilo uyaziswa futhi isisebenzi sezempilo somphakathi singase sixhumane nawe. Uma weqa izikhathi ezingu-2 zokulanda zilandelana, ungase ususwe ku-CCMDD bese udinga ukubuyela emtholampilo uyolanda khona kuze kube uyabhaliswa kabusha. Ungavumeli lokhu kwenzeke — uma ungakwazi ukulanda, thumela ilungu lomndeni linencwadi esayiniwe yemvume.',
+  },
+  {
+    question: 'Ngisadinga yini ukuya emtholampilo uma ngisebenzisa i-CCMDD?',
+    answer: 'Yebo, kodwa kancane kakhulu. Kumele ubuyele emtholampilo njalo ngezinyanga ezingu-6-12 (kuya ngesifo sakho) ukuze kwenziwe ukubuyekezwa kwezokwelapha: ukuhlolwa kwegazi, ukuhlolwa kwezimpawu, nokuvuselelwa kwencwadi yemithi. I-apotimende yasemtholampilo ingeyokuthi udokotela noma umhlengikazi ahlole ukuthi ukwelashwa kwakho kusasebenza yini — okushintshwa i-CCMDD ukulandwa kwemithi kwanyanga zonke.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'CCMDD — Ukulanda Imithi Yesifo Esingamahlalakhona Ngaphandle Komugqa',
+    description: 'Lusebenza kanjani uhlelo lwe-Central Chronic Medicine Dispensing and Distribution eNingizimu Afrika: ukufaneleka, izindawo zokulanda, nokubhalisa.',
+    url: 'https://clinicfinder.co.za/zu/guides/ccmdd-chronic-meds-pickup',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    'name': 'Ubhalisa Kanjani Ku-CCMDD Ukuze Ulande Imithi Yesifo Esingamahlalakhona',
+    'description': 'Thola imithi yakho yesifo esingamahlalakhona endaweni yokulanda elula esikhundleni sokuma emugqeni emtholampilo njalo ngenyanga.',
+    'step': [
+      {'@type': 'HowToStep', 'position': 1, 'name': 'Qinisekisa ukuthi isifo sakho sizinzile', 'text': 'Udinga izinyanga ezingu-6-12 usekwelashweni futhi izimpawu zilawuleka — izinga legciwane egazini (viral load) elicindezelwe kwi-HIV, umfutho wegazi (blood pressure) olawulekayo kumfutho wegazi ophakeme, i-HbA1c ezinzile kushukela. Umhlengikazi noma udokotela wakho emtholampilo wenza lokhu kuhlola ekuvakasheni okuhleliwe.'},
+      {'@type': 'HowToStep', 'position': 2, 'name': 'Buza umhlengikazi wakho emtholampilo ngokufaneleka kwe-CCMDD', 'text': 'Ekuvakasheni kwakho okulandelayo emtholampilo, buza: "Ngiyafaneleka yini ku-CCMDD?" Umhlengikazi uhlola umlando wakho wokwelashwa nokuzinza kwakho. Uma ufaneleka, bakubhalisa ohlelweni lwe-elekthronikhi lwe-CCMDD — ukubhalisa kuthatha cishe imizuzu engu-10.'},
+      {'@type': 'HowToStep', 'position': 3, 'name': 'Khetha indawo yokulanda elula', 'text': 'Khetha ezindaweni zokulanda ezitholakalayo eduze nawe: amakhemisi azimele, izikhungo zomphakathi, noma izindawo zokulanda emsebenzini. Khetha ngokusondelana nekhaya noma nomsebenzi kanye nesikhathi semigqa. Ungayishintsha indawo yakho yokulanda kamuva kunoma yikuphi ukubuyekezwa okuhleliwe emtholampilo.'},
+      {'@type': 'HowToStep', 'position': 4, 'name': 'Landa imithi yakho esipakishwe ngaphambili nyanga zonke', 'text': 'Imithi yakho ipakishwa ngaphambili ekhemisi elimaphakathi bese ilethwa endaweni oyikhethile yokulanda. Landa phakathi kwesikhathi sezinsuku ezingu-5 sokulanda. Uma ungakwazi ukulanda, thumela ilungu lomndeni linencwadi esayiniwe yemvume. Ukweqa izikhathi ezingu-2 zokulanda zilandelana kukususa ohlelweni.'},
+      {'@type': 'HowToStep', 'position': 5, 'name': 'Buyela emtholampilo ukuze ubuyekezwe ngezikhathi ezithile', 'text': 'Yiba khona ekubuyekezweni kwezokwelapha njalo ngezinyanga ezingu-6-12 (kuya ngesifo sakho) ukuze kwenziwe ukuhlolwa kwegazi, ukuhlolwa kwezimpawu, nokuvuselelwa kwencwadi yemithi. I-CCMDD ishintsha ukulanda imithi kwanyanga zonke, hhayi ukuqashwa kwezokwelapha — ukubuyekezwa kuqinisekisa ukuthi ukwelashwa kwakho kusasebenza.'},
+    ],
+  },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Imihlahlandlela', item: 'https://clinicfinder.co.za/zu/guides' }, { '@type': 'ListItem', position: 3, name: 'CCMDD' }] },
+];
+---
+<Base
+  title="CCMDD — Ukulanda Imithi Yesifo Esingamahlalakhona Ngaphandle Komugqa — Clinic Finder SA"
+  description="Lusebenza kanjani uhlelo lwe-CCMDD: landa imithi yesifo esingamahlalakhona ekhemisi noma endaweni yomphakathi yokulanda esikhundleni sokuma emugqeni emtholampilo. Ukufaneleka, ukubhalisa, nezindawo zokulanda."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zu('/')}>Ikhasi Lokuqala</a> &rsaquo; <a href={zu('/guides')}>Imihlahlandlela</a> &rsaquo; Imithi Ye-CCMDD Yesifo Esingamahlalakhona
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">CCMDD — Ukulanda Imithi Yesifo Esingamahlalakhona Ngaphandle Komugqa</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      Uhlelo lwe-Central Chronic Medicine Dispensing and Distribution (CCMDD) lungenye yezinsizakalo ezibaluleke kakhulu — futhi ezingaziwa kangako — ohlelweni lwezempilo lomphakathi eNingizimu Afrika. Luvumela iziguli ezizinzile ezinezifo ezingamahlalakhona ukuthi zilande imithi yazo endaweni yokulanda elula esikhundleni sokuma emugqeni amahora amaningi emtholampilo njalo ngenyanga. Iziguli ezingaphezu kwezigidi ezingu-4.9 zibhalisiwe.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Iyini i-CCMDD?</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        I-CCMDD uhlelo lukahulumeni olupakisha ngaphambili imithi yesifo esingamahlalakhona ekhemisi elimaphakathi bese luyilethe ezindaweni zokulanda ezingaphandle ezweni lonke. Esikhundleni sokuhlala emugqeni emtholampilo ulande amaphilisi afanayo owaphuza nyanga zonke, ungena ekhemisi elizimele, esikhungweni somphakathi, noma emsebenzini eduze nekhaya lakho bese ulanda iphasela lemithi elinelebula nelivalwe ngokuphelele.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Uhlelo lwaqale lwenzelwa iziguli ze-HIV ezizinzile eziphuza ama-ARV, kodwa selwandiswe lwafaka zonke izifo ezingamahlalakhona: umfutho wegazi ophakeme, ushukela, isithuthwane, i-asthma, izifo zempilo yengqondo, nokunye. Lumahhala — awukhokhi lutho endaweni yokulanda.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ubani ofanelekayo?</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        Ungabhaliselwa i-CCMDD uma uhlangabezana nazo zonke lezi zimo:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Usekwelashweni kwesifo esingamahlalakhona izinyanga ezingu-6-12</strong> (kuya ngesifo)</li>
+        <li><strong>Uzinzile ngokwezokwelapha</strong> — isifo sakho siyalawuleka. Kwi-HIV: izinga legciwane egazini (viral load) licindezelwe. Kumfutho wegazi ophakeme: umfutho wegazi usenanini elifunekayo. Kushukela: i-HbA1c iyalawuleka.</li>
+        <li><strong>Awukho ushintsho lomthamo ezinyangeni ezingu-3 ezedlule</strong></li>
+        <li><strong>Akukho ukukhathazeka ngokulandela ukwelashwa</strong> — ubulokhu uyilanda njalo imithi</li>
+      </ol>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 12px;">
+        Umhlengikazi noma udokotela wakho uthatha isinqumo sokugcina. Uma unqatshiwe, buza ukuthi yini okumele uyenze ukuze ufaneleke — ngokuvamile udinga nje ukuzinza ezinyangeni ezimbalwa ezengeziwe.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Izinhlobo zezindawo zokulanda</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        I-CCMDD isebenza ngenethiwekhi yezindawo zokulanda ezingaphandle ezingaphezu kuka-3,000 eNingizimu Afrika yonke:
+      </p>
+      <div style="display: grid; gap: 12px;">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">Amakhemisi azimele</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Clicks, Dis-Chem, namakhemisi azimele. Yindawo yokulanda evame kakhulu. Ulanda ekhawunteni yekhemisi njenganoma yimuphi omunye umuthi obhaliwe — usokhemisi uqinisekisa ukuthi ungubani bese ekunika iphasela elivaliwe.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">Amaqembu omphakathi okulandela ukwelashwa</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Amaqembu eziguli ezingu-25-30 ezihlangana endaweni yomphakathi (ihholo lesonto, umtapo wolwazi, indlu eseceleni komtholampilo) ukuze zilande imithi ndawonye. Umgqugquzeli usabalalisa amaphasela. Kufaka ukuhlolwa okufushane kwempilo nokwesekwa ngontanga.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">Ukulanda ngomugqa osheshayo emtholampilo</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Kweziguli ezithanda umtholampilo wazo kodwa ezifuna ukweqa umugqa. Amaphasela e-CCMDD afika esepakishiwe — uya efasiteleni elikhethekile le-CCMDD, uqinisekise umazisi wakho, bese uyahamba. Awulindi ukuthi ikhemisi likukhiphele imithi.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">Emsebenzini nakwezinye izindawo</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">Abanye abaqashi abakhulu namanyuvesi banazo izindawo zokulanda ze-CCMDD. Ulanda ngamahora omsebenzi, akudingeki uye emtholampilo. Buza ihhovisi lezempilo emsebenzini wakho ukuthi lokhu kuyatholakala yini.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ubhaliswa kanjani</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Ekuvakasheni kwakho okulandelayo emtholampilo</strong>, tshela umhlengikazi ukuthi ufuna ukujoyina i-CCMDD.</li>
+        <li>Umhlengikazi uhlola ukuzinza kwakho ngokwezokwelapha esebenzisa ifayela lakho nemiphumela yakamuva yokuhlolwa kwegazi.</li>
+        <li>Uma ufaneleka, bakubhalisa ohlelweni lwe-elekthronikhi lwe-CCMDD (kuthatha cishe imizuzu engu-10).</li>
+        <li>Ukhetha indawo yokulanda oyithandayo ohlwini lwezindawo ezitholakalayo.</li>
+        <li>Imithi yakho ikhishwa ekhemisi elimaphakathi bese ilethwa endaweni oyikhethile ngaphambi kosuku lwakho olulandelayo lokulanda.</li>
+        <li>Uthola i-SMS uma iphasela lakho selilungile. Landa phakathi kwezinsuku ezingu-5 zomsebenzi.</li>
+      </ol>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--primary-dark);">Kungani lokhu kubalulekile</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7;">
+        Ngaphambi kwe-CCMDD, iziguli ezinezifo ezingamahlalakhona zazichitha isilinganiso esingu-<strong>4-8 amahora ngenyanga</strong> emtholampilo zilande nje imithi efanayo eziyiphuza nyanga zonke. Abantu abaningi — ikakhulukazi labo abasebenza imisebenzi ekhokhelwa ngehora — bayeka ukulanda ngoba babengakwazi ukulahlekelwa umholo wosuku njalo ngenyanga. Lokhu kwaholela ekuphazamisekeni kokwelashwa, ukumelana kwegciwane nemithi (ikakhulukazi kwi-HIV nakwi-TB), nasekufeni okwakungavinjelwa.
+      </p>
+      <p style="font-size: 0.95rem; line-height: 1.7; margin-top: 8px;">
+        I-CCMDD yehlisa isikhathi sokulanda sibe <strong>ngaphansi kwemizuzu engu-15</strong>. Amazinga okulandela ukwelashwa eziguli ze-CCMDD aphakeme kakhulu kunawezona ziguli ezilanda emtholampilo kuphela. Uma ufaneleka, ukubhalisa kungenye yezinto ezibaluleke kakhulu ongazenzela impilo yakho yesikhathi eside.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ukulungisa izinkinga ezivamile ze-CCMDD</h2>
+      <div style="display: grid; gap: 12px;">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">"Iphasela lami belingekho endaweni yokulanda"</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">Ukubambezeleka kokulethwa kuyenzeka, ikakhulukazi ekupheleni kwenyanga. Kuqala bheka i-SMS yakho — kufanele iqinisekise usuku lokulethwa. Uma iphasela lingekho ngempela, xhumana nesikhungo sezingcingo se-CCMDD (0800 242 243) unenombolo yakho kamazisi. Okwamanje, yiya emtholampilo obhalisele kuwo — bangakukhiphela imithi yesikhashana ekhemisi labo ngesikhathi inkinga ilungiswa.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">"Ikhemisi lithi angikho ohlelweni"</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">Lokhu ngokuvamile kusho ukuthi ukubhalisa kwakho akuhambanga kahle noma ukubuyekezwa kwakho kwezokwelapha sekudlulelwe yisikhathi (uhlelo lususa ngokuzenzakalelayo iziguli esezedlulelwe usuku lokubuyekezwa). Buyela emtholampilo obhalisele kuwo unomazisi wakho nekhadi eliluhlaza. Umhlengikazi angahlola isimo sakho se-CCMDD bese ekubhalisa kabusha uma kudingeka.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">"Ngiyahamba futhi angikwazi ukulanda endaweni yami ejwayelekile"</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">Amaphasela e-CCMDD alethwa endaweni yakho yokulanda obhalisele kuyo kuphela. Uma uzobe ungekho, landa kusenesikhathi ngaphambi kokuhamba. Uma weqa isikhathi sokulanda, yiya kunoma yimuphi umtholampilo womphakathi endaweni oyivakashele — chaza ukuthi uyisiguli se-CCMDD bese bengakukhiphela imithi yesikhashana. Hamba nekhadi lakho eliluhlaza nomazisi uma uhamba.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <strong style="color: var(--primary-dark);">"Kunomunye umuntu okumele angilandele"</strong>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">Ilungu lomndeni noma umuntu omethembayo angalanda egameni lakho. Badinga: umazisi wakho (noma ikhophi yawo), umazisi wabo, nencwadi esayiniwe evela kuwe ebagunyaza ukuthi balande. Ezinye izindawo zokulanda ziyamukela ucingo oluvela kuwe ukuqinisekisa. Xhumana nendawo yakho yokulanda kusenesikhathi ukuqinisekisa izidingo zabo zokulandelwa ngomunye umuntu.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Thola umtholampilo wemithi yesifo esingamahlalakhona</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Izikhungo ezingu-{chronicClinics.length} ohlwini lwethu zinikeza izinsizakalo zemithi yesifo esingamahlalakhona. Buza nge-CCMDD ekuvakasheni kwakho okulandelayo.
+      </p>
+      <a href="/services/chronic-medication" class="btn btn--primary" style="font-size: 0.9rem;">Bheka imitholampilo yemithi yesifo esingamahlalakhona</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Njalo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Imithombo:</strong> CCMDD Implementation Framework (National Department of Health, 2018). Differentiated Service Delivery models for HIV — SA adaptation. CCMDD monthly statistics — NDoH quarterly reports. Right to Care — CCMDD operational guidelines.
+    </section>
+      <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Imihlahlandlela Ehlobene</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={zu('/guides/chronic-medication-management')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukuphathwa Kwemithi Yesifo Esingamahlalakhona</a>
+      <a href={zu('/guides/how-to-get-arvs')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ungawathola Kanjani Ama-ARV</a>
+      <a href={zu('/guides/hospital-referral-system')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Uhlelo Lokuthunyelwa Esibhedlela</a>
+      <a href={zu('/guides/hiv-testing-guide')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Umhlahlandlela Wokuhlolela I-HIV</a>
+      </div>
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Thola Imitholampilo Ngesifundazwe</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

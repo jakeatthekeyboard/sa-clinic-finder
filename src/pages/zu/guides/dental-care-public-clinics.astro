@@ -1,0 +1,265 @@
+---
+// isiZulu translation of src/pages/guides/dental-care-public-clinics.astro (issue #2).
+// Sentence-for-sentence. Locale comes off the URL — no locale prop is passed.
+import Base from '../../../layouts/Base.astro';
+import { facilities } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const dentalClinics = facilities.filter(f => f.services.dental);
+
+const zu = (p: string) => localePath(p, 'zu');
+
+const faqs = [
+  {
+    question: 'Ingabe ukunakekelwa kwamazinyo kumahhala emitholampilo yomphakathi?',
+    answer: 'Yebo, kodwa kunemikhawulo. Ukwelashwa kwamazinyo okuphuthumayo (ukukhishwa kwezinyo, ukukhishwa kobovu, ubuhlungu obukhulu) kumahhala kuyo yonke imitholampilo yamazinyo yomphakathi nakuyo yonke iminyango yamazinyo yasezibhedlela. Ukunakekelwa kokuvimbela nokulungisa (ukuvala amazinyo, ukuhlanzwa, amazinyo okufakwa) nakho kumahhala lapho kutholakala khona, kodwa uhlu lokulinda lungaba yizinyanga ubude. Izinqubo eziyinkimbinkimbi (i-root canal, ama-crown, amabhuloho, ama-implant) ngokuvamile azitholakali ohlelweni lomphakathi — lezi ungazidinga kudokotela wamazinyo ozimele.',
+  },
+  {
+    question: 'Ngidinga i-apotimende yamazinyo?',
+    answer: 'Ngobuhlungu bamazinyo obuphuthumayo: iningi lemitholampilo nezibhedlela liyabamukela abangenayo nje, kodwa ungase udinge ukufika ekuseni kakhulu (ngaphambi kuka-07:00) ngoba izikhala zamazinyo ziphela ngokushesha. Ngokunakekelwa kwamazinyo okujwayelekile: yebo, ngokuvamile udinga i-apotimende. Cela umamukeli izihambeli womtholampilo akufake ohlwini lokulinda lwamazinyo. Isikhathi sokulinda sihluka kusukela emavikini kuya ezinyangeni kuye ngesikhungo nangesifundazwe.',
+  },
+  {
+    question: 'Ingabe izingane zingakuthola ukunakekelwa kwamazinyo emitholampilo yomphakathi?',
+    answer: 'Yebo. Izingane zibekwa phambili ezinsizakalweni zamazinyo zomphakathi. Ukuhlolwa kwamazinyo esikoleni kwenziwa ngohlelo oluhlanganisiwe lwezempilo ezikoleni (ISHP), kodwa alufinyeleli yonke indawo. Noma iyiphi ingane ingakuthola ukwelashwa kwamazinyo okuphuthumayo emtholampilo womphakathi. Ngokunakekelwa kokuvimbela (ukuvalwa kwemifantu yamazinyo, ukufakwa kwe-fluoride, ukuvalwa kwamazinyo), yisa ingane yakho emnyangweni wamazinyo womtholampilo — izingane ngokuvamile zibonwa ngokushesha kunabantu abadala.',
+  },
+  {
+    question: 'Kuthiwani ngamazinyo okufakwa?',
+    answer: 'Amazinyo okufakwa aphelele nangokwengxenye ayatholakala kwezinye izikhungo zamazinyo zomphakathi, kodwa isikhathi sokulinda side — ngokuvamile izinyanga ezingu-6-18. Inqubo: (1) ukuhlolwa kwamazinyo nokukhishwa kwamazinyo uma kudingeka, (2) isikhathi sokupholisa (imvamisa izinyanga ezingu-3-6 ngemva kokukhishwa), (3) ukuthathwa kwesimo somlomo nokwenziwa kwamazinyo, (4) ukufakwa nokulungiswa. Kubekwa phambili iziguli ezingakwazi ukudla kahle. Akuzona zonke izikhungo ezinezinsizakalo zamazinyo okufakwa — buza esikhungweni sezempilo somphakathi noma emnyangweni wamazinyo wesibhedlela.',
+  },
+];
+
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Ungakuthola kanjani ukunakekelwa kwamazinyo emtholampilo womphakathi waseNingizimu Afrika',
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Thola isikhungo esinezinsizakalo zamazinyo',
+      text: 'Akuwona wonke umtholampilo oyisisekelo onesihlalo samazinyo. Bheka isikhungo sezempilo somphakathi (CHC), umnyango wamazinyo wesibhedlela sesifunda, noma isibhedlela sokuqeqesha samazinyo (esixhumene nezikhungo zemfundo ephakeme i-Wits, i-Pretoria, i-UWC, i-UKZN, i-Sefako Makgatho, noma i-Limpopo). Sebenzisa i-Clinic Finder ukusesha izikhungo ezinikeza ukunakekelwa kwamazinyo endaweni yakho.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Fika ekuseni nomazisi wakho nekhadi lomtholampilo',
+      text: 'Ngobuhlungu bamazinyo obuphuthumayo (ubuhlungu obukhulu bezinyo, ubovu, izinyo elephukile), yiya esikhungweni ungenele nje ngaphambi kuka-07:00 — izikhala zamazinyo ziphela ngokushesha futhi iningi lemitholampilo lisebenza ngo-07:30-16:00. Phatha umazisi wakho waseNingizimu Afrika nekhadi lomtholampilo (ikhadi eliluhlaza). Ngokunakekelwa okungaphuthumi, shayela isikhungo kuqala ukuze ufakwe ohlwini lokulinda lwamazinyo.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Uhlolwe umelaphi wamazinyo noma udokotela wamazinyo',
+      text: 'Umelaphi wamazinyo, uchwepheshe wenhlanzeko yomlomo, noma udokotela wamazinyo uzohlola amazinyo akho, athathe ama-X-ray uma kudingeka, abone ukuthi yikuphi ukwelashwa okudingekayo. Iziguli eziphuthumayo (ubuhlungu, ukuvuvukala, ukutheleleka) zibekwa phambili. Ngokunakekelwa okujwayelekile okufana nokuvalwa kwamazinyo noma ukuhlanzwa, ungase ubhalelwe i-apotimende yokubuya.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 4,
+      name: 'Thola ukwelashwa — ukukhishwa kwamazinyo, ukuvalwa, noma ukuthunyelwa kwamazinyo okufakwa',
+      text: 'Ukukhishwa kwamazinyo okuphuthumayo nokukhishwa kobovu ngokuvamile kwenziwa ngalo lolo suku. Ukuvalwa kwamazinyo okuyisisekelo nokuhlanzwa kwamazinyo kungenziwa ngaso leso sikhathi noma nge-apotimende ebhaliwe. Ngamazinyo okufakwa, inqubo ithatha ukuvakasha okuningana phakathi kwezinyanga ezingu-6-18: ukuhlolwa, ukukhishwa kwamazinyo, isikhathi sokupholisa, ukuthathwa kwesimo somlomo, ukwenziwa, nokufakwa. Konke ukwelashwa ezikhungweni zomphakathi kumahhala.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 5,
+      name: 'Buya futhi ugcine ukunakekelwa kokuvimbela',
+      text: 'Ngemva kokwelashwa, landela imiyalelo yokuzinakekela (ungahlambululi umlomo amahora angu-24 ngemva kokukhishwa kwezinyo, uqedele wonke ama-antibiotic). Ngempilo yamazinyo eqhubekayo, xubha kabili ngosuku ngomuthi wamazinyo one-fluoride, unciphise ushukela phakathi kwezikhathi zokudla, futhi ubuye uzohlolwa minyaka yonke. Izingane kufanele ziyiswe ekunakekelweni kokuvimbela (ukuvalwa kwemifantu yamazinyo, ukufakwa kwe-fluoride) — ngokuvamile zibonwa ngokushesha kunabantu abadala emitholampilo yamazinyo yomphakathi.',
+    },
+  ],
+};
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Ukuthola Ukunakekelwa Kwamazinyo Emtholampilo Womphakathi eNingizimu Afrika',
+    description: 'Yiziphi izinsizakalo zamazinyo ezitholakala emitholampilo yomphakathi yaseNingizimu Afrika: ukukhishwa kwamazinyo okuphuthumayo, ukuvalwa kwamazinyo, amazinyo okufakwa, nokuthi ungakuthola kanjani.',
+    url: 'https://clinicfinder.co.za/zu/guides/dental-care-public-clinics',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  howToLd,
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Imihlahlandlela', item: 'https://clinicfinder.co.za/zu/guides' }, { '@type': 'ListItem', position: 3, name: 'Ukunakekelwa Kwamazinyo Emitholampilo Yomphakathi' }] },
+];
+---
+<Base
+  title="Ukunakekelwa Kwamazinyo Emitholampilo Yomphakathi — Clinic Finder SA"
+  description="Yiziphi izinsizakalo zamazinyo ezitholakala emitholampilo yomphakathi yaseNingizimu Afrika: ukukhishwa kwamazinyo okuphuthumayo, ukuvalwa kwamazinyo, amazinyo okufakwa, ukunakekelwa kwamazinyo ezingane, nokuthi ungakuthola kanjani."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zu('/')}>Ikhasi Lokuqala</a> &rsaquo; <a href={zu('/guides')}>Imihlahlandlela</a> &rsaquo; Ukunakekelwa Kwamazinyo
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Ukunakekelwa Kwamazinyo Emitholampilo Yomphakathi</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      INingizimu Afrika ishoda kakhulu ngezinsizakalo zamazinyo zomphakathi — kunodokotela wamazinyo oyedwa nje kubantu abangu-10,000 emkhakheni womphakathi, uma kuqhathaniswa noyedwa kubantu abangu-2,000 emkhakheni ozimele. Kodwa ukunakekelwa kwamazinyo kwamahhala kukhona. Lo mhlahlandlela umboza okutholakalayo, ukuthi ungakuthola kanjani, nokuthi ulindeleni.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Yiziphi izinsizakalo zamazinyo ezitholakalayo?</h2>
+      <div style="display: grid; gap: 12px;">
+        <div style="border-left: 4px solid var(--primary); padding: 12px 16px; background: var(--primary-light); border-radius: 0 var(--radius) var(--radius) 0;">
+          <strong style="color: var(--primary-dark);">Kutholakala emitholampilo eminingi yamazinyo</strong>
+          <ol style="padding-left: 16px; font-size: 0.9rem; margin-top: 4px; line-height: 1.6; display: grid; gap: 2px;">
+            <li>Ukukhishwa kwamazinyo</li>
+            <li>Ukukhishwa kobovu</li>
+            <li>Ukudambisa ubuhlungu obuphuthumayo</li>
+            <li>Ukuvalwa kwamazinyo okuyisisekelo (i-amalgam noma i-composite)</li>
+            <li>Ukuhlanzwa nokupholishwa kwamazinyo</li>
+            <li>Imfundo ngempilo yomlomo</li>
+          </ol>
+        </div>
+        <div style="border-left: 4px solid #fd7e14; padding: 12px 16px; background: #fff8f0; border-radius: 0 var(--radius) var(--radius) 0;">
+          <strong style="color: #e65100;">Kutholakala kwezinye izikhungo (ulinda isikhathi eside)</strong>
+          <ol style="padding-left: 16px; font-size: 0.9rem; margin-top: 4px; line-height: 1.6; display: grid; gap: 2px;">
+            <li>Amazinyo okufakwa aphelele nangokwengxenye</li>
+            <li>Ukuvalwa kwemifantu yamazinyo ezingane</li>
+            <li>Ukufakwa kwe-fluoride</li>
+            <li>Ukuqondiswa kwamazinyo okuyisisekelo (ezimweni ezimbi kuphela)</li>
+          </ol>
+        </div>
+        <div style="border-left: 4px solid #dc3545; padding: 12px 16px; background: #fff5f5; border-radius: 0 var(--radius) var(--radius) 0;">
+          <strong style="color: #dc3545;">Ngokuvamile AKUTHOLAKALI emkhakheni womphakathi</strong>
+          <ol style="padding-left: 16px; font-size: 0.9rem; margin-top: 4px; line-height: 1.6; display: grid; gap: 2px;">
+            <li>Ukwelashwa kwe-root canal</li>
+            <li>Ama-crown, amabhuloho, ama-veneer</li>
+            <li>Ama-implant amazinyo</li>
+            <li>Ukwelashwa kwamazinyo kokubukeka</li>
+            <li>Ukumhlophisa amazinyo</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Uya kuphi</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Akuwona wonke umtholampilo oyisisekelo onezinsizakalo zamazinyo. Ukunakekelwa kwamazinyo kugxile:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px; margin-top: 8px;">
+        <li><strong>Ezikhungweni zezempilo zomphakathi (ama-CHC)</strong> — izikhungo ezinkulu ezivamise ukuba nesihlalo samazinyo nomelaphi wamazinyo. Yilapha okufanele uqale khona ngezidingo zamazinyo ezijwayelekile.</li>
+        <li><strong>Ezibhedlela zesifunda nezesifundazwana</strong> — iminyango yamazinyo yasezibhedlela ibhekana nezimo eziyinkimbinkimbi, amazinyo okufakwa, nalabo abathunyelwe bevela kuma-CHC. Ingaba nochwepheshe benhlanzeko yomlomo nodokotela bamazinyo.</li>
+        <li><strong>Ezibhedlela zokuqeqesha zamazinyo</strong> — izikhungo ezixhunywe ezikoleni zamazinyo (i-Wits, i-Pretoria, i-Western Cape, i-KZN, i-Sefako Makgatho, i-Limpopo). Lezi zivame ukuba nezikhathi zokulinda ezimfushane ngoba abafundi badinga iziguli. Ukwelashwa kwengamelwe odokotela bamazinyo abagunyaziwe. Kumahhala.</li>
+        <li><strong>Emayunithini amazinyo ahambayo</strong> — ezinye izifundazwe zinemitholampilo yamazinyo ehambayo evakashela izindawo ezingafinyelelwa kahle ngokushintshana. Buza umtholampilo wakho wendawo ukuthi ikhona yini iyunithi ehambayo esebenza endaweni yakho.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ongakwenza khona manje ngobuhlungu bezinyo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Uma unobuhlungu obukhulu bezinyo futhi ungakwazi ukufika emtholampilo namuhla:
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px; margin-top: 8px;">
+        <li><strong>Phuza i-ibuprofen (Nurofen) noma i-paracetamol (Panado)</strong> — iyatholakala kunoma yikuphi ikhemisi ngaphandle kwencwadi kadokotela. I-ibuprofen isebenza kangcono kubuhlungu bezinyo ngoba yehlisa ukuvuvukala. Landela imiyalelo yomthamo esemgqonyeni.</li>
+        <li><strong>Hlambulula umlomo ngamanzi afudumele anosawoti</strong> — uhhafu wethispuni likasawoti engilazini yamanzi afudumele. Hlambulula kancane endaweni ebuhlungu. Phinda njalo emahoreni angu-2-3.</li>
+        <li><strong>UNGABEKI i-aspirin ngqo enyameni yamazinyo</strong> — lokhu yiphutha elivamile elingabangela ukusha kwenyama ngenxa yamakhemikhali.</li>
+        <li><strong>Yiya emtholampilo kusasa ekuseni kuqala</strong> — fika ngaphambi kuka-07:00. Iziguli zamazinyo eziphuthumayo ngokuvamile zibonwa zingenele nje kodwa izikhala ziphela ngokushesha.</li>
+        <li><strong>Uma ubuhlungu buhambisana nokuvuvukala, umkhuhlane, noma ubunzima bokuphefumula/bokugwinya</strong> — yiya egumbini lezimo eziphuthumayo esibhedlela. Ubovu bezinyo bungaba yingozi kakhulu empilweni uma ukutheleleka kusabalala.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Izibhedlela zokuqeqesha zamazinyo — ukulinda okumfushane, ukunakekelwa kwamahhala</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        INingizimu Afrika inezikole zamazinyo eziyisithupha ezixhunywe emanyuvesi. Imitholampilo yazo yokuqeqesha yelapha iziguli zomphakathi mahhala kanti abafundi bonyaka wokugcina bafunda beqondiswa ngqo. Ngoba abafundi bedinga amahora okusebenza neziguli, izikhathi zokulinda zivame ukuba mfushane kunasezibhedlela zikahulumeni — ikakhulukazi ekuvalweni kwamazinyo, emazinyweni okufakwa, nasekuqondisweni kwamazinyo.
+      </p>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; font-size: 0.88rem; border-collapse: collapse; line-height: 1.6;">
+          <thead>
+            <tr style="background: var(--bg-alt); text-align: left;">
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Inyuvesi</th>
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Indawo</th>
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Isibhedlela samazinyo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px;">University of the Witwatersrand</td><td style="padding: 10px 12px;">Johannesburg, Gauteng</td><td style="padding: 10px 12px;">Wits Oral Health Centre (Charlotte Maxeke campus)</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px;">University of Pretoria</td><td style="padding: 10px 12px;">Pretoria, Gauteng</td><td style="padding: 10px 12px;">Oral and Dental Hospital, Bophelo Road</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px;">University of the Western Cape</td><td style="padding: 10px 12px;">Cape Town, Western Cape</td><td style="padding: 10px 12px;">Tygerberg Oral Health Centre</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px;">University of KwaZulu-Natal</td><td style="padding: 10px 12px;">Durban, KwaZulu-Natal</td><td style="padding: 10px 12px;">King Edward VIII Hospital dental department</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px;">Sefako Makgatho Health Sciences University</td><td style="padding: 10px 12px;">Pretoria, Gauteng</td><td style="padding: 10px 12px;">Medunsa Oral Health Centre</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 10px 12px;">University of Limpopo</td><td style="padding: 10px 12px;">Mankweng, Limpopo</td><td style="padding: 10px 12px;">Mankweng Hospital dental unit</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">Ngena nje noma ushayele ucingo emamukelweni wezikole zamazinyo ukuze ubhuke. Phatha umazisi wakho nekhadi lomtholampilo. Ukwelashwa kuthatha isikhathi eside kunakudokotela wamazinyo ozimele (abafundi basebenza ngokucophelela beqondiswa) kodwa izinga lokunakekelwa liphezulu — futhi kumahhala.</p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ukuvimbela izinkinga zamazinyo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        Izinsizakalo zamazinyo zomphakathi zicindezelekile. Ukuvimbela kukusindisa ekutheni ujoyine izinhlu ezinde zokulinda — nasebuhlungwini obebungagwenywa.
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li><strong>Xubha kabili ngosuku ngomuthi wamazinyo one-fluoride.</strong> Umuthi wamazinyo oshibhile kunayo yonke kwa-Shoprite noma kwa-PnP unayo i-fluoride — awudingi umkhiqizo obizayo. Shintsha isixubho sakho njalo ezinyangeni ezingu-3 noma uma izinwele zaso sezihlakazekile.</li>
+        <li><strong>Nciphisa ushukela, ikakhulukazi phakathi kwezikhathi zokudla.</strong> Akukhona ukuthi udla ushukela ongakanani — kungukuthi ukudla kangaki. Ukuhaba iziphuzo ezinoshukela (i-cooldrink, ijusi, itiye elinoshukela) usuku lonke kugcina amazinyo akho egeza ku-asidi njalo. Phuza amanzi phakathi kwezikhathi zokudla.</li>
+        <li><strong>Ungasebenzisi amazinyo akho njengamathuluzi.</strong> Ukuvula amabhodlela, ukudabula amaphakethe, nokuqhekeza amantongomane ngamazinyo kubangela ukwephuka okuholela ekukhishweni kwamazinyo.</li>
+        <li><strong>Uma ugedla amazinyo ebusuku,</strong> tshela umtholampilo — lokhu kuvamile lapho kunengcindezi futhi ekugcineni kuqhekeza amazinyo. Isivikelo somlomo esilula (asitholakali emitholampilo eminingi yomphakathi, kodwa siyathengeka ngo-R200-R500 kudokotela wamazinyo ozimele) sivimbela umonakalo obizayo.</li>
+        <li><strong>Izingane ezingaphansi kweminyaka engu-6:</strong> sebenzisa umuthi wamazinyo ongangobhontshisi futhi ubukele lapho zixubha. Amazinyo obuntwana abalulekile — ukulahleka kwawo kusenesikhathi ngenxa yokubola kwenza amazinyo aphakade aphume egwegwile, okuholela ezinkingeni ezinkulu kakhulu kamuva.</li>
+      </ol>
+    </section>
+
+    <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Thola umtholampilo onezinsizakalo zamazinyo</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Izikhungo ezingu-{dentalClinics.length} esizindeni sethu semininingwane zinikeza ukunakekelwa kwamazinyo.
+      </p>
+      <a href="/services/dental" class="btn btn--primary" style="font-size: 0.9rem;">Bheka imitholampilo yamazinyo</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Njalo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Imithombo:</strong> National Oral Health Strategy (NDoH, 2023). South African Dental Association workforce report. HPCSA dental practitioner statistics. Integrated School Health Programme — oral health component. Essential Drugs List — dental formulary.
+    </section>
+      <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Imihlahlandlela Ehlobene</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={zu('/guides/hospital-referral-system')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Uhlelo Lokuthunyelwa Esibhedlela</a>
+      <a href={zu('/guides/child-immunisation-schedule')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Uhlelo Lwemijovo Yezingane</a>
+      <a href={zu('/guides/chronic-medication-management')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukuphathwa Kwemithi Yesifo Esingamahlalakhona</a>
+      <a href={zu('/guides/medical-emergency-guide')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Umhlahlandlela Wezimo Eziphuthumayo Zezempilo</a>
+      </div>
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Thola Imitholampilo Ngesifundazwe</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

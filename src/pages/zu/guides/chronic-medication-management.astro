@@ -1,0 +1,312 @@
+---
+// isiZulu translation of src/pages/guides/chronic-medication-management.astro (issue #2).
+// Sentence-for-sentence. Locale comes off the URL — no locale prop is passed.
+import Base from '../../../layouts/Base.astro';
+import { facilities } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const chronicClinics = facilities.filter(f => f.services.chronic_medication);
+
+const zu = (p: string) => localePath(p, 'zu');
+
+const conditions = [
+  {
+    name: 'Umfutho wegazi ophakeme (high blood pressure)',
+    prevalence: 'Uthinta oyedwa kwabathathu kubantu abadala baseNingizimu Afrika. Yimbangela enkulu yesifo sohlangothi nesifo senhliziyo.',
+    treatment: 'Imithi (hydrochlorothiazide, amlodipine, enalapril), izinguquko endleleni yokuphila (yehlisa usawoti, zivocavoce, yehlisa isisindo), ukuhlolwa njalo komfutho wegazi.',
+    atClinic: 'Ukuhlolwa komfutho wegazi kukho konke ukuvakasha. Ukuhlolwa kwegazi njalo ngezinyanga ezingu-6-12 (ukusebenza kwezinso, i-cholesterol). Umuthi uyalungiswa ngokwezibalo ezitholakalayo. Okufunekayo: ngaphansi kuka-140/90.',
+  },
+  {
+    name: 'Ushukela (Type 2)',
+    prevalence: 'Uthinta abantu baseNingizimu Afrika abayizigidi ezingu-4.5. Uyanda ngokushesha — uhambisana nokudla, ukukhuluphala ngokweqile, nokuhlala emadolobheni.',
+    treatment: 'Metformin (owokuqala), glimepiride, insulin (uma imithi ephuzwayo ingasebenzi). Ukulawulwa kokudla, ukuzivocavoca, ukunakekelwa kwezinyawo.',
+    atClinic: 'Ukuhlolwa kwamazinga kashukela egazini ne-HbA1c njalo ngezinyanga ezingu-3-6. Ukuthunyelwa kokuhlolwa kwamehlo minyaka yonke (ukuhlolelwa i-diabetic retinopathy). Ukuhlolwa kwezinyawo kukho konke ukuvakasha. Ukwelulekwa ngudokotela wokudla lapho kutholakala khona.',
+  },
+  {
+    name: 'Isithuthwane',
+    prevalence: 'Sithinta cishe oyedwa kwabayi-100. Ngokuvamile asilashwa ngokwanele ezindaweni zasemakhaya eNingizimu Afrika ngenxa yehlazo.',
+    treatment: 'Sodium valproate, carbamazepine, noma phenytoin. Kumele kuphuzwe nsuku zonke ngaphandle kokuphazamiseka — ukuyeka kungazelelwe kungadala izinkanuko ezingabulala.',
+    atClinic: 'Ukubuyekezwa kwencwadi yezinkanuko kukho konke ukuvakasha. Ukuhlolwa kwezinga lomuthi egazini uma izinkanuko zingalawuleki. Ukuthunyelwa kudokotela wezinzwa ezimeni ezinzima. Ukwelulekwa ngemikhawulo yokushayela.',
+  },
+  {
+    name: 'I-asthma',
+    prevalence: 'Ithinta abantu baseNingizimu Afrika abayizigidi ezingu-3.9. Ayilashwa ngokwanele — iziguli eziningi zisebenzisa ama-inhaler osizo olusheshayo kuphela.',
+    treatment: 'Beclomethasone yokuhogela (evimbelayo, nsuku zonke) + salbutamol (elekelelayo, uma kudingeka). Isisetshenziswa se-spacer sikwenza kusebenze kangcono. Theophylline ephuzwayo ezimeni ezinzima.',
+    atClinic: 'Ukuhlolwa kwendlela yokusebenzisa i-inhaler kukho konke ukuvakasha (iziguli eziningi zisebenzisa ama-inhaler ngendlela engalungile). Ukuhlolwa kwe-peak flow. Uhlelo lokusebenza lwe-asthma olubhaliwe. Ukubona nokugwema izinto ezivusa i-asthma.',
+  },
+  {
+    name: 'Ukucindezeleka engqondweni / Ukukhathazeka (okungamahlalakhona)',
+    prevalence: 'Oyedwa kwabathathu baseNingizimu Afrika uba nenkinga yempilo yengqondo. Ukucindezeleka engqondweni nokukhathazeka yikho okuvame kakhulu.',
+    treatment: 'Fluoxetine (SSRI) yokucindezeleka engqondweni/ukukhathazeka. Amitriptyline yokucindezeleka okuhambisana nokungalali noma ubuhlungu obungamahlalakhona. Ukwelulekwa lapho kutholakala khona.',
+    atClinic: 'Amathuluzi okuhlola i-PHQ-9 noma i-GAD-7. Ukubuyekezwa komuthi njalo ngezinyanga ezingu-3 onyakeni wokuqala, bese kuba njalo ngezinyanga ezingu-6. Ukuthunyelwa ekwelulekweni. Ukwelashwa kuqhubeka okungenani izinyanga ezingu-12 ngemva kokuphela kwezimpawu.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Ngibhalisa kanjani njengesiguli esinesifo esingamahlalakhona emtholampilo?',
+    answer: 'Uma udokotela noma umhlengikazi ethola ukuthi unesifo esingamahlalakhona bese eqala ukukwelapha, ubhaliswa ngokuzenzakalelayo ohlelweni lomtholampilo lweziguli ezinezifo ezingamahlalakhona. Uzonikwa usuku oluthile lokubuya (ngokuvamile njalo ngenyanga noma njalo ngezinyanga ezingu-3) futhi imithi yakho izolungiswa ukuze uyilande ngalolo suku. Ngemva kwezinyanga ezingu-6-12 zokwelashwa okuzinzile, ungase ufaneleke i-CCMDD (ukulanda imithi ekhemisi esikhundleni somtholampilo).',
+  },
+  {
+    question: 'Ngingayithola imithi yesifo esingamahlalakhona kunoma yimuphi umtholampilo?',
+    answer: 'Ubhaliswe "emtholampilo wakho wasekhaya" othile ophethe ifayela lakho. Uma ulanda imithi njengenjwayelo, yiya emtholampilo wakho wasekhaya. Uma uhambile noma uthuthela endaweni entsha, noma yimuphi umtholampilo womphakathi ungakunika imithi yenyanga eyi-1 yesikhashana. Ukuze udlulisele ifayela lakho unomphela, cela umtholampilo wakho wamanje ukuthi ulungise incwadi yokudlulisa bese uyiyisa emtholampilo omusha. Ukudluliswa kufaka wonke umlando wakho wokwelashwa.',
+  },
+  {
+    question: 'Kwenzenjani uma umtholampilo uphelelwa yimithi yami?',
+    answer: 'Ukuphela kwesitoko kuyenzeka, ikakhulukazi emitholampilo yasemakhaya. Uma umuthi wakho ungekho esitokweni: (1) cela umhlengikazi akunike omunye umuthi wohlobo olufanayo, (2) cela ukuthunyelwa ekhemisi lesibhedlela esiseduze, (3) xhumana nosokhemisi wesifunda (umtholampilo kufanele ube nale nombolo) ukuze uthole isikhungo esiseduze esinesitoko. Ungalokothi uyeke nje ukuphuza imithi yesifo esingamahlalakhona — ukuphazamisa ukwelashwa kungaba yingozi.',
+  },
+  {
+    question: 'Ngidinga ukuphuza imithi yesifo esingamahlalakhona kuze kube phakade?',
+    answer: 'Ezifweni eziningi ezingamahlalakhona — yebo. Umfutho wegazi ophakeme, ushukela, isithuthwane, ne-HIV kuyalawulwa, akwelapheki ngokuphelele. Ukuyeka umuthi kwenza isifo sibuye, ngokuvamile sibe sibi kakhulu kunakuqala. Okuhlukile ukucindezeleka engqondweni — ngemva kwezinyanga ezingu-12 nangaphezulu imizwa izinzile usemthini, udokotela wakho angase ehlise umthamo kancane kancane abone ukuthi izimpawu zihlala zingekho yini. Ungalokothi uyeke imithi yesifo esingamahlalakhona ngaphandle kokukhuluma nomhlengikazi noma udokotela wakho emtholampilo.',
+  },
+];
+
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Uyithola kanjani imithi yesifo esingamahlalakhona esikhungweni somphakathi eNingizimu Afrika',
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Vakashela umtholampilo womphakathi oseduze nawe unomazisi wakho',
+      text: 'Yiya emtholampilo oyisisekelo oseduze nawe ngamahora okusebenza (ngokuvamile 07:30-16:00 ngezinsuku zomsebenzi). Phatha incwadi yakho kamazisi waseNingizimu Afrika noma ipasipoti. Tshela umamukeli ukuthi udinga ukubona umhlengikazi noma udokotela ngenkinga yezempilo. Ayidingeki i-apotimende noma incwadi yokuthunyelwa ekuvakasheni kokuqala.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Uthole ukutholakala kwesifo bese ubhaliswa njengesiguli esinesifo esingamahlalakhona',
+      text: 'Umhlengikazi noma udokotela uzokuhlola, enze ukuhlolwa (umfutho wegazi, ushukela egazini, njll.), bese ethola ukuthi unasiphi isifo. Uma sitholakele, ubhaliswa ohlelweni lomtholampilo lweziguli ezinezifo ezingamahlalakhona bese unikwa "umtholampilo wasekhaya" ophethe ifayela lakho. Uzothola ikhadi eliluhlaza lomtholampilo njengerekhodi lakho eliphethwe nguwe.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Thola incwadi yakho yokuqala yemithi kanye nemithi',
+      text: 'Umelaphi okubhalela umuthi ukuqalisa ekwelashweni okuku-Essential Drugs List (isb. hydrochlorothiazide yomfutho wegazi ophakeme, metformin kashukela). Incwadi yakho yokuqala yemithi ikhishwa ekhemisi lomtholampilo ngalo lolo suku — yonke imithi yesifo esingamahlalakhona ezikhungweni zomphakathi imahhala. Unikwa usuku lokubuya, ngokuvamile emva kwenyanga eyi-1.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 4,
+      name: 'Yiba khona ekuvakasheni kokubuya kwanyanga zonke noma kwezinyanga ezintathu',
+      text: 'Buyela emtholampilo wakho wasekhaya ngosuku olubekiwe uzolanda imithi eselungisiwe futhi uhlolwe izimpawu zomzimba (isisindo, umfutho wegazi). Njalo ngezinyanga ezingu-3 uba nokubuyekezwa okude lapho umhlengikazi ehlola ukulandela ukwelashwa bese eshintsha umuthi uma kudingeka. Ukubuyekezwa kwaminyaka yonke kufaka ukuhlolwa kwegazi okuphelele (i-HbA1c, ukusebenza kwezinso, ama-lipid).',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 5,
+      name: 'Bhalisela i-CCMDD ukuze ulande kalula uma usuzinzile',
+      text: 'Ngemva kwezinyanga ezingu-6-12 zokwelashwa okuzinzile (uhlangabezana nezinga elifunekayo elifana nomfutho wegazi ongaphansi kuka-140/90 noma i-HbA1c engaphansi kuka-7%), cela umtholampilo wakho ukuthi ukubhalisele uhlelo lwe-Central Chronic Medicine Dispensing and Distribution (CCMDD). Ubusungakwazi ukulanda imithi yakho endaweni yokulanda ye-CCMDD elula — ikhemisi, ihholo lesonto, noma isikhungo somphakathi — esikhundleni sokuma emugqeni emtholampilo. Usabuyela emtholampilo ukuze ubuyekezwe njalo ngezinyanga ezintathu naminyaka yonke.',
+    },
+  ],
+};
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Ukulawula Izifo Ezingamahlalakhona Emitholampilo Yomphakathi eNingizimu Afrika',
+    description: 'Iyilawula kanjani imitholampilo yomphakathi yaseNingizimu Afrika umfutho wegazi ophakeme, ushukela, isithuthwane, i-asthma, nokucindezeleka engqondweni: imithi, ukuhlolwa, ne-CCMDD.',
+    url: 'https://clinicfinder.co.za/zu/guides/chronic-medication-management',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  howToLd,
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Imihlahlandlela', item: 'https://clinicfinder.co.za/zu/guides' }, { '@type': 'ListItem', position: 3, name: 'Imithi Yesifo Esingamahlalakhona Emitholampilo Yomphakathi' }] },
+];
+---
+<Base
+  title="Imithi Yesifo Esingamahlalakhona Emitholampilo Yomphakathi — Clinic Finder SA"
+  description="Iyilawula kanjani imitholampilo yomphakathi yaseNingizimu Afrika umfutho wegazi ophakeme, ushukela, isithuthwane, i-asthma, nokucindezeleka engqondweni. Imithi yamahhala, izikhathi zokuhlolwa, ne-CCMDD."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zu('/')}>Ikhasi Lokuqala</a> &rsaquo; <a href={zu('/guides')}>Imihlahlandlela</a> &rsaquo; Imithi Yesifo Esingamahlalakhona
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Imithi Yesifo Esingamahlalakhona Emitholampilo Yomphakathi</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      Umthwalo wezifo ezingathathelwana eNingizimu Afrika mkhulu kakhulu: umfutho wegazi ophakeme, ushukela, nezifo zempilo yengqondo kuthinta izigidi zabantu, futhi okuningi kulawulwa emitholampilo eyisisekelo. Ukwelashwa kumahhala, kwempilo yonke, futhi — uma kulandelwa njalo — kukugcina ungangeni esibhedlela. Lo mhlahlandlela ubheka izifo ezingamahlalakhona ezivame kakhulu nokuthi yini ozoyithola emtholampilo.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--primary-dark);">Izifo ezingamahlalakhona ezivamile</h2>
+      <div style="display: grid; gap: 20px;">
+        {conditions.map(c => (
+          <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px;">
+            <strong style="font-size: 1.05rem; color: var(--primary-dark);">{c.name}</strong>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">{c.prevalence}</p>
+            <div style="margin-top: 12px; display: grid; gap: 8px; font-size: 0.9rem;">
+              <div><strong>Ukwelashwa:</strong> <span style="color: var(--text-muted);">{c.treatment}</span></div>
+              <div><strong>Emtholampilo:</strong> <span style="color: var(--text-muted);">{c.atClinic}</span></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Okufanele ukuphathe ekuvakasheni kwakho kwesifo esingamahlalakhona</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li><strong>Ikhadi eliluhlaza lomtholampilo</strong> — irekhodi lakho eliphethwe nguwe</li>
+        <li><strong>Yonke imithi oyiphuzayo njengamanje</strong> — kufaka namabhokisi/amaphakethe, ukuze umhlengikazi abone ukuthi uphuzani nokuthi kusele kangakanani</li>
+        <li><strong>Amarekhodi okuzihlola ekhaya</strong> — uma uhlola umfutho wegazi noma ushukela ekhaya, phatha izibalo</li>
+        <li><strong>Uhlu lwezimpawu noma okukukhathazayo</strong> — kubhale phansi ngaphambili ukuze ungakhohlwa</li>
+        <li><strong>Incwadi kamazisi</strong> — ingase idingeke ukuze kutholakale ifayela lakho</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Umjikelezo wemithi yesifo esingamahlalakhona</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-bottom: 12px;">
+        Iziguli ezinezifo ezingamahlalakhona zilandela umjikelezo olindelekile emtholampilo:
+      </p>
+      <div style="display: grid; gap: 12px;">
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 36px; height: 36px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-dark); font-size: 0.9rem;">1</div>
+          <div>
+            <strong>Ukulanda kwanyanga zonke/njalo ngezinyanga ezimbili</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 2px; line-height: 1.5;">Landa imithi yakho eselungisiwe. Ukuhlolwa okusheshayo kwezimpawu zomzimba (isisindo, umfutho wegazi). Ungena uphume ngaphansi kwehora ngosuku oluhle.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 36px; height: 36px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-dark); font-size: 0.9rem;">2</div>
+          <div>
+            <strong>Ukubuyekezwa kwezinyanga ezintathu (njalo ngezinyanga ezingu-3)</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 2px; line-height: 1.5;">Ukuvakasha okude. Umhlengikazi ubuyekeza isifo sakho, ahlole ukulandela ukwelashwa, ashintshe umuthi uma kudingeka. Kungathathwa igazi lokuhlolwa.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="flex-shrink: 0; width: 36px; height: 36px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-dark); font-size: 0.9rem;">3</div>
+          <div>
+            <strong>Ukubuyekezwa kwaminyaka yonke (kanye ngonyaka)</strong>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 2px; line-height: 1.5;">Ukuhlolwa okuphelele. Ukuhlolwa kwegazi okubanzi (ushukela ungakadli, i-HbA1c, ama-lipid, ukusebenza kwezinso, ukusebenza kwesibindi). Ukuthunyelwa ekuhlolweni kwamehlo kwabanoshukela. Ukuhlolwa kwezinyawo. Ukuvuselelwa kwencwadi yemithi yonyaka.</p>
+          </div>
+        </div>
+      </div>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 16px;">
+        Uma usuzinzile, ungabhalisela <a href={zu('/guides/ccmdd-chronic-meds-pickup')}>i-CCMDD</a> ukuze ulande imithi endaweni yokulanda elula esikhundleni somtholampilo. Usabuyela emtholampilo ukuze ubuyekezwe njalo ngezinyanga ezintathu naminyaka yonke.
+      </p>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--primary-dark);">Ukulandela ukwelashwa — kungani kubalulekile</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7;">
+        Imithi yesifo esingamahlalakhona isebenza kuphela uma uyiphuza njalo. Ukweqa imithamo noma ukuyeka ukwelashwa kuholela ezifweni ezingalawuleki, ekungeniseni esibhedlela, nasezinkingeni ebezingavinjelwa (isifo sohlangothi, ukufa kwezinso, ukunqunywa kwesitho kwabanoshukela, izinkanuko). ENingizimu Afrika, ukungalandeli ukwelashwa yiyona mbangela enkulu yokuthi iziguli ezinezifo ezingamahlalakhona zigcine zisesibhedlela.
+      </p>
+      <p style="font-size: 0.95rem; line-height: 1.7; margin-top: 8px;">
+        Uma unenkinga yokuphuza imithi yakho — imiphumela emibi yomuthi, ukukhohlwa, izindleko zokuya emtholampilo, ukuzizwa ukahle bese ucabanga ukuthi awusayidingi — <strong>tshela umhlengikazi wakho</strong>. Bangenza uhlelo lwakho lwemithi lube lula, bashintshele kumuthi ongakuhluphi kangako, bakubhalisele i-CCMDD, noma bakuxhumanise nomngane wokwelashwa. Into embi kunazo zonke ongayenza ukuyeka uthule.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Kusho Ukuthini "Ukuzinza" — Okufunekayo Ekwelashweni</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">Umtholampilo wakho ukubiza ngokuthi uzinzile (ufanelekela i-CCMDD, uvakasha kancane) uma uhlangabezana nezinga elithile elifunekayo. Uma ungaphandle kwalelo zinga, lindela ukuvakasha okuvamile nezinguquko emithini.</p>
+      <div style="overflow-x: auto; margin-bottom: 16px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+          <thead><tr style="border-bottom: 2px solid var(--border);">
+            <th style="text-align: left; padding: 10px 8px;">Isifo</th>
+            <th style="text-align: left; padding: 10px 8px;">Izinga Lokuzinza</th>
+            <th style="text-align: left; padding: 10px 8px;">Ngaphandle Kwezinga — Okwenziwayo</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Umfutho wegazi ophakeme</td><td style="padding: 8px;">Umfutho wegazi uhlala u&lt;140/90</td><td style="padding: 8px;">Umthamo womuthi uyanyuswa, kwengezwa omunye umuthi, kuhlolwe futhi emavikini angu-4</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Ushukela (Type 2)</td><td style="padding: 8px;">I-HbA1c &lt;7%, ushukela ungakadli 4-7 mmol/L</td><td style="padding: 8px;">Umthamo we-metformin uyanyuswa, kwengezwa i-glimepiride/insulin, kuthunyelwe kudokotela wokudla</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">I-HIV (ku-ART)</td><td style="padding: 8px;">Izinga legciwane egazini alitholakali (&lt;50 copies/mL)</td><td style="padding: 8px;">Ukwelulekwa okwengeziwe ngokulandela ukwelashwa izinyanga ezingu-3, bese kuhlolwa futhi — uma lisatholakala, kushintshelwa emithini yesigaba sesibili</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">Isithuthwane</td><td style="padding: 8px;">Awunazo izinkanuko izinyanga ezingu-12 nangaphezulu</td><td style="padding: 8px;">Umthamo uyalungiswa, kwengezwa omunye umuthi, kubuyekeze udokotela</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px;">I-asthma</td><td style="padding: 8px;">&lt;2 ukusetshenziswa kwe-inhaler yosizo ngeviki</td><td style="padding: 8px;">Kunyuselwa ku-inhaled corticosteroid + LABA, kubuyekezwe indlela yokusebenzisa</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted);">Ukuhlolwa kwegazi kwenziwa minyaka yonke (noma ngokuvamile uma ungazinzile): i-HbA1c ne-creatinine kushukela, i-urea/creatinine/potassium kumfutho wegazi ophakeme, izinga legciwane egazini kwi-HIV. Lokhu kumahhala ezikhungweni zomphakathi — akudingeki uye e-lab ezimele.</p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Ukuxubana Kwemithi Okufanele Ukwazi</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">Iziguli eziningi ezinezifo ezingamahlalakhona ziphuza imithi eminingi. Ukuxubana okuthile kudinga ukushintshwa kwezikhathi noma ukuhlolwa.</p>
+      <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Ama-ARV + ukwelashwa kwe-TB</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">I-rifampicin yehlisa amazinga e-efavirenz ne-dolutegravir. Umthamo we-dolutegravir uyaphindwa kabili ngesikhathi sokwelashwa kwe-TB. Ungalokothi ukushintshe lokhu wena — umtholampilo uyakulawula ukuxubana.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">I-metformin + izinkinga zezinso</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">I-metformin kumele iyekwe uma i-creatinine ikhuphuka ngaphezu kwezinga elithile. Ukuhlolwa kwegazi kwaminyaka yonke kuyakubona lokhu. Bika isicanucanu esiqhubekayo noma ubuhlungu bemisipha.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Ama-ACE inhibitor + i-potassium</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">I-enalapril (umuthi ovamile womfutho wegazi) ikhuphula amazinga e-potassium. Ungaphuzi ama-potassium supplement noma osawoti abangenamsoco (KCl) ngaphandle kokutshela umhlengikazi.</p>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Isithuthwane + izindlela zokuvimbela ukukhulelwa</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">I-carbamazepine ne-phenytoin zehlisa ukusebenza kwephilisi. Umjovo (Depo-Provera) noma i-IUD yethusi kungcono. Bheka <a href={zu('/guides/family-planning-contraception')}>umhlahlandlela wethu wezindlela zokuvimbela ukukhulelwa</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Thola umtholampilo wemithi yesifo esingamahlalakhona</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Izikhungo ezingu-{chronicClinics.length} ohlwini lwethu zinikeza izinsizakalo zemithi yesifo esingamahlalakhona.
+      </p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="/services/chronic-medication" class="btn btn--primary" style="font-size: 0.9rem;">Bheka imitholampilo yemithi yesifo esingamahlalakhona</a>
+        <a href={zu('/guides/ccmdd-chronic-meds-pickup')} class="btn btn--outline" style="font-size: 0.9rem;">Umhlahlandlela wokulanda we-CCMDD</a>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Njalo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Imithombo:</strong> Primary Care 101 guideline (NDoH). Essential Drugs List — Primary Healthcare. South African Hypertension Practice Guideline (2019). SEMDSA Type 2 Diabetes Guidelines (2023). South African Epilepsy Guidelines (ILAE). Global Asthma Report — South Africa chapter.
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Imihlahlandlela Ehlobene</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={zu('/guides/ccmdd-chronic-meds-pickup')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukulanda Imithi Yesifo Esingamahlalakhona Nge-CCMDD</a>
+      <a href={zu('/guides/how-to-get-arvs')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ungawathola Kanjani Ama-ARV</a>
+      <a href={zu('/guides/hospital-referral-system')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Uhlelo Lokuthunyelwa Esibhedlela</a>
+      <a href={zu('/guides/find-nearest-clinic')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Thola Umtholampilo Oseduze Nawe</a>
+      </div>
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Thola Imitholampilo Ngesifundazwe</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,134 @@
+---
+// isiZulu translation of src/pages/guides/index.astro (issue #2).
+import Base from '../../../layouts/Base.astro';
+import { localePath } from '../../../i18n/config';
+
+const zu = (path: string) => localePath(path, 'zu');
+
+const guides = [
+  {
+    title: 'Ungawuthola Kanjani Umtholampilo Oseduze Nawe',
+    slug: 'find-nearest-clinic',
+    description: 'Umhlahlandlela wesinyathelo nesinyathelo wokuthola umtholampilo womphakathi ofanele, okufanele ukuphathe, okulindelekile, namathiphu ezindaweni zasemakhaya.',
+    category: 'Okujwayelekile',
+  },
+  {
+    title: 'Ungawathola Kanjani Ama-ARV Emtholampilo Womphakathi',
+    slug: 'how-to-get-arvs',
+    description: 'Umhlahlandlela wesinyathelo nesinyathelo wokuqala ukwelashwa ngama-ARV (antiretrovirals) emtholampilo kahulumeni, kusukela ekuhloleni kuya ekwelashweni kwempilo yonke.',
+    category: 'I-HIV / Ama-ARV',
+  },
+  {
+    title: 'Ukwelashwa Kwe-TB — Okufanele Ukulindele',
+    slug: 'tb-treatment-what-to-expect',
+    description: 'Uhambo lonke lokwelashwa kwe-TB: ukutholakala kwesifo, i-DOTS, i-TB emelana nemithi, nokuthi ungabambelela kanjani izinyanga ezingu-6.',
+    category: 'I-TB',
+  },
+  {
+    title: 'Ukunakekelwa Kokubeletha Mahhala Ezibhedlela Zomphakathi',
+    slug: 'free-maternity-care',
+    description: 'Konke abesifazane abakhulelwe abangakuthola mahhala: ukuvakasha ngaphambi kokubeletha, ukubeletha, ukunakekelwa ngemva kokubeletha, nokufanele ukuphathe.',
+    category: 'Ukubeletha',
+  },
+  {
+    title: 'I-CCMDD — Ukulanda Imithi Yesifo Esingamahlalakhona Ngaphandle Komugqa',
+    slug: 'ccmdd-chronic-meds-pickup',
+    description: 'Ukuthi lusebenza kanjani uhlelo lwe-Central Chronic Medicine: ubani ofanelekayo, izindawo zokulanda, nokuthi ubhalisa kanjani.',
+    category: 'Imithi engamahlalakhona',
+  },
+  {
+    title: 'Izinsizakalo Zempilo Yengqondo Emitholampilo Yomphakathi',
+    slug: 'mental-health-services',
+    description: 'Ungaluthola kuphi usizo ngokucindezeleka engqondweni, ukukhathazeka, i-PTSD, nokusetshenziswa kabi kwezidakamizwa ohlelweni lwezempilo lomphakathi.',
+    category: 'Impilo yengqondo',
+  },
+  {
+    title: 'Ishejuli Yemijovo Yezingane (ENingizimu Afrika)',
+    slug: 'child-immunisation-schedule',
+    description: 'Ishejuli yonke yokugoma ye-EPI-SA kusukela ekuzalweni kuya eminyakeni engu-12, kufaka nemijovo yokufica namanye amakhasi okuya kuwo.',
+    category: 'Impilo yezingane',
+  },
+  {
+    title: 'Okufanele Ukwenze Esimweni Esiphuthumayo Sezempilo',
+    slug: 'medical-emergency-guide',
+    description: 'Ukuthi nini uya emtholampilo kunokuya ekamelweni leziphuthumayo, ungayibiza kanjani i-ambulensi, nokwenzekayo lapho.',
+    category: 'Isimo esiphuthumayo',
+  },
+  {
+    title: 'Ukusebenza Kokuthunyelwa Esibhedlela ENingizimu Afrika',
+    slug: 'hospital-referral-system',
+    description: 'Uchungechunge lokuthunyelwa kusukela emtholampilo kuya esibhedlela: nini uyidinga, uyithola kanjani, nokwenzekayo uma uyeqa.',
+    category: 'Okujwayelekile',
+  },
+  {
+    title: 'Ukuhlela Umndeni Nezindlela Zokuvimbela Ukukhulelwa',
+    slug: 'family-planning-contraception',
+    description: 'Zonke izindlela zokuvimbela ukukhulelwa ezitholakala mahhala: imijovo, i-implant, iphilisi, i-IUD, amakhondomu. Abasha bangazithola ngaphandle kwemvume yabazali.',
+    category: 'Ukuhlela umndeni',
+  },
+  {
+    title: 'Ukunakekelwa Kwamazinyo Emitholampilo Yomphakathi',
+    slug: 'dental-care-public-clinics',
+    description: 'Yiziphi izinsizakalo zamazinyo ezitholakalayo, uya kuphi, ukudambisa ubuhlungu obuphuthumayo, neqiniso ngesikhathi sokulinda.',
+    category: 'Amazinyo',
+  },
+  {
+    title: 'Ukuhlolela I-HIV — Kuphi, Kanjani & Okufanele Ukulindele',
+    slug: 'hiv-testing-guide',
+    description: 'Ukuhlolwa okusheshayo, ukuhlolwa ngokungaziwa, amakhithi okuzihlola, ukuvikela nge-PrEP, nokwenzekayo uma utholakala unegciwane.',
+    category: 'I-HIV / Ama-ARV',
+  },
+  {
+    title: 'Imithi Yesifo Esingamahlalakhona Emitholampilo Yomphakathi',
+    slug: 'chronic-medication-management',
+    description: 'Ukuthi imitholampilo iwuphatha kanjani umfutho wegazi ophezulu, ushukela, isithuthwane, umbefu, nokucindezeleka engqondweni. Imithi nokulandelelwa mahhala.',
+    category: 'Imithi engamahlalakhona',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Imihlahlandlela Yezempilo — Clinic Finder SA',
+  description: 'Imihlahlandlela elula ngokusebenzisa uhlelo lwezempilo lomphakathi lwaseNingizimu Afrika: ama-ARV, i-TB, ukubeletha, imithi engamahlalakhona, izimo eziphuthumayo, imijovo.',
+  url: 'https://clinicfinder.co.za/zu/guides',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: guides.map((g, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `https://clinicfinder.co.za/zu/guides/${g.slug}`,
+      name: g.title,
+    })),
+  },
+};
+---
+<Base
+  title="Imihlahlandlela Yezempilo — Clinic Finder SA"
+  description="Imihlahlandlela elula ngohlelo lwezempilo lomphakathi lwaseNingizimu Afrika. Ungawathola kanjani ama-ARV, ukwelashwa kwe-TB, ukunakekelwa kokubeletha, imithi engamahlalakhona, izinsizakalo zempilo yengqondo, nokunye."
+  jsonLd={[jsonLd, { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Imihlahlandlela' }] }]}
+>
+  <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zu('/')}>Ikhasi Lokuqala</a> &rsaquo; Imihlahlandlela
+    </nav>
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Imihlahlandlela Yezempilo</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; max-width: 640px; line-height: 1.6;">
+      Imihlahlandlela elula ngokusebenzisa uhlelo lwezempilo lomphakathi lwaseNingizimu Afrika. Awekho amagama anzima ezokwelapha, akudingeki ukubhalisa — imininingwane ecacile nje ngalokho ongakuthola mahhala nokuthi ungakuthola kanjani.
+    </p>
+
+    <div style="display: grid; gap: 16px;">
+      {guides.map(g => (
+        <a href={zu(`/guides/${g.slug}`)} class="card" style="text-decoration: none; color: var(--text);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+            <div>
+              <strong style="font-size: 1.05rem;">{g.title}</strong>
+              <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">{g.description}</p>
+            </div>
+            <span class="chip" style="flex-shrink: 0;">{g.category}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

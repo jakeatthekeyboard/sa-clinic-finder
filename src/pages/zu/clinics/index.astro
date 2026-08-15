@@ -1,0 +1,135 @@
+---
+// isiZulu translation of src/pages/clinics/index.astro (issue #2).
+// Province names and facility-type labels come from shared data and stay in English —
+// they are proper nouns / identifiers a reader repeats at a clinic counter.
+import Base from '../../../layouts/Base.astro';
+import { facilities, PROVINCES, SERVICE_MAP, provinceSlug, typeLabel } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const zu = (path: string) => localePath(path, 'zu');
+
+const totalFacilities = facilities.filter(f => f.province !== '').length;
+const total24h = facilities.filter(f => f.operating_hours?.is_24_hour).length;
+
+const typeBreakdown = facilities.reduce((acc, f) => {
+  if (f.province) {
+    acc[f.type] = (acc[f.type] || 0) + 1;
+  }
+  return acc;
+}, {} as Record<string, number>);
+
+const provinceStats = PROVINCES.map(p => {
+  const pFacilities = facilities.filter(f => f.province === p);
+  const p24h = pFacilities.filter(f => f.operating_hours?.is_24_hour).length;
+  return {
+    name: p,
+    slug: provinceSlug(p),
+    count: pFacilities.length,
+    twentyFourHour: p24h,
+  };
+});
+
+const faqs = [
+  {
+    q: 'Luhlelwe kanjani uhlelo lwezempilo lomphakathi laseNingizimu Afrika?',
+    a: `Uhlelo lulandela uhla lokuthunyelwa: imitholampilo eyisisekelo (${typeBreakdown['clinic'] || 0}) ibhekana nokunakekelwa okujwayelekile, izikhungo zezempilo zomphakathi (${typeBreakdown['community_health_centre'] || 0}) zinikeza amahora elulekiwe nezinqubo ezincane, izibhedlela zesifunda (${typeBreakdown['district_hospital'] || 0}) zinikeza ukuhlinzwa nokwelashwa okuphuthumayo, izibhedlela zesifunda esikhulu (${typeBreakdown['regional_hospital'] || 0}) zinochwepheshe abahlala khona, futhi izibhedlela ezinkulu (${typeBreakdown['tertiary_hospital'] || 0}) zibhekana namacala anzima adinga ochwepheshe abakhethekile. Uqala ezingeni lomtholampilo bese uthunyelwa phezulu uma kudingeka — ngaphandle kwezimo eziphuthumayo, lapho ungaya khona ngqo kunoma yimuphi umnyango weziphuthumayo wesibhedlela.`,
+  },
+  {
+    q: 'Ingabe ukunakekelwa kwezempilo komphakathi eNingizimu Afrika kumahhala ngempela?',
+    a: 'Ukunakekelwa kwezempilo okuyisisekelo emitholampilo kumahhala kuwo wonke umuntu — izakhamuzi, abantu abahlala unomphela, nabantu bakwamanye amazwe. Ukunakekelwa esibhedlela kuncike kokungenayo: uma uhola ngaphansi kwenani elithile (elilungiswa minyaka yonke), awukhokhi lutho. Ngaphezu kwaleyo mikhawulo, izindleko zibekwa ngokwe-Uniform Patient Fee Schedule (UPFS). Ukwelashwa okuphuthumayo kuhlala kumahhala noma ungenamalini enjani — leli yilungelo lomthethosisekelo ngaphansi kweSigaba 27(3). Izingane ezingaphansi kweminyaka engu-6 nabesifazane abakhulelwe bathola ukunakekelwa mahhala kuwo wonke amazinga.',
+  },
+  {
+    q: 'Uyini umehluko phakathi komtholampilo nesibhedlela?',
+    a: 'Imitholampilo yizikhungo zokunakekelwa okuyisisekelo eziqhutshwa abahlengikazi, ezingazilalisi iziguli ubusuku. Ibhekana nemijovo, imithi yesifo esingamahlalakhona, ukwelashwa kwe-HIV/TB, ukuhlela umndeni, nokulimala okuncane. Izibhedlela zinodokotela, amakamelo okuhlinza, i-X-ray, amalabhoratri, futhi zingazilalisa iziguli. Uma umtholampilo ungakwazi ukubhekana nesimo sakho, uzokunika incwadi yokuthunyelwa esibhedlela esiseduze.',
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
+---
+<Base
+  title="Imitholampilo Yomphakathi Ngesifundazwe — Clinic Finder SA"
+  description={`Bheka imitholampilo nezibhedlela zomphakathi ezingu-${totalFacilities} kuzo zonke izifundazwe ezingu-9 zaseNingizimu Afrika. Thola izikhungo ezinama-ARV, ukubeletha, ukwelashwa kwe-TB, nezinsizakalo eziphuthumayo.`}
+  jsonLd={[faqJsonLd, { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Izifundazwe' }] }]}
+>
+  <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zu('/')}>Ikhasi Lokuqala</a> &rsaquo; Izifundazwe
+    </nav>
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Imitholampilo Yomphakathi Ngesifundazwe</h1>
+    <p style="color: var(--text-muted); margin-bottom: 24px; max-width: 640px; line-height: 1.6;">
+      Uhlelo lwezempilo lomphakathi lwaseNingizimu Afrika lusiza cishe amaphesenti angu-84% abantu ngezikhungo ezingu-{totalFacilities.toLocaleString()} kuzo zonke izifundazwe ezingu-9. Kulezi, ezingu-{total24h} zisebenza amahora angu-24. Khetha isifundazwe ngezansi ubone yonke imitholampilo, izikhungo zezempilo zomphakathi, nezibhedlela kuleyo ndawo — kanye nemininingwane yezinsizakalo, amathiphu ezempilo, nabantu ongabashayela ezimweni eziphuthumayo.
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 32px;">
+      {provinceStats.map(p => (
+        <a href={`/clinics/${p.slug}`} class="card" style="text-decoration: none; color: var(--text);">
+          <strong style="font-size: 1.1rem;">{p.name}</strong>
+          <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
+            izikhungo ezingu-{p.count} · ezingu-{p.twentyFourHour} zivulwe amahora angu-24
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 24px; margin-bottom: 32px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--primary-dark);">Uhla lokuthunyelwa — uya kuphi kuqala</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px;">
+        Uhlelo lwezempilo lomphakathi lwakhelwe ukuthi iziguli ziqale ezingeni eliphansi elifanele lokunakekelwa bese zithunyelwa phezulu kuphela lapho kudingeka. Ukuya ngqo esibhedlela ngento umtholampilo ongakwazi ukuyenza kumosha amandla esibhedlela ayivelakancane futhi kungenzeka ubuyiswe ngoba ungenayo incwadi yokuthunyelwa.
+      </p>
+      <ol style="padding-left: 20px; font-size: 0.9rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Umtholampilo</strong> ({typeBreakdown['clinic'] || 0} eNingizimu Afrika) — Indawo yakho yokuqala kukho konke ukunakekelwa okungaphuthumi. Kuqhutshwa abahlengikazi. Awulali khona.</li>
+        <li><strong>Isikhungo Sezempilo Somphakathi</strong> ({typeBreakdown['community_health_centre'] || 0}) — Umtholampilo owelulekiwe onezinsizakalo zamahora angu-24, ukubeletha okujwayelekile, nezinqubo ezincane.</li>
+        <li><strong>Isibhedlela Sesifunda</strong> ({typeBreakdown['district_hospital'] || 0}) — Izinga lokuqala lesibhedlela. Ukuhlinzwa, i-X-ray, ilabhoratri, umnyango weziphuthumayo, nokulaliswa.</li>
+        <li><strong>Isibhedlela Sesifunda Esikhulu</strong> ({typeBreakdown['regional_hospital'] || 0}) — Ochwepheshe abahlala khona. I-CT scan, ukuhlinzwa okunzima, i-ICU, nokubeletha okunobungozi obukhulu.</li>
+        <li><strong>Isibhedlela Esikhulu</strong> ({typeBreakdown['tertiary_hospital'] || 0}) — Ukuhlinzwa kobuchopho, ukuhlinzwa kwenhliziyo, ukufakelwa izitho zomzimba, nokwelashwa ngemisebe. Ngokuthunyelwa kuphela.</li>
+      </ol>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">
+        Okuhlukile: esimweni esiphuthumayo sezempilo, yiya ngqo esibhedlela esiseduze esinomnyango weziphuthumayo ovulekile amahora angu-24. Ayidingeki incwadi yokuthunyelwa. Shayela u-<a href="tel:10177">10177</a> ucele i-ambulensi noma u-<a href="tel:112">112</a> kunoma yiluphi ucingo lwesandla (lusebenza ngisho ungenayo i-airtime).
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 16px;">Ukwehlukaniswa kwezikhungo kuzwelonke</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+        {Object.entries(typeBreakdown).sort((a, b) => b[1] - a[1]).map(([type, count]) => (
+          <span class="chip chip--type">{typeLabel(type)} ({count})</span>
+        ))}
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+        Imininingwane ithathwe ku-OpenStreetMap nakwi-Humanitarian Data Exchange. Izikhungo ezimakwe njengezisebenza amahora angu-24 ziqinisekisiwe ngokubheka uhlu olusemthethweni olutholakalayo. Ukutholakala kwezinsizakalo kusekelwe kuhlobo lwesikhungo nasemininingwaneni yesifundazwe — qinisekisa izinsizakalo ezithile ngokushayela isikhungo ngaphambi kokuvakasha.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 16px;">Imibuzo Ebuzwa Njalo</h2>
+      {faqs.map(f => (
+        <details style="border-bottom: 1px solid var(--border); padding: 12px 0;">
+          <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem;">{f.q}</summary>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">{f.a}</p>
+        </details>
+      ))}
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Noma thola ngensizakalo</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+        Ufuna insizakalo ethile esikhundleni sesifundazwe? Bheka izikhungo ngalokho ezikunikezayo:
+      </p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        {Object.entries(SERVICE_MAP).map(([key, svc]) => (
+          <a href={`/services/${svc.slug}`} class="chip" style="text-decoration: none; font-size: 0.85rem; padding: 6px 12px;">
+            {svc.plain}
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,230 @@
+---
+// isiZulu translation of src/pages/guides/family-planning-contraception.astro (issue #2).
+// Sentence-for-sentence. Locale comes off the URL — no locale prop is passed.
+import Base from '../../../layouts/Base.astro';
+import { facilities } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const fpClinics = facilities.filter(f => f.services.family_planning);
+
+const zu = (p: string) => localePath(p, 'zu');
+
+const methods = [
+  { name: 'Umjovo (Depo-Provera / Nur-Isterate)', duration: 'Njalo ezinyangeni ezingu-2-3', how: 'Umjovo emtholampilo. I-Depo-Provera njalo ezinyangeni ezingu-3, i-Nur-Isterate njalo ezinyangeni ezingu-2.', pros: 'Yindlela edume kunazo zonke eNingizimu Afrika. Iyimfihlo. Alikho iphilisi lansuku zonke. Isebenza kakhulu (99.7%).', cons: 'Ingabangela ukopha okungahleliwe, ukukhuluphala. Ukubuya kokukwazi ukukhulelwa kuthatha izinyanga ezingu-6-12 ngemva kokuyeka. Kufanele ubuyele emtholampilo kuwo wonke umjovo.' },
+  { name: 'Iphilisi lokuvimbela ukukhulelwa (eliphuzwayo)', duration: 'Nsuku zonke', how: 'Phuza iphilisi elilodwa ngesikhathi esifanayo nsuku zonke. Amaphilisi angu-21 asebenzayo + angu-7 angasebenzi noma amaphakethe aqhubekayo.', pros: 'Kulula ukuqala nokuyeka. Lingasiza ezindunini nasebuhlungwini besikhathi senyanga. Ukukwazi ukukhulelwa kubuya ngokushesha.', cons: 'Kufanele ukhumbule nsuku zonke. Alisebenzi kangako uma uliphuthelwa (91% ekusetshenzisweni okujwayelekile). Alivikeli ezifweni ezithathelwana ngokocansi (STIs).' },
+  { name: 'Isitshalo esingaphansi kwesikhumba (Implanon NXT)', duration: 'Iminyaka emi-3', how: 'Induku encane efakwa ngaphansi kwesikhumba sengalo yakho ephezulu. Kuthatha imizuzu emi-2. Kusetshenziswa umuthi wokundikindiza leyo ndawo.', pros: 'Yindlela esebenza kunazo zonke etholakalayo (99.95%). Akukho okufanele ukukhumbule iminyaka emi-3. Imahhala emitholampilo yomphakathi kusukela ngo-2014.', cons: 'Ukopha okungahleliwe kuvamile ezinyangeni ezingu-6 zokuqala. Kudinga umhlengikazi oqeqeshiwe ukuze afake futhi akhiphe. Abanye abesifazane bathi imizwa iyashintsha.' },
+  { name: 'I-IUD — yethusi (Copper-T)', duration: 'Iminyaka engu-5-10', how: 'Ithuluzi elincane elimise okuka-T elifakwa esibelethweni umhlengikazi noma udokotela oqeqeshiwe.', pros: 'Awekho ama-hormone. Isebenza kuze kufike eminyakeni engu-10. Ukukwazi ukukhulelwa kubuya ngokushesha ngemva kokukhishwa.', cons: 'Ingabangela isikhathi senyanga esinegazi eliningi. Ukufakwa kungaba buhlungu. Kudinga umuntu oqeqeshiwe — akuyona yonke imitholampilo eyinikezayo.' },
+  { name: 'Ikhondomu labesilisa', duration: 'Lisetshenziswa kanye', how: 'Limahhala kuyo yonke imitholampilo yomphakathi, ezikhungweni zezempilo zomphakathi, ezibhedlela, nasezindaweni eziningi zomphakathi.', pros: 'Ukuphela kwendlela evimbela izifo ezithathelwana ngokocansi (STIs) ne-HIV. Ayidingeki incwadi kadokotela. Limahhala futhi litholakala yonke indawo.', cons: 'Kufanele lisetshenziswe ngendlela efanele njalo. Abanye abantu bathi awakhululekile kangako. Ukusebenza kwawo kungu-85% ekusetshenzisweni okujwayelekile.' },
+  { name: 'Ikhondomu labesifazane', duration: 'Lisetshenziswa kanye', how: 'Litholakala mahhala kweminye imitholampilo. Lingafakwa kuze kube ngamahora angu-8 ngaphambi kocansi.', pros: 'Lilawulwa owesifazane. Livikela ezifweni ezithathelwana ngokocansi (STIs). Lingasetshenziswa uma une-allergy ku-latex (lenziwe nge-nitrile).', cons: 'Alitholakali kabanzi njengamakhondomu abesilisa. Kudinga ukuzijwayeza ukuze ulifake ngendlela efanele.' },
+  { name: 'Ukuvimbela ukukhulelwa okuphuthumayo (iphilisi lakusasa ekuseni)', duration: 'Umthamo owodwa phakathi kwamahora angu-72', how: 'Litholakala kunoma yimuphi umtholampilo womphakathi noma ekhemisi. Emitholampilo, limahhala. Emakhemisi, libiza u-R30-R80.', pros: 'Lingavimbela ukukhulelwa ngemva kocansi olungavikelekile. Ayidingeki incwadi kadokotela emakhemisi.', cons: 'Alenzelwe ukusetshenziswa njalo. Alisebenzi kangako uma ulinda isikhathi eside (95% phakathi kwama-24h, 58% ngama-72h). Lingabangela isicanucanu.' },
+];
+
+const faqs = [
+  {
+    question: 'Ingabe intsha ingazithola izindlela zokuvimbela ukukhulelwa ngaphandle kwemvume yabazali?',
+    answer: 'Yebo. Ngaphansi kwe-Children\'s Act (Isigaba 134), noma yimuphi umntwana oneminyaka engu-12 nangaphezulu angazithola izindlela zokuvimbela ukukhulelwa neseluleko ngazo ngaphandle kwemvume yabazali. Lokhu kufaka amakhondomu, iphilisi, umjovo, nezitshalo. Umtholampilo awukwazi ukwazisa abazali noma udinge imvume yabazali. Lo mthetho ukhona ngoba ukukhulelwa kwentsha kuyinkinga enkulu yezempilo neyemfundo eNingizimu Afrika — ukuthola izindlela zokuvimbela ukukhulelwa kusindisa izimpilo.',
+  },
+  {
+    question: 'Iyiphi indlela engingcono kimi?',
+    answer: 'Ayikho indlela eyodwa "engcono kunazo zonke" — kuncike emzimbeni wakho, endleleni ophila ngayo, nasezinhlelweni zakho. Isitshalo (Implanon) yiso esisebenza kunazo zonke futhi asidingi lutho olwenziwa nsuku zonke, kodwa abanye abesifazane abakuthandi ukopha okungahleliwe. Imijovo yiyona edume kunazo zonke eNingizimu Afrika ngoba iyimfihlo futhi idinga kuphela ukuvakashela umtholampilo njalo ezinyangeni ezingu-2-3. Iphilisi likunika ukulawula kodwa lidinga ukuzikhuza nsuku zonke. Amakhondomu ukuphela kwendlela evimbela izifo ezithathelwana ngokocansi (STIs). Khuluma nomhlengikazi womtholampilo — uzokusiza ukhethe ngokwesimo sakho.',
+  },
+  {
+    question: 'Ingabe ukuhlela umndeni kumahhala ngempela?',
+    answer: 'Yebo. Zonke izindlela zokuvimbela ukukhulelwa ezibalwe ngenhla zimahhala ezikhungweni zezempilo zomphakathi, kufaka nesitshalo (Implanon), esasizobiza u-R3,000-R5,000 kudokotela ozimele. Amakhondomu nawo amahhala emitholampilo, ezibhedlela, emanyuvesi, nasezindaweni eziningi zomphakathi. Okuwukuphela kokuhlukile ukuvimbela ukukhulelwa okuphuthumayo ekhemisi elizimele (R30-R80) — kodwa kumahhala emitholampilo yomphakathi.',
+  },
+  {
+    question: 'Ingabe abesilisa bangazithola izinsizakalo zokuhlela umndeni?',
+    answer: 'Yebo. Abesilisa bangathola: amakhondomu amahhala kunoma yimuphi umtholampilo, ukusoka ngokuzithandela ngokwezokwelapha (VMMC) okunciphisa ingcuphe ye-HIV ngo-60%, ukuthunyelwa ukuze bathenwe (vasectomy — kwaphakade, kudinga ukwelulekwa nemvume), kanye nokuhlolelwa nokwelashwa kwezifo ezithathelwana ngokocansi. Abesilisa bayamukelwa emitholampilo yokuhlela umndeni — le nsizakalo ayenzelwe abesifazane kuphela.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Ukuhlela Umndeni Nezindlela Zokuvimbela Ukukhulelwa Mahhala Emitholampilo Yomphakathi eNingizimu Afrika',
+    description: 'Zonke izindlela zokuvimbela ukukhulelwa ezitholakala mahhala emitholampilo yomphakathi yaseNingizimu Afrika: imijovo, isitshalo, iphilisi, i-IUD, amakhondomu, nokuvimbela okuphuthumayo.',
+    url: 'https://clinicfinder.co.za/zu/guides/family-planning-contraception',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-16',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'Ungazithola Kanjani Izindlela Zokuvimbela Ukukhulelwa Mahhala Emtholampilo Womphakathi eNingizimu Afrika',
+    description: 'Izinyathelo ezingu-5 zokukhetha nokuqala indlela yokuvimbela ukukhulelwa kunoma yisiphi isikhungo sezempilo somphakathi eNingizimu Afrika.',
+    step: [
+      { '@type': 'HowToStep', position: 1, name: 'Yiya kunoma yimuphi umtholampilo womphakathi — akudingeki ukubhukha', text: 'Ngena nje kunoma yimuphi umtholampilo womphakathi noma isikhungo sezempilo somphakathi ngamahora omsebenzi (ngokuvamile ngo-7:30am–4pm). Izinsizakalo zokuhlela umndeni ziyatholakala kuzo zonke izikhungo zomphakathi. Awudingi i-apotimende, incwadi yokuthunyelwa, noma umshwalense wezempilo (medical aid). Intsha eneminyaka engu-12+ ingazithola izindlela zokuvimbela ukukhulelwa ngaphandle kwemvume yabazali (Children\'s Act Isigaba 134).' },
+      { '@type': 'HowToStep', position: 2, name: 'Tshela umhlengikazi ukuthi ufuna ukuhlela umndeni', text: 'Cela insizakalo yokuhlela umndeni. Umhlengikazi uzoxoxa nawe ngezinketho zakho: umjovo (njalo ezinyangeni ezingu-2–3, odume kunazo zonke eNingizimu Afrika), iphilisi lokuvimbela ukukhulelwa (nsuku zonke), isitshalo esingaphansi kwesikhumba (iminyaka emi-3, esisebenza kunazo zonke — 99.95%), i-IUD yethusi (iminyaka engu-5–10, awekho ama-hormone), amakhondomu (amahhala, ukuphela kwendlela evimbela i-STIs), noma ukuvimbela okuphuthumayo (phakathi kwamahora angu-72 ngemva kocansi olungavikelekile).' },
+      { '@type': 'HowToStep', position: 3, name: 'Uzohlolwa impilo okuyisisekelo', text: 'Umhlengikazi uzohlola umfutho wegazi wakho (blood pressure), akubuze ngomlando wakho wezokwelapha (amahlule egazi, ikhanda elibuhlungu kakhulu (migraines), isifo sesibindi), futhi abheke ukuthi isikhathi sakho senyanga sokugcina besinini. Lokhu kuthatha imizuzu engu-5–10. Akudingeki ukuhlolwa kwegazi ukuze uqale izindlela eziningi zokuvimbela ukukhulelwa. Uma ufuna i-IUD noma isitshalo, umhlengikazi angase adinge ukukuhlelela ukuvakasha kwesibili uma umuntu oqeqeshiwe wokufaka engekho ngalolo suku.' },
+      { '@type': 'HowToStep', position: 4, name: 'Qala indlela oyikhethile ngokushesha', text: 'Izindlela eziningi ziqala ngalo lolo suku: umjovo (umjovo owodwa), iphilisi (kukhishwa iphakethe lokuqala), amakhondomu (thatha awadingayo). Ukufakwa kwesitshalo kuthatha imizuzu emi-2 ngaphansi komuthi wokundikindiza leyo ndawo. Ukufakwa kwe-IUD kuthatha imizuzu engu-10–15. Ukuvimbela okuphuthumayo kunikezwa njengomthamo owodwa. Zonke izindlela zimahhala ngokuphelele emitholampilo yomphakathi — kufaka nesitshalo, esibiza u-R3,000–R5,000 kodokotela abazimele.' },
+      { '@type': 'HowToStep', position: 5, name: 'Buya ukuze ulandelelwe njengoba kuhleliwe', text: 'Imijovo: buya njalo ezinyangeni ezingu-2 (Nur-Isterate) noma ezingu-3 (Depo-Provera). Iphilisi: buya uzolanda elinye njalo ezinyangeni ezingu-3–6. Isitshalo: buya kuphela ukuze sikhishwe ngemva kweminyaka emi-3 noma ngaphambi kwalokho uma ufuna ukuyeka. I-IUD: uhlolwa emasontweni angu-6, bese kuba minyaka yonke. Uma uba nemiphumela emibi yomuthi (ukopha okungahleliwe, ukushintsha kwemizwa), buyela emtholampilo — umhlengikazi angalungisa indlela yakho noma akushintshele kwenye.' },
+    ],
+  },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Imihlahlandlela', item: 'https://clinicfinder.co.za/zu/guides' }, { '@type': 'ListItem', position: 3, name: 'Ukuhlela Umndeni Nezindlela Zokuvimbela Ukukhulelwa Mahhala Emitholampilo ...' }] },
+];
+---
+<Base
+  title="Ukuhlela Umndeni Nezindlela Zokuvimbela Ukukhulelwa Mahhala Emitholampilo Yomphakathi — Clinic Finder SA"
+  description="Zonke izindlela zokuvimbela ukukhulelwa ezitholakala mahhala emitholampilo yomphakathi yaseNingizimu Afrika: imijovo, isitshalo, iphilisi, i-IUD, amakhondomu. Ukuzithola kanjani, okulindelekile, namalungelo entsha."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zu('/')}>Ikhasi Lokuqala</a> &rsaquo; <a href={zu('/guides')}>Imihlahlandlela</a> &rsaquo; Ukuhlela Umndeni
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Ukuhlela Umndeni &amp; Izindlela Zokuvimbela Ukukhulelwa Mahhala</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      Wonke umtholampilo womphakathi eNingizimu Afrika unikeza izinsizakalo zokuhlela umndeni mahhala. Ungazithola izindlela zokuvimbela ukukhulelwa ngaphandle komshwalense wezempilo (medical aid), ngaphandle kwencwadi yokuthunyelwa, futhi — uma uneminyaka engu-12 noma ngaphezulu — ngaphandle kwemvume yabazali. Lo mhlahlandlela uchaza yonke indlela etholakalayo nokuthi uyithola kanjani.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--primary-dark);">Izindlela ezitholakala emitholampilo yomphakathi</h2>
+      <div style="display: grid; gap: 16px;">
+        {methods.map(m => (
+          <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+            <strong style="font-size: 1rem; color: var(--primary-dark);">{m.name}</strong>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">Isikhathi: {m.duration}</div>
+            <p style="font-size: 0.9rem; margin-top: 8px; line-height: 1.6;"><strong>Isebenza kanjani:</strong> {m.how}</p>
+            <p style="font-size: 0.9rem; margin-top: 6px; line-height: 1.6; color: var(--primary-dark);"><strong>Okuhle:</strong> {m.pros}</p>
+            <p style="font-size: 0.9rem; margin-top: 6px; line-height: 1.6; color: #856404;"><strong>Okubi:</strong> {m.cons}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ungaqala kanjani</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Ngena nje kunoma yimuphi umtholampilo womphakathi.</strong> Ayidingeki i-apotimende. Tshela umhlengikazi ukuthi ufuna izinsizakalo zokuhlela umndeni.</li>
+        <li><strong>Umhlengikazi uzobuza ngempilo yakho.</strong> Ukuhlolwa komfutho wegazi (blood pressure), ukuhlolelwa ukukhulelwa (ukuqinisekisa ukuthi awukhulelwe njengamanje), umlando omfushane wezokwelapha. Lokhu kuthatha imizuzu engu-10-15.</li>
+        <li><strong>Khethani indlela ndawonye.</strong> Umhlengikazi uzochaza izinketho futhi akusize ukhethe ngokomzimba wakho, indlela ophila ngayo, nezinhlelo zakho. Awuphoqwa — ungashintsha umqondo noma nini.</li>
+        <li><strong>Qala ngokushesha.</strong> Izindlela eziningi zingaqalwa ngalo lolo suku. Isitshalo ne-IUD kudinga umuntu oqeqeshiwe — uma umtholampilo wakho ungenaye, uzokuthumela komunye onaye.</li>
+        <li><strong>Ukulandelelwa.</strong> Umhlengikazi uzokuhlelela ukuhlolwa (ngokuvamile izinyanga ezingu-3 kwizindlela ezintsha) ukuze aqinisekise ukuthi konke kuhamba kahle nokuthi ukhululekile.</li>
+      </ol>
+    </section>
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--primary-dark);">Ukuvikela okuphindwe kabili — kungani amakhondomu esabalulekile</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7;">
+        Izindlela zama-hormone (iphilisi, umjovo, isitshalo, i-IUD) zivimbela ukukhulelwa kodwa <strong>azivikeli ku-HIV noma kwezinye izifo ezithathelwana ngokocansi (STIs)</strong>. ENingizimu Afrika — enezinga eliphezulu kunawo wonke emhlabeni le-HIV — ukusebenzisa ikhondomu kanye nendlela oyikhethile (ukuvikela okuphindwe kabili) kunconywa kakhulu. Amakhondomu amahhala ayatholakala kuwo wonke umtholampilo womphakathi nasezindaweni eziningi zomphakathi.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Imiphumela emibi yomuthi — yikuphi okujwayelekile nokuthi ubuya nini</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 12px;">Iminingi imiphumela emibi yomuthi mincane futhi idlula phakathi kwezinyanga ezingu-3-6. Leli thebula likusiza ubone umehluko phakathi kokuzijwayeza okujwayelekile nesizathu sokubuyela emtholampilo.</p>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; font-size: 0.88rem; border-collapse: collapse; line-height: 1.6;">
+          <thead>
+            <tr style="background: var(--bg-alt); text-align: left;">
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Indlela</th>
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Okujwayelekile ezinyangeni ezingu-3 zokuqala</th>
+              <th style="padding: 10px 12px; border-bottom: 2px solid var(--border);">Buyela emtholampilo uma…</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 10px 12px; font-weight: 600;">Umjovo</td>
+              <td style="padding: 10px 12px;">Ukopha okuncane okungahleliwe, ikhanda elibuhlungu kancane, ukukhuluphala okuncane (1-2 kg)</td>
+              <td style="padding: 10px 12px;">Ungabi nesikhathi senyanga izinyanga ezingu-6+ ngemva kokuyeka, ikhanda elibuhlungu kakhulu, ukukhuluphala ngokuzumayo ngaphezu kuka-5 kg</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 10px 12px; font-weight: 600;">Iphilisi</td>
+              <td style="padding: 10px 12px;">Isicanucanu, amabele abuhlungu, ukopha phakathi nenyanga</td>
+              <td style="padding: 10px 12px;">Isifuba esibuhlungu, ukuvuvukala komlenze, ukushintsha kokubona, ubuhlungu obukhulu besisu</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 10px 12px; font-weight: 600;">Isitshalo</td>
+              <td style="padding: 10px 12px;">Ukopha okungahleliwe (okuvame kakhulu), ingalo enamabala lapho sifakwe khona</td>
+              <td style="padding: 10px 12px;">Ukutheleleka lapho sifakwe khona (ukubomvu, ubovu, ukushisa), induku yesitshalo izwakala igobile noma ihambile, ukopha okukhulu okuqhubekayo ngaphezu kwezinyanga ezingu-6</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 10px 12px; font-weight: 600;">I-IUD yethusi</td>
+              <td style="padding: 10px 12px;">Isikhathi senyanga esinegazi eliningi, ukubamba okuncane</td>
+              <td style="padding: 10px 12px;">Ubuhlungu obukhulu, amanzi anuka kabi, umkhuhlane, uzwa i-IUD emlonyeni wesibeletho noma awusezwa izintambo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">Uma uba nanoma yiziphi izimpawu ezithi "buyela", vakashela umtholampilo noma isikhungo sezempilo somphakathi eseduze nawe ngokushesha — ungalindi i-apotimende ehleliwe. Izimpawu eziphuthumayo (isifuba esibuhlungu, ukuvuvukala komlenze, ukushintsha kokubona) zidinga ukuya esikhungweni esivulekile amahora angu-24.</p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Ukushintsha izindlela</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 12px;">Awuboshelwe endleleni eyodwa naphakade. Uma indlela oyisebenzisayo ikubangela imiphumela emibi yomuthi ongakwazi ukubekezelela, noma isimo sakho sishintsha (uhlela ukukhulelwa maduze, umuntu omusha ophila naye, ukuncelisa ibele), ungashintsha kunoma yikuphi ukuvakasha emtholampilo womphakathi.</p>
+      <ul style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 6px;">
+        <li><strong>Umjovo → iphilisi noma isitshalo:</strong> Qala indlela entsha ngosuku lomjovo olandelayo noma ngaphambi kwalo. Akukho sikhala ekuvikelweni.</li>
+        <li><strong>Iphilisi → umjovo noma isitshalo:</strong> Thola umjovo noma isitshalo usaphuza iphilisi. Sebenzisa amakhondomu izinsuku ezingu-7 uma ushintsha iphakethe lingakapheli.</li>
+        <li><strong>Isitshalo → umjovo noma iphilisi:</strong> Qala indlela entsha ngaphambi kokuba isitshalo sikhishwe, noma usebenzise amakhondomu izinsuku ezingu-7 ngemva kokukhishwa.</li>
+        <li><strong>Noma iyiphi indlela → i-IUD yethusi:</strong> Ingafakwa noma nini phakathi nesikhathi sakho senyanga. Isebenza ngokushesha.</li>
+        <li><strong>Noma iyiphi indlela → amakhondomu kuphela:</strong> Kuhlala kuyinketho. Khumbula: amakhondomu wodwa anezinga lokwehluleka elingu-15% ekusetshenzisweni okujwayelekile ekuvimbeleni ukukhulelwa, ngakho cabanga kahle uma ukuvimbela ukukhulelwa kubalulekile kakhulu.</li>
+      </ul>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">Tshela umhlengikazi ukuthi usebenzisani njengamanje nokuthi umthamo wakho wokugcina ubunini — uzobala indlela ephephe kunazo zonke yokushintsha. Ungayeki indlela ngokuzumayo ngaphandle kwecebo.</p>
+    </section>
+
+    <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Thola umtholampilo onezinsizakalo zokuhlela umndeni</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Izikhungo ezingu-{fpClinics.length} kuhlu lwethu zinikeza ukuhlela umndeni.
+      </p>
+      <a href="/services/family-planning" class="btn btn--primary" style="font-size: 0.9rem;">Bheka imitholampilo yokuhlela umndeni</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Njalo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+      <strong style="color: var(--text);">Imithombo:</strong> National Contraception Clinical Guidelines (NDoH, 2019). Children's Act 38 of 2005, Section 134. National Contraception and Fertility Planning Policy and Service Delivery Guidelines (2012). WHO Medical Eligibility Criteria for Contraceptive Use. South African Demographic and Health Survey 2016.
+    </section>
+      <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Imihlahlandlela Ehlobene</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={zu('/guides/free-maternity-care')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukunakekelwa Kokubeletha Mahhala</a>
+      <a href={zu('/guides/child-immunisation-schedule')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Uhlelo Lwemijovo Yezingane</a>
+      <a href={zu('/guides/hiv-testing-guide')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Umhlahlandlela Wokuhlolelwa I-HIV</a>
+      <a href={zu('/guides/hospital-referral-system')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Uhlelo Lokuthunyelwa Esibhedlela</a>
+      </div>
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Thola Imitholampilo Ngesifundazwe</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

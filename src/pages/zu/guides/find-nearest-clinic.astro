@@ -1,0 +1,297 @@
+---
+// isiZulu translation of src/pages/guides/find-nearest-clinic.astro (issue #2).
+// Sentence-for-sentence. Locale comes off the URL — no locale prop is passed.
+import Base from '../../../layouts/Base.astro';
+import { facilities, PROVINCES, provinceSlug } from '../../../data/helpers';
+import { localePath } from '../../../i18n/config';
+
+const totalFacilities = facilities.length;
+const totalClinics = facilities.filter(f => f.type === 'clinic').length;
+const totalCHC = facilities.filter(f => f.type === 'community_health_centre').length;
+const total24h = facilities.filter(f => f.operating_hours?.is_24_hour).length;
+
+const provinceCounts = PROVINCES.map(p => ({
+  name: p,
+  slug: provinceSlug(p),
+  total: facilities.filter(f => f.province === p).length,
+  clinics: facilities.filter(f => f.province === p && f.type === 'clinic').length,
+}));
+
+const zu = (p: string) => localePath(p, 'zu');
+
+const faqs = [
+  {
+    question: 'Ingabe kumele ngiye emtholampilo oseduze kakhulu nalapho ngihlala khona?',
+    answer: 'Cha. Ungavakashela noma yimuphi umtholampilo womphakathi kunoma yisiphi isifundazwe. Kodwa-ke, kokwelashwa okuqhubekayo (imithi yesifo esingamahlalakhona, ama-ARV, ukunakekelwa kwabakhulelwe) kungcono ukubhalisa esikhungweni esisodwa ukuze umlando wakho wezokwelapha uhlale kufayela elilodwa. Uma uthutha, cela incwadi yokudlulisa.',
+  },
+  {
+    question: 'Kwenzenjani uma kungekho umtholampilo eduze nami?',
+    answer: 'Izindawo eziningi zasemakhaya zinakekelwa ngamaqembu emitholampilo ehambayo evakasha ngezinsuku ezibekiwe — buza ukhansela wewadi lakho noma isisebenzi sezempilo somphakathi ukuze uthole uhlelo. Izibhedlela zesifunda nazo ziyabamukela abantu abangenayo bengenayo i-apotimende ukuze bathole ukunakekelwa okuyisisekelo uma kungekho umtholampilo ofinyeleleka kalula.',
+  },
+  {
+    question: 'Ngingaqonda ngqo esibhedlela esikhundleni somtholampilo?',
+    answer: 'Ezimweni eziphuthumayo, yebo — yiya esibhedlela esiseduze esinesikhungo sezimo eziphuthumayo esisebenza amahora angu-24. Ezintweni ezingaphuthumi, izibhedlela ngokuvamile zizocela incwadi yokuthunyelwa evela emtholampilo. Ukuqala emtholampilo kusho nokuthi isikhathi sokulinda siba sifushane ezintweni ezijwayelekile.',
+  },
+  {
+    question: 'Ngidinga ukubhuka i-apotimende?',
+    answer: 'Iningi lemitholampilo yomphakathi lisebenza ngokuthi ungene nje — ayidingeki i-apotimende. Imitholampilo embalwa yasemadolobheni isiqalile ukusebenzisa uhlelo lwama-apotimende ukunciphisa imigqa. Uma ufika, yiya etafuleni lokwamukela bese uchaza ukuthi uzeleni. Uzohlolwa (kubhekwe ukuthi kuphuthuma kangakanani) bese ubonwa ngokulandelana.',
+  },
+  {
+    question: 'Kubiza malini ukuvakashela umtholampilo womphakathi?',
+    answer: 'Ukunakekelwa okuyisisekelo emitholampilo yomphakathi kumahhala kuwo wonke umuntu — izakhamuzi zaseNingizimu Afrika, abahlala unomphela, ababaleki, nabafuna ukukhoselisa. Lokhu kufaka ukubonana nomelaphi, imithi eyisisekelo, ukulawulwa kwezifo ezingamahlalakhona, imijovo, ukuhlela umndeni, nezinsizakalo ze-TB/HIV. Awusoze ucelwe ukuthi ukhokhe emtholampilo.',
+  },
+  {
+    question: 'Kwenzenjani uma umtholampilo ungangamukeli?',
+    answer: 'Imitholampilo yomphakathi ayivunyelwe ngumthetho ukwenqaba ukukubona. Uma unqatshiwe (ngaphandle kokuyiswa esibhedlela ngenxa yento engaphezu kwamandla omtholampilo), bhala phansi usuku, isikhathi, negama lesisebenzi, bese ukubika emnyangweni wezempilo wesifundazwe noma ushayele umugqa wezikhalazo zezempilo kazwelonke ku-0800 029 999.',
+  },
+];
+
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Uwuthola Kanjani Umtholampilo Womphakathi Oseduze Nawe eNingizimu Afrika',
+  description: 'Thola futhi uvakashele umtholampilo womphakathi eduze nawe. Ukunakekelwa kwezempilo mahhala kubo bonke abaseNingizimu Afrika.',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Sesha ngendawo', text: 'Sebenzisa i-Clinic Finder SA ukusesha ngesifundazwe, ngendawo, noma ngendawo ye-GPS. Hlunga ngezinsizakalo ozidingayo (ama-ARV, ukubeletha, amazinyo).' },
+    { '@type': 'HowToStep', position: 2, name: 'Bheka izinsizakalo namahora', text: 'Buyekeza ikhasi lesikhungo ukuze ubone izinsizakalo ezinikezwayo, amahora okusebenza, nokuthi sisebenza amahora angu-24 yini.' },
+    { '@type': 'HowToStep', position: 3, name: 'Lungisa amaphepha akho', text: 'Phatha umazisi wakho waseNingizimu Afrika noma ipasipoti, ikhadi lomtholampilo (ikhadi eliluhlaza), nanoma yimuphi umuthi owuphuzayo njengamanje. Izingane ezingaphansi kweminyaka emi-5 zidinga incwadi ye-Road to Health.' },
+    { '@type': 'HowToStep', position: 4, name: 'Fika ekuseni', text: 'Iningi lemitholampilo livula ngo-07:00. Fika ngaphambi kokuvulwa ukugwema imigqa emide. Thatha inombolo yomugqa bese ulinda endaweni yokulinda.' },
+    { '@type': 'HowToStep', position: 5, name: 'Bona umhlengikazi noma udokotela', text: 'Uzohlolwa bese ubonwa umhlengikazi noma udokotela. Iziguli ezinezifo ezingamahlalakhona zingase ziye emugqeni okhethekile. Zonke izinsizakalo zimahhala.' },
+  ],
+};
+
+const jsonLd = [
+  howToLd,
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: 'Uwuthola Kanjani Umtholampilo Oseduze Nawe eNingizimu Afrika',
+    description: 'Umhlahlandlela wesinyathelo nesinyathelo wokuthola nokuvakashela umtholampilo womphakathi eNingizimu Afrika. Ufaka zonke izifundazwe ezingu-9, okulindelekile, nokufanele ukuphathe.',
+    url: 'https://clinicfinder.co.za/zu/guides/find-nearest-clinic',
+    publisher: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    author: { '@type': 'Organization', name: 'Clinic Finder SA' },
+    datePublished: '2026-04-22',
+    dateModified: '2026-05-14',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Imihlahlandlela', item: 'https://clinicfinder.co.za/zu/guides' }, { '@type': 'ListItem', position: 3, name: 'Uwuthola Kanjani Umtholampilo Oseduze Nawe' }] },
+];
+---
+<Base
+  title="Uwuthola Kanjani Umtholampilo Oseduze Nawe — Clinic Finder SA"
+  description="Thola umtholampilo womphakathi eduze nawe eNingizimu Afrika. Bheka izikhungo ezingaphezu kuka-1,000 kuzo zonke izifundazwe ezingu-9 — ukunakekelwa kwezempilo mahhala, ayidingeki i-apotimende."
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 32px 0; max-width: 720px;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zu('/')}>Ikhasi Lokuqala</a> &rsaquo; <a href={zu('/guides')}>Imihlahlandlela</a> &rsaquo; Thola Umtholampilo Oseduze Nawe
+    </nav>
+
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Uwuthola Kanjani Umtholampilo Oseduze Nawe</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; line-height: 1.7;">
+      INingizimu Afrika inezikhungo zezempilo zomphakathi ezingaphezu kuka-{totalFacilities.toLocaleString()} — imitholampilo engu-{totalClinics}, izikhungo zezempilo zomphakathi ezingu-{totalCHC}, namakhulu ezibhedlela — zonke zinikeza ukunakekelwa okuyisisekelo mahhala. Lo mhlahlandlela uchaza ukuthi ungasithola kanjani esifanele, ukuthi yini ozoyithola uma ufika, nokuthi yini okumele uyiphathe.
+    </p>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Isinyathelo 1: Sesha ngesifundazwe noma ngendawo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Indlela esheshayo yokuthola umtholampilo ukubheka ngesifundazwe sakho. Ikhasi ngalinye lesifundazwe libala zonke izikhungo zomphakathi — imitholampilo, izikhungo zezempilo zomphakathi, nezibhedlela — kanye namakheli, izinombolo zocingo, nezinsizakalo ezinikezwayo. Ungasesha nangegama <a href={zu('/clinics')}>ekhasini eliyinhloko lokusesha</a>.
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; margin-top: 16px;">
+        {provinceCounts.map(p => (
+          <a href={`/clinics/${p.slug}`} style="display: block; padding: 10px 14px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none; font-size: 0.9rem;">
+            <strong>{p.name}</strong>
+            <span style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">izikhungo ezingu-{p.total}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Isinyathelo 2: Khetha uhlobo olufanele lwesikhungo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Akuzona zonke izikhungo ezifanayo. Ukukhetha esifanele kukusindisa isikhathi futhi kukugwemela ukuthunyelwa kwenye indawo.
+      </p>
+      <div style="display: grid; gap: 12px; margin-top: 16px;">
+        <div style="padding: 14px; border: 1px solid var(--border); border-radius: var(--radius);">
+          <strong style="font-size: 0.95rem;">Umtholampilo</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">
+            Indawo yakho yokuqala ezidingweni eziningi zezempilo. Imitholampilo ibhekana nemijovo, imithi yesifo esingamahlalakhona, ukuhlela umndeni, ukuhlolwa nokwelashwa kwe-HIV/TB, ukulimala okuncane, nokubonana nomelaphi ngokujwayelekile. Iningi lisebenza ngezinsuku zomsebenzi 07:00–16:00; eminye ivula ngoMgqibelo.
+          </p>
+        </div>
+        <div style="padding: 14px; border: 1px solid var(--border); border-radius: var(--radius);">
+          <strong style="font-size: 0.95rem;">Isikhungo Sezempilo Somphakathi (CHC)</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">
+            Sikhulu kunomtholampilo, sinodokotela osendaweni (imitholampilo ivamise ukuholwa ngabahlengikazi). Ama-CHC abhekana nezimo eziyinkimbinkimbi kakhulu — ukukhishwa kwamazinyo, ukuhlinzwa okuncane, ukubonana ngempilo yengqondo — futhi amaningi asebenza amahora angu-24.
+          </p>
+        </div>
+        <div style="padding: 14px; border: 1px solid var(--border); border-radius: var(--radius);">
+          <strong style="font-size: 0.95rem;">Isibhedlela Sesifunda</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">
+            Sezimo eziphuthumayo, ukubeletha, ukuhlinzwa, nanoma yini engaphezu kwalokho umtholampilo ongakwenza. Ngokuvamile uzodinga incwadi yokuthunyelwa evela emtholampilo ekuvakasheni esibhedlela okungaphuthumi. Izibhedlela zesifunda zinemikhandlu yezimo eziphuthumayo esebenza amahora angu-24.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Isinyathelo 3: Bheka amahora okuvula nezinsizakalo</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Ikhasi ngalinye lesikhungo kule sayithi likhombisa amahora aso okusebenza nezinsizakalo esizinikezayo. Izikhungo ezingu-{total24h} kwezingu-{totalFacilities.toLocaleString()} ezibalwe lapha zisebenza amahora angu-24. Uma udinga ukunakekelwa ngaphandle kwamahora ajwayelekile, bheka <a href="/services/emergency">isikhungo sezimo eziphuthumayo esisebenza amahora angu-24</a> noma uye emkhandlwini wezimo eziphuthumayo wesibhedlela esiseduze.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Izinsizakalo ziyahluka ezikhungweni. Akuwona wonke umtholampilo onikeza ukunakekelwa kwamazinyo, izinsizakalo zempilo yengqondo, noma ukuqalwa kwama-ARV. Hlunga ngensizakalo <a href={zu('/clinics')}>ekhasini lokusesha</a>, noma ubheke ikhasi lesikhungo ngasinye ngaphambi kokuhamba.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Isinyathelo 4: Okufanele ukuphathe ekuvakasheni kwakho kokuqala</h2>
+      <ol style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px;">
+        <li><strong>Umazisi waseNingizimu Afrika, ipasipoti, noma imvume yokukhosela</strong> — ukwenza ifayela lakho lomtholampilo. Uma ungenalo lutho, umtholampilo kufanele ukubone noma kunjalo. Awusoze wenqatshwe esimweni esiphuthumayo noma ngabe unamaphi amaphepha.</li>
+        <li><strong>Ubufakazi bekheli</strong> — buyasiza ekubhaliseni kodwa abudingeki ngokomthetho ukuze welashwe.</li>
+        <li><strong>Incwadi ye-Road to Health</strong> — iyadingeka ezinganeni ezingaphansi kweminyaka emi-5. Le ncwadi ephuzi ilandelela imijovo nokukhula. Uma uyilahlile, cela umtholampilo ukuthi ukukhiphele entsha.</li>
+        <li><strong>Noma yimuphi umuthi noma incwadi yemithi onayo njengamanje</strong> — phatha amabhodlela amaphilisi noma uhlu olubhaliwe ukuze umelaphi abone ukuxubana kwemithi futhi angaphindi akubhalele imithi efanayo.</li>
+        <li><strong>Incwadi yokuthunyelwa (uma uya esibhedlela)</strong> — ayidingeki ekuvakasheni emtholampilo, kodwa izibhedlela zidinga incwadi yokuthunyelwa evela emtholampilo ekunakekelweni okungaphuthumi.</li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Isinyathelo 5: Kwenzekani uma ufika</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Emtholampilo, yiya lapho kwamukelwa khona bese uchaza ukuthi uzeleni. Umhlengikazi uzokuhlola — abone ukuthi isimo sakho siphuthuma yini — bese ekubeka emugqeni othile. Izimo eziphuthumayo (ubuhlungu obukhulu, ukuphefumula kanzima, ukopha kakhulu) zibonwa kuqala, kungakhathaliseki ukuthi ufike nini.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Isikhathi sokulinda siyahluka kakhulu. Imitholampilo ematasa yasemadolobheni eGauteng nase-Cape Flats ingaba nokulinda kwamahora angu-2-4; imitholampilo emincane yasemakhaya ivame ukusheshisa. Ukufika ekuseni (ngaphambi kuka-07:30) kunciphisa kakhulu isikhathi sakho sokulinda emitholampilo enabantu abaningi.
+      </p>
+      <p style="line-height: 1.7; font-size: 0.95rem; margin-top: 8px;">
+        Ngemva kokubonana nomelaphi, ungase uthole imithi ekhemisi lomtholampilo (mahhala), incwadi yokuthunyelwa esibhedlela, noma usuku lokubuya. Gcina ikhadi lakho eliluhlaza lomtholampilo — yirekhodi lakho lezokwelapha ohamba nalo futhi lisheshisa konke ukuvakasha kwakho kwesikhathi esizayo.
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 12px; color: var(--primary-dark);">Amathiphu ezindaweni zasemakhaya</h2>
+      <p style="line-height: 1.7; font-size: 0.95rem;">
+        Ezifundazweni ezifana ne-Northern Cape, i-Limpopo, ne-Eastern Cape, umtholampilo oseduze ungaba ngamakhilomitha angu-30–60 ukusuka lapho ukhona. Nazi izinto ezimbalwa ezisizayo:
+      </p>
+      <ul style="padding-left: 20px; font-size: 0.95rem; line-height: 1.7; display: grid; gap: 8px; margin-top: 8px;">
+        <li><strong>Imitholampilo ehambayo</strong> ivakashela izindawo ezikude ngezinsuku ezibekiwe. Buza isisebenzi sezempilo somphakathi noma ukhansela wewadi ukuthola izinsuku.</li>
+        <li><strong>Izindawo zokulanda ze-CCMDD</strong> zivumela iziguli ezizinzile ezinezifo ezingamahlalakhona ukuthi zilande imithi ezindaweni ezingaphandle (amakhemisi, amahholo omphakathi) esikhundleni sokuya emtholampilo njalo ngenyanga. <a href={zu('/guides/ccmdd-chronic-meds-pickup')}>Funda ukuthi ubhalisa kanjani</a>.</li>
+        <li><strong>Ukubonana ngocingo</strong> kuyatholakala kweminye imitholampilo ekuvakasheni kokubuya okungadingi ukuhlolwa komzimba. Buza emtholampilo wakho.</li>
+        <li><strong>Ukuthuthwa kweziguli</strong> kuyatholakala kwezinye izifunda kuma-apotimende asesibhedlela. Cela umtholampilo ukuthi ukulungiselele lokho uma ukunika incwadi yokuthunyelwa.</li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Izinsizakalo Ezitholakala Ezinhlotsheni Ezihlukene Zezikhungo</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">Akuzona zonke izikhungo ezinikeza izinsizakalo ezifanayo. Ukwazi umehluko kukusiza ukuthi uye endaweni efanele kuqala.</p>
+      <div style="overflow-x: auto; margin-bottom: 16px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+          <thead><tr style="border-bottom: 2px solid var(--border);">
+            <th style="text-align: left; padding: 10px 8px;">Uhlobo Lwesikhungo</th>
+            <th style="text-align: left; padding: 10px 8px;">Amahora</th>
+            <th style="text-align: left; padding: 10px 8px;">Izinsizakalo Ezibalulekile</th>
+            <th style="text-align: left; padding: 10px 8px;">Okungenzeki</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px; font-weight: 600;">Umtholampilo</td><td style="padding: 8px;">Msombuluko-Lwesihlanu 07:00-16:00</td><td style="padding: 8px;">Imithi yesifo esingamahlalakhona, imijovo, ANC, ukuhlolela i-HIV, amanxeba amancane, ukwelashwa kwe-TB</td><td style="padding: 8px;">Ama-X-ray, ukuhlinzwa, ukulaliswa ubusuku, ukunakekelwa ngemva kwamahora</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px; font-weight: 600;">Isikhungo Sezempilo Somphakathi (CHC)</td><td style="padding: 8px;">Amahora angu-24</td><td style="padding: 8px;">Konke okwenziwa umtholampilo + ama-X-ray, ukuqinisa isimo esiphuthumayo, ukubeletha okujwayelekile, ukukhishwa kwamazinyo</td><td style="padding: 8px;">Ukunakekelwa kochwepheshe, ukuhlinzwa kokubeletha, ukuhlinzwa okuyinkimbinkimbi</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px; font-weight: 600;">Isibhedlela Sesifunda</td><td style="padding: 8px;">Amahora angu-24</td><td style="padding: 8px;">Ukulaliswa, ukuhlinzwa kokubeletha, ukuhlinzwa okujwayelekile, i-ICU eyisisekelo, ukuthelwa kwegazi, iziguli ezithunyelwe</td><td style="padding: 8px;">Ukuhlinzwa kochwepheshe (amathambo, izinzwa, inhliziyo), umdlavuza, ukufakelwa kwezitho</td></tr>
+            <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 8px; font-weight: 600;">Isibhedlela Sesifunda Esikhulu / Sezinga Eliphezulu</td><td style="padding: 8px;">Amahora angu-24</td><td style="padding: 8px;">Iminyango yochwepheshe, ukuhlolwa okuthuthukile (CT, MRI), ukuhlinzwa okuyinkimbinkimbi, i-ICU</td><td style="padding: 8px;">Ukungena ungenayo incwadi yokuthunyelwa (ngaphandle kwesimo esiphuthumayo)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted);">Esimweni esiphuthumayo, yiya esikhungweni esiseduze esinezinsizakalo zamahora angu-24 — i-CHC noma isibhedlela. Ekunakekelweni okujwayelekile, hlala uqala emtholampilo wendawo yakho. Bheka <a href={zu('/guides/hospital-referral-system')}>umhlahlandlela wethu wohlelo lokuthunyelwa</a> ukuze ubone ukuthi ushintsha kanjani phakathi kwamazinga.</p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Izindleko — Yini Emahhala Neyini Engeyona</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px;">Ukunakekelwa okuyisisekelo kwezempilo komphakathi eNingizimu Afrika kumahhala lapho ukusebenzisa. Nakhu kanye lokho okuhlanganisayo nokuthi ungakhokha kuphi.</p>
+      <div style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px; color: var(--primary-dark);">Kumahhala njalo</div>
+          <ol style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; padding-left: 1.2rem; margin: 0;">
+            <li>Ukubonana nomelaphi emtholampilo nokubuya</li>
+            <li>Imithi yesifo esingamahlalakhona (ese-Essential Drugs List)</li>
+            <li>Ukuhlolela i-HIV, i-ART, nokuhlolwa kwezinga legciwane egazini</li>
+            <li>Ukwelashwa kwe-TB (uhlelo lonke lwezinyanga ezingu-6)</li>
+            <li>Imijovo (lonke uhlelo lwe-EPI)</li>
+            <li>Ukunakekelwa kwabakhulelwe nokubeletha okujwayelekile</li>
+            <li>Ukuhlela umndeni (zonke izindlela)</li>
+            <li>Izingane ezingaphansi kweminyaka engu-6 — zonke izinsizakalo kuzo zonke izikhungo zomphakathi</li>
+          </ol>
+        </div>
+        <div style="border: 1px solid var(--border); border-radius: var(--radius); padding: 16px;">
+          <div style="font-weight: 600; margin-bottom: 8px;">Kungaba nemali (kubhekwa okungenayo)</div>
+          <ol style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; padding-left: 1.2rem; margin: 0;">
+            <li>Ukulaliswa esibhedlela (isilinganiso esincike kokungenayo)</li>
+            <li>Ukuvakashela uchwepheshe esibhedlela ungalaliswanga</li>
+            <li>Amalungu omshwalense wezempilo — akhokhiswa ngamanani esibhedlela</li>
+            <li>Ukuthuthwa nge-ambulensi (ezinye izifundazwe zikhokhisa u-R40-R300)</li>
+          </ol>
+          <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin: 8px 0 0;">Uma ungakwazi ukukhokha imali, cela ukubona usonhlalakahle wesibhedlela ukuze ukhululwe (Uniform Patient Fee Schedule exemption). Abadla umhlalaphansi nabathola imali yesibonelelo se-SASSA bafaneleka ngokuzenzakalelayo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: var(--primary-light); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-dark);">Qala usesha</h2>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">
+        Bheka zonke izikhungo zezempilo zomphakathi ezingu-{totalFacilities.toLocaleString()} kuzo zonke izifundazwe ezingu-9 zaseNingizimu Afrika.
+      </p>
+      <a href={zu('/clinics')} class="btn btn--primary" style="font-size: 0.9rem;">Thola umtholampilo eduze nawe</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.2rem; margin-bottom: 16px;">Imibuzo Ebuzwa Njalo</h2>
+      <div style="display: grid; gap: 12px;">
+        {faqs.map(faq => (
+          <details style="border: 1px solid var(--border); border-radius: var(--radius);">
+            <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem; padding: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+              {faq.question}
+              <span style="color: var(--text-muted); flex-shrink: 0; margin-left: 12px;">+</span>
+            </summary>
+            <div style="padding: 0 14px 14px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Imihlahlandlela Ehlobene</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;">
+      <a href={zu('/guides/medical-emergency-guide')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Umhlahlandlela Wezimo Eziphuthumayo Zezempilo</a>
+      <a href={zu('/guides/hospital-referral-system')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Uhlelo Lokuthunyelwa Esibhedlela</a>
+      <a href={zu('/guides/chronic-medication-management')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Ukuphathwa Kwemithi Yesifo Esingamahlalakhona</a>
+      <a href={zu('/guides/ccmdd-chronic-meds-pickup')} style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">CCMDD — Ukulanda Imithi Yesifo Esingamahlalakhona</a>
+      </div>
+    </section>
+
+    <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-top: 24px;">
+      <strong style="color: var(--text);">Imithombo:</strong> South African National Health Act (Act 61 of 2003). National Department of Health — Ideal Clinic framework. District Health Information System (DHIS). National Health Insurance white paper (2017). Uhlu lwezikhungo lwe-Clinic Finder SA (izikhungo ezingu-{totalFacilities.toLocaleString()} eziqinisekisiwe ngo-2026).
+    </section>
+    <section style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <h2 style="font-size:1.2rem;margin-bottom:1rem;">Thola Imitholampilo Ngesifundazwe</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.75rem;">
+      <a href="/clinics/gauteng" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Gauteng</a>
+      <a href="/clinics/kwazulu-natal" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">KwaZulu-Natal</a>
+      <a href="/clinics/western-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Western Cape</a>
+      <a href="/clinics/eastern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Eastern Cape</a>
+      <a href="/clinics/limpopo" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Limpopo</a>
+      <a href="/clinics/mpumalanga" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Mpumalanga</a>
+      <a href="/clinics/north-west" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">North West</a>
+      <a href="/clinics/free-state" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Free State</a>
+      <a href="/clinics/northern-cape" style="display:block;padding:0.75rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500;">Northern Cape</a>
+      </div>
+    </section>
+  </div>
+</Base>

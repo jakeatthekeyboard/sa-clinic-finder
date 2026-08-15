@@ -1,0 +1,128 @@
+---
+// isiZulu translation of src/pages/services/index.astro (issue #2).
+// Service labels (svc.plain) come from shared data used by the untranslated
+// /services/<slug> pages and stay in English so the two agree.
+import Base from '../../../layouts/Base.astro';
+import { facilities, SERVICE_MAP } from '../../../data/helpers';
+import { SERVICE_EDITORIAL } from '../../../data/service-editorial';
+import { localePath } from '../../../i18n/config';
+
+const zu = (path: string) => localePath(path, 'zu');
+
+const services = Object.entries(SERVICE_MAP).map(([key, svc]) => ({
+  key,
+  ...svc,
+  count: facilities.filter(f => f.services[key]).length,
+  hasEditorial: !!SERVICE_EDITORIAL[key],
+  guideSlug: SERVICE_EDITORIAL[key]?.guideSlug,
+})).sort((a, b) => b.count - a.count);
+
+const SERVICE_DESCRIPTIONS: Record<string, string> = {
+  arv_treatment: 'Ukwelashwa ngama-ARV (antiretrovirals) kwe-HIV. Ukuqala ngalo lolo suku kuyatholakala kuyo yonke imitholampilo kusukela ngo-2017.',
+  tb_treatment: 'Ukuhlolelwa isifo sofuba (TB), ukuhlolwa nge-GeneXpert, nokwelashwa nge-DOTS. Uhlelo lwezinyanga ezingu-6 mahhala.',
+  maternity_antenatal: 'Ukunakekelwa kwabakhulelwe, ukubeletha, nokuhlolwa ngemva kokubeletha mahhala. Akudingeki umshwalense wezempilo.',
+  chronic_medication: 'Umfutho wegazi ophezulu, ushukela, isithuthwane, umbefu, ukucindezeleka engqondweni. Imithi yempilo yonke mahhala.',
+  emergency_24h: 'Umnyango weziphuthumayo wamahora angu-24 nokuqinisa isimo esiphuthumayo. Ilungelo lomthethosisekelo — akekho obuyiswayo.',
+  dental: 'Ukukhishwa kwamazinyo, ukuvalwa kwezimbobo, amazinyo okufakelwa, nokudambisa ubuhlungu obuphuthumayo. Ungangena nje ezimweni eziphuthumayo.',
+  mental_health: 'Ukucindezeleka engqondweni, ukukhathazeka, i-PTSD, nokusetshenziswa kabi kwezidakamizwa. Ukuhlolwa, imithi, nokuthunyelwa ekwelulekweni.',
+  child_health: 'Ukulandelela ukukhula, usizo lokudla okunomsoco, ukuhlolwa kwe-IMCI. Mahhala kuzo zonke izingane ezingaphansi kweminyaka emi-6.',
+  family_planning: 'Imijovo, i-implant, iphilisi, i-IUD, amakhondomu. Mahhala kuwo wonke umuntu. Kusukela eminyakeni engu-12 ngaphandle kwemvume yomzali.',
+  immunisation: 'Ishejuli ephelele ye-EPI-SA: kusukela ekuzalweni kuya eminyakeni engu-12, izifo ezingu-13. Imijovo yokufica kunoma yiyiphi iminyaka.',
+  hiv_testing: 'Ukuhlolwa okusheshayo ngokuhlatshwa emunweni (imizuzu engu-15). Mahhala, kuyimfihlo, akwaziwa ukuthi ubani. Amakhithi okuzihlola ayatholakala.',
+};
+
+const totalFacilities = facilities.filter(f => f.province !== '').length;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Izinsizakalo Zezempilo Emitholampilo Yomphakathi — Clinic Finder SA',
+  description: `Thola imitholampilo yomphakathi ngensizakalo ezikhungweni ezingu-${totalFacilities} eNingizimu Afrika.`,
+  url: 'https://clinicfinder.co.za/zu/services',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: services.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `https://clinicfinder.co.za/services/${s.slug}`,
+      name: s.plain,
+    })),
+  },
+};
+---
+<Base
+  title="Izinsizakalo Emitholampilo Yomphakathi — Clinic Finder SA"
+  description="Thola imitholampilo yomphakathi ngensizakalo: ama-ARV, ukwelashwa kwe-TB, ukunakekelwa kokubeletha, iziphuthumayo, amazinyo, impilo yengqondo, imithi engamahlalakhona, imijovo, nokunye."
+  jsonLd={[jsonLd, { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' }, { '@type': 'ListItem', position: 2, name: 'Izinsizakalo' }] }]}
+>
+  <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zu('/')}>Ikhasi Lokuqala</a> &rsaquo; Izinsizakalo
+    </nav>
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Thola Imitholampilo Ngensizakalo</h1>
+    <p style="color: var(--text-muted); margin-bottom: 32px; max-width: 640px; line-height: 1.6;">
+      Zonke izinsizakalo zezempilo eziyisisekelo emitholampilo yomphakathi zimahhala kubantu abahlala eNingizimu Afrika. Khetha insizakalo ngezansi ukuze uthole izikhungo ezinikeza leyo nsizakalo, kanye nemininingwane yalokho okulindelekile nokuthi ubani ofanelekayo.
+    </p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;">
+      {services.map(s => (
+        <a href={`/services/${s.slug}`} class="card" style="text-decoration: none; color: var(--text);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+            <div>
+              <strong style="font-size: 1.05rem;">{s.plain}</strong>
+              {SERVICE_DESCRIPTIONS[s.key] && (
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">{SERVICE_DESCRIPTIONS[s.key]}</p>
+              )}
+              <div style="font-size: 0.85rem; color: var(--primary-dark); margin-top: 8px; font-weight: 600;">
+                izikhungo ezingu-{s.count} &rarr;
+              </div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <section style="margin-top: 40px; background: var(--bg-alt); border-radius: var(--radius); padding: 24px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">Awuqinisekile ukuthi udinga yiphi insizakalo?</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 16px;">
+        Ngena nje kunoma yimuphi umtholampilo womphakathi utshele umhlengikazi izimpawu zakho. Uzokuhlola, anqume ukuthi udinga ukunakekelwa okunjani, bese ekwelapha lapho noma akuthumele esikhungweni esifanele. Awudingi ukwazi "igama lensizakalo" — chaza nje ukuthi kukhona okungahambi kahle.
+      </p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="/search" class="btn btn--primary" style="font-size: 0.9rem;">Thola umtholampilo oseduze nawe</a>
+        <a href={zu('/guides')} class="btn btn--outline" style="font-size: 0.9rem;">Bheka imihlahlandlela yezempilo</a>
+      </div>
+    </section>
+
+    <section style="margin-top: 32px; max-width: 720px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">Ukusebenza kokunakekelwa kwezempilo kwamahhala eNingizimu Afrika</h2>
+      <div style="font-size: 0.9rem; line-height: 1.7; display: grid; gap: 12px;">
+        <p>
+          UMthethosisekelo waseNingizimu Afrika (iSigaba 27) uqinisekisa ilungelo lokuthola izinsizakalo zezempilo. Ezingeni lomtholampilo oyisisekelo, zonke izinsizakalo ezibalwe ngenhla zimahhala — awudingi umshwalense wezempilo, akuhlolwa ukuthi uhola kangakanani, futhi awudingi maphepha ekunakekelweni okuphuthumayo. Lokhu kufaka ukubonana nomhlengikazi noma udokotela, imithi esohlwini lwe-Essential Drugs List (EDL), ukuhlolwa kwaselabhoratri, nezinqubo ezingenziwa emtholampilo.
+        </p>
+        <p>
+          I-<strong>Essential Drugs List</strong> inquma ukuthi imiphi imithi etholakala mahhala ezikhungweni zomphakathi. Ifaka imithi engaphezu kuka-600 ehlanganisa izifo ezingamahlalakhona (umfutho wegazi ophezulu, ushukela, isithuthwane, i-HIV, ukucindezeleka engqondweni), izifo ezibhebhethekayo ezisheshayo, ukulawulwa kobuhlungu, nemithi yezingane. Uma umuthi usohlwini lwe-EDL, umtholampilo wakho uzokunika wona ngaphandle kwenkokhelo. Imithi engekho ohlwini idinga incazelo evela kuchwepheshe futhi ingase itholakale kuphela ezingeni lesibhedlela.
+        </p>
+        <p>
+          Ukunakekelwa ezingeni lesibhedlela (izibhedlela zesifunda, ezesifunda esikhulu, nezinkulu) kusebenzisa <strong>uhlelo lwezindleko olubheka ukuthi uhola kangakanani</strong> olubizwa nge-Uniform Patient Fee Schedule (UPFS). Iziguli ezihola ngaphansi kwenani elithile — cishe u-R100,000 ngonyaka kumuntu oyedwa — zifaneleka njenge-H0 (zixhaswe ngokugcwele, azikhokhi lutho). Abahola ngaphezulu bakhokha izindleko ezikhuphukayo. Kodwa-ke, ukwelashwa okuphuthumayo, izingane ezingaphansi kweminyaka engu-6, abesifazane abakhulelwe, neziguli ezinezifo okumele zibikwe (i-TB, isifo sohudo olubi, isimungumungwane) zihlala zingakhokhi.
+        </p>
+        <p>
+          UMthethosivivinywa we-<strong>National Health Insurance (NHI)</strong>, owasayinwa waba ngumthetho ngoMeyi 2024, uhlose ukudala isikhwama esisodwa sokunakekelwa kwezempilo kwabo bonke. Ukusetshenziswa kwawo ngokugcwele kwenziwa ngezigaba eminyakeni. Okwamanje, uhlelo lomtholampilo-isibhedlela-ukuthunyelwa oluchazwe lapha yilo indlela abantu baseNingizimu Afrika abathola ngayo ukunakekelwa kwezempilo komphakathi.
+        </p>
+      </div>
+    </section>
+
+    <section style="margin-top: 32px; max-width: 720px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">Izinsizakalo zezinga lomtholampilo kuqhathaniswa nezezinga lesibhedlela</h2>
+      <div style="font-size: 0.9rem; line-height: 1.7; display: grid; gap: 12px;">
+        <p>
+          Akuzona zonke izinsizakalo ezitholakala kuzo zonke izinhlobo zezikhungo. Imitholampilo ibhekana cishe namaphesenti angu-80% ezidingo zezempilo: imithi yesifo esingamahlalakhona, imijovo, ukunakekelwa kwe-HIV/TB, ukuhlela umndeni, ukuvakasha kwabakhulelwe, nokulimala okuncane. Izinsizakalo ezidinga ukuhlinzwa, i-X-ray, umsebenzi waselabhoratri, noma ukulaliswa ubusuku zidinga isibhedlela — futhi imvamisa nencwadi yokuthunyelwa evela emtholampilo wakho.
+        </p>
+        <p>
+          <strong>Lokho imitholampilo engakwenza izibhedlela ezivame ukungakwazi:</strong> ukungena nje ngalo lolo suku ngezinkinga eziyisisekelo (ngaphandle kwe-apotimende), ukulanda ngokushesha imithi yesifo esingamahlalakhona, ukubhaliselwa i-CCMDD ukuze ulande imithi ngaphandle, nokulandelelwa emphakathini ngabasebenzi bezempilo bomphakathi.
+        </p>
+        <p>
+          <strong>Lokho izibhedlela ezikunikezayo imitholampilo engakwazi:</strong> ukuhlinzwa ngokulaliswa ubuthi, ukuvuselelwa esimweni esiphuthumayo, i-X-ray ne-ultrasound, imiphumela yaselabhoratri lapho khona, ukufakelwa igazi, ukubukwa ubusuku, ukuhlolwa uchwepheshe (amathambo, indlebe-ikhala-umphimbo, amehlo, ingqondo), nokunakekelwa okujulile (intensive care).
+        </p>
+      </div>
+    </section>
+  </div>
+</Base>
