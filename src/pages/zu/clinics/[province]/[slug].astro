@@ -1,0 +1,312 @@
+---
+/**
+ * isiZulu facility detail page — translation of src/pages/clinics/[province]/[slug].astro
+ * (issue #2). ~1,000 pages.
+ *
+ * Data and path logic are SHARED (src/data/pages/paths.ts) so the locales cannot diverge
+ * in WHICH facilities they publish. The route is gated on COVERAGE.zu.facilities, which
+ * turns true only once the facility-type editorial, the generated facility editorial and
+ * these UI strings are all translated — the family is earned at once, not per facility.
+ *
+ * Facility names, addresses, suburb/city/district/province names, phone numbers, GPS
+ * coordinates, operating-hours strings and the OSM record identifiers are sourced values
+ * and are never translated: they are what a reader reads back at a clinic counter or
+ * types into a maps app.
+ */
+import Base from '../../../../layouts/Base.astro';
+import { facilities, SERVICE_MAP, provinceSlug, nearbyFacilities, mapsUrl, whatsappShareUrl } from '../../../../data/helpers';
+import { generateFacilityEditorialZu } from '../../../../data/i18n/facility-editorial.zu';
+import { getFacilityTypeEditorialZu } from '../../../../data/i18n/facility-types-editorial.zu';
+import { typeLabelZu, servicePlainZu, serviceLabelZu, zuHref, zuLinks } from '../../../../data/i18n/zu';
+import { facilityPaths } from '../../../../data/pages/paths';
+import { facilitiesTranslated } from '../../../../i18n/translated';
+
+export function getStaticPaths() {
+  return facilitiesTranslated('zu') ? facilityPaths() : [];
+}
+
+const { facility, titleSuffix, withheldReason } = Astro.props;
+const nearby = nearbyFacilities(facility, 3);
+const editorial = generateFacilityEditorialZu(facility);
+const typeEditorial = getFacilityTypeEditorialZu(facility.type);
+const activeServices = Object.entries(facility.services)
+  .filter(([, v]) => v)
+  .map(([k]) => ({ key: k, slug: SERVICE_MAP[k]?.slug, plain: servicePlainZu(k), label: serviceLabelZu(k) }))
+  .filter(s => s.slug);
+
+const directionsUrl = mapsUrl(facility.coordinates.lat, facility.coordinates.lng, facility.name);
+const shareUrl = whatsappShareUrl(facility);
+
+const guideMap: Record<string, { slug: string; title: string }> = {
+  arv_treatment: { slug: 'how-to-get-arvs', title: 'Ungawathola Kanjani Ama-ARV Emtholampilo Womphakathi' },
+  tb_treatment: { slug: 'tb-treatment-what-to-expect', title: 'Ukwelashwa Kwe-TB — Okufanele Ukulindele' },
+  maternity_antenatal: { slug: 'free-maternity-care', title: 'Ukunakekelwa Kokubeletha Mahhala Ezibhedlela Zomphakathi' },
+  chronic_medication: { slug: 'chronic-medication-management', title: 'Imithi Yesifo Esingamahlalakhona Emitholampilo Yomphakathi' },
+  emergency_24h: { slug: 'medical-emergency-guide', title: 'Okufanele Ukwenze Esimweni Esiphuthumayo Sezempilo' },
+  dental: { slug: 'dental-care-public-clinics', title: 'Ukunakekelwa Kwamazinyo Emitholampilo Yomphakathi' },
+  mental_health: { slug: 'mental-health-services', title: 'Izinsizakalo Zempilo Yengqondo Emitholampilo Yomphakathi' },
+  family_planning: { slug: 'family-planning-contraception', title: 'Ukuhlela Umndeni Nezindlela Zokuvimbela Ukukhulelwa' },
+  immunisation: { slug: 'child-immunisation-schedule', title: 'Ishejuli Yemijovo Yezingane (ENingizimu Afrika)' },
+  hiv_testing: { slug: 'hiv-testing-guide', title: 'Ukuhlolela I-HIV — Kuphi, Kanjani & Okufanele Ukulindele' },
+  child_health: { slug: 'child-immunisation-schedule', title: 'Ishejuli Yemijovo Yezingane (ENingizimu Afrika)' },
+};
+const matchedGuides = Object.entries(facility.services)
+  .filter(([k, v]) => v && guideMap[k])
+  .map(([k]) => guideMap[k])
+  .filter((g, i, arr) => arr.findIndex(x => x.slug === g.slug) === i)
+  .slice(0, 4);
+const extraGuides = [
+  { slug: 'ccmdd-chronic-meds-pickup', title: 'I-CCMDD — Ukulanda Imithi Yesifo Esingamahlalakhona Ngaphandle Komugqa' },
+  { slug: 'hospital-referral-system', title: 'Ukusebenza Kokuthunyelwa Esibhedlela ENingizimu Afrika' },
+  { slug: 'find-nearest-clinic', title: 'Ungawuthola Kanjani Umtholampilo Oseduze Nawe' },
+];
+const relatedGuides = [...matchedGuides];
+for (const e of extraGuides) {
+  if (relatedGuides.length >= 4) break;
+  if (!relatedGuides.some(g => g.slug === e.slug)) relatedGuides.push(e);
+}
+
+const idMatch = facility.facility_id.match(/^zaf_(way|nodes?)_(\d+)$/);
+const osmType = idMatch ? (idMatch[1] === 'way' ? 'way' : 'node') : 'node';
+const osmId = idMatch ? idMatch[2] : facility.facility_id;
+const osmUrl = `https://www.openstreetmap.org/${osmType}/${osmId}`;
+const overpassUrl = `https://overpass-turbo.eu/?Q=${osmType}(${osmId})%3Bout%3B&R`;
+const hotosmUrl = 'https://data.humdata.org/dataset/hotosm_zaf_health_facilities';
+
+const addressParts = [facility.address.street, facility.address.suburb, facility.address.city, facility.address.postal_code].filter(Boolean);
+const addressStr = addressParts.length > 0 ? addressParts.join(', ') : `${facility.province}${facility.district ? ', ' + facility.district : ''}`;
+
+const typeName = typeLabelZu(facility.type).toLowerCase();
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Ikhasi Lokuqala', item: 'https://clinicfinder.co.za/zu' },
+    { '@type': 'ListItem', position: 2, name: 'Izifundazwe', item: 'https://clinicfinder.co.za/zu/clinics' },
+    { '@type': 'ListItem', position: 3, name: facility.province, item: `https://clinicfinder.co.za/zu/clinics/${provinceSlug(facility.province)}` },
+    { '@type': 'ListItem', position: 4, name: facility.name },
+  ],
+};
+
+// FACILITY_TYPE_EDITORIAL_ZU prose carries inline <a href="/guides/…"> links. The
+// rendered page emits them as HTML (set:html below); schema.org FAQ answer text must be
+// plain, so strip the tags here rather than shipping markup into the structured data.
+const plain = (s: string) => s.replace(/<[^>]+>/g, '');
+
+const faqLd = typeEditorial ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: `Kufanele ngiye nini ${typeName}?`, acceptedAnswer: { '@type': 'Answer', text: plain(typeEditorial.whenToGo) } },
+    { '@type': 'Question', name: `Basebenza bobani ${typeName}?`, acceptedAnswer: { '@type': 'Answer', text: plain(typeEditorial.staffing) } },
+    { '@type': 'Question', name: `Lusebenza kanjani uhlelo lokuthunyelwa ${typeName}?`, acceptedAnswer: { '@type': 'Answer', text: plain(typeEditorial.referralFlow) } },
+  ],
+} : null;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['MedicalClinic', 'LocalBusiness'],
+  name: facility.name,
+  description: `${typeLabelZu(facility.type)} e-${facility.province}, eNingizimu Afrika. Izinsizakalo: ${activeServices.map(s => s.plain).join(', ')}.`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: facility.address.street || undefined,
+    addressLocality: facility.address.city || facility.district || facility.province,
+    addressRegion: facility.province,
+    addressCountry: 'ZA',
+    postalCode: facility.address.postal_code || undefined,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: facility.coordinates.lat,
+    longitude: facility.coordinates.lng,
+  },
+  url: `https://clinicfinder.co.za/zu${facility.url_path}`,
+  ...(facility.contact.phone && { telephone: facility.contact.phone }),
+  ...(facility.contact.email && { email: facility.contact.email }),
+  ...(facility.contact.website && { sameAs: [facility.contact.website] }),
+  ...(facility.operating_hours.raw
+    ? { openingHoursSpecification: { '@type': 'OpeningHoursSpecification', description: facility.operating_hours.raw } }
+    : facility.operating_hours.is_24_hour
+      ? { openingHours: 'Mo-Su 00:00-23:59' }
+      : {}),
+  isAccessibleForFree: true,
+  medicalSpecialty: activeServices.map(s => s.label),
+};
+---
+<Base
+  title={`${facility.name} — ${typeLabelZu(facility.type)} e-${facility.province}${titleSuffix}`}
+  description={`${facility.name} ${typeName} e-${facility.province}. Izinsizakalo: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}. Thola indlela nemininingwane yokuxhumana.`}
+  jsonLd={[breadcrumbLd, jsonLd, ...(faqLd ? [faqLd] : [])]}
+  noindex={Boolean(withheldReason)}
+>
+  <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={zuHref('/')}>Ikhasi Lokuqala</a> &rsaquo;
+      <a href={zuHref('/clinics')}>Izifundazwe</a> &rsaquo;
+      <a href={zuHref(`/clinics/${provinceSlug(facility.province)}`)}>{facility.province}</a> &rsaquo;
+      {facility.name}
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap;">
+      <h1 style="font-size: 1.4rem;">{facility.name}</h1>
+      <span class="chip chip--type">{typeLabelZu(facility.type)}</span>
+      {facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">amahora angu-24</span>}
+    </div>
+
+    <p style="color: var(--text-muted); margin-bottom: 24px;">
+      {addressStr}
+    </p>
+
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px;">
+      <a href={directionsUrl} target="_blank" rel="noopener" class="btn btn--primary">
+        Khombisa Indlela Nge-Google Maps
+      </a>
+      <a href={shareUrl} target="_blank" rel="noopener" class="btn btn--wa">
+        Yabelana Nge-WhatsApp
+      </a>
+    </div>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Izinsizakalo ezitholakalayo</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        {activeServices.map(s => (
+          <a href={zuHref(`/services/${s.slug}`)} class="chip" style="text-decoration: none;">{s.plain}</a>
+        ))}
+      </div>
+      {activeServices.length === 0 && <p style="color: var(--text-muted); font-size: 0.9rem;">Imininingwane yezinsizakalo yalesi sikhungo ayikaqinisekiswa.</p>}
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Mayelana nalesi sikhungo</h2>
+      <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px;" set:html={zuLinks(editorial.context)} />
+      {editorial.tips.length > 0 && (
+        <div style="display: grid; gap: 12px;">
+          {editorial.tips.map(tip => (
+            <div style="background: var(--bg-alt); border-radius: var(--radius); padding: 14px 16px; font-size: 0.9rem; line-height: 1.6;" set:html={zuLinks(tip)} />
+          ))}
+        </div>
+      )}
+    </section>
+
+    {typeEditorial && (
+      <section style="margin-bottom: 32px;">
+        <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Uyini {typeName}?</h2>
+        <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px;" set:html={zuLinks(typeEditorial.description)} />
+        <details style="margin-bottom: 12px;">
+          <summary style="cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--primary-dark);">Kufanele ngiye nini {typeName}?</summary>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;" set:html={zuLinks(typeEditorial.whenToGo)} />
+        </details>
+        <details style="margin-bottom: 12px;">
+          <summary style="cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--primary-dark);">Basebenza bobani {typeName}?</summary>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;" set:html={zuLinks(typeEditorial.staffing)} />
+        </details>
+        <details>
+          <summary style="cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--primary-dark);">Lusebenza kanjani uhlelo lokuthunyelwa {typeName}?</summary>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;" set:html={zuLinks(typeEditorial.referralFlow)} />
+        </details>
+      </section>
+    )}
+
+    {facility.operating_hours.raw && (
+      <section style="margin-bottom: 32px;">
+        <h2 style="font-size: 1.1rem; margin-bottom: 8px;">Amahora okusebenza</h2>
+        <p style="font-size: 0.9rem;">{facility.operating_hours.raw}</p>
+      </section>
+    )}
+
+    {(facility.contact.phone || facility.contact.email || facility.contact.website) && (
+      <section style="margin-bottom: 32px;">
+        <h2 style="font-size: 1.1rem; margin-bottom: 8px;">Ukuxhumana</h2>
+        <div style="display: grid; gap: 6px; font-size: 0.9rem;">
+          {facility.contact.phone && (
+            <p><a href={`tel:${facility.contact.phone}`}>{facility.contact.phone}</a></p>
+          )}
+          {facility.contact.email && (
+            <p><a href={`mailto:${facility.contact.email}`}>{facility.contact.email}</a></p>
+          )}
+          {facility.contact.website && (
+            <p><a href={facility.contact.website} target="_blank" rel="noopener">{facility.contact.website.replace(/^https?:\/\//, '')}</a></p>
+          )}
+        </div>
+      </section>
+    )}
+
+    {facility.operator && (
+      <section style="margin-bottom: 32px;">
+        <h2 style="font-size: 1.1rem; margin-bottom: 8px;">Siqhutshwa ngu</h2>
+        <p style="font-size: 0.9rem;">{facility.operator}</p>
+      </section>
+    )}
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 8px;">Indawo</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">
+        I-GPS: {facility.coordinates.lat.toFixed(4)}, {facility.coordinates.lng.toFixed(4)}
+        {facility.district && ` · Isifunda: ${facility.district}`}
+      </p>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Izikhungo eziseduze</h2>
+      <div style="display: grid; gap: 10px;">
+        {nearby.map(n => {
+          const nAddr = [n.address.street, n.address.suburb, n.address.city].filter(Boolean).join(', ');
+          return (
+          <a href={zuHref(n.url_path)} class="card" style="text-decoration: none; color: var(--text);">
+            <strong>{n.name}</strong>
+            {nAddr && <div style="font-size: 0.85rem; color: var(--text); margin-top: 2px;">{nAddr}</div>}
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
+              {typeLabelZu(n.type)} · {n.province}
+            </div>
+          </a>
+        )})}
+      </div>
+    </section>
+
+    {relatedGuides.length > 0 && (
+      <section style="margin-bottom: 32px;">
+        <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Imihlahlandlela Ehlobene</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem;">
+          {relatedGuides.map(g => (
+            <a href={zuHref(`/guides/${g.slug}`)} style="display: block; padding: 0.75rem 1rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500;">{g.title}</a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 20px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Umthombo wemininingwane</h2>
+      <div style="display: grid; gap: 8px; font-size: 0.9rem;">
+        <div style="display: flex; gap: 8px;">
+          <strong style="min-width: 100px; color: var(--text-muted);">Umthombo:</strong>
+          <span>{facility.data_source === 'overpass'
+            ? <Fragment>
+                <a href={osmUrl} target="_blank" rel="noopener">OpenStreetMap</a> (nge-<a href={overpassUrl} target="_blank" rel="noopener">Overpass API</a>) — imininingwane yendawo emephwe umphakathi
+              </Fragment>
+            : facility.data_source === 'hotosm'
+            ? <Fragment>
+                <a href={osmUrl} target="_blank" rel="noopener">OpenStreetMap</a> nge-<a href={hotosmUrl} target="_blank" rel="noopener">Humanitarian OpenStreetMap Team</a> — imininingwane yokumepha yosizo lwabantu
+              </Fragment>
+            : facility.data_source}</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <strong style="min-width: 100px; color: var(--text-muted);">Irekhodi:</strong>
+          <span><a href={osmUrl} target="_blank" rel="noopener">OSM {osmType} {osmId}</a></span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <strong style="min-width: 100px; color: var(--text-muted);">Kugcine ukuqinisekiswa:</strong>
+          <span>{facility.last_verified}</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <strong style="min-width: 100px; color: var(--text-muted);">Izinga lemininingwane:</strong>
+          <span>{'★'.repeat(facility.data_quality_score)}{'☆'.repeat(5 - facility.data_quality_score)} ({facility.data_quality_score}/5)</span>
+        </div>
+      </div>
+      <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+        Imininingwane yesikhungo &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">abanikeli be-OpenStreetMap</a>, itholakala ngaphansi kwe-<a href="https://opendatacommons.org/licenses/odbl/" target="_blank" rel="noopener">Open Database License</a>. Lolu lwazi lungase lungabonisi izinguquko zakamuva. Sincoma ukuthi ushayele isikhungo ucingo uqinisekise izinsizakalo namahora ngaphambi kokuvakasha. Uma lolu lwazi lungalungile, <a href="mailto:hello@clinicfinder.co.za">sithumelele i-imeyili</a> sizolubuyekeza.
+      </p>
+    </section>
+  </div>
+</Base>
