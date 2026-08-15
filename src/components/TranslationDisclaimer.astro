@@ -1,0 +1,62 @@
+---
+/**
+ * Machine-translation disclaimer. MANDATORY on every non-English page.
+ *
+ * ClinicFinder is YMYL health content. A reader must not act on a mistranslated
+ * dosage, eligibility rule or emergency instruction believing it was written by a
+ * clinician who speaks their language. The four clauses below are each load-bearing
+ * and none may be dropped for brevity:
+ *
+ *   machine        — nobody first-language has reviewed this
+ *   spelling       — orthography varies by region and medical terminology is unsettled;
+ *                    where no accepted term exists the English word is kept in brackets
+ *   authoritative  — the English page is the version to trust, linked directly
+ *   clinical       — confirm with a health worker, do not decide from this page
+ *
+ * Rendered in-language AND in English: a reader who cannot follow the translated
+ * warning is exactly the reader the warning is for.
+ *
+ * `tests/i18n-integrity.test.ts` asserts every built /xh/** and /zu/** page contains
+ * `[data-translation-disclaimer]`. A translated page without it is a bug, not a style
+ * choice — do not add a prop to suppress it.
+ */
+import { localeOf, stripLocale, type Locale } from '../i18n/config';
+import { strings, STRINGS } from '../i18n/strings';
+
+interface Props {
+  /** Defaults to the locale of the current URL. */
+  locale?: Locale;
+}
+
+const { locale = localeOf(Astro.url.pathname) } = Astro.props;
+const englishHref = stripLocale(Astro.url.pathname);
+const t = strings(locale);
+const en = STRINGS.en!;
+/** Only duplicate in English when the in-language text is actually different. */
+const showEnglishCopy = STRINGS[locale] !== null;
+---
+{locale !== 'en' && (
+  <aside
+    data-translation-disclaimer
+    data-locale={locale}
+    role="note"
+    style="background: #fffbeb; border-bottom: 2px solid #f59e0b; padding: 12px 0; font-size: 0.85rem; line-height: 1.5;"
+  >
+    <div class="container">
+      <p style="font-weight: 700; margin-bottom: 4px;">⚠️ {t.disclaimerHeading}</p>
+      <p>{t.disclaimerMachine} {t.disclaimerSpelling}</p>
+      <p style="margin-top: 4px;"><strong>{t.disclaimerAuthoritative}</strong> {t.disclaimerClinical}</p>
+      {showEnglishCopy && (
+        <p lang="en" style="margin-top: 8px; color: #78350f;">
+          <strong>In English:</strong> {en.disclaimerMachine} {en.disclaimerSpelling}
+          {' '}{en.disclaimerAuthoritative} {en.disclaimerClinical}
+        </p>
+      )}
+      <p style="margin-top: 8px;">
+        <a href={englishHref} hreflang="en-ZA" lang="en" style="font-weight: 600;">
+          {en.disclaimerReadEnglish} →
+        </a>
+      </p>
+    </div>
+  </aside>
+)}

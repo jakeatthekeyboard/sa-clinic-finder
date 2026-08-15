@@ -1,0 +1,31 @@
+---
+/**
+ * Language switcher.
+ *
+ * Links to the CORRESPONDING page, not the homepage — a reader on the ARV guide who
+ * taps isiZulu wants the ARV guide in isiZulu, and dumping them on the homepage is
+ * how a switcher gets ignored.
+ *
+ * Where a translation does not exist yet it is NOT offered as a dead link. Reading
+ * `TRANSLATED` rather than assuming the path exists is the whole reason that manifest
+ * is maintained; a switcher that guesses sends readers to 404s on a health site.
+ */
+import { LOCALES, LOCALE_CODES, localePath, localeOf, stripLocale } from '../i18n/config';
+import { hasTranslation } from '../i18n/translated';
+import { strings } from '../i18n/strings';
+
+const path = Astro.url.pathname;
+const current = localeOf(path);
+const base = stripLocale(path);
+const options = LOCALE_CODES.filter((code) => hasTranslation(base, code));
+const t = strings(current);
+---
+{options.length > 1 && (
+  <nav aria-label={t.switcherLabel} data-language-switcher style="display: flex; gap: 8px; align-items: center; font-size: 0.85rem;">
+    {options.map((code) => (
+      code === current
+        ? <span aria-current="true" lang={LOCALES[code].tag} style="color: #fff; font-weight: 700; text-decoration: underline;">{LOCALES[code].label}</span>
+        : <a href={localePath(base, code)} hreflang={LOCALES[code].tag} lang={LOCALES[code].tag} style="color: #fff; opacity: 0.85;">{LOCALES[code].label}</a>
+    ))}
+  </nav>
+)}

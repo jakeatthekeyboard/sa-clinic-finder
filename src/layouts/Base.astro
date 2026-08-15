@@ -1,18 +1,41 @@
 ---
+import { LOCALES, localeOf, localePath, stripLocale, type Locale } from '../i18n/config';
+import { availableLocales } from '../i18n/translated';
+import { strings } from '../i18n/strings';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import TranslationDisclaimer from '../components/TranslationDisclaimer.astro';
+
 interface Props {
   title: string;
   description: string;
   canonical?: string;
   jsonLd?: object | object[];
   noindex?: boolean;
+  /** Defaults to the locale of the current URL — a page under /xh never has to declare it. */
+  locale?: Locale;
 }
 
-const { title, description, canonical, jsonLd, noindex } = Astro.props;
+const { title, description, canonical, jsonLd, noindex, locale = localeOf(Astro.url.pathname) } = Astro.props;
 const url = canonical || Astro.url.href;
 const ogImage = new URL('/social-image.png', Astro.site ?? 'https://clinicfinder.co.za').href;
+
+const site = Astro.site ?? new URL('https://clinicfinder.co.za');
+const basePath = stripLocale(Astro.url.pathname);
+const t = strings(locale);
+const nav = (path: string) => localePath(path, locale);
+
+// hreflang: only emit alternates for translations that actually exist. Advertising a
+// page that 404s makes Google drop the whole cluster (see src/i18n/translated.ts).
+// Canonical stays self-referential — each locale is a distinct indexable document;
+// the reader-facing relationship is carried by the disclaimer's link to English.
+const alternates = availableLocales(basePath).map((code) => ({
+  tag: LOCALES[code].tag,
+  href: new URL(localePath(basePath, code), site).href,
+}));
+const xDefault = new URL(basePath, site).href;
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang={locale}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -22,6 +45,10 @@ const ogImage = new URL('/social-image.png', Astro.site ?? 'https://clinicfinder
   {noindex && <meta name="robots" content="noindex, nofollow" />}
   <meta name="robots" content="max-image-preview:large" />
   <link rel="canonical" href={url} />
+  {alternates.length > 1 && alternates.map((alt) => (
+    <link rel="alternate" hreflang={alt.tag} href={alt.href} />
+  ))}
+  {alternates.length > 1 && <link rel="alternate" hreflang="x-default" href={xDefault} />}
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly content" />
   <meta name="theme-color" content="#b91c1c" />
@@ -134,24 +161,28 @@ const ogImage = new URL('/social-image.png', Astro.site ?? 'https://clinicfinder
   </script>
   <header style="background: var(--primary); color: #fff; padding: 12px 0;">
     <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
-      <a href="/" style="color: #fff; font-weight: 700; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 6px;"><span style="font-size: 1.3rem; line-height: 1;" aria-hidden="true">🇿🇦</span> Clinic Finder SA</a>
-      <nav style="display: flex; gap: 16px; font-size: 0.9rem;" aria-label="Main navigation">
-        <a href="/clinics" style="color: #fff;">Provinces</a>
-        <a href="/services" style="color: #fff;">Services</a>
-        <a href="/search" style="color: #fff;">Search</a>
-        <a href="/guides" style="color: #fff;">Guides</a>
-      </nav>
+      <a href={nav('/')} style="color: #fff; font-weight: 700; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 6px;"><span style="font-size: 1.3rem; line-height: 1;" aria-hidden="true">🇿🇦</span> {t.brand}</a>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <nav style="display: flex; gap: 16px; font-size: 0.9rem;" aria-label="Main navigation">
+          <a href={nav('/clinics')} style="color: #fff;">{t.navProvinces}</a>
+          <a href={nav('/services')} style="color: #fff;">{t.navServices}</a>
+          <a href="/search" style="color: #fff;">{t.navSearch}</a>
+          <a href={nav('/guides')} style="color: #fff;">{t.navGuides}</a>
+        </nav>
+        <LanguageSwitcher />
+      </div>
     </div>
   </header>
+  <TranslationDisclaimer locale={locale} />
   <main>
     <slot />
   </main>
   <footer style="background: var(--bg-alt); border-top: 1px solid var(--border); padding: 24px 0; margin-top: 48px; font-size: 0.85rem; color: var(--text-muted);">
     <div class="container">
-      <p>Clinic Finder SA — Free directory of South Africa's public health facilities.</p>
-      <p style="margin-top: 8px;">Data sourced from OpenStreetMap and HOTOSM. Last updated April 2026. Not an official government site.</p>
-      <p style="margin-top: 8px;">This is a directory, not medical advice. Services, stock and operating hours vary by facility and by day — please phone ahead to confirm before travelling, and speak to a healthcare professional about treatment.</p>
-      <p style="margin-top: 8px;">If information is incorrect, <a href="/contact">let us know</a>.</p>
+      <p>{t.footerTagline}</p>
+      <p style="margin-top: 8px;">{t.footerSource}</p>
+      <p style="margin-top: 8px;">{t.footerNotAdvice}</p>
+      <p style="margin-top: 8px;">{t.footerCorrections} <a href="/contact">{t.footerCorrectionsLink}</a>.</p>
       <p style="margin-top: 8px;"><a href="/about">About</a> · <a href="/contact">Contact</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="/how-this-site-is-made">How This Site Is Made</a></p>
       <p style="margin-top: 8px;" data-ai-disclosure>AI disclosure: text on this page is AI-generated and published under human editorial review. <a href="/how-this-site-is-made">How this site is made</a>.</p>
     </div>
