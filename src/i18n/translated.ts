@@ -60,7 +60,20 @@ export const COVERAGE: Record<Exclude<Locale, 'en'>, LocaleCoverage> = {
       '/clinics',
       '/services',
     ],
-    provinces: [],
+    // All 9. PROVINCE_EDITORIAL is translated in full in
+    // src/data/i18n/province-editorial.xh.ts, so every province page may ship.
+    // NAMES, not slugs — these are the data join key (see provinceSlug below).
+    provinces: [
+      'Eastern Cape',
+      'Free State',
+      'Gauteng',
+      'KwaZulu-Natal',
+      'Limpopo',
+      'Mpumalanga',
+      'North West',
+      'Northern Cape',
+      'Western Cape',
+    ],
     services: [],
     facilities: false,
   },

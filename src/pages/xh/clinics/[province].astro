@@ -1,0 +1,333 @@
+---
+/**
+ * isiXhosa province page — sentence-for-sentence translation of
+ * src/pages/clinics/[province].astro.
+ *
+ * DATA AND LOGIC ARE SHARED, PRESENTATION IS NOT. The path set comes from
+ * `provincePaths()` in src/data/pages/paths.ts (the same enumeration the English and
+ * isiZulu routes use), and every count, breakdown and sort below mirrors the English
+ * template line for line. Only the prose differs.
+ *
+ * The route is GATED on coverage: `translatedProvinces('xh')` decides which provinces
+ * may emit a page at all, so a province whose editorial is not really translated
+ * cannot ship a half-English page under a disclaimer claiming it was.
+ *
+ * Province names, facility names, districts, phone numbers and every figure are
+ * carried across unchanged.
+ */
+import Base from '../../../layouts/Base.astro';
+import { facilities, PROVINCES, SERVICE_MAP, provinceSlug } from '../../../data/helpers';
+import { PROVINCE_EDITORIAL_XH } from '../../../data/i18n/province-editorial.xh';
+import { typeLabelXh, servicePlainXh } from '../../../data/i18n/labels.xh';
+import { provincePaths } from '../../../data/pages/paths';
+import { translatedProvinces } from '../../../i18n/translated';
+import { localiseHtmlFor, localeHrefFor } from '../../../i18n/links';
+
+export function getStaticPaths() {
+  const allowed = new Set(translatedProvinces('xh'));
+  return provincePaths().filter((p) => allowed.has(p.props.provinceName));
+}
+
+const LH = localiseHtmlFor('xh');
+// EVERY internal link on this page resolves through `localeHref`, not `localePath`.
+// This page links into three other coverage families — services, guides and the ~1,000
+// facility pages — and those ship as separate stages, so an unconditional /xh prefix
+// would 404 whichever of them has not landed yet. `localeHref` prefixes a family the
+// moment COVERAGE gains it and points at the English page until then, which is also
+// exactly what the language switcher on this page is telling the reader.
+const L = localeHrefFor('xh');
+
+const { provinceName } = Astro.props;
+const provFacilities = facilities
+  .filter(f => f.province === provinceName)
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+const typeBreakdown = provFacilities.reduce((acc, f) => {
+  acc[f.type] = (acc[f.type] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+const serviceBreakdown = Object.keys(SERVICE_MAP).map(key => ({
+  key,
+  label: servicePlainXh(key, SERVICE_MAP[key].plain),
+  count: provFacilities.filter(f => f.services[key]).length,
+})).filter(s => s.count > 0).sort((a, b) => b.count - a.count);
+
+const editorial = PROVINCE_EDITORIAL_XH[provinceName];
+
+const twentyFourHour = provFacilities.filter(f => f.operating_hours?.is_24_hour);
+const withARVs = provFacilities.filter(f => f.services?.arvs);
+const topService = serviceBreakdown[0];
+
+const faqs = [
+  {
+    q: `Zingaphi iikliniki zikarhulumente ezise-${provinceName}?`,
+    a: `Kukho amaziko empilo karhulumente angama-${provFacilities.length} e-${provinceName}. Kuwo kubandakanya ${Object.entries(typeBreakdown).map(([t, c]) => `${c} ${typeLabelXh(t).toLowerCase()}`).join(', ')}. ${twentyFourHour.length > 0 ? `Angama-${twentyFourHour.length} kula maziko asebenza iiyure ezingama-24.` : 'Amaxesha okuvula ayahluka kwiziko ngeziko.'}`,
+  },
+  {
+    q: `Ndingalufumana unyango lwe-ARV e-${provinceName}?`,
+    a: withARVs.length > 0
+      ? `Ewe. Amaziko karhulumente angama-${withARVs.length} kuma-${provFacilities.length} e-${provinceName} anikezela ngeenkonzo ze-ARV. Unyango lusimahla kumaziko karhulumente — akufuneki ncwadi yokuthunyelwa ukuze uqale, tyelela nje nayiphi na ikliniki enika ii-ARV uphethe isazisi sakho.`
+      : `Ukufumaneka kwee-ARV kuyahluka. Jonga amaphepha amaziko ngamanye ukubona uluhlu lweenkonzo lwangoku. Zonke iikliniki zikarhulumente zaseMzantsi Afrika zinika iincwadi zokuthunyelwa ze-ARV nokuba azizikhupheli apho.`,
+  },
+  {
+    q: `Zeziphi iinkonzo ezinikwa ziikliniki zikarhulumente e-${provinceName}?`,
+    a: topService
+      ? `Eyona nkonzo ifumaneka kakhulu ${topService.label.toLowerCase()} (inikwa kumaziko angama-${topService.count} kuma-${provFacilities.length}). Ezinye iinkonzo eziqhelekileyo zibandakanya ${serviceBreakdown.slice(1, 4).map(s => `${s.label.toLowerCase()} (${s.count})`).join(', ')}. Zonke iinkonzo kumaziko karhulumente zisimahla kubemi baseMzantsi Afrika.`
+      : `Iinkonzo ziyahluka kwiziko ngeziko. Zonke iikliniki zikarhulumente zinika ukhathalelo lwempilo lokuqala olusisiseko. Jonga amaphepha amaziko ngamanye ukubona iinkonzo ezithile.`,
+  },
+];
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Ikhaya', item: 'https://clinicfinder.co.za/xh' },
+    { '@type': 'ListItem', position: 2, name: 'Amaphondo', item: 'https://clinicfinder.co.za/xh/clinics' },
+    { '@type': 'ListItem', position: 3, name: provinceName },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
+
+const howToLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: `Indlela yokufumana ukhathalelo lwempilo karhulumente e-${provinceName}`,
+  description: `Isikhokelo esinyathelo nenyathelo sokutyelela ikliniki karhulumente e-${provinceName}, eMzantsi Afrika.`,
+  step: [
+    { '@type': 'HowToStep', name: 'Fumana iziko', text: `Sebenzisa isixhobo sokufumana iikliniki ukukhangela elinye lamaziko karhulumente angama-${provFacilities.length} e-${provinceName}. Cwangcisa ngohlobo lwenkonzo ukuba ufuna into ethile njengee-ARV okanye ukhathalelo lokubeleka.` },
+    { '@type': 'HowToStep', name: 'Jonga ukuba uphathe ntoni', text: 'Phatha isazisi sakho saseMzantsi Afrika okanye ipasipoti, ikhadi lekliniki (ukuba unalo), nawo nawaphi na amayeza owaselayo ngoku. Fika kwangethuba — iikliniki ezininzi zisebenza ngendlela yokuba ofike kuqala uncedwe kuqala.' },
+    { '@type': 'HowToStep', name: 'Tyelela ikliniki', text: 'Ngena nje kuyo nayiphi na ikliniki karhulumente — akufuneki dinga kukhathalelo lokuqala. Xelela umongikazi iimpawu zakho uze akuhlole, akunyange, okanye akuthumele.' },
+    { '@type': 'HowToStep', name: 'Landela ukuba uthunyelwe', text: 'Ukuba ikliniki ikuthumela esibhedlele, gcina incwadi yakho yokuthunyelwa. Izibhedlele zesithili zifuna incwadi yokuthunyelwa evela kwikliniki yokuqala ngaphandle kokuba yingxaki engxamisekileyo.' },
+  ],
+};
+
+const guideLinks = [
+  { title: 'Indlela yokufumana ikliniki ekufuphi nawe', slug: 'find-nearest-clinic' },
+  { title: 'Mawenze ntoni xa kukho ingxaki engxamisekileyo yezonyango', slug: 'medical-emergency-guide' },
+  { title: 'Isebenza njani inkqubo yokuthunyelwa esibhedlele eMzantsi Afrika', slug: 'hospital-referral-system' },
+  { title: 'CCMDD — ukulanda amayeza aqhubekayo ungemanga emgceni', slug: 'ccmdd-chronic-meds-pickup' },
+  { title: 'Ushedyuli wokugonywa kwabantwana (uMzantsi Afrika)', slug: 'child-immunisation-schedule' },
+  { title: 'Ucwangciso losapho nokuthintela ukukhulelwa', slug: 'family-planning-contraception' },
+];
+
+const guideCards = [
+  { href: '/guides/find-nearest-clinic', title: 'Indlela yokusebenzisa iikliniki zikarhulumente' },
+  { href: '/guides/hospital-referral-system', title: 'Inkqubo yokuthunyelwa esibhedlele' },
+  { href: '/guides/medical-emergency-guide', title: 'Isikhokelo sengxaki engxamisekileyo yezonyango' },
+  { href: '/guides/chronic-medication-management', title: 'Amayeza aqhubekayo' },
+  { href: '/guides/ccmdd-chronic-meds-pickup', title: 'Ukulanda amayeza e-CCMDD' },
+  { href: '/guides/hiv-testing-guide', title: 'Isikhokelo sovavanyo lwe-HIV' },
+];
+---
+<Base
+  title={`Iikliniki Zikarhulumente e-${provinceName} — Clinic Finder SA`}
+  description={`Fumana iikliniki nezibhedlele zikarhulumente ezingama-${provFacilities.length} e-${provinceName}, eMzantsi Afrika. Cwangcisa ngee-ARV, ukubeleka, unyango lwe-TB, neenkonzo ezingxamisekileyo.`}
+  jsonLd={[breadcrumbLd, faqJsonLd, howToLd]}
+>
+  <div class="container" style="padding: 32px 0;">
+    <nav style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+      <a href={L('/')}>Ikhaya</a> &rsaquo; <a href={L('/clinics')}>Amaphondo</a> &rsaquo; {provinceName}
+    </nav>
+    <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Iikliniki Zikarhulumente e-{provinceName}</h1>
+    <p style="color: var(--text-muted); margin-bottom: 24px;">amaziko empilo karhulumente angama-{provFacilities.length}</p>
+
+    {editorial && (
+      <section style="margin-bottom: 32px; line-height: 1.7;">
+        <div style="max-width: 720px; color: var(--text); font-size: 0.95rem;">
+          <p set:html={LH(editorial.intro)} />
+        </div>
+      </section>
+    )}
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;">
+      {Object.entries(typeBreakdown).map(([type, count]) => (
+        <span class="chip chip--type">{typeLabelXh(type)} ({count})</span>
+      ))}
+    </div>
+
+    <details style="margin-bottom: 24px;">
+      <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem;">Iinkonzo ezifumanekayo e-{provinceName}</summary>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;">
+        {serviceBreakdown.map(s => (
+          <span class="chip">{s.label} ({s.count})</span>
+        ))}
+      </div>
+    </details>
+
+    {editorial && (
+      <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 24px; margin-bottom: 32px;">
+        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--primary-dark);">Amacebiso empilo e-{provinceName}</h2>
+        <div style="display: grid; gap: 16px;">
+          {editorial.healthTips.map(tip => (
+            <div>
+              <strong style="font-size: 0.95rem;">{tip.title}</strong>
+              <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;" set:html={LH(tip.text)} />
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {editorial && (
+      <section style="border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 32px;">
+        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--primary-dark);">Mawuphathe ntoni xa usiya kwikliniki karhulumente</h2>
+        <ol style="list-style: none; padding: 0; display: grid; gap: 12px;">
+          {editorial.whatToBring.map((item, i) => (
+            <li style="display: flex; gap: 12px; font-size: 0.9rem;">
+              <span style="flex-shrink: 0; width: 24px; height: 24px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">{i + 1}</span>
+              <div>
+                <strong>{item.item}</strong>
+                <p style="color: var(--text-muted); margin-top: 2px; line-height: 1.5;">{item.note}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+
+    {editorial?.contacts && (
+      <section style="background: var(--bg-alt); border-radius: var(--radius); padding: 24px; margin-bottom: 32px;">
+        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--primary-dark);">Iinombolo zongxamiseko nezesebe lezempilo</h2>
+        <div style="display: grid; gap: 10px; font-size: 0.9rem;">
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <strong style="min-width: 140px; color: var(--text-muted); flex-shrink: 0;">I-ambulensi:</strong>
+            <span><a href={`tel:${editorial.contacts.ambulance}`}>{editorial.contacts.ambulance}</a> (inombolo yesizwe — isebenza kuyo nayiphi na ifowuni)</span>
+          </div>
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <strong style="min-width: 140px; color: var(--text-muted); flex-shrink: 0;">Isebe lezempilo:</strong>
+            <span>{editorial.contacts.healthDeptName} — <a href={`tel:${editorial.contacts.healthDeptPhone.replace(/\s/g, '')}`}>{editorial.contacts.healthDeptPhone}</a></span>
+          </div>
+          {editorial.contacts.crisisLine && (
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <strong style="min-width: 140px; color: var(--text-muted); flex-shrink: 0;">Umnxeba wengxaki:</strong>
+              <span>{editorial.contacts.crisisLine}</span>
+            </div>
+          )}
+          {editorial.contacts.complaintsLine && (
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <strong style="min-width: 140px; color: var(--text-muted); flex-shrink: 0;">Izikhalazo:</strong>
+              <span><a href={`tel:${editorial.contacts.complaintsLine.replace(/\s/g, '')}`}>{editorial.contacts.complaintsLine}</a> (amalungelo esigulana &amp; izikhalazo ngeenkonzo)</span>
+            </div>
+          )}
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <strong style="min-width: 140px; color: var(--text-muted); flex-shrink: 0;">Kuyo nayiphi na iselula:</strong>
+            <span><a href="tel:112">112</a> (ungxamiseko) — isebenza nangaphandle kwe-airtime</span>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {editorial?.districtHighlights && editorial.districtHighlights.length > 0 && (
+      <section style="margin-bottom: 32px;">
+        <h2 style="font-size: 1.15rem; margin-bottom: 16px; color: var(--primary-dark);">Izithili zempilo e-{provinceName}</h2>
+        <div style="display: grid; gap: 16px;">
+          {editorial.districtHighlights.map(d => (
+            <div style="border-left: 3px solid var(--primary); padding-left: 16px;">
+              <strong style="font-size: 0.95rem;">{d.name}</strong>
+              <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">{d.context}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {editorial?.deepDive && editorial.deepDive.length > 0 && (
+      <section style="margin-bottom: 32px; max-width: 720px;">
+        {editorial.deepDive.map(section => (
+          <div style="margin-bottom: 28px;">
+            <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">{section.heading}</h2>
+            <p style="font-size: 0.9rem; line-height: 1.7; color: var(--text);" set:html={LH(section.body)} />
+          </div>
+        ))}
+      </section>
+    )}
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Izikhokelo ezincedayo</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Inkcazelo esebenzayo yokutyelela iikliniki zikarhulumente e-{provinceName}:</p>
+      <div style="display: grid; gap: 8px;">
+        {guideLinks.map(g => (
+          <a href={L(`/guides/${g.slug}`)} style="display: block; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; color: var(--text); text-decoration: none; transition: border-color 0.15s;">
+            {g.title}
+          </a>
+        ))}
+      </div>
+      <a href={L('/guides')} style="display: inline-block; margin-top: 12px; font-size: 0.85rem; color: var(--primary-dark);">Jonga zonke izikhokelo &rarr;</a>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 16px;">Imibuzo Ebuzwa Rhoqo</h2>
+      {faqs.map(f => (
+        <details style="border-bottom: 1px solid var(--border); padding: 12px 0;">
+          <summary style="cursor: pointer; font-weight: 600; font-size: 0.95rem;">{f.q}</summary>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;">{f.a}</p>
+        </details>
+      ))}
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Iinkonzo zempilo e-{provinceName}</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Fumana amaziko anikezela ngeenkonzo ezithile kweli phondo:</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        {serviceBreakdown.slice(0, 8).map(s => (
+          <a href={L(`/services/${SERVICE_MAP[s.key].slug}`)} style="display: inline-block; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; color: var(--text); text-decoration: none; transition: border-color 0.15s;">
+            {s.label} <span style="color: var(--text-muted);">({s.count})</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Amanye amaphondo</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        {PROVINCES.filter(p => p !== provinceName).map(p => (
+          <a href={L(`/clinics/${provinceSlug(p)}`)} style="display: inline-block; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; color: var(--text); text-decoration: none; transition: border-color 0.15s;">
+            {p}
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Izikhokelo zempilo</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Izikhokelo ezisebenzayo ezikuncedayo ukusebenzisa iinkonzo zempilo karhulumente:</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem;">
+        {guideCards.map(g => (
+          <a href={L(g.href)} style="display: block; padding: 0.75rem 1rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 500;">{g.title}</a>
+        ))}
+      </div>
+      <p style="margin-top: 0.75rem;"><a href={L('/guides')} style="color: var(--primary-dark); font-weight: 500; font-size: 0.9rem;">Zonke izikhokelo &rarr;</a></p>
+    </section>
+
+    <h2 style="font-size: 1.15rem; margin-bottom: 16px;">Onke amaziko e-{provinceName}</h2>
+    <div style="display: grid; gap: 12px;">
+      {provFacilities.map(f => (
+        <a href={L(f.url_path)} class="card" style="text-decoration: none; color: var(--text); display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong>{f.name}</strong>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
+              {typeLabelXh(f.type)}
+              {f.district && ` · ${f.district}`}
+              {f.operating_hours.is_24_hour && ' · iiyure ezingama-24'}
+            </div>
+          </div>
+          <div style="display: flex; gap: 4px; flex-shrink: 0;">
+            {Object.entries(f.services).filter(([,v]) => v).slice(0, 3).map(([k]) => (
+              <span class="chip" style="font-size: 0.7rem; padding: 2px 6px;">{servicePlainXh(k, SERVICE_MAP[k]?.plain || k)}</span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

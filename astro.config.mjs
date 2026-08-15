@@ -43,15 +43,27 @@ function isStructural(path) {
   // this site" is a first-order E-E-A-T signal. It has zero impressions, so it can never
   // enter the impressions-derived manifest on its own; the structural list is the only
   // place a deliberate nomination survives a manifest refresh.
-  // Translated locales (#1 isiXhosa / #2 isiZulu): only the locale homepage and its guides
-  // hub are nominated. Both are <=2 clicks from the English homepage via the language
-  // switcher, so they meet the sitemap-growth criterion. The individual translated
-  // guides, /xh|zu/clinics and /xh|zu/services are deliberately NOT nominated — per
-  // pipeline sitemap discipline a new URL earns inclusion by demonstrating demand, and
-  // these are reachable through internal links and the switcher in the meantime.
+  // Translated locales (#1 isiXhosa / #2 isiZulu): only the locale HUB pages are
+  // nominated — the homepage, the guides hub and (added with the isiXhosa province,
+  // service and facility routes) the provinces and services hubs. All four are <=2
+  // clicks from the English homepage via the language switcher, so they meet the
+  // sitemap-growth criterion of structural reachability.
+  //
+  // Everything BELOW those hubs is deliberately NOT nominated: the individual translated
+  // guides, the 9 translated province pages, the translated service pages, and above all
+  // the ~1,000 translated facility detail pages. Per pipeline sitemap discipline a new
+  // URL earns inclusion by demonstrating demand, and CF must not outrun indexing —
+  // declaring a locale's facility corpus would roughly TRIPLE the submitted set on a site
+  // whose whole growth story is that it was left alone. They stay reachable through
+  // internal links and the switcher in the meantime.
+  //
+  // Note the `structuralPrefixes` loop below cannot reach these: a locale path has one
+  // extra segment, so `/xh/clinics` does not start with `/clinics/` and
+  // `/xh/clinics/gauteng` fails the <=3-segment test. Nomination here is the only route in.
   if (['/', '/clinics', '/services', '/guide', '/guides', '/search',
        '/how-this-site-is-made', '/about',
-       '/xh', '/xh/guides', '/zu', '/zu/guides'].includes(path)) return true;
+       '/xh', '/xh/guides', '/xh/clinics', '/xh/services',
+       '/zu', '/zu/guides'].includes(path)) return true;
   for (const prefix of structuralPrefixes) {
     if (path.startsWith(prefix) && path.split('/').length <= 3) return true;
   }
