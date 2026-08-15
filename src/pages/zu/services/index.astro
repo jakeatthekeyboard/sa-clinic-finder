@@ -1,11 +1,13 @@
 ---
 // isiZulu translation of src/pages/services/index.astro (issue #2).
-// Service labels (svc.plain) come from shared data used by the untranslated
-// /services/<slug> pages and stay in English so the two agree.
+// Service labels now have an isiZulu variant (src/data/i18n/zu.ts). The shared English
+// SERVICE_MAP values are never edited in place — the English and isiXhosa pages read
+// the same map, so translating a label there would corrupt both.
 import Base from '../../../layouts/Base.astro';
 import { facilities, SERVICE_MAP } from '../../../data/helpers';
 import { SERVICE_EDITORIAL } from '../../../data/service-editorial';
 import { localePath } from '../../../i18n/config';
+import { servicePlainZu, zuHref } from '../../../data/i18n/zu';
 
 const zu = (path: string) => localePath(path, 'zu');
 
@@ -44,8 +46,8 @@ const jsonLd = {
     itemListElement: services.map((s, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      url: `https://clinicfinder.co.za/services/${s.slug}`,
-      name: s.plain,
+      url: `https://clinicfinder.co.za${zuHref(`/services/${s.slug}`)}`,
+      name: servicePlainZu(s.key),
     })),
   },
 };
@@ -65,10 +67,10 @@ const jsonLd = {
     </p>
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;">
       {services.map(s => (
-        <a href={`/services/${s.slug}`} class="card" style="text-decoration: none; color: var(--text);">
+        <a href={zuHref(`/services/${s.slug}`)} class="card" style="text-decoration: none; color: var(--text);">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
             <div>
-              <strong style="font-size: 1.05rem;">{s.plain}</strong>
+              <strong style="font-size: 1.05rem;">{servicePlainZu(s.key)}</strong>
               {SERVICE_DESCRIPTIONS[s.key] && (
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">{SERVICE_DESCRIPTIONS[s.key]}</p>
               )}
@@ -87,7 +89,7 @@ const jsonLd = {
         Ngena nje kunoma yimuphi umtholampilo womphakathi utshele umhlengikazi izimpawu zakho. Uzokuhlola, anqume ukuthi udinga ukunakekelwa okunjani, bese ekwelapha lapho noma akuthumele esikhungweni esifanele. Awudingi ukwazi "igama lensizakalo" — chaza nje ukuthi kukhona okungahambi kahle.
       </p>
       <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-        <a href="/search" class="btn btn--primary" style="font-size: 0.9rem;">Thola umtholampilo oseduze nawe</a>
+        <a href={zuHref('/search')} class="btn btn--primary" style="font-size: 0.9rem;">Thola umtholampilo oseduze nawe</a>
         <a href={zu('/guides')} class="btn btn--outline" style="font-size: 0.9rem;">Bheka imihlahlandlela yezempilo</a>
       </div>
     </section>

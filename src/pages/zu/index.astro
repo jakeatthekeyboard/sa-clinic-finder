@@ -4,6 +4,7 @@
 import Base from '../../layouts/Base.astro';
 import { facilities, PROVINCES, SERVICE_MAP, provinceSlug } from '../../data/helpers';
 import { localePath } from '../../i18n/config';
+import { zuHref } from '../../data/i18n/zu';
 
 const totalFacilities = facilities.filter(f => f.province !== '').length;
 const provinceStats = PROVINCES.map(p => ({
@@ -96,7 +97,7 @@ const datasetJsonLd = {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           Bhala imitholampilo eseduze nami
         </button>
-        <a href="/search" class="btn btn--outline" style="border-color: #fff; color: #fff; font-size: 0.95rem; padding: 12px 22px;">
+        <a href={zuHref('/search')} class="btn btn--outline" style="border-color: #fff; color: #fff; font-size: 0.95rem; padding: 12px 22px;">
           Noma bheka &amp; useshe
         </a>
       </div>
@@ -214,7 +215,7 @@ const datasetJsonLd = {
         <p>Amaphesenti angu-84% abantu baseNingizimu Afrika bathembele ohlelweni lwezempilo lomphakathi. Ukuthola umtholampilo ofanele akufanele kube nzima.</p>
         <p style="margin-top: 12px;">I-Clinic Finder SA iwuhlu lwamahhala, oluzimele, lwemitholampilo nezibhedlela zomphakathi. Sikukhombisa izinsizakalo ezitholakalayo, ukuthi isikhungo sikuphi, nokuthi ungafika kanjani lapho — kunoma yiluphi ucingo, kusetshenziswa idatha encane.</p>
         <p style="margin-top: 12px;">Asihlangene nanoma yimuphi umnyango kahulumeni. Imininingwane yethu ivela ku-OpenStreetMap nakwi-Humanitarian Data Exchange, iqinisekiswa ngemithombo esemthethweni lapho kwenzeka khona.</p>
-        <p style="margin-top: 12px;"><a href="/guide">Funda ukuthi ulisebenzisa kanjani leli sayithi</a> — sesha, bheka, hlunga, thola izikhombisi zendlela, futhi wabelane nge-WhatsApp.</p>
+        <p style="margin-top: 12px;"><a href={zuHref('/guide')}>Funda ukuthi ulisebenzisa kanjani leli sayithi</a> — sesha, bheka, hlunga, thola izikhombisi zendlela, futhi wabelane nge-WhatsApp.</p>
       </div>
     </div>
   </section>

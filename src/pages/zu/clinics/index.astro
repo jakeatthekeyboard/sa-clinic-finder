@@ -1,10 +1,13 @@
 ---
 // isiZulu translation of src/pages/clinics/index.astro (issue #2).
-// Province names and facility-type labels come from shared data and stay in English —
-// they are proper nouns / identifiers a reader repeats at a clinic counter.
+// Province names come from shared data and stay in English — they are proper nouns a
+// reader repeats at a clinic counter. Facility-type labels now have an isiZulu variant
+// (src/data/i18n/zu.ts); the shared English values are never edited in place because
+// the English and isiXhosa pages read the same map.
 import Base from '../../../layouts/Base.astro';
-import { facilities, PROVINCES, SERVICE_MAP, provinceSlug, typeLabel } from '../../../data/helpers';
+import { facilities, PROVINCES, SERVICE_MAP, provinceSlug } from '../../../data/helpers';
 import { localePath } from '../../../i18n/config';
+import { typeLabelZu, servicePlainZu, zuHref } from '../../../data/i18n/zu';
 
 const zu = (path: string) => localePath(path, 'zu');
 
@@ -70,7 +73,7 @@ const faqJsonLd = {
 
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 32px;">
       {provinceStats.map(p => (
-        <a href={`/clinics/${p.slug}`} class="card" style="text-decoration: none; color: var(--text);">
+        <a href={zuHref(`/clinics/${p.slug}`)} class="card" style="text-decoration: none; color: var(--text);">
           <strong style="font-size: 1.1rem;">{p.name}</strong>
           <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
             izikhungo ezingu-{p.count} · ezingu-{p.twentyFourHour} zivulwe amahora angu-24
@@ -100,7 +103,7 @@ const faqJsonLd = {
       <h2 style="font-size: 1.15rem; margin-bottom: 16px;">Ukwehlukaniswa kwezikhungo kuzwelonke</h2>
       <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
         {Object.entries(typeBreakdown).sort((a, b) => b[1] - a[1]).map(([type, count]) => (
-          <span class="chip chip--type">{typeLabel(type)} ({count})</span>
+          <span class="chip chip--type">{typeLabelZu(type)} ({count})</span>
         ))}
       </div>
       <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
@@ -125,8 +128,8 @@ const faqJsonLd = {
       </p>
       <div style="display: flex; flex-wrap: wrap; gap: 8px;">
         {Object.entries(SERVICE_MAP).map(([key, svc]) => (
-          <a href={`/services/${svc.slug}`} class="chip" style="text-decoration: none; font-size: 0.85rem; padding: 6px 12px;">
-            {svc.plain}
+          <a href={zuHref(`/services/${svc.slug}`)} class="chip" style="text-decoration: none; font-size: 0.85rem; padding: 6px 12px;">
+            {servicePlainZu(key)}
           </a>
         ))}
       </div>

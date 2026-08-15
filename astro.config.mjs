@@ -63,7 +63,7 @@ function isStructural(path) {
   if (['/', '/clinics', '/services', '/guide', '/guides', '/search',
        '/how-this-site-is-made', '/about',
        '/xh', '/xh/guides', '/xh/clinics', '/xh/services',
-       '/zu', '/zu/guides'].includes(path)) return true;
+       '/zu', '/zu/guides', '/zu/clinics', '/zu/services'].includes(path)) return true;
   for (const prefix of structuralPrefixes) {
     if (path.startsWith(prefix) && path.split('/').length <= 3) return true;
   }
