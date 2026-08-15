@@ -22,11 +22,51 @@ interface Facility {
  * Each override replaces the generated context paragraph and can add
  * facility-specific tips beyond the generic service-based tips.
  */
-interface FacilityOverride {
+export interface FacilityOverride {
   /** Replaces the auto-generated context paragraph */
   context: string;
   /** Additional tips specific to this facility (appended to service-based tips) */
   facilityTips: string[];
+}
+
+/**
+ * Everything this generator says in words, bundled so a LOCALE can supply its own copy
+ * without forking the generator.
+ *
+ * The composition rules — which override wins, which service flags produce which tips,
+ * in what order the three context sentences concatenate — are behaviour, and behaviour
+ * must stay in ONE place. A second copy is a second thing to keep in step, and the copy
+ * that drifts is always the translated one: silently, across ~1,000 pages that nobody
+ * reviews in that language. So `generateFacilityEditorial` below remains the only
+ * implementation and a locale contributes only strings.
+ *
+ * `serviceTips` is keyed by the FACILITY SERVICE FLAG, not by SERVICE_MAP key — note
+ * `dental_services` and `child_immunisation`, which is what the facility records carry.
+ * A missing key produces no tip for that service, exactly as an absent flag does.
+ */
+export interface FacilityEditorialStrings {
+  /** Hand-written per-facility copy, keyed by facility slug. */
+  overrides: Record<string, FacilityOverride>;
+  /** Phrase describing what this level of facility does, keyed by facility type. */
+  typeContext: Record<string, string>;
+  /** Province-level access context, keyed by the English province name (a data join key). */
+  provinceHealthContext: Record<string, string>;
+  /**
+   * Phrase used when `typeContext` has no entry for the facility's type — `satellite_clinic`
+   * is the live case. Optional only so a locale bundle written before this field existed
+   * still type-checks; a locale that omits it falls back to the ENGLISH phrase inside its
+   * own sentence, which is exactly the half-translated page this project refuses to ship,
+   * so every locale bundle should set it.
+   */
+  typeContextFallback?: string;
+  /** One tip per service flag present on the facility. */
+  serviceTips: Record<string, string>;
+  /** Sentence 1: names the facility, its level and where it is. */
+  sentenceBase: (name: string, typeDesc: string, province: string, district: string) => string;
+  /** Appended when the facility is open 24 hours. Keeps its leading space. */
+  sentence24h: string;
+  /** Appended when 4+ services are verified. Keeps its leading space. */
+  sentenceServiceCount: (count: number) => string;
 }
 
 const FACILITY_OVERRIDES: Record<string, FacilityOverride> = {
@@ -182,49 +222,65 @@ const PROVINCE_HEALTH_CONTEXT: Record<string, string> = {
   'Western Cape': 'The Western Cape has the most developed public health infrastructure outside Gauteng, with strong referral pathways from community clinics to Tygerberg and Groote Schuur hospitals.',
 };
 
-function getServiceTips(services: Record<string, boolean>): string[] {
+/**
+ * The service tips, keyed by the facility service FLAG that switches each one on.
+ * Order matters — it is the order the tips render in — so this is an ordered list of
+ * keys plus a lookup, not a bare object iteration, which would tie the reader-facing
+ * order to a JS property-enumeration detail.
+ */
+const SERVICE_TIP_ORDER = [
+  'arv_treatment',
+  'tb_treatment',
+  'maternity_antenatal',
+  'chronic_medication',
+  'dental_services',
+  'mental_health',
+  'family_planning',
+  'child_immunisation',
+] as const;
+
+const SERVICE_TIPS_EN: Record<string, string> = {
+  arv_treatment: 'This facility provides <a href="/services/arvs">ARV treatment</a>. You can initiate same-day ART — bring your ID document and arrive before 10am for the shortest wait. Read our <a href="/guides/how-to-get-arvs">guide to starting ARVs</a> for what to expect.',
+  tb_treatment: 'TB screening and treatment is available here through the <a href="/services/tb">DOTS programme</a>. Sputum tests take 2-3 days for results. If you have a persistent cough lasting more than two weeks, get tested — early treatment dramatically improves outcomes.',
+  maternity_antenatal: '<a href="/services/maternity">Maternity and antenatal care</a> is available. Register as early as possible in your pregnancy — before 20 weeks is recommended. Bring your ID and any previous pregnancy records. Read our <a href="/guides/free-maternity-care">free maternity care guide</a> for a complete checklist.',
+  chronic_medication: 'This facility dispenses <a href="/services/chronic-medication">chronic medication</a>. If you\'re stable on treatment, ask about the <a href="/guides/ccmdd-chronic-meds-pickup">CCMDD programme</a> — it lets you collect medication from a pharmacy or pickup point closer to home instead of queuing at the clinic each month.',
+  dental_services: '<a href="/services/dental">Dental services</a> are available. Public dental care focuses on extractions and emergency treatment — arrive early as dental queues fill fast. See our <a href="/guides/dental-care-public-clinics">dental care guide</a> for what public clinics cover.',
+  mental_health: 'This facility offers <a href="/services/mental-health">mental health services</a>. You can self-refer for an initial assessment — no referral letter needed. Our <a href="/guides/mental-health-services">mental health services guide</a> explains what support is available at each level of care.',
+  family_planning: '<a href="/services/family-planning">Family planning services</a> are available, including contraception counselling and provision. No appointment or referral needed. See our <a href="/guides/family-planning-contraception">contraception guide</a> for available methods.',
+  child_immunisation: '<a href="/services/immunisation">Child immunisation</a> is provided according to the national schedule. Bring your child\'s Road to Health booklet. Our <a href="/guides/child-immunisation-schedule">immunisation schedule guide</a> shows which vaccines are due at each age.',
+};
+
+/** The English copy bundle. The default, so every existing caller is unchanged. */
+export const FACILITY_EDITORIAL_EN: FacilityEditorialStrings = {
+  overrides: FACILITY_OVERRIDES,
+  typeContext: TYPE_CONTEXT,
+  provinceHealthContext: PROVINCE_HEALTH_CONTEXT,
+  typeContextFallback: 'public healthcare',
+  serviceTips: SERVICE_TIPS_EN,
+  sentenceBase: (name, typeDesc, province, district) =>
+    `${name} is a ${typeDesc} facility in ${province}${district ? ', ' + district + ' district' : ''}.`,
+  sentence24h:
+    ' The facility operates 24 hours, including weekends and public holidays — no appointment is needed for emergencies.',
+  sentenceServiceCount: (count) =>
+    ` With ${count} verified services, this is a well-equipped facility for comprehensive primary care.`,
+};
+
+function getServiceTips(services: Record<string, boolean>, strings: FacilityEditorialStrings): string[] {
   const tips: string[] = [];
-
-  if (services.arv_treatment) {
-    tips.push('This facility provides <a href="/services/arvs">ARV treatment</a>. You can initiate same-day ART — bring your ID document and arrive before 10am for the shortest wait. Read our <a href="/guides/how-to-get-arvs">guide to starting ARVs</a> for what to expect.');
+  for (const key of SERVICE_TIP_ORDER) {
+    if (services[key] && strings.serviceTips[key]) tips.push(strings.serviceTips[key]);
   }
-
-  if (services.tb_treatment) {
-    tips.push('TB screening and treatment is available here through the <a href="/services/tb">DOTS programme</a>. Sputum tests take 2-3 days for results. If you have a persistent cough lasting more than two weeks, get tested — early treatment dramatically improves outcomes.');
-  }
-
-  if (services.maternity_antenatal) {
-    tips.push('<a href="/services/maternity">Maternity and antenatal care</a> is available. Register as early as possible in your pregnancy — before 20 weeks is recommended. Bring your ID and any previous pregnancy records. Read our <a href="/guides/free-maternity-care">free maternity care guide</a> for a complete checklist.');
-  }
-
-  if (services.chronic_medication) {
-    tips.push('This facility dispenses <a href="/services/chronic-medication">chronic medication</a>. If you\'re stable on treatment, ask about the <a href="/guides/ccmdd-chronic-meds-pickup">CCMDD programme</a> — it lets you collect medication from a pharmacy or pickup point closer to home instead of queuing at the clinic each month.');
-  }
-
-  if (services.dental_services) {
-    tips.push('<a href="/services/dental">Dental services</a> are available. Public dental care focuses on extractions and emergency treatment — arrive early as dental queues fill fast. See our <a href="/guides/dental-care-public-clinics">dental care guide</a> for what public clinics cover.');
-  }
-
-  if (services.mental_health) {
-    tips.push('This facility offers <a href="/services/mental-health">mental health services</a>. You can self-refer for an initial assessment — no referral letter needed. Our <a href="/guides/mental-health-services">mental health services guide</a> explains what support is available at each level of care.');
-  }
-
-  if (services.family_planning) {
-    tips.push('<a href="/services/family-planning">Family planning services</a> are available, including contraception counselling and provision. No appointment or referral needed. See our <a href="/guides/family-planning-contraception">contraception guide</a> for available methods.');
-  }
-
-  if (services.child_immunisation) {
-    tips.push('<a href="/services/immunisation">Child immunisation</a> is provided according to the national schedule. Bring your child\'s Road to Health booklet. Our <a href="/guides/child-immunisation-schedule">immunisation schedule guide</a> shows which vaccines are due at each age.');
-  }
-
   return tips;
 }
 
-export function generateFacilityEditorial(facility: Facility): { context: string; tips: string[] } {
+export function generateFacilityEditorial(
+  facility: Facility,
+  strings: FacilityEditorialStrings = FACILITY_EDITORIAL_EN,
+): { context: string; tips: string[] } {
   // Check for per-facility editorial override
-  const override = FACILITY_OVERRIDES[facility.slug];
+  const override = strings.overrides[facility.slug];
   if (override) {
-    const serviceTips = getServiceTips(facility.services);
+    const serviceTips = getServiceTips(facility.services, strings);
     return {
       context: override.context,
       tips: [...serviceTips, ...override.facilityTips],
@@ -232,26 +288,26 @@ export function generateFacilityEditorial(facility: Facility): { context: string
   }
 
   // Default: generate from metadata
-  const typeDesc = TYPE_CONTEXT[facility.type] || 'public healthcare';
-  const provinceContext = PROVINCE_HEALTH_CONTEXT[facility.province] || '';
+  const typeDesc = strings.typeContext[facility.type] || strings.typeContextFallback || 'public healthcare';
+  const provinceContext = strings.provinceHealthContext[facility.province] || '';
 
   const activeServiceCount = Object.values(facility.services).filter(Boolean).length;
 
-  let context = `${facility.name} is a ${typeDesc} facility in ${facility.province}${facility.district ? ', ' + facility.district + ' district' : ''}.`;
+  let context = strings.sentenceBase(facility.name, typeDesc, facility.province, facility.district);
 
   if (facility.operating_hours.is_24_hour) {
-    context += ' The facility operates 24 hours, including weekends and public holidays — no appointment is needed for emergencies.';
+    context += strings.sentence24h;
   }
 
   if (activeServiceCount >= 4) {
-    context += ` With ${activeServiceCount} verified services, this is a well-equipped facility for comprehensive primary care.`;
+    context += strings.sentenceServiceCount(activeServiceCount);
   }
 
   if (provinceContext) {
     context += ' ' + provinceContext;
   }
 
-  const tips = getServiceTips(facility.services);
+  const tips = getServiceTips(facility.services, strings);
 
   return { context, tips };
 }

@@ -95,7 +95,16 @@ export const COVERAGE: Record<Exclude<Locale, 'en'>, LocaleCoverage> = {
       'immunisation',
       'hiv_testing',
     ],
-    facilities: false,
+    // The three sources a facility page renders from are all translated:
+    // src/data/i18n/facility-types-editorial.xh.ts (the referral-hierarchy editorial),
+    // src/data/i18n/facility-editorial.xh.ts (the isiXhosa copy bundle the SHARED
+    // generator in src/data/facility-editorial.ts composes from — the 10 hand-written
+    // overrides, the type and province tables, the service tips and the three sentence
+    // templates) and the facility-page UI strings in the route itself.
+    // Per the note above this is a FAMILY flag, not a list — the locale earns all ~1,000
+    // pages at once because they share those sources, and enumerating them here would rot
+    // the moment a facility enters the OSM extract.
+    facilities: true,
   },
   zu: {
     paths: [
