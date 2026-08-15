@@ -156,7 +156,24 @@ export const COVERAGE: Record<Exclude<Locale, 'en'>, LocaleCoverage> = {
       'Northern Cape',
       'Western Cape',
     ],
-    services: [],
+    // All 11 SERVICE_MAP keys. Ten of them have a translated SERVICE_EDITORIAL entry in
+    // src/data/i18n/service-editorial.zu.ts; emergency_24h has no editorial entry in the
+    // ENGLISH source either, so that page renders from the route's own generic prose —
+    // which is translated. Listing it here is therefore honest, not a wish: the isiZulu
+    // page carries exactly what the English one does.
+    services: [
+      'arv_treatment',
+      'tb_treatment',
+      'maternity_antenatal',
+      'chronic_medication',
+      'emergency_24h',
+      'dental',
+      'mental_health',
+      'child_health',
+      'family_planning',
+      'immunisation',
+      'hiv_testing',
+    ],
     // The three sources a facility page renders from are all translated:
     // src/data/i18n/facility-types-editorial.zu.ts (the referral-hierarchy editorial),
     // src/data/i18n/facility-editorial.zu.ts (the generated per-facility prose and the
