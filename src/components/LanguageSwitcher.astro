@@ -1,14 +1,24 @@
 ---
 /**
- * Language switcher.
+ * Language switcher. Renders on EVERY page, in every locale, without exception.
  *
- * Links to the CORRESPONDING page, not the homepage — a reader on the ARV guide who
- * taps isiZulu wants the ARV guide in isiZulu, and dumping them on the homepage is
- * how a switcher gets ignored.
+ * Two rules, and the second is the one that is easy to get wrong:
  *
- * Where a translation does not exist yet it is NOT offered as a dead link. Reading
- * `TRANSLATED` rather than assuming the path exists is the whole reason that manifest
- * is maintained; a switcher that guesses sends readers to 404s on a health site.
+ *  1. It links to the CORRESPONDING page, not the homepage. A reader on the ARV
+ *     guide who taps isiZulu wants the ARV guide in isiZulu; dumping them on the
+ *     homepage is how a switcher gets ignored.
+ *
+ *  2. It never emits a link to a page that does not exist. During a rollout some
+ *     pages are translated and some are not, and a switcher that guesses sends
+ *     readers to 404s on a health site. An untranslated locale is still SHOWN —
+ *     muted, non-interactive, and marked up as such — so every reader learns the
+ *     site speaks their language even on a page that has not been reached yet.
+ *     Hiding it instead (the previous behaviour, `options.length > 1`) meant the
+ *     switcher was absent from ~1,000 facility pages: invisible to the reader and
+ *     invisible to us, because every one of those pages still returned 200.
+ *
+ * `tests/i18n-integrity.test.ts` asserts a switcher on every built page and that
+ * every href it emits resolves to a built page.
  */
 import { LOCALES, LOCALE_CODES, localePath, localeOf, stripLocale } from '../i18n/config';
 import { hasTranslation } from '../i18n/translated';
@@ -17,15 +27,39 @@ import { strings } from '../i18n/strings';
 const path = Astro.url.pathname;
 const current = localeOf(path);
 const base = stripLocale(path);
-const options = LOCALE_CODES.filter((code) => hasTranslation(base, code));
 const t = strings(current);
 ---
-{options.length > 1 && (
-  <nav aria-label={t.switcherLabel} data-language-switcher style="display: flex; gap: 8px; align-items: center; font-size: 0.85rem;">
-    {options.map((code) => (
-      code === current
-        ? <span aria-current="true" lang={LOCALES[code].tag} style="color: #fff; font-weight: 700; text-decoration: underline;">{LOCALES[code].label}</span>
-        : <a href={localePath(base, code)} hreflang={LOCALES[code].tag} lang={LOCALES[code].tag} style="color: #fff; opacity: 0.85;">{LOCALES[code].label}</a>
-    ))}
-  </nav>
-)}
+<nav
+  aria-label={t.switcherLabel}
+  data-language-switcher
+  style="display: flex; gap: 8px; align-items: center; font-size: 0.85rem; flex-wrap: wrap;"
+>
+  {LOCALE_CODES.map((code) => {
+    const meta = LOCALES[code];
+    if (code === current) {
+      return (
+        <span aria-current="true" lang={meta.tag} style="color: #fff; font-weight: 700; text-decoration: underline;">
+          {meta.label}
+        </span>
+      );
+    }
+    if (hasTranslation(base, code)) {
+      return (
+        <a href={localePath(base, code)} hreflang={meta.tag} lang={meta.tag} style="color: #fff; opacity: 0.85;">
+          {meta.label}
+        </a>
+      );
+    }
+    return (
+      <span
+        lang={meta.tag}
+        aria-disabled="true"
+        data-untranslated
+        title={`${meta.label}: not available for this page yet`}
+        style="color: #fff; opacity: 0.45; text-decoration: line-through;"
+      >
+        {meta.label}
+      </span>
+    );
+  })}
+</nav>

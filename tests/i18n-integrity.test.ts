@@ -4,7 +4,7 @@ import { readFileSync, existsSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
 import * as cheerio from 'cheerio';
 import { LOCALES, LOCALE_CODES, localePath, stripLocale, localeOf } from '../src/i18n/config';
-import { TRANSLATED } from '../src/i18n/translated';
+import { COVERAGE } from '../src/i18n/translated';
 import { STRINGS } from '../src/i18n/strings';
 
 /**
@@ -71,8 +71,8 @@ describe('path helpers', () => {
 
 describe('translation manifest', () => {
   it('lists only canonical English paths, never prefixed ones', () => {
-    for (const [code, paths] of Object.entries(TRANSLATED)) {
-      for (const p of paths) {
+    for (const [code, cov] of Object.entries(COVERAGE)) {
+      for (const p of cov.paths) {
         expect(p, `${code}: manifest entry must be the English path`).toBe(stripLocale(p));
         expect(p.startsWith('/'), `${code}: ${p} must be absolute`).toBe(true);
       }
@@ -81,8 +81,8 @@ describe('translation manifest', () => {
 
   it('every listed translation actually built', () => {
     const missing: string[] = [];
-    for (const code of Object.keys(TRANSLATED) as (keyof typeof TRANSLATED)[]) {
-      for (const p of TRANSLATED[code]) {
+    for (const code of Object.keys(COVERAGE) as (keyof typeof COVERAGE)[]) {
+      for (const p of COVERAGE[code].paths) {
         const target = localePath(p, code);
         if (!pageFile(target)) missing.push(target);
       }
@@ -91,8 +91,8 @@ describe('translation manifest', () => {
   });
 
   it('a locale shipping pages has finished its chrome strings', () => {
-    for (const code of Object.keys(TRANSLATED) as (keyof typeof TRANSLATED)[]) {
-      if (TRANSLATED[code].length === 0) continue;
+    for (const code of Object.keys(COVERAGE) as (keyof typeof COVERAGE)[]) {
+      if (COVERAGE[code].paths.length === 0) continue;
       expect(STRINGS[code], `${code} ships pages but its chrome strings are still null — nav, footer and the disclaimer would render in English`).not.toBeNull();
       for (const [key, value] of Object.entries(STRINGS[code]!)) {
         expect(String(value).trim().length, `${code}.${key} is empty`).toBeGreaterThan(0);
@@ -132,13 +132,73 @@ describe('built translated pages', () => {
   });
 });
 
+describe('language switcher reaches every page', () => {
+  /**
+   * The gap this catches: the switcher used to render only when the current page had
+   * a translation, so it was absent from ~1,000 English facility pages — a reader on
+   * a clinic page could not discover the site speaks their language, and every one of
+   * those pages still returned 200, so nothing else could see it.
+   */
+  it('every built page carries a switcher listing all three languages', () => {
+    const offenders: string[] = [];
+    const files = walkHtml(DIST);
+    expect(files.length, 'no built pages found').toBeGreaterThan(100);
+    for (const file of files) {
+      const $ = cheerio.load(readFileSync(file, 'utf-8'));
+      const sw = $('[data-language-switcher]');
+      if (sw.length === 0) { offenders.push(`${file.replace(DIST, '')} (no switcher)`); continue; }
+      const shown = sw.first().find('a, span[lang], span[aria-current]').length;
+      if (shown < LOCALE_CODES.length) {
+        offenders.push(`${file.replace(DIST, '')} (only ${shown} of ${LOCALE_CODES.length} languages)`);
+      }
+    }
+    expect(offenders.slice(0, 20)).toEqual([]);
+  });
+
+  it('never links to a page that did not build', () => {
+    const offenders: string[] = [];
+    for (const file of walkHtml(DIST)) {
+      const $ = cheerio.load(readFileSync(file, 'utf-8'));
+      $('[data-language-switcher] a').each((_, el) => {
+        const href = $(el).attr('href')!;
+        if (!pageFile(href)) offenders.push(`${file.replace(DIST, '')} -> ${href}`);
+      });
+    }
+    expect(offenders.slice(0, 20), 'switcher offers a dead link').toEqual([]);
+  });
+});
+
+describe('locale page parity', () => {
+  /**
+   * A locale must publish exactly what its COVERAGE declares — no more, no less.
+   * Fewer means the manifest lies to hreflang; more means a page shipped without
+   * being declared, so no other locale links to it and the switcher cannot reach it.
+   */
+  it('each locale publishes exactly its declared coverage', () => {
+    for (const code of Object.keys(COVERAGE) as (keyof typeof COVERAGE)[]) {
+      const prefix = LOCALES[code].prefix;
+      const built = new Set(
+        walkHtml(join(DIST, prefix.slice(1)))
+          .map((f) => f.replace(DIST, '').replace(/\/index\.html$/, '').replace(/\.html$/, ''))
+          .map((p) => stripLocale(p || '/') || '/')
+      );
+      if (pageFile(prefix)) built.add('/');
+      const declared = new Set<string>();
+      for (const p of COVERAGE[code].paths) declared.add(p);
+      for (const p of COVERAGE[code].provinces) declared.add(`/clinics/${p.toLowerCase().replace(/ /g, '-')}`);
+      const undeclared = [...built].filter((p) => !declared.has(p) && !p.startsWith('/clinics/') && !p.startsWith('/services/'));
+      expect(undeclared.slice(0, 10), `${code} built pages it never declared`).toEqual([]);
+    }
+  });
+});
+
 describe('English pages are unchanged by the scaffolding', () => {
   it('the homepage still builds and stays un-prefixed', () => {
     expect(pageFile('/')).not.toBeNull();
   });
 
   it('emits no hreflang cluster while nothing is translated', () => {
-    const anyTranslated = Object.values(TRANSLATED).some((p) => p.length > 0);
+    const anyTranslated = Object.values(COVERAGE).some((c) => c.paths.length > 0);
     if (anyTranslated) return;
     const $ = cheerio.load(readFileSync(pageFile('/')!, 'utf-8'));
     expect($('link[rel="alternate"][hreflang]').length, 'a one-language hreflang cluster is worse than none').toBe(0);
