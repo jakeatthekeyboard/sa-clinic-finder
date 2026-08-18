@@ -146,8 +146,22 @@ Field notes:
   use 0 if you did not check. Never invent one; an invented code is silently discarded anyway.
 - `health.status` — `healthy` / `degraded` / `unknown`.
 - `guides_written` / `pages_updated` / `internal_links_added` / `editorial_sections_added` —
-  count only what actually CHANGED on a rendered page this run. Zero is a valid answer and
-  usually the right one.
+  count the EDITS YOU AUTHORED, never the pages those edits happen to reach. Zero is a
+  valid answer and usually the right one.
+  **A template change affecting N pages is ONE change, not N.** This is not a nuance — it
+  is the specific way these counters have gone wrong. On 2026-08-12 the DCG keeper made a
+  single commit editing a single file (`src/pages/county/[county].astro`, 106 lines) that
+  renders on 560 county pages, and declared `editorial_sections_added: 560`. Nothing was
+  scraped and nothing was misparsed: the keeper stated that number itself, in its own
+  `<capture>` block, having counted pages AFFECTED as units of WORK (#1155). The earlier
+  wording here — "count what actually CHANGED on a rendered page" — reads as an
+  instruction to do exactly that, since 560 rendered pages did change.
+  The rule: if one edit reaches many pages, the counter is 1 and the reach belongs in
+  `content_actions[]` or the run summary. `pages_updated` is the ONE field that legitimately
+  counts pages, and it is separately bounded by the site's own page count.
+  `tools/keeper-capture-sanity.py` enforces per-run ceilings on all of these and a number
+  above a ceiling is reported as fabricated, so an inflated counter does not flatter the
+  overnight summary — it fails a check.
 - `content_actions[]` — one entry per real content change. This is the field that reaches the
   content log (`data/capture/content-log/content-log.jsonl`); before 2026-07-24 the keeper
   report wrote a differently-named key that no reader looked at, so no keeper content change
