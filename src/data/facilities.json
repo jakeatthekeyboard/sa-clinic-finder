@@ -611,7 +611,7 @@
     "url_path": "/clinics/eastern-cape/hobeni-clinic-eastern-cape"
   },
   {
-    "facility_id": "zaf_node_1460687699",
+    "facility_id": "zaf_way_468966258",
     "name": "Ha Grove Hospital",
     "type": "district_hospital",
     "province": "Mpumalanga",
@@ -624,8 +624,8 @@
       "postal_code": ""
     },
     "coordinates": {
-      "lat": -25.6852902,
-      "lng": 30.0390233
+      "lat": -25.6962179,
+      "lng": 30.0446059
     },
     "contact": {
       "phone": "",
@@ -653,7 +653,7 @@
     "operator_type": "unknown",
     "data_source": "overpass",
     "data_quality_score": 5,
-    "last_verified": "2026-04-14",
+    "last_verified": "2026-08-19",
     "slug": "ha-grove-hospital-mpumalanga",
     "url_path": "/clinics/mpumalanga/ha-grove-hospital-mpumalanga"
   },
@@ -1175,7 +1175,7 @@
     "url_path": "/clinics/free-state/virginia-provincial-virginia-matjhabeng-local-municipality-free-state"
   },
   {
-    "facility_id": "zaf_node_2298902321",
+    "facility_id": "zaf_way_1103021023",
     "name": "Cambridge Clinic (Sprigg Street Clinic)",
     "type": "clinic",
     "province": "Eastern Cape",
@@ -1188,8 +1188,8 @@
       "postal_code": ""
     },
     "coordinates": {
-      "lat": -32.9780146,
-      "lng": 27.8895227
+      "lat": -32.9779545,
+      "lng": 27.8894834
     },
     "contact": {
       "phone": "+27 43 726 0142",
@@ -1217,7 +1217,7 @@
     "operator_type": "public",
     "data_source": "overpass",
     "data_quality_score": 5,
-    "last_verified": "2026-04-14",
+    "last_verified": "2026-08-19",
     "slug": "cambridge-clinic-sprigg-street-clinic-eastern-cape",
     "url_path": "/clinics/eastern-cape/cambridge-clinic-sprigg-street-clinic-eastern-cape"
   },
@@ -4653,7 +4653,7 @@
     "url_path": "/clinics/free-state/pule-sefatsa-clinic-free-state"
   },
   {
-    "facility_id": "zaf_node_4982491408",
+    "facility_id": "zaf_way_1105112556",
     "name": "V Shumane Clinic",
     "type": "clinic",
     "province": "Eastern Cape",
@@ -4666,8 +4666,8 @@
       "postal_code": "6139"
     },
     "coordinates": {
-      "lat": -33.2961952,
-      "lng": 26.5464206
+      "lat": -33.2960798,
+      "lng": 26.5464375
     },
     "contact": {
       "phone": "+27 46 603 6077",
@@ -4695,7 +4695,7 @@
     "operator_type": "public",
     "data_source": "overpass",
     "data_quality_score": 5,
-    "last_verified": "2026-04-14",
+    "last_verified": "2026-08-19",
     "slug": "v-shumane-clinic-grahamstown",
     "url_path": "/clinics/eastern-cape/v-shumane-clinic-grahamstown"
   },
@@ -7426,7 +7426,7 @@
     "url_path": "/clinics/north-west/mokgola-clinic-motswedizeerust"
   },
   {
-    "facility_id": "zaf_node_7896380488",
+    "facility_id": "zaf_way_218396423",
     "name": "Tower Psychiatric Hospital",
     "type": "district_hospital",
     "province": "Eastern Cape",
@@ -7439,8 +7439,8 @@
       "postal_code": ""
     },
     "coordinates": {
-      "lat": -32.7737012,
-      "lng": 26.6260359
+      "lat": -32.7714541,
+      "lng": 26.6240941
     },
     "contact": {
       "phone": "+27466451122",
@@ -7468,7 +7468,7 @@
     "operator_type": "public",
     "data_source": "overpass",
     "data_quality_score": 5,
-    "last_verified": "2026-04-14",
+    "last_verified": "2026-08-19",
     "slug": "tower-psychiatric-hospital-eastern-cape",
     "url_path": "/clinics/eastern-cape/tower-psychiatric-hospital-eastern-cape"
   },
@@ -8883,7 +8883,7 @@
     "url_path": "/clinics/gauteng/parkdene-medical-centre-parkrand-johannesburg"
   },
   {
-    "facility_id": "zaf_node_9048293718",
+    "facility_id": "zaf_way_168965151",
     "name": "General Justice Gizenga Mpanza Regional Hospital (formerly Stanger Hospital)",
     "type": "regional_hospital",
     "province": "KwaZulu-Natal",
@@ -8896,8 +8896,8 @@
       "postal_code": "4450"
     },
     "coordinates": {
-      "lat": -29.3355422,
-      "lng": 31.2844813
+      "lat": -29.3354961,
+      "lng": 31.2843153
     },
     "contact": {
       "phone": "+27 324376000",
@@ -8925,7 +8925,7 @@
     "operator_type": "public",
     "data_source": "overpass",
     "data_quality_score": 5,
-    "last_verified": "2026-04-14",
+    "last_verified": "2026-08-19",
     "slug": "general-justice-gizenga-mpanza-regional-hospital-formerly-stanger-hospital-durba",
     "url_path": "/clinics/kwazulu-natal/general-justice-gizenga-mpanza-regional-hospital-formerly-stanger-hospital-durba"
   },
@@ -14476,7 +14476,7 @@
     "url_path": "/clinics/gauteng/pholosong-hospital-gauteng"
   },
   {
-    "facility_id": "zaf_node_10121106418",
+    "facility_id": "zaf_way_1508956180",
     "name": "4th Avenue Community Health Clinic",
     "type": "community_health_centre",
     "province": "Gauteng",
@@ -14489,8 +14489,8 @@
       "postal_code": ""
     },
     "coordinates": {
-      "lat": -26.1058555,
-      "lng": 28.0903605
+      "lat": -26.1057353,
+      "lng": 28.0905066
     },
     "contact": {
       "phone": "",
@@ -14518,7 +14518,7 @@
     "operator_type": "public",
     "data_source": "overpass",
     "data_quality_score": 5,
-    "last_verified": "2026-04-14",
+    "last_verified": "2026-08-19",
     "slug": "4th-avenue-community-health-clinic-gauteng",
     "url_path": "/clinics/gauteng/4th-avenue-community-health-clinic-gauteng"
   },
@@ -19411,7 +19411,7 @@
     "url_path": "/clinics/kwazulu-natal/harry-gwala-regional-hospital-kwazulu-natal"
   },
   {
-    "facility_id": "zaf_way_217484563",
+    "facility_id": "zaf_way_461683581",
     "name": "Elliot Provincial Hospital",
     "type": "district_hospital",
     "province": "Eastern Cape",
@@ -19424,8 +19424,8 @@
       "postal_code": ""
     },
     "coordinates": {
-      "lat": -31.3284521,
-      "lng": 27.8552424
+      "lat": -31.3366043,
+      "lng": 27.8377052
     },
     "contact": {
       "phone": "",
@@ -19453,7 +19453,7 @@
     "operator_type": "public",
     "data_source": "overpass",
     "data_quality_score": 5,
-    "last_verified": "2026-04-14",
+    "last_verified": "2026-08-19",
     "slug": "elliot-provincial-hospital-eastern-cape",
     "url_path": "/clinics/eastern-cape/elliot-provincial-hospital-eastern-cape"
   },
@@ -47235,7 +47235,7 @@
     "url_path": "/clinics/limpopo/nchabeleng-community-helath-centre-limpopo"
   },
   {
-    "facility_id": "zaf_way_1419947251",
+    "facility_id": "zaf_way_1532039331",
     "name": "Queenstown Aids Training, Information and Counselling Centre",
     "type": "clinic",
     "province": "Eastern Cape",
@@ -47248,8 +47248,8 @@
       "postal_code": ""
     },
     "coordinates": {
-      "lat": -31.8933854,
-      "lng": 26.8742801
+      "lat": -31.8933732,
+      "lng": 26.8742329
     },
     "contact": {
       "phone": "",
@@ -47277,7 +47277,7 @@
     "operator_type": "public",
     "data_source": "overpass",
     "data_quality_score": 5,
-    "last_verified": "2026-04-14",
+    "last_verified": "2026-08-19",
     "slug": "queenstown-aids-training-information-and-counselling-centre-eastern-cape",
     "url_path": "/clinics/eastern-cape/queenstown-aids-training-information-and-counselling-centre-eastern-cape"
   },
