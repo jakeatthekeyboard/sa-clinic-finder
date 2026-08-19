@@ -1,33 +1,14 @@
 {
-  "captured_at": "2026-08-19T06:18:04.519241+00:00",
-  "records_checked": 1058,
-  "osm_objects_returned": 1053,
-  "unparseable_facility_ids": [
-    "zaf_nodes_3981211157",
-    "zaf_nodes_3446745595",
-    "zaf_nodes_11119507335",
-    "zaf_nodes_9053265017",
-    "zaf_nodes_8337426617",
-    "zaf_nodes_7729951651",
-    "zaf_nodes_3446745596",
-    "zaf_nodes_4686199910",
-    "zaf_nodes_11045788799",
-    "zaf_nodes_6476180457",
-    "zaf_nodes_6476197721",
-    "zaf_nodes_9061067417",
-    "zaf_nodes_9055334317",
-    "zaf_nodes_9041298617",
-    "zaf_nodes_9992014523",
-    "zaf_nodes_9055384617",
-    "zaf_nodes_9054693218",
-    "zaf_nodes_13475435243"
-  ],
+  "captured_at": "2026-08-19T15:08:40.082957+00:00",
+  "records_checked": 1076,
+  "osm_objects_returned": 1071,
+  "unparseable_facility_ids": [],
   "move_threshold_metres": 500.0,
   "counts": {
-    "MISSING": 8,
+    "MISSING": 7,
     "MOVED": 0,
-    "NAME_CHANGED": 6,
-    "ENRICHABLE": 2
+    "NAME_CHANGED": 5,
+    "ENRICHABLE": 10
   },
   "findings": {
     "MISSING": [
@@ -68,12 +49,6 @@
         "reason": "no longer tagged healthcare (amenity=None)"
       },
       {
-        "slug": "elliot-provincial-hospital-eastern-cape",
-        "name": "Elliot Provincial Hospital",
-        "osm": "way:217484563",
-        "reason": "no longer tagged healthcare (amenity='school')"
-      },
-      {
         "slug": "queenstown-aids-training-information-and-counselling-centre-eastern-cape",
         "name": "Queenstown Aids Training, Information and Counselling Centre",
         "osm": "way:1419947251",
@@ -83,19 +58,14 @@
     "MOVED": [],
     "NAME_CHANGED": [
       {
-        "slug": "ladysmith-hospital-ladysmith",
-        "ours": "Ladysmith Hospital",
-        "osm_name": "uMnambithi Provincial Hospital"
+        "slug": "nelimahle-phamarcy-soshanguve",
+        "ours": "Nelimahle Phamarcy",
+        "osm_name": "Nelimahle Pharmacy"
       },
       {
         "slug": "fort-beaufort-provincial-fort-beaufort-eastern-cape",
         "ours": "Fort Beaufort Provincial",
         "osm_name": "KwaMaqoma Provincial Hospital"
-      },
-      {
-        "slug": "elliot-hospital-elliot",
-        "ours": "Elliot Hospital",
-        "osm_name": "Elliot Provincial Hospital"
       },
       {
         "slug": "temba-santa-hospital-grahamstown",
@@ -115,8 +85,59 @@
     ],
     "ENRICHABLE": [
       {
-        "slug": "orania-kliniek-orania",
+        "slug": "wellvale-recovery-centre-kwazulu-natal",
         "gains": [
+          "phone"
+        ]
+      },
+      {
+        "slug": "siga-home-based-care-north-west",
+        "gains": [
+          "opening_hours"
+        ]
+      },
+      {
+        "slug": "mafumahali-hospital-maseru",
+        "gains": [
+          "phone"
+        ]
+      },
+      {
+        "slug": "pretoria-north-eye-institute-pretoria",
+        "gains": [
+          "phone",
+          "opening_hours"
+        ]
+      },
+      {
+        "slug": "siga-clinic-north-west",
+        "gains": [
+          "opening_hours"
+        ]
+      },
+      {
+        "slug": "domiciliary-clinic-free-state",
+        "gains": [
+          "operator"
+        ]
+      },
+      {
+        "slug": "the-local-choice-pharmacy-bronberrik-centurion",
+        "gains": [
+          "phone"
+        ]
+      },
+      {
+        "slug": "ampath-krugersdorp-bell-street-krugersdorp",
+        "gains": [
+          "phone",
+          "opening_hours"
+        ]
+      },
+      {
+        "slug": "nelimahle-phamarcy-soshanguve",
+        "gains": [
+          "phone",
           "opening_hours"
         ]
       },

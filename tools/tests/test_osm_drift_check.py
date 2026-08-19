@@ -47,13 +47,43 @@ def test_parses_node_way_relation():
     assert bad == []
 
 
-def test_unparseable_ids_are_reported_not_dropped():
-    """The 18 HOTOSM records use `zaf_nodes_` (plural). They are NOT checkable
-    against OSM by id, and a checker that silently ignored them would report
-    'all clear' over a corpus it never looked at."""
-    by_type, bad = odc.parse_ids([rec("h", "zaf_nodes_99"), rec("j", "garbage")])
+def test_plural_nodes_typo_is_parsed_not_exempted():
+    """#1243e. 18 of the 1,076 published records carry `zaf_nodes_` (plural) — a
+    ONE-CHARACTER typo that this regex, the gate into the entire check, silently
+    refused. Those 18 were therefore permanently exempt from the closed-clinic
+    detector while every run still printed a pass. The site's own render path
+    already matched `^zaf_(way|nodes?)_(\\d+)$`, so the pages resolved these ids
+    while the guard did not. This test previously asserted the BUG as intended
+    behaviour, which is why it survived review.
+    """
+    by_type, bad = odc.parse_ids([rec("h", "zaf_nodes_99"), rec("i", "zaf_node_98")])
+    assert set(by_type["node"]) == {98, 99}, "plural form must normalise to node"
+    assert bad == []
+
+
+def test_genuinely_unparseable_ids_are_reported_not_dropped():
+    """An id in no recognised form must still be REPORTED, never silently skipped:
+    a record the check cannot see is not a record it cleared."""
+    by_type, bad = odc.parse_ids([rec("j", "garbage"), rec("k", "")])
     assert sum(len(v) for v in by_type.values()) == 0
-    assert set(bad) == {"zaf_nodes_99", "garbage"}  # the id is reported, not the slug
+    assert set(bad) == {"garbage", "k"}  # id when present, else the slug
+
+
+def test_unparseable_id_fails_the_run(tmp_path, monkeypatch):
+    """An unparseable id is now exit 1, not a [note]. Reading as a pass while a
+    facility goes unasked-about is the #818 fail-open shape, and on a humanitarian
+    directory the unasked facility is the one that has closed."""
+    _baseline(tmp_path, monkeypatch, [])
+    cap = _capture([])
+    cap["unparseable_facility_ids"] = ["zaf_nodez_1"]
+    assert odc.report(cap, Args(), fresh=True) == 1
+
+
+def test_no_unparseable_ids_stays_green(tmp_path, monkeypatch):
+    _baseline(tmp_path, monkeypatch, [])
+    cap = _capture([])
+    cap["unparseable_facility_ids"] = []
+    assert odc.report(cap, Args(), fresh=True) == 0
 
 
 # ── healthcare classification ─────────────────────────────────────────────────

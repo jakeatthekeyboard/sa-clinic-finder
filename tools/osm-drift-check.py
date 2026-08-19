@@ -87,7 +87,21 @@ HEALTHCARE_TAGS = {
     "amenity": {"clinic", "hospital", "doctors", "health_post", "pharmacy", "dentist"},
     "healthcare": None,  # any value
 }
-ID_RE = re.compile(r"^zaf_(node|way|relation)_(\d+)$")
+# `nodes` (plural) is a ONE-CHARACTER TYPO in 18 of the 1,076 published records,
+# and it is not cosmetic: this regex is the gate into the whole check, so every id
+# it fails to parse is a facility PERMANENTLY EXEMPT from the closed-clinic
+# detector — the one defect this file exists to catch — while the run still
+# prints a pass. It surfaced only as a `[note] N facility_id(s) ... not checked`
+# line nobody read (#1243e). The site's own render path already tolerates it:
+# `src/pages/clinics/[province]/[slug].astro` matches `^zaf_(way|nodes?)_(\d+)$`
+# to build its OSM link, so the pages were resolving these ids while the guard
+# was not. Match what RENDERS (feedback_scan_the_rendered_field) and normalise
+# `nodes` -> `node` so the Overpass query is still well-formed.
+ID_RE = re.compile(r"^zaf_(node|nodes|way|relation)_(\d+)$")
+# Anything this regex cannot parse is now a HARD failure rather than a note. An
+# unparseable id is indistinguishable, from the outside, from a facility that was
+# checked and found healthy — the fail-open shape of #818, on a humanitarian
+# directory. 0 unparseable at ship (2026-08-19), so this is green on introduction.
 
 
 def norm(s):
@@ -121,7 +135,8 @@ def parse_ids(facilities):
         if not m:
             unparseable.append(r.get("facility_id") or r.get("slug"))
             continue
-        by_type[m.group(1)][int(m.group(2))] = r
+        etype = "node" if m.group(1) == "nodes" else m.group(1)
+        by_type[etype][int(m.group(2))] = r
     return by_type, unparseable
 
 
@@ -338,6 +353,17 @@ def report(result, args, fresh):
         if result.get("unparseable_facility_ids"):
             print(f"  [note] {len(result['unparseable_facility_ids'])} facility_id(s) "
                   f"not in zaf_<type>_<id> form, not checked")
+    unparseable = result.get("unparseable_facility_ids") or []
+    if unparseable:
+        print(f"\n[FAILED] {len(unparseable)} facility_id(s) do not parse as "
+              f"zaf_<type>_<id>, so those facilities were NOT asked about and CANNOT be "
+              f"reported MISSING. A record this check cannot see is not a record it "
+              f"cleared (#1243e). Fix the id in src/data/facilities.json, or widen ID_RE "
+              f"if the form is legitimate — do NOT accept it as a note.")
+        for fid in unparseable[:20]:
+            print(f"    [UNPARSEABLE] {fid}")
+        return 1
+
     new = result.get("new_missing", [])
     if new:
         print(f"\n[FAILED] {len(new)} NEW published facility/ies are no longer a healthcare "
