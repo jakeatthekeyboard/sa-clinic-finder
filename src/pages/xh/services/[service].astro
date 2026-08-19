@@ -394,20 +394,14 @@ const jsonLd = editorial ? [
         <div style="display: grid; gap: 8px;">
           {prov.facilities.map(f => {
             const addr = [f.address.street, f.address.suburb, f.address.city].filter(Boolean).join(', ');
+            // Deliberately ONE line and free of wrapper elements (#1248): this markup
+            // is serialised once per facility, 1,044 times on /services/immunisation,
+            // so every tag and every newline between tags is multiplied by that.
+            // .svc-card in Base.astro is the grid that used to be .svc-card-row; the
+            // chip is placed by CSS, not by a wrapper div, and its inline style now
+            // lives in that class too.
             return (
-              <a href={L(f.url_path)} class="card svc-card">
-                <div class="svc-card-row">
-                  <div>
-                    <strong>{f.name}</strong>
-                    {addr && <div class="svc-card-addr">{addr}</div>}
-                    <div class="svc-card-meta">
-                      {typeLabelXh(f.type)}
-                      {f.district && ` · ${f.district}`}
-                    </div>
-                  </div>
-                  {f.operating_hours.is_24_hour && <span class="chip" style="font-size: 0.75rem; background: #fef3cd; color: #856404;">iiyure ezingama-24</span>}
-                </div>
-              </a>
+              <a href={L(f.url_path)} class="svc-card"><strong>{f.name}</strong>{addr && <span class="svc-card-addr">{addr}</span>}<span class="svc-card-meta">{typeLabelXh(f.type)}{f.district && ` · ${f.district}`}</span>{f.operating_hours.is_24_hour && <span class="chip">iiyure ezingama-24</span>}</a>
             );
           })}
         </div>
