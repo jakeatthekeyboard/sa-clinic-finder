@@ -3,3 +3,7 @@ dist/
 .vercel/
 .astro/
 .vercel
+
+# Python bytecode from the root conftest.py test guard (#1229)
+__pycache__/
+*.pyc
