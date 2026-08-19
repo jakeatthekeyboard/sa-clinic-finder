@@ -4,7 +4,7 @@ import provenance from '../data/_provenance.json';
 
 // Generated from src/data/_provenance.json so the table cannot drift from the manifest
 // the data tooling reads.
-const LEVEL_ORDER = ['sourced', 'derived', 'ai_authored', 'observed', 'config'];
+const LEVEL_ORDER = ['sourced', 'derived', 'mixed', 'ai_authored', 'observed', 'config', 'not_collected'];
 const used = new Set();
 for (const fields of Object.values(provenance.datasets ?? {})) {
   if (fields && typeof fields === 'object') {

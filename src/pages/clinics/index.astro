@@ -59,7 +59,7 @@ const faqJsonLd = {
     </nav>
     <h1 style="font-size: 1.5rem; margin-bottom: 8px;">Public Clinics by Province</h1>
     <p style="color: var(--text-muted); margin-bottom: 24px; max-width: 640px; line-height: 1.6;">
-      South Africa's public health system serves approximately 84% of the population through {totalFacilities.toLocaleString()} facilities across 9 provinces. Of these, {total24h} operate 24 hours. Select a province below to see every clinic, community health centre, and hospital in that area — with service details, health tips, and emergency contacts.
+      South Africa's public health system serves approximately 84% of the population through {totalFacilities.toLocaleString()} facilities across 9 provinces. Of these, {total24h} are recorded as open 24 hours. Select a province below to see every clinic, community health centre, and hospital in that area — with service details, health tips, and emergency contacts.
     </p>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 32px;">
@@ -67,7 +67,7 @@ const faqJsonLd = {
         <a href={`/clinics/${p.slug}`} class="card" style="text-decoration: none; color: var(--text);">
           <strong style="font-size: 1.1rem;">{p.name}</strong>
           <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 6px;">
-            {p.count} facilities · {p.twentyFourHour} open 24h
+            {p.count} facilities · {p.twentyFourHour} recorded 24h
           </div>
         </a>
       ))}

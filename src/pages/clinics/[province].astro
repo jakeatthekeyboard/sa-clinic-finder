@@ -35,7 +35,7 @@ const topService = serviceBreakdown[0];
 const faqs = [
   {
     q: `How many public clinics are in ${provinceName}?`,
-    a: `There are ${provFacilities.length} public health facilities in ${provinceName}. These include ${Object.entries(typeBreakdown).map(([t, c]) => `${c} ${typeLabel(t).toLowerCase()}${c !== 1 ? 's' : ''}`).join(', ')}. ${twentyFourHour.length > 0 ? `${twentyFourHour.length} of these facilities operate 24 hours.` : 'Operating hours vary by facility.'}`,
+    a: `There are ${provFacilities.length} public health facilities in ${provinceName}. These include ${Object.entries(typeBreakdown).map(([t, c]) => `${c} ${typeLabel(t).toLowerCase()}${c !== 1 ? 's' : ''}`).join(', ')}. ${twentyFourHour.length > 0 ? `${twentyFourHour.length} of these facilities are recorded as open 24 hours.` : 'Operating hours vary by facility.'}`,
   },
   {
     q: `Can I get ARV treatment in ${provinceName}?`,
