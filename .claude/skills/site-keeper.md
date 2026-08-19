@@ -93,7 +93,11 @@ Files this keeper typically writes (stage only the ones you actually changed thi
 # 1. Stage ONLY what you changed, by name.
 git add <path> [<path> ...]
 
-# 2. Verify. If anything you did not write appears here, unstage it and stop.
+# 2. Verify. The first listing is exactly what the commit in step 3 will contain,
+#    because that pathspec bounds it. The second shows what ELSE is sitting in this
+#    shared index right now — another session's half-finished work. It is neither
+#    yours to commit nor yours to discard; the pathspec is what keeps it out.
+git diff --cached --name-only -- <path> [<path> ...]
 git diff --cached --name-only
 
 # 3. Message to a file, then -F. NEVER `git commit -m` — in zsh a double-quoted -m
@@ -106,11 +110,27 @@ Sitekeeper: <action> for clinicfinder.co.za (YYYY-MM-DD)
 Files: <the exact paths staged above>
 Revert: git revert this commit
 MSG
-git commit -F /tmp/keeper-commit-msg.txt
+git commit -F /tmp/keeper-commit-msg.txt -- <path> [<path> ...]
+# The `-- <paths>` is NOT optional (#1272). `git commit` with no pathspec commits the
+# whole INDEX, and this checkout has one index shared by every session in it. An
+# unpathspecced commit therefore records whatever a concurrent grind session happened
+# to have staged, exits 0, and describes only your own change in the message — the
+# same silent failure as `git add -A`, arriving one command later. Repeat the exact
+# paths from step 1. `tools/broad-staging-check.py` in the pipeline repo enforces this,
+# so it does not depend on this paragraph surviving a future edit of this file.
 
-# 4. Rebase onto whatever the other sessions pushed, then push.
-git pull --rebase origin main
-git push origin main
+# 4. ONE push per run, at the END of the run — not per task section (#1300).
+#    A push to this repo is one production build against a free-tier cap of 100 per
+#    rolling 24h shared by all four sites and by every cron and agent. That cap has
+#    been exhausted twice. On the night of 2026-07-31 the four keepers' per-section
+#    pushes produced 138 builds between them (7 from this site) and exhausted both
+#    the 100-deploy cap and the separate file-upload cap. Gate the push: exit 0 = push, exit 1 = DEFER (these commits
+#    change nothing a reader sees). On a DEFER, hold the push, re-check later, and
+#    push before the run ends — never end a run on an unpushed commit
+#    (`tools/unpushed-commit-check.py` watches for that).
+python3 /Users/jake/dev/product-pipeline-1/tools/deploy-budget-gate.py --repo sa-clinic-finder
+git pull --rebase origin master
+git push origin master
 ```
 
 **Foreign changes are neither yours to commit nor yours to discard.** Leave them unstaged.
@@ -179,6 +199,7 @@ only way anyone can see it: a fabricated 103 is precisely what hid 98 days of co
     {"type": "editorial_deep_dive", "path": "/province/gauteng", "description": "CCMDD pickup-point context"}
   ],
   "issues": [],
+  "checks": [],
   "skipped": ["editorial deepening — CF is Settle autopilot, content grinding is out of scope"],
   "commits": []
 }
@@ -213,7 +234,8 @@ Field notes:
 - `issues[]` — real problems only. NEVER add a line that reports the ABSENCE of a problem
   ("0 issues", "Issues: None") — that is the exact bug this replaces.
   **Each entry MUST be an OBJECT, not a bare string:**
-  `{"severity": "high"|"medium"|"low", "title": "<one line>", "detail": "<full reasoning>"}`.
+  `{"severity": "high"|"medium"|"low", "title": "<one line>", "detail": "<full reasoning>",
+  "produced_by": "<what raised it>", "target": "<file or field it is about>"}`.
   `severity` is your own grading of whether this needs a human: `high` = a reader is being
   shown something wrong right now; `medium` = real but not reader-facing yet, or blocked on
   something you could not reach; `low` = worth recording, fine to leave.
@@ -224,6 +246,24 @@ Field notes:
   (3%) carried any grading at all, because nothing ever asked for one. A routing check cannot
   triage what it cannot grade, so an ungraded finding is indistinguishable from a note and
   gets dropped. Write the object even when severity is `low`.
+  **`produced_by` and `target` are mandatory too (#1295), and they are the half a prose
+  title cannot carry.** `produced_by` names WHAT raised the finding — the script, gate or
+  task, e.g. `quality/growth_rate_basis_check.py`, `tools/editorial-fee-drift-check.py`,
+  `manual: spot-check step 2`, `npm run build`. `target` names WHAT IT IS ABOUT, as a path
+  or a record key: `src/data/narratives/snap-on.json`, `src/data/cities.json →
+  salt-lake-city.editorial.real_cost`, `/compare/chick-fil-a-vs-circle-k`. Measured
+  2026-08-19 across all 129 stored entries: the only keys present were `severity`, `title`
+  and `detail` (plus `verdict` twice). Nothing recorded who found a thing or where it lives,
+  so every consumer had only a regenerated English sentence to work with. Two concrete uses:
+  the router's fuzzy matcher (#1076) gets a STABLE key beside the drifting title, and a
+  reader can go straight to the file instead of re-deriving it. If you genuinely cannot name
+  a producer, write `manual: <what you were doing>` — never omit the key, and never invent a
+  script name you did not run.
+  **This does NOT mean a finding can be auto-closed.** A closure proposer was built and
+  withdrawn on 2026-08-19 (#1211 → #1233): it made two proposals in its life and both were
+  false, because a heuristic cannot tell FIXED from NO LONGER MEASURED. `produced_by` and
+  `target` are identity, not evidence of resolution. Do not write anything into `issues[]`
+  implying an entry is done.
   **The `title` is an IDENTITY, so keep it STABLE across nights (#1076).** The router
   fingerprints a finding by its title, so **never embed a recurrence counter in it** — no
   "for a third consecutive night", no "blocked a 4th night", no "still". One FVS finding was
@@ -248,6 +288,15 @@ Field notes:
   you cannot write a Texas record under a Utah heading without noticing. Keep reporting these:
   the same three findings surfaced two genuine live errors. Only the attribution was broken.
 - `skipped[]` — work deliberately not done, each with its reason.
+- `checks[]` — what you RAN this run and what it said, one entry per check:
+  `{"check": "<script or gate you invoked>", "verdict": "pass"|"fail"|"skip"|"error",
+  "detail": "<one line, optional>"}`. This is a record of what was MEASURED, and it exists
+  because the captures carried no such channel at all (#1295): a finding that stops appearing
+  is indistinguishable from a check that stopped running, and 49 consecutive captures gave no
+  way to tell them apart. A `skip` is as important as a `fail` — say why. Empty list is
+  honest if you ran no checks; do NOT list a check you did not actually invoke.
+  **A clean `checks[]` is not a closure signal.** Nothing may infer from it that an open
+  `issues[]` finding is resolved (#1233).
 - `commits[]` — short SHAs pushed this run; empty list if nothing was committed.
 
 ## Cron mode — never end the turn with background work pending (TODO #736)
