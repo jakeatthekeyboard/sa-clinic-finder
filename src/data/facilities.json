@@ -180,7 +180,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -274,7 +274,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -321,7 +321,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -509,7 +509,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -1778,7 +1778,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -6713,7 +6713,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -6760,7 +6760,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -6854,7 +6854,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -6901,7 +6901,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -6948,7 +6948,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -7653,7 +7653,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -9063,7 +9063,7 @@
       "hiv_testing": true
     },
     "operator": "The Local Choice",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -9439,7 +9439,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -12776,7 +12776,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -48966,7 +48966,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "hotosm",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -49248,7 +49248,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "hotosm",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",

@@ -28,7 +28,18 @@ export function getStaticPaths() {
 const { facility, titleSuffix, withheldReason } = Astro.props;
 const nearby = nearbyFacilities(facility, 3);
 const editorial = generateFacilityEditorialZu(facility);
-const typeEditorial = getFacilityTypeEditorialZu(facility.type);
+// #1150 — the public-system editorial is gated on OPERATOR, not on `type`.
+// `type` is an OSM-derived shape label: 16 retail pharmacies (Clicks, Dis-Chem,
+// Medicross, independent chemists) import as type="clinic", and the clinic block
+// tells the reader a clinic is "the front door of the South African public health
+// system", nurse-driven and free. On a humanitarian site that sends someone to a
+// Clicks expecting free public primary care. `operator_type` is the field that
+// actually answers "is this the public system?", so it is the field that gates.
+// Deliberately suppress only on a KNOWN private operator — 249 records are
+// operator_type "unknown" and silently stripping their editorial would be a large
+// unreviewed content deletion, not a correction.
+const isPrivate = facility.operator_type === 'private';
+const typeEditorial = isPrivate ? null : getFacilityTypeEditorialZu(facility.type);
 const activeServices = Object.entries(facility.services)
   .filter(([, v]) => v)
   .map(([k]) => ({ key: k, slug: SERVICE_MAP[k]?.slug, plain: servicePlainZu(k), label: serviceLabelZu(k) }))
@@ -131,7 +142,7 @@ const jsonLd = {
     : facility.operating_hours.is_24_hour
       ? { openingHours: 'Mo-Su 00:00-23:59' }
       : {}),
-  isAccessibleForFree: true,
+  isAccessibleForFree: !isPrivate,
   medicalSpecialty: activeServices.map(s => s.label),
 };
 ---
@@ -206,6 +217,15 @@ const jsonLd = {
           <summary style="cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--primary-dark);">Lusebenza kanjani uhlelo lokuthunyelwa {typeName}?</summary>
           <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;" set:html={zuLinks(typeEditorial.referralFlow)} />
         </details>
+      </section>
+    )}
+
+    {isPrivate && (
+      <section style="margin-bottom: 32px;">
+        <div style="background: #fef3cd; border-left: 4px solid #856404; border-radius: var(--radius); padding: 14px 16px;">
+          <h2 style="font-size: 1rem; margin-bottom: 8px; color: #856404;">Isebenza ngokuzimela — akuwona umtholampilo kahulumeni wamahhala</h2>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">Lena yindawo esebenza ngokuzimela. Ayiyona ingxenye yohlelo lwezempilo lomphakathi lwamahhala — lindela ukukhokha, noma ukusebenzisa umshwalense wezempilo, ukuze ubonwe lapha. Umtholampilo oholwa umhlengikazi ngaphakathi kwekhemisi ungagoma, uhlole umfutho wegazi noshukela, futhi welaphe amanxeba amancane, kodwa awukwazi ukukhipha incwadi yokuthunyelwa yomkhakha womphakathi futhi awukhipheli imithi kahulumeni yesikhathi eside. Ukuthola usizo lwamahhala, yiya emtholampilo kahulumeni noma esikhungweni sezempilo somphakathi.</p>
+        </div>
       </section>
     )}
 

@@ -40,7 +40,18 @@ const LH = localiseHtmlFor('xh');
 const { facility, titleSuffix, withheldReason } = Astro.props;
 const nearby = nearbyFacilities(facility, 3);
 const editorial = generateFacilityEditorial(facility, FACILITY_EDITORIAL_XH);
-const typeEditorial = getFacilityTypeEditorialXh(facility.type);
+// #1150 — the public-system editorial is gated on OPERATOR, not on `type`.
+// `type` is an OSM-derived shape label: 16 retail pharmacies (Clicks, Dis-Chem,
+// Medicross, independent chemists) import as type="clinic", and the clinic block
+// tells the reader a clinic is "the front door of the South African public health
+// system", nurse-driven and free. On a humanitarian site that sends someone to a
+// Clicks expecting free public primary care. `operator_type` is the field that
+// actually answers "is this the public system?", so it is the field that gates.
+// Deliberately suppress only on a KNOWN private operator — 249 records are
+// operator_type "unknown" and silently stripping their editorial would be a large
+// unreviewed content deletion, not a correction.
+const isPrivate = facility.operator_type === 'private';
+const typeEditorial = isPrivate ? null : getFacilityTypeEditorialXh(facility.type);
 const activeServices = Object.entries(facility.services)
   .filter(([, v]) => v)
   .map(([k]) => ({ key: k, ...SERVICE_MAP[k] }))
@@ -146,7 +157,7 @@ const jsonLd = {
     : facility.operating_hours.is_24_hour
       ? { openingHours: 'Mo-Su 00:00-23:59' }
       : {}),
-  isAccessibleForFree: true,
+  isAccessibleForFree: !isPrivate,
   medicalSpecialty: activeServices.map(s => s.label),
 };
 ---
@@ -221,6 +232,15 @@ const jsonLd = {
           <summary style="cursor: pointer; font-weight: 600; font-size: 0.9rem; color: var(--primary-dark);">Isebenza njani inkqubo yokuthunyelwa kwi-{typeNameLower}?</summary>
           <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px; line-height: 1.6;" set:html={LH(typeEditorial.referralFlow)} />
         </details>
+      </section>
+    )}
+
+    {isPrivate && (
+      <section style="margin-bottom: 32px;">
+        <div style="background: #fef3cd; border-left: 4px solid #856404; border-radius: var(--radius); padding: 14px 16px;">
+          <h2 style="font-size: 1rem; margin-bottom: 8px; color: #856404;">Isebenza ngokwabucala — ayiyona ikliniki karhulumente yasimahla</h2>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">Eli liziko elisebenza ngokwabucala. Alikho kwinkqubo yempilo yoluntu yasimahla — lindela ukuhlawula, okanye ukusebenzisa uncedo lwezonyango, ukuze ubonwe apha. Ikliniki ekhokelwa ngumongikazi ngaphakathi kwekhemesti inokugonya, ijonge uxinzelelo lwegazi neswekile, kwaye inyange amanxeba amancinci, kodwa ayinakukhupha ileta yokuthunyelwa kwinkqubo karhulumente kwaye ayiwakhupheli amayeza karhulumente exesha elide. Ukufumana unyango lwasimahla, yiya kwikliniki karhulumente okanye kwiziko lempilo loluntu.</p>
+        </div>
       </section>
     )}
 
