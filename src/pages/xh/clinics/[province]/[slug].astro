@@ -25,6 +25,7 @@ import { typeLabelXh, servicePlainXh, serviceLabelXh } from '../../../../data/i1
 import { facilityPaths } from '../../../../data/pages/paths';
 import { facilitiesTranslated } from '../../../../i18n/translated';
 import { localiseHtmlFor, localeHrefFor } from '../../../../i18n/links';
+import { careRole } from '../../../../data/care-role';
 
 export function getStaticPaths() {
   return facilitiesTranslated('xh') ? facilityPaths() : [];
@@ -51,7 +52,14 @@ const editorial = generateFacilityEditorial(facility, FACILITY_EDITORIAL_XH);
 // operator_type "unknown" and silently stripping their editorial would be a large
 // unreviewed content deletion, not a correction.
 const isPrivate = facility.operator_type === 'private';
-const typeEditorial = isPrivate ? null : getFacilityTypeEditorialXh(facility.type);
+// #1002 — three published records are not places anyone can be treated (a state
+// forensic mortuary, an office building, a bedding retailer). The type editorial
+// describes a clinic, which on those pages is a false description of the place, so
+// it is suppressed here exactly as it is on the English route. The explanatory
+// notice the English page shows is NOT reproduced here: a safety notice has to be
+// written by a speaker of the language, not machine-phrased on a humanitarian site.
+const notCare = careRole(facility.slug);
+const typeEditorial = isPrivate || notCare ? null : getFacilityTypeEditorialXh(facility.type);
 const activeServices = Object.entries(facility.services)
   .filter(([, v]) => v)
   .map(([k]) => ({ key: k, ...SERVICE_MAP[k] }))
@@ -132,9 +140,13 @@ const faqLd = typeEditorial ? {
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': ['MedicalClinic', 'LocalBusiness'],
+  '@type': notCare ? 'LocalBusiness' : ['MedicalClinic', 'LocalBusiness'],
   name: facility.name,
-  description: `I-${typeName} e-${facility.province}, eMzantsi Afrika. Iinkonzo: ${activeServices.map(s => s.plain).join(', ')}.`,
+  // #1002 — with no service flags this rendered the literal string "Iinkonzo: ."
+  description: notCare
+    ? `${facility.name}, ${facility.province}.`
+    : `I-${typeName} e-${facility.province}, eMzantsi Afrika.`
+      + (activeServices.length ? ` Iinkonzo: ${activeServices.map(s => s.plain).join(', ')}.` : ''),
   address: {
     '@type': 'PostalAddress',
     streetAddress: facility.address.street || undefined,
@@ -157,13 +169,19 @@ const jsonLd = {
     : facility.operating_hours.is_24_hour
       ? { openingHours: 'Mo-Su 00:00-23:59' }
       : {}),
-  isAccessibleForFree: !isPrivate,
-  medicalSpecialty: activeServices.map(s => s.label),
+  ...(notCare ? {} : { isAccessibleForFree: !isPrivate }),
+  ...(activeServices.length ? { medicalSpecialty: activeServices.map(s => s.label) } : {}),
 };
 ---
 <Base
-  title={`${facility.name} — i-${typeName} e-${facility.province}${titleSuffix}`}
-  description={`I-${facility.name} yi-${typeNameLower} e-${facility.province}. Iinkonzo: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}. Fumana ulwalathiso neenkcukacha zoqhagamshelwano.`}
+  title={notCare
+    ? `I-${facility.name} — ${facility.province}${titleSuffix}`
+    : `${facility.name} — i-${typeName} e-${facility.province}${titleSuffix}`}
+  description={(notCare
+      ? `I-${facility.name}, ${facility.province}.`
+      : `I-${facility.name} yi-${typeNameLower} e-${facility.province}.`
+        + (activeServices.length ? ` Iinkonzo: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}.` : ''))
+    + ' Fumana ulwalathiso neenkcukacha zoqhagamshelwano.'}
   jsonLd={[breadcrumbLd, jsonLd, ...(faqLd ? [faqLd] : [])]}
   noindex={Boolean(withheldReason)}
 >
@@ -177,7 +195,7 @@ const jsonLd = {
 
     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap;">
       <h1 style="font-size: 1.4rem;">{facility.name}</h1>
-      <span class="chip chip--type">{typeName}</span>
+      {!notCare && <span class="chip chip--type">{typeName}</span>}
       {facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">iiyure ezingama-24</span>}
     </div>
 
@@ -235,7 +253,7 @@ const jsonLd = {
       </section>
     )}
 
-    {isPrivate && (
+    {isPrivate && !notCare && (
       <section style="margin-bottom: 32px;">
         <div style="background: #fef3cd; border-left: 4px solid #856404; border-radius: var(--radius); padding: 14px 16px;">
           <h2 style="font-size: 1rem; margin-bottom: 8px; color: #856404;">Isebenza ngokwabucala — ayiyona ikliniki karhulumente yasimahla</h2>

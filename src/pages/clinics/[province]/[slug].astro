@@ -4,6 +4,7 @@ import { SERVICE_MAP, provinceSlug, typeLabel, nearbyFacilities, mapsUrl, whatsa
 import { facilityPaths } from '../../../data/pages/paths';
 import { generateFacilityEditorial } from '../../../data/facility-editorial';
 import { getFacilityTypeEditorial, REFERRAL_HIERARCHY } from '../../../data/facility-types-editorial';
+import { careRole } from '../../../data/care-role';
 
 export function getStaticPaths() {
   // #1239a — this route used to carry its OWN copy of the enumeration that
@@ -27,11 +28,21 @@ const editorial = generateFacilityEditorial(facility);
 // operator_type "unknown" and silently stripping their editorial would be a large
 // unreviewed content deletion, not a correction.
 const isPrivate = facility.operator_type === 'private';
-const typeEditorial = isPrivate ? null : getFacilityTypeEditorial(facility.type);
+// #1002 — three published records are not places anyone can be treated: a state
+// forensic mortuary, an office building and a bedding retailer, all three tagged
+// `healthcare` in OpenStreetMap, so no re-query separates them from a clinic. The
+// type editorial below explains what a clinic is and how its referral system
+// works; on those three pages that is not context, it is a false description of
+// the place. Same gate shape as isPrivate, adjudicated one record at a time.
+const notCare = careRole(facility.slug);
+const typeEditorial = isPrivate || notCare ? null : getFacilityTypeEditorial(facility.type);
 const activeServices = Object.entries(facility.services)
   .filter(([, v]) => v)
   .map(([k]) => ({ key: k, ...SERVICE_MAP[k] }))
   .filter(s => s.plain);
+
+// First sentence of the adjudicated description, for the meta description.
+const notCareSummary = notCare ? (notCare.what.match(/^[^.]*\./)?.[0] ?? '') : '';
 
 const directionsUrl = mapsUrl(facility.coordinates.lat, facility.coordinates.lng, facility.name);
 const shareUrl = whatsappShareUrl(facility);
@@ -103,9 +114,18 @@ const faqLd = typeEditorial ? {
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': ['MedicalClinic', 'LocalBusiness'],
+  // #1002 — a state mortuary, an office building and a bedding retailer are not
+  // MedicalClinics, and isAccessibleForFree answers a question about care that
+  // does not arise at any of them. Both are dropped rather than answered wrongly.
+  '@type': notCare ? 'LocalBusiness' : ['MedicalClinic', 'LocalBusiness'],
   name: facility.name,
-  description: `${typeLabel(facility.type)} in ${facility.province}, South Africa. Services: ${activeServices.map(s => s.plain).join(', ')}.`,
+  // #1002 — 22 records carry no service flag at all, which rendered the literal
+  // string "Services: ." here and in the meta description. Absent source data has
+  // to read as absent, not as an empty list of services.
+  description: notCare
+    ? notCareSummary
+    : `${typeLabel(facility.type)} in ${facility.province}, South Africa.`
+      + (activeServices.length ? ` Services: ${activeServices.map(s => s.plain).join(', ')}.` : ''),
   address: {
     '@type': 'PostalAddress',
     streetAddress: facility.address.street || undefined,
@@ -128,13 +148,19 @@ const jsonLd = {
     : facility.operating_hours.is_24_hour
       ? { openingHours: 'Mo-Su 00:00-23:59' }
       : {}),
-  isAccessibleForFree: !isPrivate,
-  medicalSpecialty: activeServices.map(s => s.label),
+  ...(notCare ? {} : { isAccessibleForFree: !isPrivate }),
+  ...(activeServices.length ? { medicalSpecialty: activeServices.map(s => s.label) } : {}),
 };
 ---
 <Base
-  title={`${facility.name} — ${typeLabel(facility.type)} in ${facility.province}${titleSuffix}`}
-  description={`${facility.name} is a ${typeLabel(facility.type).toLowerCase()} in ${facility.province}. Services: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}. Get directions and contact details.`}
+  title={notCare
+    ? `${facility.name} — ${facility.province}${titleSuffix}`
+    : `${facility.name} — ${typeLabel(facility.type)} in ${facility.province}${titleSuffix}`}
+  description={notCare
+    ? `${facility.name} is not a clinic and nobody is treated here. ${notCareSummary} Get directions and contact details.`
+    : activeServices.length
+      ? `${facility.name} is a ${typeLabel(facility.type).toLowerCase()} in ${facility.province}. Services: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}. Get directions and contact details.`
+      : `${facility.name} is a ${typeLabel(facility.type).toLowerCase()} in ${facility.province}. We hold no service details for it. Get directions and contact details.`}
   jsonLd={[breadcrumbLd, jsonLd, ...(faqLd ? [faqLd] : [])]}
   noindex={Boolean(withheldReason)}
 >
@@ -148,7 +174,7 @@ const jsonLd = {
 
     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap;">
       <h1 style="font-size: 1.4rem;">{facility.name}</h1>
-      <span class="chip chip--type">{typeLabel(facility.type)}</span>
+      {!notCare && <span class="chip chip--type">{typeLabel(facility.type)}</span>}
       {facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">24 hours</span>}
     </div>
 
@@ -165,6 +191,19 @@ const jsonLd = {
       </a>
     </div>
 
+    {notCare && (
+      <section style="margin-bottom: 32px;">
+        <div style="background: #fdecea; border-left: 4px solid #a4262c; border-radius: var(--radius); padding: 14px 16px;">
+          <h2 style="font-size: 1rem; margin-bottom: 8px; color: #a4262c;">Not a clinic — you cannot be treated here</h2>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px;">{notCare.what}</p>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
+            For medical care, see the <a href={`/clinics/${provinceSlug(facility.province)}`}>public clinics and hospitals in {facility.province}</a>.
+          </p>
+        </div>
+      </section>
+    )}
+
+    {!notCare && (
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Services available</h2>
       <div style="display: flex; flex-wrap: wrap; gap: 6px;">
@@ -174,7 +213,9 @@ const jsonLd = {
       </div>
       {activeServices.length === 0 && <p style="color: var(--text-muted); font-size: 0.9rem;">Service details not yet verified for this facility.</p>}
     </section>
+    )}
 
+    {!notCare && (
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 12px;">About this facility</h2>
       <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px;" set:html={editorial.context} />
@@ -186,6 +227,7 @@ const jsonLd = {
         </div>
       )}
     </section>
+    )}
 
     {typeEditorial && (
       <section style="margin-bottom: 32px;">
@@ -206,7 +248,7 @@ const jsonLd = {
       </section>
     )}
 
-    {isPrivate && (
+    {isPrivate && !notCare && (
       <section style="margin-bottom: 32px;">
         <div style="background: #fef3cd; border-left: 4px solid #856404; border-radius: var(--radius); padding: 14px 16px;">
           <h2 style="font-size: 1rem; margin-bottom: 8px; color: #856404;">Privately operated — not a free public clinic</h2>

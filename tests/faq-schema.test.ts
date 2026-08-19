@@ -144,7 +144,31 @@ describe('FAQ schema compliance — facility pages', () => {
     return paths;
   }
 
-  const facilityPaths = sampleFacilityPaths();
+  // #1150 and #1002 — the FAQ block is generated from the FACILITY-TYPE editorial
+  // ("when should I go to a clinic", "what staff work there"), and that editorial is
+  // deliberately suppressed on two kinds of page: privately operated facilities, where
+  // it would describe the free public system to someone who will be asked to pay, and
+  // the three records that are not care facilities at all (a state mortuary, an office
+  // building, a bedding retailer). Those pages carry no FAQ by design, so requiring one
+  // asserts the opposite of the correction. The sample takes the first pages
+  // alphabetically per province, so which of them land in it is an accident of naming —
+  // this test passed only until one private facility happened to sort into the sample.
+  const facilities: Array<{ slug: string; operator_type: string }> = JSON.parse(
+    readFileSync(join(__dirname, '..', 'src', 'data', 'facilities.json'), 'utf-8')
+  );
+  const noFaqBySlug = new Set(
+    facilities.filter((f) => f.operator_type === 'private').map((f) => f.slug)
+  );
+  // care-role.ts is TypeScript and this suite reads dist, so its slugs are read from
+  // the source text rather than imported — one regex over a hand-maintained registry of
+  // three entries, which is cheaper and less fragile than a transpile step.
+  const careRoleSrc = readFileSync(join(__dirname, '..', 'src', 'data', 'care-role.ts'), 'utf-8');
+  const registry = careRoleSrc.slice(careRoleSrc.indexOf('NOT_WALK_IN_CARE'));
+  for (const m of registry.matchAll(/^  '([a-z0-9-]+)':/gm)) noFaqBySlug.add(m[1]);
+
+  const facilityPaths = sampleFacilityPaths().filter(
+    (p) => !noFaqBySlug.has(p.split('/').pop() as string)
+  );
 
   it('sampled at least 9 facility pages (1+ per province)', () => {
     expect(facilityPaths.length).toBeGreaterThanOrEqual(9);

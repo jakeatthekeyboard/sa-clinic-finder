@@ -20,6 +20,7 @@ import { getFacilityTypeEditorialZu } from '../../../../data/i18n/facility-types
 import { typeLabelZu, servicePlainZu, serviceLabelZu, zuHref, zuLinks } from '../../../../data/i18n/zu';
 import { facilityPaths } from '../../../../data/pages/paths';
 import { facilitiesTranslated } from '../../../../i18n/translated';
+import { careRole } from '../../../../data/care-role';
 
 export function getStaticPaths() {
   return facilitiesTranslated('zu') ? facilityPaths() : [];
@@ -39,7 +40,14 @@ const editorial = generateFacilityEditorialZu(facility);
 // operator_type "unknown" and silently stripping their editorial would be a large
 // unreviewed content deletion, not a correction.
 const isPrivate = facility.operator_type === 'private';
-const typeEditorial = isPrivate ? null : getFacilityTypeEditorialZu(facility.type);
+// #1002 — three published records are not places anyone can be treated (a state
+// forensic mortuary, an office building, a bedding retailer). The type editorial
+// describes a clinic, which on those pages is a false description of the place, so
+// it is suppressed here exactly as it is on the English route. The explanatory
+// notice the English page shows is NOT reproduced here: a safety notice has to be
+// written by a speaker of the language, not machine-phrased on a humanitarian site.
+const notCare = careRole(facility.slug);
+const typeEditorial = isPrivate || notCare ? null : getFacilityTypeEditorialZu(facility.type);
 const activeServices = Object.entries(facility.services)
   .filter(([, v]) => v)
   .map(([k]) => ({ key: k, slug: SERVICE_MAP[k]?.slug, plain: servicePlainZu(k), label: serviceLabelZu(k) }))
@@ -117,9 +125,13 @@ const faqLd = typeEditorial ? {
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': ['MedicalClinic', 'LocalBusiness'],
+  '@type': notCare ? 'LocalBusiness' : ['MedicalClinic', 'LocalBusiness'],
   name: facility.name,
-  description: `${typeLabelZu(facility.type)} e-${facility.province}, eNingizimu Afrika. Izinsizakalo: ${activeServices.map(s => s.plain).join(', ')}.`,
+  // #1002 — with no service flags this rendered the literal string "Izinsizakalo: ."
+  description: notCare
+    ? `${facility.name}, ${facility.province}.`
+    : `${typeLabelZu(facility.type)} e-${facility.province}, eNingizimu Afrika.`
+      + (activeServices.length ? ` Izinsizakalo: ${activeServices.map(s => s.plain).join(', ')}.` : ''),
   address: {
     '@type': 'PostalAddress',
     streetAddress: facility.address.street || undefined,
@@ -142,13 +154,19 @@ const jsonLd = {
     : facility.operating_hours.is_24_hour
       ? { openingHours: 'Mo-Su 00:00-23:59' }
       : {}),
-  isAccessibleForFree: !isPrivate,
-  medicalSpecialty: activeServices.map(s => s.label),
+  ...(notCare ? {} : { isAccessibleForFree: !isPrivate }),
+  ...(activeServices.length ? { medicalSpecialty: activeServices.map(s => s.label) } : {}),
 };
 ---
 <Base
-  title={`${facility.name} — ${typeLabelZu(facility.type)} e-${facility.province}${titleSuffix}`}
-  description={`${facility.name} ${typeName} e-${facility.province}. Izinsizakalo: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}. Thola indlela nemininingwane yokuxhumana.`}
+  title={notCare
+    ? `${facility.name} — e-${facility.province}${titleSuffix}`
+    : `${facility.name} — ${typeLabelZu(facility.type)} e-${facility.province}${titleSuffix}`}
+  description={(notCare
+      ? `${facility.name}, ${facility.province}.`
+      : `${facility.name} ${typeName} e-${facility.province}.`
+        + (activeServices.length ? ` Izinsizakalo: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}.` : ''))
+    + ' Thola indlela nemininingwane yokuxhumana.'}
   jsonLd={[breadcrumbLd, jsonLd, ...(faqLd ? [faqLd] : [])]}
   noindex={Boolean(withheldReason)}
 >
@@ -162,7 +180,7 @@ const jsonLd = {
 
     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap;">
       <h1 style="font-size: 1.4rem;">{facility.name}</h1>
-      <span class="chip chip--type">{typeLabelZu(facility.type)}</span>
+      {!notCare && <span class="chip chip--type">{typeLabelZu(facility.type)}</span>}
       {facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">amahora angu-24</span>}
     </div>
 
@@ -220,7 +238,7 @@ const jsonLd = {
       </section>
     )}
 
-    {isPrivate && (
+    {isPrivate && !notCare && (
       <section style="margin-bottom: 32px;">
         <div style="background: #fef3cd; border-left: 4px solid #856404; border-radius: var(--radius); padding: 14px 16px;">
           <h2 style="font-size: 1rem; margin-bottom: 8px; color: #856404;">Isebenza ngokuzimela — akuwona umtholampilo kahulumeni wamahhala</h2>
