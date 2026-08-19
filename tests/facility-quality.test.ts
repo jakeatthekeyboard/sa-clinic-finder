@@ -135,4 +135,49 @@ describe('the two signals cannot drift (#929)', () => {
     // matching would make this test pass vacuously.
     expect(withheldPaths.size).toBeGreaterThan(0);
   });
+
+  it('withholds a record that resolves to the same OSM object as another (#1228)', async () => {
+    // Identity, not spelling. #1228 repointed three records at the building polygon
+    // that had absorbed the POI node we used to publish, and each collided with a
+    // record already on the site. Two of the three also normalise to the same NAME,
+    // so the pre-existing rule happened to cover them; "Elliot Provincial Hospital"
+    // and "Elliot Hospital" do not, and that page was being submitted. This pins the
+    // id rule specifically — with only the name rule present, the third case leaks.
+    const { withheldKeys } = await import('../src/data/facility-quality.mjs');
+    const withheld = withheldKeys([
+      { facility_id: 'zaf_way_461683581', province: 'EC', slug: 'rich',
+        name: 'Elliot Hospital', address: { street: 'Maclear Road', city: 'Elliot' },
+        contact: { phone: '+27459311321' }, operator: 'Eastern Cape Department of Health' },
+      { facility_id: 'zaf_way_461683581', province: 'EC', slug: 'thin',
+        name: 'Elliot Provincial Hospital', address: {}, contact: {} },
+    ]);
+    // The thin record loses; the informative one is kept and stays submittable.
+    expect(withheld.get('EC|thin')).toBe('duplicate-osm-object');
+    expect(withheld.has('EC|rich')).toBe(false);
+  });
+
+  it('does not withhold distinct facilities that merely share a name shape (#1228)', async () => {
+    // The id rule must not widen the name rule's blast radius: two DIFFERENT OSM
+    // objects are two facilities, however alike their names read.
+    const { withheldKeys } = await import('../src/data/facility-quality.mjs');
+    const withheld = withheldKeys([
+      { facility_id: 'zaf_way_1', province: 'EC', slug: 'a', name: 'Zwelitsha Clinic',
+        address: {}, contact: {} },
+      { facility_id: 'zaf_way_2', province: 'KZN', slug: 'b', name: 'Zwelitsha Clinic',
+        address: {}, contact: {} },
+    ]);
+    expect(withheld.size).toBe(0);
+  });
+
+  it('treats an empty facility_id as no evidence of duplication (#1228)', async () => {
+    // Absent is not equal. Clustering records on a missing id would withhold every
+    // record but one the moment the field went empty — the fail-open shape, wearing
+    // a quality gate's uniform.
+    const { withheldKeys } = await import('../src/data/facility-quality.mjs');
+    const withheld = withheldKeys([
+      { facility_id: '', province: 'EC', slug: 'a', name: 'Alpha Clinic', address: {}, contact: {} },
+      { facility_id: '', province: 'EC', slug: 'b', name: 'Beta Clinic', address: {}, contact: {} },
+    ]);
+    expect(withheld.size).toBe(0);
+  });
 });

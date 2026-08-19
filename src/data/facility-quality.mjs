@@ -72,6 +72,42 @@ export function withheldKeys(facilities) {
     if (r) out.set(`${f.province}|${f.slug}`, r);
   }
 
+  // Records that resolve to the SAME OpenStreetMap object are the same facility —
+  // that is not a heuristic, it is what an OSM id means. #1228 surfaced three such
+  // pairs while adjudicating the drift check's first MISSING findings: the node we
+  // published had been DELETED BY A MAPPER BECAUSE IT WAS A DUPLICATE, and once our
+  // record was repointed at the surviving building polygon it collided with a record
+  // we were already publishing for the same building. The name rule below happens to
+  // catch two of them ("Ha Grove Hospital" / "H.A. Grove Hospital" normalise the same,
+  // as do the two "Tower Psychiatric Hospital" records) and structurally cannot catch
+  // the third: "Elliot Provincial Hospital" and "Elliot Hospital" are different
+  // strings for one 52-bed hospital at 1 Maclear Road, Khowa, and both were being
+  // submitted. Identity beats spelling, so this runs FIRST.
+  //
+  // It cannot produce the false positive the name rule is careful about. Withholding
+  // on name equality risks hiding two genuinely different clinics that share a name;
+  // two records carrying one OSM id are one object by construction, so the only
+  // question is which record describes it best.
+  const byObject = new Map();
+  for (const f of facilities) {
+    const id = (f.facility_id || '').trim();
+    if (!id) continue;
+    if (!byObject.has(id)) byObject.set(id, []);
+    byObject.get(id).push(f);
+  }
+  for (const group of byObject.values()) {
+    if (group.length < 2) continue;
+    const ranked = [...group].sort(
+      (a, b) => fieldFill(b) - fieldFill(a)
+             || (b.data_quality_score || 0) - (a.data_quality_score || 0)
+             || String(a.slug).localeCompare(String(b.slug))
+    );
+    for (const f of ranked.slice(1)) {
+      const key = `${f.province}|${f.slug}`;
+      if (!out.has(key)) out.set(key, 'duplicate-osm-object');
+    }
+  }
+
   // Same-province duplicates: keep the single most-informative record, withhold the
   // rest. Ties break on slug so the choice is stable across builds — an unstable
   // sitemap would churn every deploy.
