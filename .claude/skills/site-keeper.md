@@ -128,7 +128,10 @@ git commit -F /tmp/keeper-commit-msg.txt -- <path> [<path> ...]
 #    change nothing a reader sees). On a DEFER, hold the push, re-check later, and
 #    push before the run ends — never end a run on an unpushed commit
 #    (`tools/unpushed-commit-check.py` watches for that).
-python3 /Users/jake/dev/product-pipeline-1/tools/deploy-budget-gate.py --repo sa-clinic-finder
+#    `--repo` takes a PATH, not a repo name. A bare name resolves against the
+#    pipeline dir, does not exist, and the gate SOFT-SKIPS exit 0 — a fail-open
+#    that reads exactly like an approval. Pass the absolute path.
+python3 /Users/jake/dev/product-pipeline-1/tools/deploy-budget-gate.py --repo /Users/jake/dev/sa-clinic-finder
 git pull --rebase origin master
 git push origin master
 ```
