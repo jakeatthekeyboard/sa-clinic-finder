@@ -1,66 +1,40 @@
 {
-  "captured_at": "2026-08-19T15:08:40.082957+00:00",
-  "records_checked": 1076,
-  "osm_objects_returned": 1071,
+  "captured_at": "2026-08-19T20:19:19.100912+00:00",
+  "records_checked": 1073,
+  "osm_objects_returned": 1073,
   "unparseable_facility_ids": [],
   "move_threshold_metres": 500.0,
   "counts": {
-    "MISSING": 7,
+    "MISSING": 1,
     "MOVED": 0,
-    "NAME_CHANGED": 5,
-    "ENRICHABLE": 10
+    "NAME_CHANGED": 8,
+    "ENRICHABLE": 12
   },
   "findings": {
     "MISSING": [
       {
-        "slug": "ha-grove-hospital-mpumalanga",
-        "name": "Ha Grove Hospital",
-        "osm": "node:1460687699",
-        "reason": "object no longer returned by Overpass"
-      },
-      {
         "slug": "cambridge-clinic-sprigg-street-clinic-eastern-cape",
         "name": "Cambridge Clinic (Sprigg Street Clinic)",
-        "osm": "node:2298902321",
-        "reason": "object no longer returned by Overpass"
-      },
-      {
-        "slug": "v-shumane-clinic-grahamstown",
-        "name": "V Shumane Clinic",
-        "osm": "node:4982491408",
-        "reason": "object no longer returned by Overpass"
-      },
-      {
-        "slug": "tower-psychiatric-hospital-eastern-cape",
-        "name": "Tower Psychiatric Hospital",
-        "osm": "node:7896380488",
-        "reason": "object no longer returned by Overpass"
-      },
-      {
-        "slug": "general-justice-gizenga-mpanza-regional-hospital-formerly-stanger-hospital-durba",
-        "name": "General Justice Gizenga Mpanza Regional Hospital (formerly Stanger Hospital)",
-        "osm": "node:9048293718",
-        "reason": "object no longer returned by Overpass"
-      },
-      {
-        "slug": "4th-avenue-community-health-clinic-gauteng",
-        "name": "4th Avenue Community Health Clinic",
-        "osm": "node:10121106418",
-        "reason": "no longer tagged healthcare (amenity=None)"
-      },
-      {
-        "slug": "queenstown-aids-training-information-and-counselling-centre-eastern-cape",
-        "name": "Queenstown Aids Training, Information and Counselling Centre",
-        "osm": "way:1419947251",
-        "reason": "no longer tagged healthcare (amenity=None)"
+        "osm": "way:1103021023",
+        "reason": "no longer tagged healthcare (amenity='social_facility')"
       }
     ],
     "MOVED": [],
     "NAME_CHANGED": [
       {
-        "slug": "nelimahle-phamarcy-soshanguve",
-        "ours": "Nelimahle Phamarcy",
-        "osm_name": "Nelimahle Pharmacy"
+        "slug": "general-justice-gizenga-mpanza-regional-hospital-formerly-stanger-hospital-durba",
+        "ours": "General Justice Gizenga Mpanza Regional Hospital (formerly Stanger Hospital)",
+        "osm_name": "General Justice Gizenga Mpanza Regional Hospital"
+      },
+      {
+        "slug": "ladysmith-hospital-ladysmith",
+        "ours": "Ladysmith Hospital",
+        "osm_name": "uMnambithi Provincial Hospital"
+      },
+      {
+        "slug": "elliot-hospital-elliot",
+        "ours": "Elliot Hospital",
+        "osm_name": "Elliot Provincial Hospital"
       },
       {
         "slug": "fort-beaufort-provincial-fort-beaufort-eastern-cape",
@@ -81,6 +55,11 @@
         "slug": "palm-ridge-clinic-gauteng",
         "ours": "Palm Ridge Clinic",
         "osm_name": "Palm Ridge Community Hall"
+      },
+      {
+        "slug": "queenstown-aids-training-information-and-counselling-centre-eastern-cape",
+        "ours": "Queenstown Aids Training, Information and Counselling Centre",
+        "osm_name": "ATICC"
       }
     ],
     "ENRICHABLE": [
@@ -142,7 +121,19 @@
         ]
       },
       {
+        "slug": "orania-kliniek-orania",
+        "gains": [
+          "opening_hours"
+        ]
+      },
+      {
         "slug": "santa-hospital-eastern-cape",
+        "gains": [
+          "operator"
+        ]
+      },
+      {
+        "slug": "queenstown-aids-training-information-and-counselling-centre-eastern-cape",
         "gains": [
           "operator"
         ]
