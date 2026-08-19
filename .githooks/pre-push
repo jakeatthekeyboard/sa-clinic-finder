@@ -41,6 +41,29 @@ if ! python3 /Users/jake/dev/product-pipeline-1/tools/dead-link-scan.py "$SITE_D
     exit 1
 fi
 
+# ── Vitest suites — ALL 14 (#1239a) ──────────────────────────────
+# This hook did not contain the string `vitest` at all until 2026-08-19, while
+# 14 suites / 315 assertions sat in tests/. So tests/seo-integrity.test.ts had
+# NEVER gated a push, and CF — the portfolio's #1 site by clicks and impressions
+# — was serving 15 duplicate-title groups, the worst being 12 pages all titled
+# "health care — Clinic in Mpumalanga, Ehlanzeni District" across three locales.
+# The suite that asserts zero duplicate titles was green in the repo and unrun.
+#
+# Runs AFTER the build, before the parity check: seo-integrity, sitemap,
+# routing-integrity, build-output, page-completeness and performance all walk
+# dist/. ~12s on this corpus — there is no cost argument.
+#
+# If you ever narrow this, prove what actually runs with
+#   python3 /Users/jake/dev/product-pipeline-1/tools/pre-push-gate-check.py --repo .
+# A declared gate is not a running gate (#1116).
+echo ""
+echo "▸ Running vitest suites (14 files, data + dist)..."
+if ! npx vitest run < /dev/null; then
+    echo ""
+    echo "✗ PUSH BLOCKED — vitest suites failed."
+    exit 1
+fi
+
 # ── Numeric parity (translations vs English) ─────────────────────
 # The one translation defect the machine-translation disclaimer cannot cover:
 # a dosage, threshold, fee or emergency number that lost a digit. The page still

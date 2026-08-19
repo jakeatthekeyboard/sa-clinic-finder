@@ -150,6 +150,23 @@ const xDefault = new URL(basePath, site).href;
       transition: box-shadow 0.15s;
     }
     .card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* Service-page facility list (#1239a).
+       These four rules were previously repeated as INLINE style attributes on
+       every facility card. /services/arvs renders 811 cards, so the same four
+       declaration blocks were serialised 811 times each — 212 KB of the page's
+       443 KB, for markup that never varies. tests/performance.test.ts caps a
+       page at 350 KB and had been failing on it since #1001 turned that list
+       from 2 facilities into every public facility in the country; nothing
+       noticed because the vitest suite had never run at push.
+       On clinicfinder.co.za the payload is the product: the reader is on South
+       African mobile data, often prepaid. Classes here rather than an Astro
+       scoped <style> deliberately — scoping stamps a data-astro-cid attribute
+       on every element and would hand most of the saving straight back. */
+    .svc-card { text-decoration: none; color: var(--text); padding: 12px 16px; }
+    .svc-card-row { display: flex; justify-content: space-between; align-items: center; }
+    .svc-card-addr { font-size: 0.85rem; color: var(--text); margin-top: 2px; }
+    .svc-card-meta { font-size: 0.85rem; color: var(--text-muted); margin-top: 2px; }
   </style>
 </head>
 <body>
