@@ -1,0 +1,204 @@
+"""Unit tests for tools/osm-drift-check.py.
+
+Everything here runs against synthetic records and a temp baseline — never the
+live facilities.json or the live baseline, which change under the test and turn
+a real regression into a green run.
+
+The load-bearing test is `test_unaccepted_missing_is_red`: a guard that cannot
+go RED is decoration, and this one ships with 8 accepted findings, so the only
+proof it still works is that removing one fires.
+"""
+
+import importlib.util
+import json
+import sys
+from pathlib import Path
+
+import pytest
+
+MOD_PATH = Path(__file__).resolve().parent.parent / "osm-drift-check.py"
+spec = importlib.util.spec_from_file_location("osm_drift_check", MOD_PATH)
+odc = importlib.util.module_from_spec(spec)
+sys.modules["osm_drift_check"] = odc
+spec.loader.exec_module(odc)
+
+
+class Args:
+    json = False
+
+
+def rec(slug, fid, lat=-26.0, lng=28.0, name="Test Clinic", phone="", raw="", operator=""):
+    return {
+        "slug": slug, "facility_id": fid, "name": name,
+        "coordinates": {"lat": lat, "lng": lng},
+        "contact": {"phone": phone}, "operating_hours": {"raw": raw},
+        "operator": operator,
+    }
+
+
+# ── id parsing ────────────────────────────────────────────────────────────────
+
+def test_parses_node_way_relation():
+    by_type, bad = odc.parse_ids([
+        rec("a", "zaf_node_1"), rec("b", "zaf_way_2"), rec("c", "zaf_relation_3")])
+    assert set(by_type["node"]) == {1}
+    assert set(by_type["way"]) == {2}
+    assert set(by_type["relation"]) == {3}
+    assert bad == []
+
+
+def test_unparseable_ids_are_reported_not_dropped():
+    """The 18 HOTOSM records use `zaf_nodes_` (plural). They are NOT checkable
+    against OSM by id, and a checker that silently ignored them would report
+    'all clear' over a corpus it never looked at."""
+    by_type, bad = odc.parse_ids([rec("h", "zaf_nodes_99"), rec("j", "garbage")])
+    assert sum(len(v) for v in by_type.values()) == 0
+    assert set(bad) == {"zaf_nodes_99", "garbage"}  # the id is reported, not the slug
+
+
+# ── healthcare classification ─────────────────────────────────────────────────
+
+@pytest.mark.parametrize("tags,expected", [
+    ({"amenity": "clinic"}, True),
+    ({"amenity": "hospital"}, True),
+    ({"healthcare": "centre"}, True),
+    ({"amenity": "school"}, False),
+    ({}, False),
+    ({"amenity": None}, False),
+])
+def test_is_healthcare(tags, expected):
+    assert odc.is_healthcare(tags) is expected
+
+
+def test_retagged_as_school_is_missing_not_a_name_change():
+    """elliot-provincial-hospital-eastern-cape, the real 2026-08-19 case: OSM now
+    calls it a school. That is the closed-facility signal, and it must not be
+    softened into NAME_CHANGED."""
+    by_type, _ = odc.parse_ids([rec("elliot", "zaf_way_5", name="Elliot Hospital")])
+    found = {"way:5": {"tags": {"amenity": "school", "name": "Elliot Primary"},
+                       "lat": -26.0, "lon": 28.0}}
+    f = odc.compare(by_type, found, 500.0)
+    assert len(f["MISSING"]) == 1
+    assert "school" in f["MISSING"][0]["reason"]
+    assert f["NAME_CHANGED"] == []
+
+
+# ── geometry ──────────────────────────────────────────────────────────────────
+
+def test_move_under_threshold_is_not_a_relocation():
+    by_type, _ = odc.parse_ids([rec("a", "zaf_node_1", lat=-26.0, lng=28.0)])
+    # ~110 m north
+    found = {"node:1": {"tags": {"amenity": "clinic", "name": "Test Clinic"},
+                        "lat": -25.999, "lon": 28.0}}
+    assert odc.compare(by_type, found, 500.0)["MOVED"] == []
+
+
+def test_move_over_threshold_is_flagged():
+    by_type, _ = odc.parse_ids([rec("a", "zaf_node_1", lat=-26.0, lng=28.0)])
+    found = {"node:1": {"tags": {"amenity": "clinic", "name": "Test Clinic"},
+                        "lat": -26.05, "lon": 28.0}}
+    moved = odc.compare(by_type, found, 500.0)["MOVED"]
+    assert len(moved) == 1 and moved[0]["metres"] > 500
+
+
+# ── enrichment (TODO #315) ────────────────────────────────────────────────────
+
+def test_enrichable_only_when_we_lack_the_value():
+    by_type, _ = odc.parse_ids([
+        rec("has", "zaf_node_1", phone="+27 11 000 0000"),
+        rec("lacks", "zaf_node_2", phone=""),
+    ])
+    tags = {"amenity": "clinic", "name": "Test Clinic", "phone": "+27 11 111 1111"}
+    found = {"node:1": {"tags": tags, "lat": -26.0, "lon": 28.0},
+             "node:2": {"tags": tags, "lat": -26.0, "lon": 28.0}}
+    enr = odc.compare(by_type, found, 500.0)["ENRICHABLE"]
+    assert [e["slug"] for e in enr] == ["lacks"]
+    assert enr[0]["gains"] == ["phone"]
+
+
+# ── baseline identity, not count ──────────────────────────────────────────────
+
+def _baseline(tmp_path, monkeypatch, entries):
+    p = tmp_path / "baseline.json"
+    p.write_text(json.dumps({"accepted": entries}), encoding="utf-8")
+    monkeypatch.setattr(odc, "BASELINE", p)
+    return p
+
+
+def _capture(missing):
+    return {"records_checked": 1, "osm_objects_returned": 1,
+            "counts": {"MISSING": len(missing), "MOVED": 0,
+                       "NAME_CHANGED": 0, "ENRICHABLE": 0},
+            "findings": {"MISSING": missing, "MOVED": [],
+                         "NAME_CHANGED": [], "ENRICHABLE": []}}
+
+
+GONE = {"slug": "a", "name": "A", "osm": "node:1",
+        "reason": "object no longer returned by Overpass"}
+
+
+def test_accepted_missing_is_green(tmp_path, monkeypatch):
+    _baseline(tmp_path, monkeypatch, [{"key": odc.missing_key(GONE)}])
+    assert odc.report(_capture([GONE]), Args(), fresh=True) == 0
+
+
+def test_unaccepted_missing_is_red(tmp_path, monkeypatch):
+    _baseline(tmp_path, monkeypatch, [])
+    assert odc.report(_capture([GONE]), Args(), fresh=True) == 1
+
+
+def test_same_facility_new_reason_refires(tmp_path, monkeypatch):
+    """Key includes the reason on purpose: 'the object vanished' and 'the object
+    is now a school' are different facts about the same facility, and the second
+    is new information even though the slug was already accepted."""
+    _baseline(tmp_path, monkeypatch, [{"key": odc.missing_key(GONE)}])
+    retagged = dict(GONE, reason="no longer tagged healthcare (amenity='school')")
+    assert odc.report(_capture([retagged]), Args(), fresh=True) == 1
+
+
+def test_one_resolved_one_new_does_not_net_out(tmp_path, monkeypatch):
+    """The reason the baseline is identity-keyed rather than a count: with a count
+    ratchet this run is green, because 1 accepted became 1 different one."""
+    _baseline(tmp_path, monkeypatch, [{"key": odc.missing_key(GONE)}])
+    other = {"slug": "b", "name": "B", "osm": "node:2",
+             "reason": "object no longer returned by Overpass"}
+    assert odc.report(_capture([other]), Args(), fresh=True) == 1
+
+
+def test_baseline_applies_to_a_cached_capture_too(tmp_path, monkeypatch):
+    """A stored capture must never carry its own verdict. Re-reporting one from
+    cache re-applies the CURRENT baseline, so accepting an entry clears it and
+    revoking one re-fires it without another network pull."""
+    _baseline(tmp_path, monkeypatch, [])
+    cap = _capture([GONE])
+    assert odc.report(dict(cap), Args(), fresh=False) == 1
+    _baseline(tmp_path, monkeypatch, [{"key": odc.missing_key(GONE)}])
+    assert odc.report(dict(cap), Args(), fresh=False) == 0
+
+
+# ── fail-loud paths ───────────────────────────────────────────────────────────
+
+def test_unreadable_baseline_is_a_hard_failure(tmp_path, monkeypatch):
+    p = tmp_path / "baseline.json"
+    p.write_text("{not json", encoding="utf-8")
+    monkeypatch.setattr(odc, "BASELINE", p)
+    with pytest.raises(SystemExit):
+        odc.report(_capture([GONE]), Args(), fresh=True)
+
+
+def test_missing_baseline_file_means_nothing_accepted(tmp_path, monkeypatch):
+    monkeypatch.setattr(odc, "BASELINE", tmp_path / "absent.json")
+    assert odc.report(_capture([GONE]), Args(), fresh=True) == 1
+
+
+def test_capture_without_findings_is_a_hard_failure(tmp_path, monkeypatch):
+    """'No drift' and 'not measured' are different facts. A capture from an older
+    shape must not read as a clean run — feedback_unreadable_is_not_absent."""
+    _baseline(tmp_path, monkeypatch, [])
+    with pytest.raises(SystemExit):
+        odc.report({"counts": {}}, Args(), fresh=False)
+
+
+def test_clean_run_is_green(tmp_path, monkeypatch):
+    _baseline(tmp_path, monkeypatch, [])
+    assert odc.report(_capture([]), Args(), fresh=True) == 0

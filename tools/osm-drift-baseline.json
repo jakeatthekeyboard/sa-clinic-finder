@@ -1,0 +1,77 @@
+{
+  "$comment": "Accepted MISSING findings for tools/osm-drift-check.py, keyed by IDENTITY (slug|reason), never by count — a count ratchet stays green when one entry is resolved and another vanishes the same week, which is the event this check exists to catch. Adding a key here is a DECISION: write a note saying why. Removing a facility from the site is a separate, later act.",
+  "accepted": [
+    {
+      "key": "ha-grove-hospital-mpumalanga|object no longer returned by Overpass",
+      "slug": "ha-grove-hospital-mpumalanga",
+      "name": "Ha Grove Hospital",
+      "osm": "node:1460687699",
+      "reason": "object no longer returned by Overpass",
+      "accepted_at": "2026-08-19",
+      "note": "Present on the FIRST run of this check (2026-08-19), so it predates the detector and cannot be attributed to a change we can date. Accepted so the guard ships GREEN and fires on NEW drift; NOT dismissed. Each still needs a by-hand verdict — an OSM object can disappear through vandalism, a merge into another object, or a retag, and only one of those means the facility closed. Burn-down list, not a clean bill."
+    },
+    {
+      "key": "cambridge-clinic-sprigg-street-clinic-eastern-cape|object no longer returned by Overpass",
+      "slug": "cambridge-clinic-sprigg-street-clinic-eastern-cape",
+      "name": "Cambridge Clinic (Sprigg Street Clinic)",
+      "osm": "node:2298902321",
+      "reason": "object no longer returned by Overpass",
+      "accepted_at": "2026-08-19",
+      "note": "Present on the FIRST run of this check (2026-08-19), so it predates the detector and cannot be attributed to a change we can date. Accepted so the guard ships GREEN and fires on NEW drift; NOT dismissed. Each still needs a by-hand verdict — an OSM object can disappear through vandalism, a merge into another object, or a retag, and only one of those means the facility closed. Burn-down list, not a clean bill."
+    },
+    {
+      "key": "v-shumane-clinic-grahamstown|object no longer returned by Overpass",
+      "slug": "v-shumane-clinic-grahamstown",
+      "name": "V Shumane Clinic",
+      "osm": "node:4982491408",
+      "reason": "object no longer returned by Overpass",
+      "accepted_at": "2026-08-19",
+      "note": "Present on the FIRST run of this check (2026-08-19), so it predates the detector and cannot be attributed to a change we can date. Accepted so the guard ships GREEN and fires on NEW drift; NOT dismissed. Each still needs a by-hand verdict — an OSM object can disappear through vandalism, a merge into another object, or a retag, and only one of those means the facility closed. Burn-down list, not a clean bill."
+    },
+    {
+      "key": "tower-psychiatric-hospital-eastern-cape|object no longer returned by Overpass",
+      "slug": "tower-psychiatric-hospital-eastern-cape",
+      "name": "Tower Psychiatric Hospital",
+      "osm": "node:7896380488",
+      "reason": "object no longer returned by Overpass",
+      "accepted_at": "2026-08-19",
+      "note": "Present on the FIRST run of this check (2026-08-19), so it predates the detector and cannot be attributed to a change we can date. Accepted so the guard ships GREEN and fires on NEW drift; NOT dismissed. Each still needs a by-hand verdict — an OSM object can disappear through vandalism, a merge into another object, or a retag, and only one of those means the facility closed. Burn-down list, not a clean bill."
+    },
+    {
+      "key": "general-justice-gizenga-mpanza-regional-hospital-formerly-stanger-hospital-durba|object no longer returned by Overpass",
+      "slug": "general-justice-gizenga-mpanza-regional-hospital-formerly-stanger-hospital-durba",
+      "name": "General Justice Gizenga Mpanza Regional Hospital (formerly Stanger Hospital)",
+      "osm": "node:9048293718",
+      "reason": "object no longer returned by Overpass",
+      "accepted_at": "2026-08-19",
+      "note": "Present on the FIRST run of this check (2026-08-19), so it predates the detector and cannot be attributed to a change we can date. Accepted so the guard ships GREEN and fires on NEW drift; NOT dismissed. Each still needs a by-hand verdict — an OSM object can disappear through vandalism, a merge into another object, or a retag, and only one of those means the facility closed. Burn-down list, not a clean bill."
+    },
+    {
+      "key": "4th-avenue-community-health-clinic-gauteng|no longer tagged healthcare (amenity=None)",
+      "slug": "4th-avenue-community-health-clinic-gauteng",
+      "name": "4th Avenue Community Health Clinic",
+      "osm": "node:10121106418",
+      "reason": "no longer tagged healthcare (amenity=None)",
+      "accepted_at": "2026-08-19",
+      "note": "Present on the FIRST run of this check (2026-08-19), so it predates the detector and cannot be attributed to a change we can date. Accepted so the guard ships GREEN and fires on NEW drift; NOT dismissed. Each still needs a by-hand verdict — an OSM object can disappear through vandalism, a merge into another object, or a retag, and only one of those means the facility closed. Burn-down list, not a clean bill."
+    },
+    {
+      "key": "elliot-provincial-hospital-eastern-cape|no longer tagged healthcare (amenity='school')",
+      "slug": "elliot-provincial-hospital-eastern-cape",
+      "name": "Elliot Provincial Hospital",
+      "osm": "way:217484563",
+      "reason": "no longer tagged healthcare (amenity='school')",
+      "accepted_at": "2026-08-19",
+      "note": "Present on the FIRST run of this check (2026-08-19), so it predates the detector and cannot be attributed to a change we can date. Accepted so the guard ships GREEN and fires on NEW drift; NOT dismissed. Each still needs a by-hand verdict — an OSM object can disappear through vandalism, a merge into another object, or a retag, and only one of those means the facility closed. Burn-down list, not a clean bill."
+    },
+    {
+      "key": "queenstown-aids-training-information-and-counselling-centre-eastern-cape|no longer tagged healthcare (amenity=None)",
+      "slug": "queenstown-aids-training-information-and-counselling-centre-eastern-cape",
+      "name": "Queenstown Aids Training, Information and Counselling Centre",
+      "osm": "way:1419947251",
+      "reason": "no longer tagged healthcare (amenity=None)",
+      "accepted_at": "2026-08-19",
+      "note": "Present on the FIRST run of this check (2026-08-19), so it predates the detector and cannot be attributed to a change we can date. Accepted so the guard ships GREEN and fires on NEW drift; NOT dismissed. Each still needs a by-hand verdict — an OSM object can disappear through vandalism, a merge into another object, or a retag, and only one of those means the facility closed. Burn-down list, not a clean bill."
+    }
+  ]
+}
