@@ -73,8 +73,51 @@ After each run, append to `ops/keeper-log.json`:
 }
 ```
 
-Commit changes with message: `Keeper: <what was done> — clinicfinder.co.za`
-Push to main.
+## Commit and deploy
+
+**Stage by explicit path. NEVER `git add -A`, `git add .`, `git add -u`, or `git commit -a`.**
+
+Up to ten other sessions edit this repo concurrently while this keeper runs. A broad add
+stages THEIR half-finished work into THIS run's commit, exits 0, and reports success — the
+failure is completely silent. It has already happened for real (#1144): a keeper's
+`git add -A src/` swept live Lemon Squeezy payment-path edits into an FDD data-quality
+commit, so `git revert` on the data fix would also revert someone else's payment code, and
+the commit message describes only the data fix. A second run the same week nearly committed
+a working copy that would have deleted another session's edit.
+
+Files this keeper typically writes (stage only the ones you actually changed this run):
+- `src/data/province-editorial.ts`, `src/data/cities.json`
+- `ops/keeper-log.json` — the run log
+
+```bash
+# 1. Stage ONLY what you changed, by name.
+git add <path> [<path> ...]
+
+# 2. Verify. If anything you did not write appears here, unstage it and stop.
+git diff --cached --name-only
+
+# 3. Message to a file, then -F. NEVER `git commit -m` — in zsh a double-quoted -m
+#    string runs backticks and expands $1, silently.
+cat > /tmp/keeper-commit-msg.txt <<'MSG'
+Sitekeeper: <action> for clinicfinder.co.za (YYYY-MM-DD)
+
+<why this change was made>
+
+Files: <the exact paths staged above>
+Revert: git revert this commit
+MSG
+git commit -F /tmp/keeper-commit-msg.txt
+
+# 4. Rebase onto whatever the other sessions pushed, then push.
+git pull --rebase origin main
+git push origin main
+```
+
+**Foreign changes are neither yours to commit nor yours to discard.** Leave them unstaged.
+If one genuinely blocks your work, `git stash push --include-untracked -- <their paths>` and
+restore it when you are done; never `git checkout --` or `git restore` over another session's
+working copy. If you cannot proceed without touching their files, do not improvise — record it
+in `issues[]` and stop.
 
 ## Regulatory & legislative scan (weekly, portfolio-wide) — spec §9
 
