@@ -21,6 +21,11 @@ import { typeLabelZu, servicePlainZu, serviceLabelZu, zuHref, zuLinks } from '..
 import { facilityPaths } from '../../../../data/pages/paths';
 import { facilitiesTranslated } from '../../../../i18n/translated';
 import { careRole } from '../../../../data/care-role';
+import {
+  CARE_ROLE_CHROME_ZU,
+  careRoleWhatZu,
+  firstSentence,
+} from '../../../../data/i18n/care-role.xh-zu';
 import { emergencyIsInferred } from '../../../../data/emergency-basis';
 
 export function getStaticPaths() {
@@ -63,6 +68,20 @@ const isPrivate = facility.operator_type === 'private';
 // cannot move the numeric multiset tools/numeric-parity-check.py compares.
 const emergencyInferred = facility.services.emergency_24h && emergencyIsInferred(facility.slug);
 const notCare = careRole(facility.slug);
+// #1367 — the #1002 "this is not a care facility" notice, in isiZulu.
+// It was withheld from this route under the same rule #1361 reversed: "a safety
+// notice has to be written by a speaker of the language, not machine-phrased on a
+// humanitarian site." The refutation is on this very page — src/i18n/strings.ts
+// renders a machine-phrased isiZulu safety notice above the fold, and says so in
+// isiZulu. Withholding it here withheld the CORRECTION of a false claim rather
+// than a caveat on a true one: measured from built output on 2026-08-21, the notice
+// stood on 6 of 6 English pages and 0 of 6 isiZulu pages, with no English fallback,
+// so this route presented a state mortuary and a bedding retailer as facilities with
+// nothing anywhere on the page saying otherwise.
+// First-language review of all isiZulu safety copy is still right and is #1369.
+// Wording, terminology and the no-numerals rule: src/data/i18n/care-role.xh-zu.ts.
+const notCareWhat = notCare ? careRoleWhatZu(facility.slug) : null;
+const notCareSummary = firstSentence(notCareWhat);
 const typeEditorial = isPrivate || notCare ? null : getFacilityTypeEditorialZu(facility.type);
 const activeServices = Object.entries(facility.services)
   .filter(([, v]) => v)
@@ -144,8 +163,10 @@ const jsonLd = {
   '@type': notCare ? 'LocalBusiness' : ['MedicalClinic', 'LocalBusiness'],
   name: facility.name,
   // #1002 — with no service flags this rendered the literal string "Izinsizakalo: ."
+  // #1367 — the English route publishes the adjudicated first sentence here. This
+  // route published only a name and a province, which is not a correction.
   description: notCare
-    ? `${facility.name}, ${facility.province}.`
+    ? notCareSummary || `${facility.name}, ${facility.province}.`
     : `${typeLabelZu(facility.type)} e-${facility.province}, eNingizimu Afrika.`
       + (activeServices.length ? ` Izinsizakalo: ${activeServices.map(s => s.plain).join(', ')}.` : ''),
   address: {
@@ -179,7 +200,8 @@ const jsonLd = {
     ? `${facility.name} — e-${facility.province}${titleSuffix}`
     : `${facility.name} — ${typeLabelZu(facility.type)} e-${facility.province}${titleSuffix}`}
   description={(notCare
-      ? `${facility.name}, ${facility.province}.`
+      ? `${facility.name} akuwona umtholampilo futhi akekho umuntu owelashwa lapha.`
+        + (notCareSummary ? ` ${notCareSummary}` : '')
       : `${facility.name} ${typeName} e-${facility.province}.`
         + (activeServices.length ? ` Izinsizakalo: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}.` : ''))
     + ' Thola indlela nemininingwane yokuxhumana.'}
@@ -212,6 +234,21 @@ const jsonLd = {
         Yabelana Nge-WhatsApp
       </a>
     </div>
+
+    {/* #1367 — same notice, same position and same styling as the English route, so
+        the three locales cannot say different things about the same record. */}
+    {notCare && (
+      <section style="margin-bottom: 32px;">
+        <div style="background: #fdecea; border-left: 4px solid #a4262c; border-radius: var(--radius); padding: 14px 16px;">
+          <h2 style="font-size: 1rem; margin-bottom: 8px; color: #a4262c;">{CARE_ROLE_CHROME_ZU.heading}</h2>
+          {notCareWhat && <p style="font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px;">{notCareWhat}</p>}
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
+            {CARE_ROLE_CHROME_ZU.seeBefore}
+            <a href={zuHref(`/clinics/${provinceSlug(facility.province)}`)}>{CARE_ROLE_CHROME_ZU.linkText(facility.province)}</a>.
+          </p>
+        </div>
+      </section>
+    )}
 
     {/* #1002/#1350 — a record adjudicated as NOT walk-in care must not be
         described as a facility on this route either. The English page wraps both
