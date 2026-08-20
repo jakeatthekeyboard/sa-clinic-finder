@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 
 /**
@@ -19,6 +19,22 @@ import { join } from "path";
 const ROOT = join(__dirname, "..");
 const PAGE = join(ROOT, "src/pages/how-this-site-is-made.astro");
 const BASE = join(ROOT, "src/layouts/Base.astro");
+
+const DIST = join(ROOT, "dist");
+
+/** Every built HTML page. Walked at call time so a locale added later is covered. */
+function builtPages(): string[] {
+  const out: string[] = [];
+  const walk = (dir: string) => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = join(dir, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name === "index.html") out.push(p);
+    }
+  };
+  walk(DIST);
+  return out;
+}
 
 const page = readFileSync(PAGE, "utf-8");
 const flat = page.replace(/\s+/g, " ");
@@ -41,8 +57,33 @@ describe("AI-transparency page", () => {
     expect(existsSync(PAGE)).toBe(true);
   });
 
-  it("is footer-linked from the shared layout, so it is reachable from every page", () => {
-    expect(readFileSync(BASE, "utf-8")).toContain('href="/how-this-site-is-made"');
+  it("is footer-linked from every BUILT page, in every locale (#1368)", () => {
+    // Asserted on the BUILT output, not on Base.astro's source text. The source
+    // assertion this replaces matched the literal `href="/how-this-site-is-made"`,
+    // which is exactly the hard-coded English href #1368 removed: the layout now
+    // resolves the link through `localeHref`, so a source-text check could only be
+    // kept green by putting the defect back. It also could not see the thing that
+    // matters — that an isiXhosa reader lands on the isiXhosa page.
+    const pages = builtPages();
+    expect(pages.length).toBeGreaterThan(3000);
+    const missing: string[] = [];
+    for (const f of pages) {
+      const html = readFileSync(f, "utf-8");
+      const rel = f.slice(DIST.length);
+      const prefix = rel.startsWith("/xh/") ? "/xh" : rel.startsWith("/zu/") ? "/zu" : "";
+      if (!html.includes(`href="${prefix}/how-this-site-is-made"`)) missing.push(rel);
+    }
+    expect(missing.slice(0, 5)).toEqual([]);
+  });
+
+  it("has no hard-coded English chrome href left in the layout (#1368)", () => {
+    // The footer legal strip, the corrections link and the header search link were all
+    // literal English paths, so all 2,240 built /xh and /zu pages sent a reader who
+    // clicked "sazise" — the corrections channel — into English. Only asset hrefs
+    // (/favicon.svg, /llms.txt) may be literal here.
+    const base = readFileSync(BASE, "utf-8");
+    const literals = [...base.matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1]);
+    expect(literals.sort()).toEqual(["/favicon.svg", "/llms.txt"]);
   });
 
   it("is indexable — a trust page hidden from search is worthless as an E-E-A-T signal", () => {

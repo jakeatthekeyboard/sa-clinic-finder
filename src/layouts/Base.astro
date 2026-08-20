@@ -2,6 +2,7 @@
 import { LOCALES, localeOf, localePath, stripLocale, type Locale } from '../i18n/config';
 import { availableLocales } from '../i18n/translated';
 import { strings } from '../i18n/strings';
+import { localeHref } from '../i18n/links';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
 import TranslationDisclaimer from '../components/TranslationDisclaimer.astro';
 
@@ -22,7 +23,19 @@ const ogImage = new URL('/social-image.png', Astro.site ?? 'https://clinicfinder
 const site = Astro.site ?? new URL('https://clinicfinder.co.za');
 const basePath = stripLocale(Astro.url.pathname);
 const t = strings(locale);
-const nav = (path: string) => localePath(path, locale);
+// Every internal chrome link resolves through `localeHref`, never through `localePath`
+// directly: `localePath` prefixes unconditionally, so it would emit /xh/<page> for a
+// page this locale has not translated, i.e. a 404 on a health site. `localeHref` asks
+// `hasTranslation` — the same predicate the language switcher and the hreflang cluster
+// read — and falls back to the English page when there is no translation. A missing
+// translation therefore degrades to English, never to a dead link.
+//
+// #1368: the footer legal strip and the header search link used to be hard-coded to
+// the English routes on all 2,240 built /xh and /zu pages, although every target has a
+// built isiXhosa and isiZulu version, so a reader who clicked "sazise" to report a
+// wrong clinic was dropped into English. There are no literal internal hrefs left in
+// this layout — add none.
+const nav = (path: string) => localeHref(path, locale);
 
 // hreflang: only emit alternates for translations that actually exist. Advertising a
 // page that 404s makes Google drop the whole cluster (see src/i18n/translated.ts).
@@ -205,7 +218,7 @@ const xDefault = new URL(basePath, site).href;
         <nav style="display: flex; gap: 16px; font-size: 0.9rem;" aria-label="Main navigation">
           <a href={nav('/clinics')} style="color: #fff;">{t.navProvinces}</a>
           <a href={nav('/services')} style="color: #fff;">{t.navServices}</a>
-          <a href="/search" style="color: #fff;">{t.navSearch}</a>
+          <a href={nav('/search')} style="color: #fff;">{t.navSearch}</a>
           <a href={nav('/guides')} style="color: #fff;">{t.navGuides}</a>
         </nav>
         <LanguageSwitcher />
@@ -221,9 +234,9 @@ const xDefault = new URL(basePath, site).href;
       <p>{t.footerTagline}</p>
       <p style="margin-top: 8px;">{t.footerSource}</p>
       <p style="margin-top: 8px;">{t.footerNotAdvice}</p>
-      <p style="margin-top: 8px;">{t.footerCorrections} <a href="/contact">{t.footerCorrectionsLink}</a>.</p>
-      <p style="margin-top: 8px;"><a href="/about">About</a> · <a href="/contact">Contact</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="/how-this-site-is-made">How This Site Is Made</a></p>
-      <p style="margin-top: 8px;" data-ai-disclosure>AI disclosure: text on this page is AI-generated and published under human editorial review. <a href="/how-this-site-is-made">How this site is made</a>.</p>
+      <p style="margin-top: 8px;">{t.footerCorrections} <a href={nav('/contact')}>{t.footerCorrectionsLink}</a>.</p>
+      <p style="margin-top: 8px;"><a href={nav('/about')}>{t.footerAbout}</a> · <a href={nav('/contact')}>{t.footerContact}</a> · <a href={nav('/privacy')}>{t.footerPrivacy}</a> · <a href={nav('/terms')}>{t.footerTerms}</a> · <a href={nav('/how-this-site-is-made')}>{t.footerHowMade}</a></p>
+      <p style="margin-top: 8px;" data-ai-disclosure>{t.footerAiDisclosure} <a href={nav('/how-this-site-is-made')}>{t.footerAiDisclosureLink}</a>.</p>
     </div>
   </footer>
 </body>
