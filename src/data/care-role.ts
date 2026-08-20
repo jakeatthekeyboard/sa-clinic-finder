@@ -36,24 +36,71 @@
  * 3 are the new entries, and the remaining 6 were deliberately NOT added because a
  * second source did not settle them — see the UNRESOLVED list below.
  *
- * UNRESOLVED CANDIDATES — do not add these without a second source
+ * THE SIX UNRESOLVED CANDIDATES, ADJUDICATED (#1362, 2026-08-21)
  * ---------------------------------------------------------------
- * Each is a name that reads wrong against a `healthcare` tag, and in each case the
- * honest answer today is "not established". Guessing is the failure mode this file
- * is built against.
- *   afm-steynville-church-northern-cape       OSM way 608975659, name "AFM Steynville
- *     Church", amenity=clinic. A church hall genuinely may host a clinic; no source
- *     found either way.
- *   western-cape-blood-service-george-regional-office-the-medical-centre-courtenay-s
- *     A blood donor service. Nobody is treated there, but the public does walk in,
- *     so "not walk-in care" is the wrong label without deciding what it is instead.
- *   swellendam-school-clinic-western-cape     A school clinic may be a real public
- *     service point with restricted access.
- *   health-worx-medical-centre-centurion-mall-centurion  A private medical centre
- *     published as a District Hospital. This is an operator_type/type question
- *     (#1150 territory), not a care-role one.
- *   the-local-choice-pharmacy-plett-medicine-depot  A retail pharmacy; covered by
- *     the 2026-08-19 operator_type correction rather than by this file.
+ * #1362 was filed because the six candidates below had been LEFT, each published as
+ * a health facility with no second source either way. Each was then researched
+ * individually against sources whose HOST was checked first — a search result
+ * corroborating our own data has twice turned out to be our own site, so
+ * clinicfinder.co.za, mapcarta.com, openalfa, waze and worldplaces were all
+ * discarded as OSM mirrors or as us before anything was concluded. Four settled,
+ * two did not. The two that did not are still published and still unsettled, and
+ * that is the honest state, not a gap to fill with a guess.
+ *
+ * SETTLED — added to NOT_WALK_IN_CARE below, each with its source:
+ *   western-cape-blood-service-george-regional-office-…  A blood donation centre and
+ *     the service's regional office. #1362 said "not walk-in care" was the wrong
+ *     label without deciding what it IS instead; wcbs.org.za names both a "George
+ *     Regional Office" and a "George Blood Bank" with donor hours at this building,
+ *     which decides it. You walk in to give blood; nobody is treated.
+ *   the-local-choice-pharmacy-plett-medicine-depot  A retail pharmacy branch.
+ *     #1362 said to verify rather than assume the 2026-08-19 operator_type
+ *     correction covered it: it did NOT — the record is `private` but still typed
+ *     `clinic` and still presented as a place to get care. Medpages categorises it
+ *     "Pharmacies - Retail".
+ *
+ * SETTLED AS REAL CARE — NOT care-role cases, routed to the type/operator_type lane:
+ *   health-worx-medical-centre-centurion-mall-centurion  A PRIVATE general practice
+ *     and dental centre in a shopping mall (health-worx.co.za's own service list;
+ *     Medpages categorises "HEALth-WorX Centurion" as "General Practice (GP)"; a
+ *     third listing carries our exact telephone 012 683 3000). It is genuine care,
+ *     so it does not belong in this file — but we publish it as a PUBLIC DISTRICT
+ *     HOSPITAL, which is wrong in both fields. Worth noting for whoever takes that:
+ *     Centurion Mall is absent from the operator's own current branch list, so the
+ *     branch may have closed or moved to Raslouw.
+ *   strydom-medi-centre-mulbarton-johannesburg  A real PRIVATE clinic, not a sibling
+ *     of Mattress Medi Centre. Medpages categorises "Strydom Medi-Centre" as
+ *     "Clinics - Private" at Mulbarton Shopping Centre, 4 True North Road, with our
+ *     record's exact telephone +27 11 432 2410. We publish it as `public`.
+ *
+ * STILL UNRESOLVED — do NOT add these without a second source, and do NOT unpublish
+ * them either. "No source found" is not evidence that a place is not a clinic, and
+ * removing a clinic that exists is the one error this humanitarian site cannot
+ * afford. What is recorded here is what was searched, so the next session does not
+ * repeat it:
+ *   afm-steynville-church-northern-cape  OSM way 608975659. The clinic tags are
+ *     OLDER than the church name — E Vos created the object with amenity=clinic and
+ *     NO name in 2018, and the name "AFM Steynville Church" was added in 2022 by a
+ *     "#maproulette South Africa - COVID 19 Hospital Mapping" task. So the name was
+ *     attached to something already tagged a clinic, which weakens the reading that
+ *     someone mapped a church and mis-tagged it, without settling anything. No
+ *     independent source places a clinic at the AFM church, and none refutes one:
+ *     a Hopetown business directory lists only Wege Hospital, on Cross Street in
+ *     Steynville — a different facility at a different street — and Medpages
+ *     returned no details for Hopetown clinic service codes. Needs a Northern Cape
+ *     DoH facility list.
+ *   swellendam-school-clinic-western-cape  Established: it is NOT a Western Cape
+ *     DoH facility. The province lists exactly two in Swellendam — Swellendam PHC
+ *     Clinic, 18 Drostdy Street, and Swellendam Hospital — both at roughly
+ *     -34.0243, 20.4500, about 1.1 km east of our coordinate. NOT established: what
+ *     is at our coordinate. A school clinic can be a real service point that is
+ *     simply not on the provincial facility list, so absence from that list decides
+ *     the operator question and not the existence question.
+ *   medi-centre-pretoria  Nothing found either way. The name is generic and the
+ *     record carries no address and no telephone, so there is nothing to bind a
+ *     search to; the named facilities near the coordinate (Mediclinic Medforum,
+ *     Mediclinic Arcadia) are neither at it nor called this. Unsettled, published,
+ *     and flagged here rather than guessed at.
  *
   * WHAT IT DELIBERATELY DOES NOT DO
  * --------------------------------
@@ -136,6 +183,37 @@ export const NOT_WALK_IN_CARE: Record<string, CareRoleEntry> = {
       'Mattress Medi Centre is a bedding retailer, not a health facility. It appears on this site because its OpenStreetMap entry ' +
       'carries a healthcare tag, which is a mistake in the source data rather than a description of the business.',
     source: 'https://vaalio.co.za/mattress-medi-centre',
+  },
+  'western-cape-blood-service-george-regional-office-the-medical-centre-courtenay-s': {
+    what:
+      'This is the Western Cape Blood Service in George — a blood donation centre together with the service\'s regional ' +
+      'office, in The Medical Centre on Courtenay Street. Members of the public do walk in here, but to give blood, not ' +
+      'to be treated: it is not a clinic, it has no consulting rooms and it provides no primary care. For public health ' +
+      'care in George, go to George Provincial Hospital in Heatherlands or Geneva Clinic.',
+    source:
+      'The Western Cape Blood Service\'s own contact page, https://www.wcbs.org.za/contact-us/, lists TWO entries at this ' +
+      'building: "George Regional Office", The Medical Centre, Courtenay Street, George, telephone 044 874 2074; and ' +
+      '"George Blood Bank", Medical Centre, 33 Courtenay Street, George, telephone 044 884 0581, georgebb@wcbs.org.za, ' +
+      'open Mondays-Fridays 8:00-22:00 and weekends 8:00-16:00. Medpages (orgcode 95070) lists "Western Cape Blood ' +
+      'Services - George Regional Office" under the category "Blood Transfusion Services" at The Medical Centre, 33 ' +
+      'Courtenay Street, George, telephone +27 44 874 2074. NOTE for anyone re-checking this: the Western Cape Blood ' +
+      'Service is NOT part of SANBS. SANBS serves eight of the nine provinces and the Western Cape is served ' +
+      'independently by WCBS; the 2025 joint donor-recruitment campaign between them is not a merger, and no merger ' +
+      'source exists. Do not "correct" this entry to SANBS.',
+  },
+  'the-local-choice-pharmacy-plett-medicine-depot': {
+    what:
+      'The Local Choice Pharmacy Plett Medicine Depot is a retail pharmacy in Plettenberg Bay, one branch of a national ' +
+      'pharmacy franchise. You can buy medicines and over-the-counter health products there, but it is not a public ' +
+      'clinic, nobody is treated there and no free public health care is provided. The public clinic serving ' +
+      'Plettenberg Bay is Kwanokuthula Community Day Centre, in Kwanokuthula.',
+    source:
+      'Medpages (orgcode 87713) lists "The Local Choice Pharmacy - Plettenberg Bay" under the category "Pharmacies - ' +
+      'Retail" at Shop 12A Atmar Centre, 11 High Street, Plettenberg Bay, 6600. A second directory listing carries our ' +
+      'record\'s exact name, "The Local Choice Pharmacy Plett Medicine Depot", at High St, Atmar Centre, Plettenberg ' +
+      'Bay, with our record\'s exact telephone 044 533 2298 (Medpages gives 044 533 2278 for the same branch, which is ' +
+      'a second line, not a different business). The Local Choice describes itself as "an aligned, like-minded group of ' +
+      'independent pharmacists" with "more than 180 stores throughout South Africa".',
   },
 };
 
