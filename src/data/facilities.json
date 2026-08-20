@@ -35997,7 +35997,7 @@
     "operator_type": "unknown",
     "data_source": "overpass",
     "data_quality_score": 5,
-    "last_verified": "2026-04-14",
+    "last_verified": "2026-08-21",
     "slug": "temba-santa-hospital-grahamstown",
     "url_path": "/clinics/eastern-cape/temba-santa-hospital-grahamstown"
   },
@@ -45215,7 +45215,7 @@
   },
   {
     "facility_id": "zaf_way_1270673476",
-    "name": "SANTA Hospital",
+    "name": "Winterberg TB Hospital (formerly SANTA Hospital)",
     "type": "district_hospital",
     "province": "Eastern Cape",
     "district": "Amathole District",
@@ -45256,7 +45256,7 @@
     "operator_type": "unknown",
     "data_source": "overpass",
     "data_quality_score": 5,
-    "last_verified": "2026-04-14",
+    "last_verified": "2026-08-21",
     "slug": "santa-hospital-eastern-cape",
     "url_path": "/clinics/eastern-cape/santa-hospital-eastern-cape"
   },

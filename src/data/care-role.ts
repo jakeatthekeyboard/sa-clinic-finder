@@ -184,6 +184,29 @@ export const NOT_WALK_IN_CARE: Record<string, CareRoleEntry> = {
       'carries a healthcare tag, which is a mistake in the source data rather than a description of the business.',
     source: 'https://vaalio.co.za/mattress-medi-centre',
   },
+  'temba-santa-hospital-grahamstown': {
+    what:
+      'Temba TB Hospital in Makhanda is CLOSED and nobody is treated here. The Eastern Cape Department of Health ended ' +
+      'the lease on the Grahamstown TB Association building it occupied and moved its patients and its staff into a wing ' +
+      'of Settlers Hospital, in Milner Street, Makhanda, which is where TB inpatient care in this town now happens. ' +
+      'These buildings stood empty within a fortnight of the closure and have since been stripped by thieves. Do not ' +
+      'travel here, and do not ring the telephone number on this page.',
+    source:
+      'The Eastern Cape Department of Health\'s own Annual Report 2023/24 says, under the heading "Temba TB Hospital": ' +
+      '"The hospital has been moved from Temba hospital premises which was being rented under Grahamstown TB Association ' +
+      'and has been relocated to Settler\'s hospital." Spotlight (SECTION27 health journalism), 2023-09-13: "On 1 July ' +
+      'this year, Makhanda\'s only TB hospital, Temba TB Hospital, also shut its doors" ' +
+      '(https://www.spotlightnsp.co.za/2023/09/13/in-depth-why-an-eastern-cape-tb-hospital-closed-and-what-comes-next/). ' +
+      'Grocott\'s Mail (Rhodes University, Makhanda), 2023-07-13: "When Grocott\'s Mail visited the Temba Santa TB ' +
+      'hospital on 12 July, the buildings were deserted", and the department "says the TB patients will be accommodated ' +
+      'in a wing at the busy Settler\'s Hospital, and the 31 staff will also be moved to Settler\'s" ' +
+      '(https://grocotts.ru.ac.za/2023/07/13/temba-santa-tb-hospital-shuts-down-abruptly/); a follow-up on 2024-10-24 is ' +
+      'headlined "Community steps up to save vandalized Themba TB Hospital". Three spellings are in circulation and all ' +
+      'three are kept findable: "Temba TB Hospital" (the department\'s own string), "Temba SANTA Hospital" (ours, and ' +
+      'the name most local searchers still use) and "Themba TB Hospital" (also in the department\'s report). The record ' +
+      'still carries services.emergency_24h — that is NOT corrected here: it sits in emergency-basis.json\'s ' +
+      '`unevidenced` list, and #1349 says explicitly not to resolve such a claim by flipping the flag.',
+  },
   'western-cape-blood-service-george-regional-office-the-medical-centre-courtenay-s': {
     what:
       'This is the Western Cape Blood Service in George — a blood donation centre together with the service\'s regional ' +
