@@ -30428,7 +30428,7 @@
     "contact": {
       "phone": "+27 11 432 2410",
       "email": "",
-      "website": "https://www.strydommedicentre.com/"
+      "website": ""
     },
     "operating_hours": {
       "raw": "Mo-Fr 08:00-18:00; Sa 08:00-13:00; Su 09:00-14:00; PH 09:00-14:00",
@@ -30448,7 +30448,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
