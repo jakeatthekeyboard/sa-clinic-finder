@@ -62,6 +62,17 @@ the reason, a record that goes from "gone" to "retagged as a school" fires again
 that is new information about the same facility. Accepting an entry is a
 decision, so each carries a `note` saying who accepted it and why.
 
+NAME_CHANGED IS REPORTED BY NAME, NOT JUST COUNTED (#1281). Until 2026-08-21 this
+bucket printed a bare integer and nothing else, so eight findings — three of them
+real provincial renames that change the query the page can win — were reported and
+ignored from the day the check shipped. A count nobody can act on is not a report.
+Each finding now prints, and the ones already adjudicated print with their verdict,
+keyed `slug|osm_name` in the same baseline file. The key includes the OSM name on
+purpose: if OSM renames the object AGAIN, that is a new fact and it re-surfaces.
+This bucket still does NOT affect the exit code. A rename is not an outage, and a
+name is a `sourced` value that must not be swept to match OSM automatically — each
+one needs its own second source (see the note at the head of the adjudications).
+
 Exit 0 = no NEW MISSING facilities. Exit 1 = new MISSING, or the capture could
 not be read. Exit 2 = soft skip (no network AND no capture to fall back on).
 """
@@ -288,8 +299,26 @@ def load_baseline():
     return {e["key"]: e for e in raw.get("accepted", [])}
 
 
+def load_name_adjudications():
+    """Adjudicated NAME_CHANGED findings, keyed `slug|osm_name`. Shares the baseline
+    file with the accepted MISSING findings but is kept in a SEPARATE array: these
+    do not suppress anything, they annotate a report, and merging the two would let
+    a name note silently accept a facility's disappearance."""
+    if not BASELINE.exists():
+        return {}
+    try:
+        raw = json.loads(BASELINE.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as e:
+        raise SystemExit(f"[FAILED] baseline {BASELINE} exists but could not be read: {e}")
+    return {e["key"]: e for e in raw.get("name_adjudications", [])}
+
+
 def missing_key(f):
     return f"{f['slug']}|{f['reason']}"
+
+
+def name_key(f):
+    return f"{f['slug']}|{f['osm_name']}"
 
 
 def latest_capture():
@@ -403,6 +432,16 @@ def report(result, args, fresh):
             print(f"  ({acc} MISSING already accepted in {BASELINE.name} — burn-down list)")
         for f in result["findings"]["MISSING"][:20]:
             print(f"    [MISSING] {f['slug']} — {f['reason']}")
+        adjudicated = load_name_adjudications()
+        for f in result["findings"].get("NAME_CHANGED", []):
+            entry = adjudicated.get(name_key(f))
+            if entry:
+                print(f"    [NAME ok] {f['slug']} — ours {f['ours']!r} / OSM "
+                      f"{f['osm_name']!r} — {entry.get('verdict', 'adjudicated')}")
+            else:
+                print(f"    [NAME ?]  {f['slug']} — ours {f['ours']!r} / OSM "
+                      f"{f['osm_name']!r} — NOT adjudicated; a name is `sourced`, so "
+                      f"settle it against a second source before changing it")
         if result.get("unparseable_facility_ids"):
             print(f"  [note] {len(result['unparseable_facility_ids'])} facility_id(s) "
                   f"not in zaf_<type>_<id> form, not checked")

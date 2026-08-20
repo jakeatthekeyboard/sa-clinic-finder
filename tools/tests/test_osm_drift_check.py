@@ -155,12 +155,13 @@ def _baseline(tmp_path, monkeypatch, entries):
     return p
 
 
-def _capture(missing):
+def _capture(missing, names=None):
+    names = names or []
     return {"records_checked": 1, "osm_objects_returned": 1,
             "counts": {"MISSING": len(missing), "MOVED": 0,
-                       "NAME_CHANGED": 0, "ENRICHABLE": 0},
+                       "NAME_CHANGED": len(names), "ENRICHABLE": 0},
             "findings": {"MISSING": missing, "MOVED": [],
-                         "NAME_CHANGED": [], "ENRICHABLE": []}}
+                         "NAME_CHANGED": names, "ENRICHABLE": []}}
 
 
 GONE = {"slug": "a", "name": "A", "osm": "node:1",
@@ -325,3 +326,65 @@ def test_report_shows_both_counts_when_measured(capsys, tmp_path, monkeypatch):
     odc.report(cap, Args(), fresh=True)
     line = capsys.readouterr().out.splitlines()[0]
     assert "1076 records over 1073 distinct OSM objects" in line
+# ── NAME_CHANGED reporting (#1281) ────────────────────────────────────────────
+#
+# This bucket printed a bare integer until 2026-08-21, so three real provincial
+# hospital renames sat in it unread from the day the check shipped. The tests
+# below pin the two things that made it useless: that each finding is NAMED, and
+# that an adjudicated one is distinguishable from an unadjudicated one.
+
+RENAMED = {"slug": "ladysmith-hospital-ladysmith", "ours": "Ladysmith Hospital",
+           "osm_name": "uMnambithi Provincial Hospital"}
+
+
+def _baseline_names(tmp_path, monkeypatch, names):
+    p = tmp_path / "baseline.json"
+    p.write_text(json.dumps({"accepted": [], "name_adjudications": names}),
+                 encoding="utf-8")
+    monkeypatch.setattr(odc, "BASELINE", p)
+    return p
+
+
+def test_unadjudicated_name_change_is_named_in_the_report(tmp_path, monkeypatch, capsys):
+    _baseline_names(tmp_path, monkeypatch, [])
+    odc.report(_capture([], [RENAMED]), Args(), fresh=True)
+    out = capsys.readouterr().out
+    assert "[NAME ?]" in out
+    assert "ladysmith-hospital-ladysmith" in out
+    assert "uMnambithi Provincial Hospital" in out
+
+
+def test_adjudicated_name_change_prints_its_verdict(tmp_path, monkeypatch, capsys):
+    _baseline_names(tmp_path, monkeypatch,
+                    [{"key": odc.name_key(RENAMED), "verdict": "RENAME CONFIRMED"}])
+    odc.report(_capture([], [RENAMED]), Args(), fresh=True)
+    out = capsys.readouterr().out
+    assert "[NAME ok]" in out
+    assert "RENAME CONFIRMED" in out
+    assert "[NAME ?]" not in out
+
+
+def test_a_second_osm_rename_resurfaces_an_adjudicated_facility(tmp_path, monkeypatch, capsys):
+    """The key carries the OSM name for the same reason missing_key carries the
+    reason: 'OSM now calls it X' and 'OSM now calls it Y' are different facts about
+    one facility, and the second is new information we have not checked."""
+    _baseline_names(tmp_path, monkeypatch,
+                    [{"key": odc.name_key(RENAMED), "verdict": "RENAME CONFIRMED"}])
+    again = dict(RENAMED, osm_name="Something Else Entirely")
+    odc.report(_capture([], [again]), Args(), fresh=True)
+    assert "[NAME ?]" in capsys.readouterr().out
+
+
+def test_name_findings_never_change_the_exit_code(tmp_path, monkeypatch):
+    """A rename is not an outage. If this ever went red it would be muted, and the
+    MISSING arm — which is the one that matters — would be muted with it."""
+    _baseline_names(tmp_path, monkeypatch, [])
+    assert odc.report(_capture([], [RENAMED]), Args(), fresh=True) == 0
+
+
+def test_name_adjudication_does_not_accept_a_missing_finding(tmp_path, monkeypatch):
+    """Kept in a separate array on purpose: a note about a name must never be able
+    to suppress 'this facility is no longer a healthcare object'."""
+    _baseline_names(tmp_path, monkeypatch,
+                    [{"key": odc.missing_key(GONE), "verdict": "not a suppression"}])
+    assert odc.report(_capture([GONE]), Args(), fresh=True) == 1
