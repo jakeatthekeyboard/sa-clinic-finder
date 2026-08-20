@@ -13068,7 +13068,7 @@
   {
     "facility_id": "zaf_node_9060935417",
     "name": "Health Worx Medical Centre Centurion Mall",
-    "type": "district_hospital",
+    "type": "clinic",
     "province": "Gauteng",
     "district": "City of Tshwane Metropolitan",
     "sub_district": "",
@@ -13105,7 +13105,7 @@
       "hiv_testing": false
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
