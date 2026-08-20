@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { facilities, PROVINCES, SERVICE_MAP, SERVICE_SLUGS, provinceSlug, typeLabel } from '../../data/helpers';
+import { facilities, providesService, PROVINCES, SERVICE_MAP, SERVICE_SLUGS, provinceSlug, typeLabel } from '../../data/helpers';
 import { SERVICE_EDITORIAL } from '../../data/service-editorial';
 
 export function getStaticPaths() {
@@ -27,7 +27,7 @@ const DERIVED_SERVICES: Record<string, string> = {
 };
 const editorial = SERVICE_EDITORIAL[serviceKey];
 const serviceFacilities = facilities
-  .filter(f => f.services[serviceKey] && f.province !== '')
+  .filter(f => providesService(f, serviceKey) && f.province !== '')
   .sort((a, b) => a.province.localeCompare(b.province) || a.name.localeCompare(b.name));
 
 const byProvince = PROVINCES.map(p => ({

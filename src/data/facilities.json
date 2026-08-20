@@ -13068,7 +13068,7 @@
   {
     "facility_id": "zaf_node_9060935417",
     "name": "Health Worx Medical Centre Centurion Mall",
-    "type": "district_hospital",
+    "type": "clinic",
     "province": "Gauteng",
     "district": "City of Tshwane Metropolitan",
     "sub_district": "",
@@ -13105,7 +13105,7 @@
       "hiv_testing": false
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -18161,7 +18161,7 @@
     "contact": {
       "phone": "+27 36 637 2111",
       "email": "",
-      "website": "http://www.kznhealth.gov.za/ladysmithhospital.htm"
+      "website": "https://www2.kznhealth.gov.za/ladysmithhospital.htm"
     },
     "operating_hours": {
       "raw": "",
@@ -19553,7 +19553,7 @@
   },
   {
     "facility_id": "zaf_way_218396411",
-    "name": "Fort Beaufort Provincial",
+    "name": "Fort Beaufort Provincial Hospital",
     "type": "district_hospital",
     "province": "Eastern Cape",
     "district": "Amathole District",
@@ -30428,7 +30428,7 @@
     "contact": {
       "phone": "+27 11 432 2410",
       "email": "",
-      "website": "https://www.strydommedicentre.com/"
+      "website": ""
     },
     "operating_hours": {
       "raw": "Mo-Fr 08:00-18:00; Sa 08:00-13:00; Su 09:00-14:00; PH 09:00-14:00",
@@ -30448,7 +30448,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",

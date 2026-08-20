@@ -1,12 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { facilities, SERVICE_MAP } from '../../data/helpers';
+import { facilities, serviceCorpus, SERVICE_MAP } from '../../data/helpers';
 import { SERVICE_EDITORIAL } from '../../data/service-editorial';
 
 const services = Object.entries(SERVICE_MAP).map(([key, svc]) => ({
   key,
   ...svc,
-  count: facilities.filter(f => f.services[key]).length,
+  count: serviceCorpus.filter(f => f.services[key]).length,
   hasEditorial: !!SERVICE_EDITORIAL[key],
   guideSlug: SERVICE_EDITORIAL[key]?.guideSlug,
 })).sort((a, b) => b.count - a.count);

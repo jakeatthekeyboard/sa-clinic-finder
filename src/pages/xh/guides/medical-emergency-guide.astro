@@ -4,12 +4,12 @@
  * Slugs stay English (they are the join key for hreflang and the language switcher).
  */
 import Base from '../../../layouts/Base.astro';
-import { facilities } from '../../../data/helpers';
+import { serviceCorpus } from '../../../data/helpers';
 import { localePath } from '../../../i18n/config';
 
 const L = (p: string) => localePath(p, 'xh');
 
-const emergencyClinics = facilities.filter(f => f.services.emergency_24h);
+const emergencyClinics = serviceCorpus.filter(f => f.services.emergency_24h);
 
 const faqs = [
   {

@@ -10,7 +10,7 @@
  * OpenStreetMap) stay in their source form.
  */
 import Base from '../../../layouts/Base.astro';
-import { facilities, PROVINCES, SERVICE_MAP, provinceSlug } from '../../../data/helpers';
+import { facilities, providesService, PROVINCES, SERVICE_MAP, provinceSlug } from '../../../data/helpers';
 import { SERVICE_EDITORIAL_ZU } from '../../../data/i18n/service-editorial.zu';
 import { typeLabelZu, servicePlainZu, serviceLabelZu, zuHref, zuLinks } from '../../../data/i18n/zu';
 import { servicePaths } from '../../../data/pages/paths';
@@ -36,7 +36,7 @@ const DERIVED_SERVICES: Record<string, string> = {
 };
 const editorial = SERVICE_EDITORIAL_ZU[serviceKey];
 const serviceFacilities = facilities
-  .filter(f => f.services[serviceKey] && f.province !== '')
+  .filter(f => providesService(f, serviceKey) && f.province !== '')
   .sort((a, b) => a.province.localeCompare(b.province) || a.name.localeCompare(b.name));
 
 const byProvince = PROVINCES.map(p => ({

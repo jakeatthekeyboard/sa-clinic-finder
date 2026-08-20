@@ -34,6 +34,32 @@ What it does is SPLIT the claim by its basis, so the page can say which one it i
   osm_confirmed  the facility's own OSM element carries emergency=yes
   unevidenced    no emergency tag either way — the claim rests on the type
                  inference alone
+  excluded_not_care
+                 the facility is adjudicated in src/data/care-role.ts as a place
+                 nobody is treated, so it is not in the emergency corpus at all
+
+THE FOURTH BUCKET, AND WHY IT IS NOT A FLIP (#1376)
+---------------------------------------------------
+Temba SANTA Hospital in Makhanda CLOSED on 2023-07-01 and still claimed 24-hour
+emergency, so it was listed on /services/emergency, counted in the emergency
+editorial's stated totals and counted in the medical-emergency guide — for a
+building that stood empty within a fortnight and has since been stripped. The
+obvious repair is `emergency_24h: false`, and the rule above forbids it for a
+reason that survives the closure: that flag is a claim about a SERVICE, we have
+no evidence about the service either way, and setting it false would assert one.
+
+What we do know is a fact about the PLACE, and care-role.ts already holds it with
+the Eastern Cape DoH Annual Report 2023/24, Spotlight and Grocott's Mail behind
+it. So the scoping happens there, and it generalises without a special case: a
+facility adjudicated in care-role.ts is not somewhere the public is treated, so
+it cannot appear in any service listing or count. src/data/helpers.ts's
+`providesService` applies the identical rule to the rendered pages. The two must
+stay in step, or these totals stop describing the listings they assert.
+
+The record is left exactly as OpenStreetMap has it. Excluded slugs are RECORDED
+in `excluded_not_care`, never silently dropped — --check fails if a care-role
+facility claims the service and is missing from that list, because "out of the
+corpus" and "never looked at" must not read the same.
 
 MODES
 -----
@@ -56,6 +82,46 @@ FAC = REPO / "src/data/facilities.json"
 OUT = REPO / "src/data/emergency-basis.json"
 CAPS = REPO / "data/capture/osm-tags"
 ID_RE = re.compile(r"^zaf_(node|way|relation|nodes)_(\d+)$")
+CARE_ROLE = REPO / "src/data/care-role.ts"
+CARE_KEY_RE = re.compile(r"^  '([a-z0-9-]+)': \{$", re.M)
+
+
+def not_care_facilities():
+    """The slugs adjudicated in care-role.ts as places nobody is treated.
+
+    They are excluded from the emergency corpus. A closed hospital, a state
+    mortuary or a bedding retailer cannot run a 24-hour casualty, and the site
+    must not list one — but the remedy is NOT to flip `emergency_24h`, which
+    would assert something about a SERVICE that we do not know (#1349). What we
+    know is that the FACILITY is not a place of care, which is a fact about the
+    place, sourced in care-role.ts. See src/data/helpers.ts `providesService`,
+    which applies the identical rule to the rendered listings; the two must
+    agree or the guard's totals stop matching the pages they assert.
+
+    An unreadable or empty registry is a HARD failure. Reading zero slugs out of
+    a file that exists would silently re-admit every adjudicated non-facility to
+    the emergency corpus, and the guard would go green on it
+    (feedback_unreadable_is_not_absent).
+    """
+    if not CARE_ROLE.exists():
+        print(f"[FAILED] {CARE_ROLE.relative_to(REPO)} is missing — the emergency "
+              "corpus cannot be scoped and would re-admit closed facilities",
+              file=sys.stderr)
+        raise SystemExit(1)
+    text = CARE_ROLE.read_text(encoding="utf-8")
+    body = text[text.index("export const NOT_WALK_IN_CARE"):] \
+        if "export const NOT_WALK_IN_CARE" in text else ""
+    if not body:
+        print(f"[FAILED] {CARE_ROLE.relative_to(REPO)} has no NOT_WALK_IN_CARE map "
+              "— its shape changed and this parse is stale", file=sys.stderr)
+        raise SystemExit(1)
+    slugs = set(CARE_KEY_RE.findall(body))
+    if not slugs:
+        print(f"[FAILED] parsed ZERO slugs out of {CARE_ROLE.relative_to(REPO)} — "
+              "the entry format changed; fix this parse rather than shipping an "
+              "unscoped emergency corpus", file=sys.stderr)
+        raise SystemExit(1)
+    return slugs
 
 
 def osm_key(rec):
@@ -80,9 +146,13 @@ def derive():
     tags = cap["tags"]
     facs = json.loads(FAC.read_text(encoding="utf-8"))
 
-    confirmed, unevidenced, denied, unresolvable = [], [], [], []
+    not_care = not_care_facilities()
+    confirmed, unevidenced, denied, unresolvable, excluded = [], [], [], [], []
     for r in facs:
         if not r["services"]["emergency_24h"]:
+            continue
+        if r["slug"] in not_care:
+            excluded.append(r["slug"])
             continue
         k = osm_key(r)
         if k is None or k not in tags:
@@ -113,10 +183,12 @@ def derive():
         "captured_at": cap["captured_at"],
         "counts": {"osm_confirmed": len(confirmed),
                    "unevidenced": len(unevidenced),
-                   "unresolvable": len(unresolvable)},
+                   "unresolvable": len(unresolvable),
+                   "excluded_not_care": len(excluded)},
         "osm_confirmed": sorted(confirmed),
         "unevidenced": sorted(unevidenced),
         "unresolvable": sorted(unresolvable),
+        "excluded_not_care": sorted(excluded),
     }, facs
 
 
@@ -147,7 +219,8 @@ def scalar_problems(facs):
         return ["MISSING_EDITORIAL no emergency_24h entry in service-editorial.ts"]
     block = block[:block.index("\n  },")]
 
-    e = [r for r in facs if r["services"]["emergency_24h"]]
+    not_care = not_care_facilities()
+    e = [r for r in facs if r["services"]["emergency_24h"] and r["slug"] not in not_care]
     by = {}
     for r in e:
         by[r["type"]] = by.get(r["type"], 0) + 1
@@ -188,7 +261,9 @@ def main():
     a = ap.parse_args()
 
     fresh, facs = derive()
-    claimed = {r["slug"] for r in facs if r["services"]["emergency_24h"]}
+    _not_care = not_care_facilities()
+    claimed = {r["slug"] for r in facs
+               if r["services"]["emergency_24h"] and r["slug"] not in _not_care}
 
     if not a.check:
         OUT.write_text(json.dumps(fresh, indent=1) + "\n", encoding="utf-8")
@@ -212,6 +287,12 @@ def main():
     labelled = set(have.get("osm_confirmed", [])) | set(have.get("unevidenced", [])) \
         | set(have.get("unresolvable", []))
     problems = []
+    # A record excluded as not-a-care-facility must be RECORDED as excluded, never
+    # silently dropped: "not in the corpus" and "never looked at" must not read the same.
+    for s_ in sorted((_not_care & {r["slug"] for r in facs if r["services"]["emergency_24h"]})
+                     - set(have.get("excluded_not_care", []))):
+        problems.append(f"UNRECORDED_EXCLUSION {s_} is adjudicated in care-role.ts and "
+                        f"claims 24-hour emergency, but is not in excluded_not_care")
     for s in sorted(claimed - labelled):
         problems.append(f"UNLABELLED_CLAIM  {s} claims 24-hour emergency and has no basis entry")
     for s in sorted(labelled - claimed):
