@@ -58,6 +58,13 @@ const isPrivate = facility.operator_type === 'private';
 // it is suppressed here exactly as it is on the English route. The explanatory
 // notice the English page shows is NOT reproduced here: a safety notice has to be
 // written by a speaker of the language, not machine-phrased on a humanitarian site.
+// #1349 — the English route carries a notice explaining that a facility's
+// round-the-clock emergency listing is an inference from its facility TYPE on 229
+// of the 500 facilities that carry it, rather than a record for that facility.
+// That notice is NOT reproduced here, for the same reason the #1002 notice above
+// is not: a safety notice has to be written by a speaker of the language, not
+// machine-phrased on a humanitarian site. The gap is real and is tracked, not
+// accepted as finished — a translated version needs a speaker.
 const notCare = careRole(facility.slug);
 const typeEditorial = isPrivate || notCare ? null : getFacilityTypeEditorialXh(facility.type);
 const activeServices = Object.entries(facility.services)
@@ -212,6 +219,15 @@ const jsonLd = {
       </a>
     </div>
 
+    {/* #1002/#1350 — a record adjudicated as NOT walk-in care must not be
+        described as a facility on this route either. The English page wraps both
+        of these sections in the same gate; these two did not, so a state mortuary,
+        a bedding retailer, a veterinary practice and a shopping centre kept their
+        service chips and a generated "about this facility" paragraph in isiXhosa
+        and isiZulu while the English page suppressed them. Found by
+        tools/numeric-parity-check.py, which is the only thing that compares the
+        three routes against each other. */}
+    {!notCare && (
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Iinkonzo ezifumanekayo</h2>
       <div style="display: flex; flex-wrap: wrap; gap: 6px;">
@@ -221,7 +237,9 @@ const jsonLd = {
       </div>
       {activeServices.length === 0 && <p style="color: var(--text-muted); font-size: 0.9rem;">Iinkcukacha zeenkonzo azikaqinisekiswa kweli ziko.</p>}
     </section>
+    )}
 
+    {!notCare && (
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Malunga neli ziko</h2>
       <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px;" set:html={LH(editorial.context)} />
@@ -233,6 +251,7 @@ const jsonLd = {
         </div>
       )}
     </section>
+    )}
 
     {typeEditorial && (
       <section style="margin-bottom: 32px;">

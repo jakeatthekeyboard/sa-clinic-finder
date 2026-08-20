@@ -5,6 +5,7 @@ import { facilityPaths } from '../../../data/pages/paths';
 import { generateFacilityEditorial } from '../../../data/facility-editorial';
 import { getFacilityTypeEditorial, REFERRAL_HIERARCHY } from '../../../data/facility-types-editorial';
 import { careRole } from '../../../data/care-role';
+import { emergencyIsInferred } from '../../../data/emergency-basis';
 
 export function getStaticPaths() {
   // #1239a — this route used to carry its OWN copy of the enumeration that
@@ -40,6 +41,11 @@ const activeServices = Object.entries(facility.services)
   .filter(([, v]) => v)
   .map(([k]) => ({ key: k, ...SERVICE_MAP[k] }))
   .filter(s => s.plain);
+// #1349 — the 24-hour emergency listing is a TYPE INFERENCE on 229 of the 500
+// facilities that carry it; only 271 have an OpenStreetMap emergency record.
+// Someone chooses where to travel at 2am on this listing, so the page says
+// which of the two it is rather than presenting both as the same fact.
+const emergencyInferred = facility.services.emergency_24h && emergencyIsInferred(facility.slug);
 
 // First sentence of the adjudicated description, for the meta description.
 const notCareSummary = notCare ? (notCare.what.match(/^[^.]*\./)?.[0] ?? '') : '';
@@ -212,6 +218,17 @@ const jsonLd = {
         ))}
       </div>
       {activeServices.length === 0 && <p style="color: var(--text-muted); font-size: 0.9rem;">Service details not yet verified for this facility.</p>}
+      {emergencyInferred && (
+        <div style="margin-top: 12px; background: #fff8e6; border-left: 4px solid #b8860b; border-radius: var(--radius); padding: 12px 14px;">
+          <h3 style="font-size: 0.92rem; margin: 0 0 6px;">Why this facility is listed for emergencies</h3>
+          <p style="font-size: 0.85rem; line-height: 1.65; margin: 0; color: var(--text-muted);">
+            We list this facility as offering round-the-clock emergency care because of the kind of facility it is,
+            not because of a record for this facility. OpenStreetMap, our source, holds no emergency-department entry
+            for it either way &mdash; that is a gap in the map, not a sign that the unit is closed. Phone before
+            travelling at night, and in a life-threatening emergency call an ambulance rather than travelling yourself.
+          </p>
+        </div>
+      )}
     </section>
     )}
 

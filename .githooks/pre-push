@@ -71,6 +71,17 @@ fi
 # other gate here can see it. Reuses the dist just built above.
 # 2,240 translated pages, 0 unaccepted differences when added (2026-08-15).
 echo ""
+echo "▸ Running emergency-basis check (is every 24-hour claim labelled?)..."
+if ! python3 "$SITE_DIR/tools/emergency-basis.py" --check; then
+    echo ""
+    echo "  A published facility claims 24-hour emergency care with no recorded basis,"
+    echo "  or the emergency editorial states a total the corpus no longer supports."
+    echo "  Regenerate with: python3 tools/emergency-basis.py"
+    echo "  Do NOT resolve this by flipping services.emergency_24h — see #1349."
+    exit 1
+fi
+echo ""
+
 echo "▸ Running numeric-parity check (translated pages vs English)..."
 if ! python3 "$SITE_DIR/tools/numeric-parity-check.py"; then
     echo ""
