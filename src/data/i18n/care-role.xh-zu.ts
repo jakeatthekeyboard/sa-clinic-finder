@@ -81,6 +81,15 @@
 export interface CareRoleChrome {
   /** Heading of the red notice. Mirrors "Not a clinic — you cannot be treated here". */
   heading: string;
+  /**
+   * The warning chip beside the <h1> (#1368b). Mirrors English "Not a clinic", and is
+   * the heading's own first clause rather than a fresh phrasing — the chip and the
+   * notice it points at must not say two different things about the same record.
+   * Digit-free, like every string on these routes: it renders on nine pages per locale
+   * whose English siblings carry no numeral here, and tools/numeric-parity-check.py
+   * compares the numeral multiset of a translated page against its English source.
+   */
+  chip: string;
   /** Text before the province link. Mirrors "For medical care, see the ". */
   seeBefore: string;
   /** The province link's own text, given the English province name. */
@@ -89,12 +98,14 @@ export interface CareRoleChrome {
 
 export const CARE_ROLE_CHROME_XH: CareRoleChrome = {
   heading: 'Ayiyiyo ikliniki — awunakunyangwa apha',
+  chip: 'Ayiyiyo ikliniki',
   seeBefore: 'Ukuze ufumane unyango, jonga ',
   linkText: (province) => `iikliniki nezibhedlele zikarhulumente e-${province}`,
 };
 
 export const CARE_ROLE_CHROME_ZU: CareRoleChrome = {
   heading: 'Akuwona umtholampilo — awukwazi ukwelashwa lapha',
+  chip: 'Akuwona umtholampilo',
   seeBefore: 'Ukuze uthole ukwelashwa, bheka ',
   linkText: (province) => `imitholampilo nezibhedlela zikahulumeni e-${province}`,
 };

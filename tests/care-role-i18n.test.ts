@@ -24,6 +24,8 @@
  * BEFORE the record does and the merge cannot open a gap.
  */
 import { describe, it, expect } from 'vitest';
+import { readFileSync, readdirSync } from 'fs';
+import { join } from 'path';
 import { NOT_WALK_IN_CARE } from '../src/data/care-role';
 import {
   CARE_ROLE_WHAT_XH,
@@ -92,5 +94,93 @@ describe('care-role notice: mechanical constraints', () => {
     expect(careRoleWhatXh('no-such-facility')).toBeNull();
     expect(careRoleWhatZu('no-such-facility')).toBeNull();
     expect(firstSentence(null)).toBe('');
+  });
+});
+
+/**
+ * The chip row and the notice ordering on the BUILT pages (#1368b).
+ *
+ * WHY ON BUILT OUTPUT: the defect this pins was not visible in any data file. Every
+ * flag was correct, every string was correct, the notice was present and translated —
+ * and the top of the page still said the opposite of the notice, because a yellow
+ * "24 hours" chip and a clinic-shaped heading rendered ABOVE it. Only the rendered
+ * page shows that.
+ *
+ * WHY NOTHING HERE IS COUNTED: the adjudicated set grew three times in four hours on
+ * 2026-08-20. The expected sets are derived at run time from `NOT_WALK_IN_CARE` and
+ * from `facilities.json`, so a record another lane adjudicates tonight is in scope
+ * without an edit here.
+ *
+ * The last assertion is the one that protects the ~1,067 facilities that ARE clinics:
+ * every genuine 24-hour facility must still carry the chip. A gate that only checked
+ * the nine could be satisfied by deleting the chip outright.
+ */
+describe('care-role pages: chip row and notice order (built output)', () => {
+  const DIST = join(__dirname, '..', 'dist');
+  const facilities: any[] = (() => {
+    const raw = JSON.parse(readFileSync(join(__dirname, '..', 'src/data/facilities.json'), 'utf-8'));
+    return raw.facilities ?? raw;
+  })();
+  const bySlug = new Map(facilities.map((f) => [f.slug, f]));
+  const provinceSlug = (n: string) => n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  const LOCALES = [
+    { code: 'en', prefix: '', hours: '>24 hours<', warn: '>Not a clinic<',
+      notice: 'Not a clinic — you cannot be treated here', button: 'Show Google Maps Directions' },
+    { code: 'xh', prefix: '/xh', hours: '>iiyure ezingama-24<', warn: `>${CARE_ROLE_CHROME_XH.chip}<`,
+      notice: CARE_ROLE_CHROME_XH.heading, button: 'Bonisa ulwalathiso lwe-Google Maps' },
+    { code: 'zu', prefix: '/zu', hours: '>amahora angu-24<', warn: `>${CARE_ROLE_CHROME_ZU.chip}<`,
+      notice: CARE_ROLE_CHROME_ZU.heading, button: 'Khombisa Indlela Nge-Google Maps' },
+  ];
+
+  const pageFor = (prefix: string, slug: string) => {
+    const rec: any = bySlug.get(slug);
+    return join(DIST + prefix, 'clinics', provinceSlug(rec.province), slug, 'index.html');
+  };
+
+  const cases = LOCALES.flatMap((l) => slugs.map((s) => [`${l.code} ${s}`, l, s] as const));
+
+  it.each(cases)('%s renders no 24-hour chip', (_n, l, slug) => {
+    expect(readFileSync(pageFor(l.prefix, slug), 'utf-8')).not.toContain(l.hours);
+  });
+
+  it.each(cases)('%s carries the warning chip beside the heading', (_n, l, slug) => {
+    const html = readFileSync(pageFor(l.prefix, slug), 'utf-8');
+    expect(html).toContain(l.warn);
+    // Beside the <h1>, not somewhere below it: same flex row.
+    expect(html.indexOf(l.warn) - html.indexOf('<h1')).toBeLessThan(400);
+  });
+
+  it.each(cases)('%s puts the notice above the directions button', (_n, l, slug) => {
+    const html = readFileSync(pageFor(l.prefix, slug), 'utf-8');
+    const notice = html.indexOf(l.notice);
+    const button = html.indexOf(l.button);
+    expect(notice).toBeGreaterThan(-1);
+    expect(button).toBeGreaterThan(-1);
+    expect(notice).toBeLessThan(button);
+  });
+
+  it.each(LOCALES)('$code still shows the 24-hour chip on every genuine 24-hour facility', (l) => {
+    const expected = facilities.filter(
+      (f) => f.operating_hours?.is_24_hour && !(f.slug in NOT_WALK_IN_CARE)
+    );
+    expect(expected.length).toBeGreaterThan(50);
+    const missing = expected
+      .filter((f) => !readFileSync(pageFor(l.prefix, f.slug), 'utf-8').includes(l.hours))
+      .map((f) => f.slug);
+    expect(missing).toEqual([]);
+  });
+
+  it.each(LOCALES)('$code shows the warning chip on the adjudicated set and nowhere else', (l) => {
+    const seen: string[] = [];
+    const walk = (dir: string) => {
+      for (const e of readdirSync(dir, { withFileTypes: true })) {
+        const p = join(dir, e.name);
+        if (e.isDirectory()) walk(p);
+        else if (e.name === 'index.html' && readFileSync(p, 'utf-8').includes(l.warn)) seen.push(p);
+      }
+    };
+    walk(join(DIST + l.prefix, 'clinics'));
+    expect(seen.length).toBe(slugs.length);
   });
 });
