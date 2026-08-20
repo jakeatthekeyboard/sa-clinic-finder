@@ -44,6 +44,16 @@ A refusal is not a pass — it prints the capture's age and re-reports its verdi
 An unreadable capture is a HARD failure, never "no drift" — absence of a reading
 and a clean reading are not the same fact.
 
+RECORDS ARE NOT OBJECTS. `records_checked` counts our published RECORDS and
+`osm_objects_checked` counts the distinct OSM objects they resolve to; on
+2026-08-21 those are 1,076 and 1,073, because #1228 repointed three facilities
+onto an object another record already used. Reporting only the object count
+under a "records" label is what made three separate measurements of "how many
+facilities are gone from OSM" — a keeper's 4, this check's 1, and a full
+sweep's 0 — read as a contradiction when all three were true answers to
+different questions (#1351/#1363). A coverage number that reads as "records"
+and holds an object count hides exactly the records it drops.
+
 BASELINE. tools/osm-drift-baseline.json holds the MISSING findings already seen
 and accepted, keyed by IDENTITY (`slug|reason`), not by COUNT. A count ratchet
 stays green when one facility is resolved and a different one vanishes the same
@@ -128,7 +138,32 @@ class SoftSkip(Exception):
 
 
 def parse_ids(facilities):
-    """Group our records by OSM element type. Unparseable ids are REPORTED."""
+    """Group our records by OSM element type. Unparseable ids are REPORTED.
+
+    The value is a LIST of records, not one record, because TWO OF OUR RECORDS
+    CAN SHARE ONE OSM OBJECT. This was `by_type[etype][id] = r`, a plain
+    assignment, so the second record to arrive SILENTLY OVERWROTE the first and
+    was never compared against OSM at all — not for MISSING, not for MOVED, not
+    for NAME_CHANGED. No count moved, because the dropped record vanished from
+    the denominator as well as the numerator: the run reported "1073 records
+    checked" and 1073 was the number of distinct OBJECTS, so the arithmetic was
+    self-consistent and 3 of 1,076 records were invisible.
+
+    It is not hypothetical and it was created by the fix to a different item:
+    #1228 repointed 8 facilities onto the OSM object that still carried them,
+    and three of those landed on an object another record already used —
+    ha-grove-hospital-mpumalanga / ha-grove-hospital-belfast-mpumalanga
+    (way:468966258), tower-psychiatric-hospital-eastern-cape /
+    tower-psychiatric-hospital-fort-beaufort (way:218396423), and
+    elliot-provincial-hospital-eastern-cape / elliot-hospital-elliot
+    (way:461683581). `src/data/facility-quality.mjs` handles the collision for
+    PUBLISHING (it withholds the weaker page, keyed on facility_id); nothing
+    handled it for CHECKING. The two records in a pair carry DIFFERENT names, so
+    NAME_CHANGED is the bucket that was actually losing findings.
+
+    Found 2026-08-21 while reconciling #1351/#1363, which is the reason a
+    coverage number that reads as "records" must never be an object count.
+    """
     by_type, unparseable = {"node": {}, "way": {}, "relation": {}}, []
     for r in facilities:
         m = ID_RE.match(r.get("facility_id", ""))
@@ -136,7 +171,7 @@ def parse_ids(facilities):
             unparseable.append(r.get("facility_id") or r.get("slug"))
             continue
         etype = "node" if m.group(1) == "nodes" else m.group(1)
-        by_type[etype][int(m.group(2))] = r
+        by_type[etype].setdefault(int(m.group(2)), []).append(r)
     return by_type, unparseable
 
 
@@ -195,41 +230,50 @@ def is_healthcare(tags):
 def compare(by_type, found, move_metres):
     findings = {"MISSING": [], "MOVED": [], "NAME_CHANGED": [], "ENRICHABLE": []}
     for etype, records in by_type.items():
-        for osm_id, rec in records.items():
+        for osm_id, recs in records.items():
             key = f"{etype}:{osm_id}"
-            slug = rec.get("slug")
             el = found.get(key)
-            if el is None:
-                findings["MISSING"].append(
-                    {"slug": slug, "name": rec.get("name"), "osm": key,
-                     "reason": "object no longer returned by Overpass"})
-                continue
-            tags = el["tags"]
-            if not is_healthcare(tags):
-                findings["MISSING"].append(
-                    {"slug": slug, "name": rec.get("name"), "osm": key,
-                     "reason": f"no longer tagged healthcare (amenity={tags.get('amenity')!r})"})
-                continue
-            c = rec.get("coordinates") or {}
-            if el["lat"] is not None and c.get("lat") is not None:
-                d = haversine_m(c["lat"], c["lng" if "lng" in c else "lon"], el["lat"], el["lon"])
-                if d > move_metres:
-                    findings["MOVED"].append(
-                        {"slug": slug, "osm": key, "metres": round(d)})
-            if tags.get("name") and norm(tags["name"]) != norm(rec.get("name")):
-                findings["NAME_CHANGED"].append(
-                    {"slug": slug, "ours": rec.get("name"), "osm_name": tags["name"]})
-            gains = []
-            contact = rec.get("contact") or {}
-            if not (contact.get("phone") or "").strip() and (tags.get("phone") or tags.get("contact:phone")):
-                gains.append("phone")
-            if not ((rec.get("operating_hours") or {}).get("raw") or "").strip() and tags.get("opening_hours"):
-                gains.append("opening_hours")
-            if not (rec.get("operator") or "").strip() and tags.get("operator"):
-                gains.append("operator")
-            if gains:
-                findings["ENRICHABLE"].append({"slug": slug, "gains": gains})
+            # Every record on this object is compared, not just the last one
+            # parsed. Two records sharing an object produce two findings — which
+            # is correct: they are two published PAGES, the baseline is keyed on
+            # slug, and each needs its own disposition.
+            for rec in recs:
+                _compare_one(findings, key, rec, el, move_metres)
     return findings
+
+
+def _compare_one(findings, key, rec, el, move_metres):
+    slug = rec.get("slug")
+    if el is None:
+        findings["MISSING"].append(
+            {"slug": slug, "name": rec.get("name"), "osm": key,
+             "reason": "object no longer returned by Overpass"})
+        return
+    tags = el["tags"]
+    if not is_healthcare(tags):
+        findings["MISSING"].append(
+            {"slug": slug, "name": rec.get("name"), "osm": key,
+             "reason": f"no longer tagged healthcare (amenity={tags.get('amenity')!r})"})
+        return
+    c = rec.get("coordinates") or {}
+    if el["lat"] is not None and c.get("lat") is not None:
+        d = haversine_m(c["lat"], c["lng" if "lng" in c else "lon"], el["lat"], el["lon"])
+        if d > move_metres:
+            findings["MOVED"].append(
+                {"slug": slug, "osm": key, "metres": round(d)})
+    if tags.get("name") and norm(tags["name"]) != norm(rec.get("name")):
+        findings["NAME_CHANGED"].append(
+            {"slug": slug, "ours": rec.get("name"), "osm_name": tags["name"]})
+    gains = []
+    contact = rec.get("contact") or {}
+    if not (contact.get("phone") or "").strip() and (tags.get("phone") or tags.get("contact:phone")):
+        gains.append("phone")
+    if not ((rec.get("operating_hours") or {}).get("raw") or "").strip() and tags.get("opening_hours"):
+        gains.append("opening_hours")
+    if not (rec.get("operator") or "").strip() and tags.get("operator"):
+        gains.append("operator")
+    if gains:
+        findings["ENRICHABLE"].append({"slug": slug, "gains": gains})
 
 
 def load_baseline():
@@ -303,7 +347,11 @@ def main():
 
     result = {
         "captured_at": now.isoformat(),
-        "records_checked": sum(len(v) for v in by_type.values()),
+        # RECORDS, not objects — these differ whenever two records share an OSM
+        # object (3 of 1,076 do, all created by the #1228 repointing). This key
+        # has always been named "records" and used to hold the object count.
+        "records_checked": sum(len(rs) for v in by_type.values() for rs in v.values()),
+        "osm_objects_checked": sum(len(v) for v in by_type.values()),
         "osm_objects_returned": len(found),
         "unparseable_facility_ids": unparseable,
         "move_threshold_metres": args.move_metres,
@@ -341,7 +389,12 @@ def report(result, args, fresh):
         c = result["counts"]
         age = result.get("capture_age_days")
         tag = "fresh pull" if fresh else f"cached capture, {age}d old"
-        print(f"[osm-drift] {result['records_checked']} records checked against OSM "
+        objs = result.get("osm_objects_checked")
+        # A capture written before osm_objects_checked existed does not get a
+        # made-up value — the clause is simply absent, so the line never asserts
+        # a distinct-object count nobody measured.
+        over = f" over {objs} distinct OSM objects" if objs is not None else ""
+        print(f"[osm-drift] {result['records_checked']} records{over} checked against OSM "
               f"({tag}); {result['osm_objects_returned']} objects returned")
         for k in ("MISSING", "MOVED", "NAME_CHANGED", "ENRICHABLE"):
             print(f"  {k:14} {c.get(k, 0)}")

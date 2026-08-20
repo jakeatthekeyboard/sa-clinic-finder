@@ -232,3 +232,96 @@ def test_capture_without_findings_is_a_hard_failure(tmp_path, monkeypatch):
 def test_clean_run_is_green(tmp_path, monkeypatch):
     _baseline(tmp_path, monkeypatch, [])
     assert odc.report(_capture([]), Args(), fresh=True) == 0
+
+
+# ── two records on one OSM object (#1351/#1363 reconciliation) ────────────────
+#
+# `parse_ids` used to do `by_type[etype][id] = r`, so the second record to land
+# on an id silently replaced the first and was never compared. It was invisible
+# because the dropped record left the denominator too: the run said "1073
+# records checked" and 1073 was the count of distinct OBJECTS.
+#
+# The collision is real and was created by the fix to #1228, which repointed 8
+# facilities onto the object that still carried them; three landed on an object
+# another record already used. These tests are led by a verbatim reconstruction
+# of the H.A. Grove pair, whose NAME_CHANGED finding was actually being lost.
+
+HA_GROVE = "way:468966258"
+
+
+def _grove_pair():
+    return [
+        rec("ha-grove-hospital-mpumalanga", "zaf_way_468966258", name="Ha Grove Hospital"),
+        rec("ha-grove-hospital-belfast-mpumalanga", "zaf_way_468966258",
+            name="H.A. Grove Hospital"),
+    ]
+
+
+def _el(name, lat=-26.0, lon=28.0, **tags):
+    return {"lat": lat, "lon": lon, "tags": {"amenity": "hospital", "name": name, **tags}}
+
+
+def test_two_records_on_one_object_are_both_parsed():
+    by_type, bad = odc.parse_ids(_grove_pair())
+    assert bad == []
+    assert list(by_type["way"]) == [468966258]
+    assert len(by_type["way"][468966258]) == 2, "the second record must not overwrite the first"
+
+
+def test_records_and_objects_are_counted_separately():
+    """The mislabel that hid this: a coverage number reading 'records' held an
+    object count, so 1,076 records over 1,073 objects was self-consistent at
+    1073 and three records were missing from both sides of the ratio."""
+    by_type, _ = odc.parse_ids(_grove_pair() + [rec("solo", "zaf_node_7")])
+    records = sum(len(rs) for v in by_type.values() for rs in v.values())
+    objects = sum(len(v) for v in by_type.values())
+    assert (records, objects) == (3, 2)
+
+
+def test_shared_object_name_drift_is_not_lost():
+    """The finding that was actually being dropped on the live corpus: OSM says
+    'H.A. Grove Hospital', one of our two records says 'Ha Grove Hospital', and
+    it never appeared in the 2026-08-19 capture because the other record won the
+    dict slot."""
+    by_type, _ = odc.parse_ids(_grove_pair())
+    findings = odc.compare(by_type, {HA_GROVE: _el("H.A. Grove Hospital")}, 500.0)
+    drifted = [f["slug"] for f in findings["NAME_CHANGED"]]
+    assert drifted == ["ha-grove-hospital-mpumalanga"]
+
+
+def test_shared_object_gone_reports_both_slugs():
+    """Two published pages describe the object, so a vanished object is two
+    findings — the baseline is keyed on slug and each page needs its own
+    disposition. Netting them to one would accept both by accepting either."""
+    by_type, _ = odc.parse_ids(_grove_pair())
+    findings = odc.compare(by_type, {}, 500.0)
+    assert sorted(f["slug"] for f in findings["MISSING"]) == [
+        "ha-grove-hospital-belfast-mpumalanga", "ha-grove-hospital-mpumalanga"]
+    assert {f["reason"] for f in findings["MISSING"]} == {
+        "object no longer returned by Overpass"}
+
+
+def test_shared_object_retagged_reports_both_slugs():
+    by_type, _ = odc.parse_ids(_grove_pair())
+    el = {"lat": -26.0, "lon": 28.0, "tags": {"amenity": "school", "name": "X"}}
+    findings = odc.compare(by_type, {HA_GROVE: el}, 500.0)
+    assert len(findings["MISSING"]) == 2
+    assert all("no longer tagged healthcare" in f["reason"] for f in findings["MISSING"])
+
+
+def test_report_omits_object_clause_on_a_pre_change_capture(capsys, tmp_path, monkeypatch):
+    """An old capture has no osm_objects_checked. It must not be given a made-up
+    one — the clause is absent rather than asserting a count nobody measured."""
+    _baseline(tmp_path, monkeypatch, [])
+    odc.report(_capture([]), Args(), fresh=False)
+    line = capsys.readouterr().out.splitlines()[0]
+    assert "distinct OSM objects" not in line
+
+
+def test_report_shows_both_counts_when_measured(capsys, tmp_path, monkeypatch):
+    _baseline(tmp_path, monkeypatch, [])
+    cap = _capture([])
+    cap["records_checked"], cap["osm_objects_checked"] = 1076, 1073
+    odc.report(cap, Args(), fresh=True)
+    line = capsys.readouterr().out.splitlines()[0]
+    assert "1076 records over 1073 distinct OSM objects" in line
