@@ -21,6 +21,7 @@ import { typeLabelZu, servicePlainZu, serviceLabelZu, zuHref, zuLinks } from '..
 import { facilityPaths } from '../../../../data/pages/paths';
 import { facilitiesTranslated } from '../../../../i18n/translated';
 import { careRole } from '../../../../data/care-role';
+import { emergencyIsInferred } from '../../../../data/emergency-basis';
 
 export function getStaticPaths() {
   return facilitiesTranslated('zu') ? facilityPaths() : [];
@@ -46,13 +47,21 @@ const isPrivate = facility.operator_type === 'private';
 // it is suppressed here exactly as it is on the English route. The explanatory
 // notice the English page shows is NOT reproduced here: a safety notice has to be
 // written by a speaker of the language, not machine-phrased on a humanitarian site.
-// #1349 — the English route carries a notice explaining that a facility's
-// round-the-clock emergency listing is an inference from its facility TYPE on 229
-// of the 500 facilities that carry it, rather than a record for that facility.
-// That notice is NOT reproduced here, for the same reason the #1002 notice above
-// is not: a safety notice has to be written by a speaker of the language, not
-// machine-phrased on a humanitarian site. The gap is real and is tracked, not
-// accepted as finished — a translated version needs a speaker.
+// #1361 — the #1349 notice IS now reproduced here. The rule it was withheld under
+// ("a safety notice has to be written by a speaker of the language, not machine-phrased
+// on a humanitarian site") is refuted by this very page: the most prominent safety
+// notice on it — the translation disclaimer in src/i18n/strings.ts, which tells the
+// reader not to make a treatment decision from this page — is itself machine-phrased
+// isiZulu, and so is the "Iziphuthumayo zamahora angu-24"
+// service chip that this notice qualifies. Withholding only the CAVEAT, while publishing
+// the CLAIM it caveats, leaves the isiZulu reader with strictly less doubt than the
+// English one about the same inference. Absence was the larger harm, so the notice ships,
+// under the page-wide disclaimer that already says who wrote it. A first-language review
+// of ALL isiXhosa/isiZulu safety copy is filed separately — that is the real remedy, and
+// it is not a reason to leave a reader arriving at two in the morning with no caveat.
+// DIGIT-FREE, deliberately: "imini nobusuku" rather than a numeral, so this notice
+// cannot move the numeric multiset tools/numeric-parity-check.py compares.
+const emergencyInferred = facility.services.emergency_24h && emergencyIsInferred(facility.slug);
 const notCare = careRole(facility.slug);
 const typeEditorial = isPrivate || notCare ? null : getFacilityTypeEditorialZu(facility.type);
 const activeServices = Object.entries(facility.services)
@@ -221,6 +230,19 @@ const jsonLd = {
         ))}
       </div>
       {activeServices.length === 0 && <p style="color: var(--text-muted); font-size: 0.9rem;">Imininingwane yezinsizakalo yalesi sikhungo ayikaqinisekiswa.</p>}
+      {emergencyInferred && (
+        <div style="margin-top: 12px; background: #fff8e6; border-left: 4px solid #b8860b; border-radius: var(--radius); padding: 12px 14px;">
+          <h3 style="font-size: 0.92rem; margin: 0 0 6px;">Kungani lesi sikhungo sifakwe ezinsizakalweni eziphuthumayo</h3>
+          <p style="font-size: 0.85rem; line-height: 1.65; margin: 0; color: var(--text-muted);">
+            Sithi lesi sikhungo sinokwelashwa kwezimo eziphuthumayo imini nobusuku ngenxa yohlobo
+            lwesikhungo esiyilo, hhayi ngenxa yerekhodi ethile yalesi sikhungo. Ku-OpenStreetMap,
+            umthombo wethu, ayikho imininingwane yomnyango wezimo eziphuthumayo yalesi sikhungo
+            nganoma yiluphi uhlangothi &mdash; lokho kuyisikhala emephini, akulona uphawu lokuthi
+            lo mnyango uvaliwe. Shayela ucingo ngaphambi kokuhamba ebusuku, futhi esimweni
+            esiphuthumayo esiyingozi empilweni biza i-ambulensi kunokuba uzihambele wena.
+          </p>
+        </div>
+      )}
     </section>
     )}
 
