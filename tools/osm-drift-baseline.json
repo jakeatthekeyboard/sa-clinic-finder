@@ -54,6 +54,11 @@
       "key": "elliot-hospital-elliot|Elliot Provincial Hospital",
       "verdict": "NOT SETTLED — a fuller form of the same name, not a new one; left as ours",
       "note": "This is the record #1228 repointed at way 461683581, the polygon that carries the hospital's own tags at 1 Maclear Road, Khowa. 'Elliot Provincial Hospital' is a fuller rendering of the same name rather than a rename, and no second source was consulted for it, so nothing is changed. Note that our own corpus holds a SECOND, withheld record literally named 'Elliot Provincial Hospital' (withheld as a duplicate-osm-object by #1228), so adopting that string here would make two of our records identical in name as well as in id — a reason for caution, not evidence either way. Low stakes: neither string misleads a searcher."
+    },
+    {
+      "key": "ha-grove-hospital-mpumalanga|H.A. Grove Hospital",
+      "verdict": "KEEP OURS — a punctuation variant, and the drifted record is not published",
+      "note": "Surfaced by the #1351/#1363 fix, not by the 2026-08-19 capture: this finding had been silently dropped because two records share OSM object way:468966258 and the second overwrote the first in the comparison dict. No second source is needed, because nothing here is a claim about the world changing. 'Ha Grove Hospital' and 'H.A. Grove Hospital' are the same name with different punctuation, and the record OSM disagrees with, ha-grove-hospital-mpumalanga, is WITHHELD as duplicate-osm-object — noindexed and absent from the sitemap since #1228. The record we actually publish for this hospital, ha-grove-hospital-belfast-mpumalanga, already carries OSM's exact string 'H.A. Grove Hospital'. No searcher is affected either way, so editing a sourced name here would be churn."
     }
   ]
 }
