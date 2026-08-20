@@ -25,7 +25,6 @@ const withheldPaths = new Set(
     return `/clinics/${province.toLowerCase().replace(/ /g, '-')}/${slug}`;
   })
 );
-console.log(`[sitemap] #929 quality gate: withholding ${withheldPaths.size} facility page(s)`);
 
 const structuralPrefixes = ['/clinics/', '/services/', '/guides/'];
 function isStructural(path) {
@@ -70,6 +69,33 @@ function isStructural(path) {
   return false;
 }
 
+// #1063 — the log line used to print withheldPaths.size, the CANDIDATE set, and
+// overstated the gate's effect by 18 (54 printed, 36 real). Withholding only DOES
+// anything to a path the sitemap filter would otherwise ADMIT, and the admission rule
+// is `isSubmittable` below: a facility detail path has four segments, so isStructural
+// can never admit one, which leaves the impressions-derived priority manifest as the
+// only way in. 18 of the 54 were never in that manifest, so withholding them changed
+// nothing — they were candidates, not effects. This number is the ONLY visible readout
+// of a data-quality gate, and an inflated one makes the gate look like it is doing 50%
+// more than it is; a session sizing the #1002 problem from this log would over-count.
+//
+// The count is derived from isSubmittable rather than from `priorityPaths` directly so
+// it cannot drift again: if the admission rule ever changes — a new structural prefix,
+// facility paths becoming structural — the effective count follows it automatically
+// instead of silently going back to describing something else. Both numbers are
+// printed, because "36 of 54 candidates" is the honest shape: the other 18 are real
+// quality findings that simply have no sitemap consequence.
+function isSubmittable(path) {
+  return priorityPaths.has(path) || isStructural(path);
+}
+const withheldEffective = [...withheldPaths].filter(isSubmittable);
+console.log(
+  `[sitemap] #929 quality gate: withholding ${withheldEffective.length} facility page(s) ` +
+    `from the submitted sitemap (of ${withheldPaths.size} withhold candidate(s); the other ` +
+    `${withheldPaths.size - withheldEffective.length} are not in the submitted set, so ` +
+    `withholding them has no effect)`
+);
+
 export default defineConfig({
   site: 'https://clinicfinder.co.za',
   adapter: vercel(),
@@ -78,7 +104,7 @@ export default defineConfig({
       filter: (page) => {
         const path = page.replace('https://clinicfinder.co.za', '') || '/';
         if (withheldPaths.has(path)) return false;
-        return priorityPaths.has(path) || isStructural(path);
+        return isSubmittable(path);
       },
     }),
   ],
