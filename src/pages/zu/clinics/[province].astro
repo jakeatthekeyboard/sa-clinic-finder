@@ -11,7 +11,7 @@
  * their source form — they are proper nouns a reader repeats at a clinic counter.
  */
 import Base from '../../../layouts/Base.astro';
-import { facilities, PROVINCES, SERVICE_MAP, provinceSlug } from '../../../data/helpers';
+import { facilities, providesService, PROVINCES, SERVICE_MAP, provinceSlug } from '../../../data/helpers';
 import { PROVINCE_EDITORIAL_ZU } from '../../../data/i18n/province-editorial.zu';
 import { typeLabelZu, servicePlainZu, zuHref, zuLinks } from '../../../data/i18n/zu';
 import { provincePaths } from '../../../data/pages/paths';
@@ -35,7 +35,7 @@ const typeBreakdown = provFacilities.reduce((acc, f) => {
 const serviceBreakdown = Object.keys(SERVICE_MAP).map(key => ({
   key,
   label: servicePlainZu(key),
-  count: provFacilities.filter(f => f.services[key]).length,
+  count: provFacilities.filter(f => providesService(f, key)).length,
 })).filter(s => s.count > 0).sort((a, b) => b.count - a.count);
 
 const editorial = PROVINCE_EDITORIAL_ZU[provinceName];

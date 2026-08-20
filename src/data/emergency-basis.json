@@ -4,8 +4,9 @@
  "captured_at": "2026-08-20T23:04:07+02:00",
  "counts": {
   "osm_confirmed": 271,
-  "unevidenced": 229,
-  "unresolvable": 0
+  "unevidenced": 228,
+  "unresolvable": 0,
+  "excluded_not_care": 1
  },
  "osm_confirmed": [
   "1-military-hospital-pretoria",
@@ -478,7 +479,6 @@
   "sundumbili-community-health-centre-mandeni",
   "swartruggens-health-centre-north-west",
   "tc-newman-hospital-paarl-charlston-hill-western-cape",
-  "temba-santa-hospital-grahamstown",
   "thaba-leshoba-health-centre-limpopo",
   "thebe-district-hospital-harrismith",
   "thembelihle-clinic-gauteng",
@@ -511,5 +511,8 @@
   "xamdeboo-hospital-xamdeboo",
   "zithulele-hospital-eastern-cape"
  ],
- "unresolvable": []
+ "unresolvable": [],
+ "excluded_not_care": [
+  "temba-santa-hospital-grahamstown"
+ ]
 }

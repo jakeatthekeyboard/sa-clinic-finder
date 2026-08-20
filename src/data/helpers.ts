@@ -1,4 +1,5 @@
 import facilitiesRaw from './facilities.json';
+import { careRole } from './care-role';
 
 export interface Facility {
   facility_id: string;
@@ -37,6 +38,53 @@ export interface Facility {
 }
 
 export const facilities: Facility[] = facilitiesRaw as Facility[];
+
+/**
+ * Does this facility provide `serviceKey` to a member of the public?
+ *
+ * WHY THIS IS NOT JUST `f.services[key]` (#1376)
+ * ----------------------------------------------
+ * Temba SANTA Hospital in Makhanda CLOSED on 2023-07-01. Its record still carries
+ * `services.emergency_24h: true`, so it was listed on /services/emergency as a place
+ * to go with a medical emergency, counted in the emergency editorial's stated totals
+ * and counted in the medical-emergency guide — for a building that stood empty within
+ * a fortnight of the closure and has since been stripped by thieves. Someone acting on
+ * that at 2am drives to a locked, vandalised site instead of to Settlers Hospital.
+ *
+ * The obvious repair is to set the flag false. #1349 forbids it, explicitly and
+ * correctly: `emergency_24h` is not a sourced value, it was inferred from facility
+ * TYPE (commit 3d5d03c), and this claim sits in emergency-basis.json's `unevidenced`
+ * list. Flipping it would assert "this hospital does not run a 24-hour casualty",
+ * which is a claim about a SERVICE and is not what we know. What we know — and what
+ * `care-role.ts` already records, with the Eastern Cape DoH Annual Report 2023/24,
+ * Spotlight and Grocott's Mail behind it — is that the FACILITY is closed. That is a
+ * fact about the place, not about the service, so it is answered where facts about
+ * the place live, and the sourced record is left exactly as OpenStreetMap has it.
+ *
+ * So the honest answer to "does a closed hospital belong in the emergency corpus" is
+ * no, and it generalises with no special case: a facility adjudicated in `care-role.ts`
+ * is by definition not somewhere a member of the public is treated, so it cannot be
+ * listed as providing ANY service. That covers the state mortuary, the bedding
+ * retailer, the veterinary practice, the office building, the shopping centre, the
+ * blood bank, the retail pharmacy and the decommissioned hospital in one predicate —
+ * 15 service listings in total, of which the emergency one is the dangerous one.
+ *
+ * The pages themselves are untouched and stay live, indexed and in the sitemap, per
+ * `care-role.ts`'s own policy: people search for these places and the useful answer is
+ * a page saying plainly what they are and where to go instead.
+ */
+export function providesService(f: Facility, serviceKey: string): boolean {
+  return Boolean(f.services[serviceKey]) && careRole(f.slug) === null;
+}
+
+/**
+ * The facilities that can appear in a service listing or count — everything except
+ * the `care-role.ts` adjudications. Use this, not `facilities`, wherever a service is
+ * being counted or listed, in EVERY locale: the three languages must agree or
+ * tools/numeric-parity-check.py fails, and it should fail, because a count that
+ * differs by language is a count one of them has got wrong.
+ */
+export const serviceCorpus: Facility[] = facilities.filter(f => careRole(f.slug) === null);
 
 export const PROVINCES = [
   'Eastern Cape',
@@ -92,7 +140,7 @@ export function facilitiesByProvince(prov: string): Facility[] {
 }
 
 export function facilitiesByService(serviceKey: string): Facility[] {
-  return facilities.filter(f => f.services[serviceKey]);
+  return serviceCorpus.filter(f => f.services[serviceKey]);
 }
 
 export function nearbyFacilities(facility: Facility, count = 3): Facility[] {

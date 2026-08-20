@@ -16,7 +16,7 @@
  * carried across unchanged.
  */
 import Base from '../../../layouts/Base.astro';
-import { facilities, PROVINCES, SERVICE_MAP, provinceSlug } from '../../../data/helpers';
+import { facilities, providesService, PROVINCES, SERVICE_MAP, provinceSlug } from '../../../data/helpers';
 import { PROVINCE_EDITORIAL_XH } from '../../../data/i18n/province-editorial.xh';
 import { typeLabelXh, servicePlainXh } from '../../../data/i18n/labels.xh';
 import { provincePaths } from '../../../data/pages/paths';
@@ -50,7 +50,7 @@ const typeBreakdown = provFacilities.reduce((acc, f) => {
 const serviceBreakdown = Object.keys(SERVICE_MAP).map(key => ({
   key,
   label: servicePlainXh(key, SERVICE_MAP[key].plain),
-  count: provFacilities.filter(f => f.services[key]).length,
+  count: provFacilities.filter(f => providesService(f, key)).length,
 })).filter(s => s.count > 0).sort((a, b) => b.count - a.count);
 
 const editorial = PROVINCE_EDITORIAL_XH[provinceName];

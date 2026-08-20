@@ -17,7 +17,7 @@
  * language switcher and the sitemap.
  */
 import Base from '../../../layouts/Base.astro';
-import { facilities, PROVINCES, SERVICE_MAP, provinceSlug } from '../../../data/helpers';
+import { facilities, providesService, PROVINCES, SERVICE_MAP, provinceSlug } from '../../../data/helpers';
 import { SERVICE_EDITORIAL_XH } from '../../../data/i18n/service-editorial.xh';
 import { typeLabelXh, servicePlainXh, serviceLabelXh } from '../../../data/i18n/labels.xh';
 import { servicePaths } from '../../../data/pages/paths';
@@ -54,7 +54,7 @@ const DERIVED_SERVICES: Record<string, string> = {
 };
 const editorial = SERVICE_EDITORIAL_XH[serviceKey];
 const serviceFacilities = facilities
-  .filter(f => f.services[serviceKey] && f.province !== '')
+  .filter(f => providesService(f, serviceKey) && f.province !== '')
   .sort((a, b) => a.province.localeCompare(b.province) || a.name.localeCompare(b.name));
 
 const byProvince = PROVINCES.map(p => ({
