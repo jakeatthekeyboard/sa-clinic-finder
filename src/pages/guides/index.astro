@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { PROVINCES, provinceSlug } from '../../data/helpers';
 
 const guides = [
   {
@@ -126,5 +127,22 @@ const jsonLd = {
         </a>
       ))}
     </div>
+
+    <section style="margin-top: 40px; background: var(--bg-alt); border-radius: var(--radius); padding: 24px; max-width: 720px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">Looking for a clinic, not a guide?</h2>
+      <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 16px;">
+        Every guide above describes care you can get free at a public facility. Use the directory to find the facility nearest you, or browse by the service you need.
+      </p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+        <a href="/search" class="btn btn--primary" style="font-size: 0.9rem;">Find your nearest clinic</a>
+        <a href="/services" class="btn btn--outline" style="font-size: 0.9rem;">Browse clinics by service</a>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Or start with your province:</p>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        {PROVINCES.map(p => (
+          <a href={`/clinics/${provinceSlug(p)}`} class="chip" style="text-decoration: none; font-size: 0.85rem; padding: 6px 12px;">{p}</a>
+        ))}
+      </div>
+    </section>
   </div>
 </Base>

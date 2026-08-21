@@ -2,6 +2,7 @@
 // isiZulu translation of src/pages/guides/index.astro (issue #2).
 import Base from '../../../layouts/Base.astro';
 import { localePath } from '../../../i18n/config';
+import { zuHref } from '../../../data/i18n/zu';
 
 const zu = (path: string) => localePath(path, 'zu');
 
@@ -130,5 +131,14 @@ const jsonLd = {
         </a>
       ))}
     </div>
+
+    <section style="margin-top: 40px; background: var(--bg-alt); border-radius: var(--radius); padding: 24px; max-width: 720px; margin-bottom: 32px;">
+      <h2 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--primary-dark);">Thola umtholampilo</h2>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href={zuHref('/search')} class="btn btn--primary" style="font-size: 0.9rem;">Thola umtholampilo oseduze nawe</a>
+        <a href={zuHref('/services')} class="btn btn--outline" style="font-size: 0.9rem;">Thola Imitholampilo Ngensizakalo</a>
+        <a href={zuHref('/clinics')} class="btn btn--outline" style="font-size: 0.9rem;">Imitholampilo Yomphakathi Ngesifundazwe</a>
+      </div>
+    </section>
   </div>
 </Base>
