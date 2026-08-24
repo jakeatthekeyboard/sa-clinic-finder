@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Cross-check facilities.json `province` against each record's own `coordinates`.
 
+Also reports records that fall in NO South African district at all (#1381, 2026-08-24).
+
 Why (2026-08-14): 130 of 1,076 records (12%) named a NEIGHBOURING province -- Kimberley
 Hospital under Free State, Ermelo Hospital under KwaZulu-Natal, Sebokeng Hospital under
 North West. `province` drives the URL (/clinics/<province>/<slug>) and every province
@@ -13,6 +15,22 @@ value; the province tag is not.
 Usage:
   curl -sL https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/south-africa.geojson -o /tmp/za.geojson
   python3 ops/validate-province-by-coords.py
+
+OUTSIDE SOUTH AFRICA (#1381, 2026-08-24): a record whose coordinates land in no district
+at all used to be SKIPPED here -- `if p and p != province` treats "located nowhere" as
+"nothing to say". That silence hid three clinics in Maseru, LESOTHO, published as Free
+State facilities, and this script had the evidence to name them the whole time. It now
+reports them separately, because the two findings need different remedies: a mismatch is
+fixed by correcting `province`, and there is no province to correct an outside-SA record
+to -- it is adjudicated in `src/data/outside-sa.ts`, which drops it from the directory
+while keeping its page. A record already adjudicated there is expected and is NOT
+re-reported; anything else in this list is new and unhandled.
+
+Not every "nowhere" is another country: a record just offshore, or in a gap between the
+district polygons of this particular GeoJSON, lands here too. The list is a candidate
+generator, exactly like the name scan in care-role.ts. Settle each one against a second
+source -- the OSM object's own tags carry country evidence (a dialling code, a postcode,
+an operator) that a point-in-polygon test does not.
 
 Exits 1 if any mismatch is found. Boundary noise: treat hits under ~3 km from the stated
 province's border as needing manual confirmation against address.city before changing.
@@ -62,10 +80,15 @@ def locate(lng,lat):
     return None,None
 
 if __name__ == '__main__':
-    import sys, os
+    import sys, os, re
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     fac = json.load(open(os.path.join(root, 'src/data/facilities.json')))
     bad = []
+    nowhere = []
+    # Slugs already adjudicated in src/data/outside-sa.ts. Parsed rather than hardcoded
+    # so this list cannot drift from the lane that actually drops them.
+    adjudicated = set(re.findall(r"^  '([a-z0-9-]+)': \{", open(
+        os.path.join(root, 'src/data/outside-sa.ts')).read(), re.M))
     for f in fac:
         c = f.get('coordinates') or {}
         if c.get('lat') is None or c.get('lng') is None:
@@ -73,7 +96,15 @@ if __name__ == '__main__':
         d, p = locate(c['lng'], c['lat'])
         if p and p != f['province']:
             bad.append(f"{f['province']:>14} -> {p:<14} | {f['name'][:50]:<50} | {d}")
+        elif p is None and f['slug'] not in adjudicated:
+            nowhere.append(
+                f"{f['province']:>14} -> NO SA DISTRICT | {f['name'][:50]:<50} | "
+                f"{c['lat']:.4f},{c['lng']:.4f} | {f['slug']}")
     for b in bad:
         print(b)
+    for b in nowhere:
+        print(b)
     print(f"{len(bad)} province/coordinate mismatch(es) across {len(fac)} facilities")
-    sys.exit(1 if bad else 0)
+    print(f"{len(nowhere)} record(s) in NO SA district and not adjudicated in outside-sa.ts "
+          f"({len(adjudicated)} adjudicated, not reported)")
+    sys.exit(1 if bad or nowhere else 0)

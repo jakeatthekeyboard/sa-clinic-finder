@@ -21,6 +21,8 @@ import { typeLabelZu, servicePlainZu, serviceLabelZu, zuHref, zuLinks } from '..
 import { facilityPaths } from '../../../../data/pages/paths';
 import { facilitiesTranslated } from '../../../../i18n/translated';
 import { careRole } from '../../../../data/care-role';
+import { outsideSouthAfrica } from '../../../../data/outside-sa';
+import { OUTSIDE_SA_CHROME_ZU, outsideSaWhatZu } from '../../../../data/i18n/outside-sa.xh-zu';
 import {
   CARE_ROLE_CHROME_ZU,
   careRoleWhatZu,
@@ -82,7 +84,16 @@ const notCare = careRole(facility.slug);
 // Wording, terminology and the no-numerals rule: src/data/i18n/care-role.xh-zu.ts.
 const notCareWhat = notCare ? careRoleWhatZu(facility.slug) : null;
 const notCareSummary = firstSentence(notCareWhat);
-const typeEditorial = isPrivate || notCare ? null : getFacilityTypeEditorialZu(facility.type);
+// #1381 — three published records are health facilities in Maseru, LESOTHO, carried
+// under `province: "Free State"` because the map extract they came from is clipped to
+// a bounding box that contains the whole enclave. The notice ships in this locale in
+// the same commit as the English one, for the reason #1367 sets out at length:
+// withholding a CORRECTION while publishing the false claim it corrects leaves this
+// reader worse off than the English one, not safer. Wording: outside-sa.xh-zu.ts.
+const notInSA = outsideSouthAfrica(facility.slug);
+const notInSAWhat = notInSA ? outsideSaWhatZu(facility.slug) : null;
+const notInSASummary = firstSentence(notInSAWhat);
+const typeEditorial = isPrivate || notCare || notInSA ? null : getFacilityTypeEditorialZu(facility.type);
 const activeServices = Object.entries(facility.services)
   .filter(([, v]) => v)
   .map(([k]) => ({ key: k, slug: SERVICE_MAP[k]?.slug, plain: servicePlainZu(k), label: serviceLabelZu(k) }))
@@ -167,14 +178,19 @@ const jsonLd = {
   // route published only a name and a province, which is not a correction.
   description: notCare
     ? notCareSummary || `${facility.name}, ${facility.province}.`
+    : notInSA
+    ? notInSASummary || `${facility.name}, ${notInSA.country}.`
     : `${typeLabelZu(facility.type)} e-${facility.province}, eNingizimu Afrika.`
       + (activeServices.length ? ` Izinsizakalo: ${activeServices.map(s => s.plain).join(', ')}.` : ''),
   address: {
     '@type': 'PostalAddress',
     streetAddress: facility.address.street || undefined,
     addressLocality: facility.address.city || facility.district || facility.province,
-    addressRegion: facility.province,
-    addressCountry: 'ZA',
+    // #1381 — was hardcoded South African, which published a Lesotho clinic to search
+    // engines as a Free State one in machine-readable form. The region is dropped
+    // rather than guessed: we know the COUNTRY and no more.
+    ...(notInSA ? {} : { addressRegion: facility.province }),
+    addressCountry: notInSA ? notInSA.countryCode : 'ZA',
     postalCode: facility.address.postal_code || undefined,
   },
   geo: {
@@ -191,17 +207,23 @@ const jsonLd = {
     : facility.operating_hours.is_24_hour
       ? { openingHours: 'Mo-Su 00:00-23:59' }
       : {}),
-  ...(notCare ? {} : { isAccessibleForFree: !isPrivate }),
+  // #1381 — not ours to answer for a facility in another country's health system.
+  ...(notCare || notInSA ? {} : { isAccessibleForFree: !isPrivate }),
   ...(activeServices.length ? { medicalSpecialty: activeServices.map(s => s.label) } : {}),
 };
 ---
 <Base
   title={notCare
     ? `${facility.name} — e-${facility.province}${titleSuffix}`
-    : `${facility.name} — ${typeLabelZu(facility.type)} e-${facility.province}${titleSuffix}`}
+    : notInSA
+      ? `${facility.name} — e-${notInSA.country}${titleSuffix}`
+      : `${facility.name} — ${typeLabelZu(facility.type)} e-${facility.province}${titleSuffix}`}
   description={(notCare
       ? `${facility.name} akuwona umtholampilo futhi akekho umuntu owelashwa lapha.`
         + (notCareSummary ? ` ${notCareSummary}` : '')
+      : notInSA
+      ? `${facility.name} ise-${notInSA.country}, ayikho eNingizimu Afrika.`
+        + (notInSASummary ? ` ${notInSASummary}` : '')
       : `${facility.name} ${typeName} e-${facility.province}.`
         + (activeServices.length ? ` Izinsizakalo: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}.` : ''))
     + ' Thola indlela nemininingwane yokuxhumana.'}
@@ -243,9 +265,13 @@ const jsonLd = {
            rather than inside it. */}
     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap;">
       <h1 style="font-size: 1.4rem;">{facility.name}</h1>
-      {!notCare && <span class="chip chip--type">{typeLabelZu(facility.type)}</span>}
+      {!notCare && !notInSA && <span class="chip chip--type">{typeLabelZu(facility.type)}</span>}
       {notCare && <span class="chip" style="background: #fdecea; color: #a4262c; font-weight: 600;">{CARE_ROLE_CHROME_ZU.chip}</span>}
-      {!notCare && facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">amahora angu-24</span>}
+      {/* #1381 — same reasoning as #1368b applied to the country: a type chip and a
+          round-the-clock chip above a notice saying the place is in another country
+          is the top of the page contradicting the correction below it. */}
+      {!notCare && notInSA && <span class="chip" style="background: #fdecea; color: #a4262c; font-weight: 600;">{OUTSIDE_SA_CHROME_ZU.chip}</span>}
+      {!notCare && !notInSA && facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">amahora angu-24</span>}
     </div>
 
     <p style="color: var(--text-muted); margin-bottom: 24px;">
@@ -262,6 +288,21 @@ const jsonLd = {
           <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
             {CARE_ROLE_CHROME_ZU.seeBefore}
             <a href={zuHref(`/clinics/${provinceSlug(facility.province)}`)}>{CARE_ROLE_CHROME_ZU.linkText(facility.province)}</a>.
+          </p>
+        </div>
+      </section>
+    )}
+
+    {/* #1381 — same notice, same position and same styling as the English route, so
+        the three locales cannot say different things about the same record. */}
+    {notInSA && (
+      <section style="margin-bottom: 32px;">
+        <div style="background: #fdecea; border-left: 4px solid #a4262c; border-radius: var(--radius); padding: 14px 16px;">
+          <h2 style="font-size: 1rem; margin-bottom: 8px; color: #a4262c;">{OUTSIDE_SA_CHROME_ZU.heading(notInSA.country)}</h2>
+          {notInSAWhat && <p style="font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px;">{notInSAWhat}</p>}
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
+            {OUTSIDE_SA_CHROME_ZU.seeBefore}
+            <a href={zuHref(`/clinics/${provinceSlug(facility.province)}`)}>{OUTSIDE_SA_CHROME_ZU.linkText(facility.province)}</a>.
           </p>
         </div>
       </section>
@@ -291,7 +332,7 @@ const jsonLd = {
         and isiZulu while the English page suppressed them. Found by
         tools/numeric-parity-check.py, which is the only thing that compares the
         three routes against each other. */}
-    {!notCare && (
+    {!notCare && !notInSA && (
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Izinsizakalo ezitholakalayo</h2>
       <div style="display: flex; flex-wrap: wrap; gap: 6px;">
@@ -316,7 +357,7 @@ const jsonLd = {
     </section>
     )}
 
-    {!notCare && (
+    {!notCare && !notInSA && (
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Mayelana nalesi sikhungo</h2>
       <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px;" set:html={zuLinks(editorial.context)} />

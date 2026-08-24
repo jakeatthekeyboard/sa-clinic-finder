@@ -11,7 +11,7 @@
  *
  * Presentation stays per-locale (prose must be translatable); DATA and LOGIC live here.
  */
-import { facilities, PROVINCES, SERVICE_MAP, provinceSlug, typeLabel } from '../helpers';
+import { allFacilityRecords, PROVINCES, SERVICE_MAP, provinceSlug, typeLabel } from '../helpers';
 import { withheldKeys } from '../facility-quality.mjs';
 
 export function provincePaths() {
@@ -29,7 +29,12 @@ export function servicePaths() {
 }
 
 export function facilityPaths() {
-  const validFacilities = facilities.filter((f) => PROVINCES.includes(f.province as any));
+  // #1381 — `allFacilityRecords`, not `facilities`. `facilities` is now the SOUTH
+  // AFRICAN directory and excludes the three Maseru records adjudicated in
+  // `outside-sa.ts`; those records keep their live, indexed URLs, because the page
+  // is where the correction is delivered. Routing off the narrowed corpus would
+  // replace three pages that say "this is in Lesotho" with three 404s.
+  const validFacilities = allFacilityRecords.filter((f) => PROVINCES.includes(f.province as any));
 
   // #929 — pages whose OSM `name` is a category string ("health care", "Clinic") or
   // that duplicate a facility already on the site are withheld from the sitemap by

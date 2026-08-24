@@ -1,5 +1,6 @@
 import facilitiesRaw from './facilities.json';
 import { careRole } from './care-role';
+import { outsideSouthAfrica } from './outside-sa';
 
 export interface Facility {
   facility_id: string;
@@ -37,7 +38,31 @@ export interface Facility {
   url_path: string;
 }
 
-export const facilities: Facility[] = facilitiesRaw as Facility[];
+/**
+ * EVERY record in the corpus, including the ones adjudicated as not being in South
+ * Africa. Two callers only, and both of them are about which PAGES exist rather than
+ * about what the directory contains: `src/data/pages/paths.ts`, so an adjudicated
+ * record keeps its live URL, and `src/i18n/translated.ts`, so that URL keeps its
+ * hreflang alternates in all three locales. Everything else wants `facilities`.
+ */
+export const allFacilityRecords: Facility[] = facilitiesRaw as Facility[];
+
+/**
+ * The South African directory: every count, listing, search index and nearby
+ * suggestion on the site.
+ *
+ * #1381 — this excludes the `outside-sa.ts` adjudications, three clinics in Maseru
+ * that a bounding-box map extract delivered labelled "Free State". The filter is
+ * applied HERE, at the one export ~35 page files already import, rather than at each
+ * of those call sites: the three locales must agree on every published count or
+ * tools/numeric-parity-check.py fails, and a per-page filter is a per-page chance to
+ * forget one. A facility on the wrong side of an international border is not a
+ * variant of "not walk-in care", so it is a separate predicate from `careRole` — but
+ * both narrow the same corpus, and `serviceCorpus` below applies them in series.
+ */
+export const facilities: Facility[] = allFacilityRecords.filter(
+  f => outsideSouthAfrica(f.slug) === null
+);
 
 /**
  * Does this facility provide `serviceKey` to a member of the public?
@@ -74,12 +99,20 @@ export const facilities: Facility[] = facilitiesRaw as Facility[];
  * a page saying plainly what they are and where to go instead.
  */
 export function providesService(f: Facility, serviceKey: string): boolean {
-  return Boolean(f.services[serviceKey]) && careRole(f.slug) === null;
+  // #1381 — the same reasoning reaches one step further. A clinic in Maseru is not a
+  // place a reader of a South African directory can be sent for a service either, so
+  // the outside-SA adjudications drop out of every service listing exactly as the
+  // care-role ones do. They are already absent from `facilities`; this predicate is
+  // also called on a single record, where that filter cannot help.
+  return Boolean(f.services[serviceKey])
+    && careRole(f.slug) === null
+    && outsideSouthAfrica(f.slug) === null;
 }
 
 /**
  * The facilities that can appear in a service listing or count — everything except
- * the `care-role.ts` adjudications. Use this, not `facilities`, wherever a service is
+ * the `care-role.ts` adjudications, and (via `facilities` itself, since #1381) except
+ * the `outside-sa.ts` ones. Use this, not `facilities`, wherever a service is
  * being counted or listed, in EVERY locale: the three languages must agree or
  * tools/numeric-parity-check.py fails, and it should fail, because a count that
  * differs by language is a count one of them has got wrong.

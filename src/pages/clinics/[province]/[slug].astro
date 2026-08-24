@@ -5,6 +5,8 @@ import { facilityPaths } from '../../../data/pages/paths';
 import { generateFacilityEditorial } from '../../../data/facility-editorial';
 import { getFacilityTypeEditorial, REFERRAL_HIERARCHY } from '../../../data/facility-types-editorial';
 import { careRole } from '../../../data/care-role';
+import { outsideSouthAfrica } from '../../../data/outside-sa';
+import { OUTSIDE_SA_CHROME_EN } from '../../../data/i18n/outside-sa.xh-zu';
 import { emergencyIsInferred } from '../../../data/emergency-basis';
 
 export function getStaticPaths() {
@@ -36,7 +38,15 @@ const isPrivate = facility.operator_type === 'private';
 // works; on those three pages that is not context, it is a false description of
 // the place. Same gate shape as isPrivate, adjudicated one record at a time.
 const notCare = careRole(facility.slug);
-const typeEditorial = isPrivate || notCare ? null : getFacilityTypeEditorial(facility.type);
+// #1381 — three published records are health facilities in Maseru, LESOTHO, carried
+// under `province: "Free State"` because the HOTOSM extract they came from is clipped
+// to a bounding box that contains the whole enclave. They are gone from the South
+// African directory (see `facilities` in helpers.ts) but their pages stay live, and
+// this is where the correction is delivered. Unlike `notCare` they ARE care — what is
+// false about them is the country, so the suppressions below are the ones that assert
+// something South African, not the ones that assert treatment happens here.
+const notInSA = outsideSouthAfrica(facility.slug);
+const typeEditorial = isPrivate || notCare || notInSA ? null : getFacilityTypeEditorial(facility.type);
 const activeServices = Object.entries(facility.services)
   .filter(([, v]) => v)
   .map(([k]) => ({ key: k, ...SERVICE_MAP[k] }))
@@ -49,6 +59,7 @@ const emergencyInferred = facility.services.emergency_24h && emergencyIsInferred
 
 // First sentence of the adjudicated description, for the meta description.
 const notCareSummary = notCare ? (notCare.what.match(/^[^.]*\./)?.[0] ?? '') : '';
+const notInSASummary = notInSA ? (notInSA.what.match(/^[^.]*\./)?.[0] ?? '') : '';
 
 const directionsUrl = mapsUrl(facility.coordinates.lat, facility.coordinates.lng, facility.name);
 const shareUrl = whatsappShareUrl(facility);
@@ -130,14 +141,20 @@ const jsonLd = {
   // to read as absent, not as an empty list of services.
   description: notCare
     ? notCareSummary
+    : notInSA
+    ? notInSASummary
     : `${typeLabel(facility.type)} in ${facility.province}, South Africa.`
       + (activeServices.length ? ` Services: ${activeServices.map(s => s.plain).join(', ')}.` : ''),
   address: {
     '@type': 'PostalAddress',
     streetAddress: facility.address.street || undefined,
     addressLocality: facility.address.city || facility.district || facility.province,
-    addressRegion: facility.province,
-    addressCountry: 'ZA',
+    // #1381 — `addressRegion` and `addressCountry` were hardcoded South African. On the
+    // three Maseru records that published a Lesotho clinic to search engines as being
+    // in the Free State, South Africa, in machine-readable form. The region is dropped
+    // rather than guessed: we know which COUNTRY the record is in and no more.
+    ...(notInSA ? {} : { addressRegion: facility.province }),
+    addressCountry: notInSA ? notInSA.countryCode : 'ZA',
     postalCode: facility.address.postal_code || undefined,
   },
   geo: {
@@ -154,16 +171,23 @@ const jsonLd = {
     : facility.operating_hours.is_24_hour
       ? { openingHours: 'Mo-Su 00:00-23:59' }
       : {}),
-  ...(notCare ? {} : { isAccessibleForFree: !isPrivate }),
+  // #1381 — `isAccessibleForFree` answers "is this free at the point of care in the
+  // South African public system". For a facility in another country it is not ours to
+  // answer, so it is dropped rather than claimed.
+  ...(notCare || notInSA ? {} : { isAccessibleForFree: !isPrivate }),
   ...(activeServices.length ? { medicalSpecialty: activeServices.map(s => s.label) } : {}),
 };
 ---
 <Base
   title={notCare
     ? `${facility.name} — ${facility.province}${titleSuffix}`
-    : `${facility.name} — ${typeLabel(facility.type)} in ${facility.province}${titleSuffix}`}
+    : notInSA
+      ? `${facility.name} — ${notInSA.country}${titleSuffix}`
+      : `${facility.name} — ${typeLabel(facility.type)} in ${facility.province}${titleSuffix}`}
   description={notCare
     ? `${facility.name} is not a clinic and nobody is treated here. ${notCareSummary} Get directions and contact details.`
+    : notInSA
+    ? `${facility.name} is in ${notInSA.country}, not South Africa. ${notInSASummary} Get directions and contact details.`
     : activeServices.length
       ? `${facility.name} is a ${typeLabel(facility.type).toLowerCase()} in ${facility.province}. Services: ${activeServices.slice(0, 5).map(s => s.plain).join(', ')}. Get directions and contact details.`
       : `${facility.name} is a ${typeLabel(facility.type).toLowerCase()} in ${facility.province}. We hold no service details for it. Get directions and contact details.`}
@@ -205,9 +229,14 @@ const jsonLd = {
            rather than inside it. */}
     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap;">
       <h1 style="font-size: 1.4rem;">{facility.name}</h1>
-      {!notCare && <span class="chip chip--type">{typeLabel(facility.type)}</span>}
+      {!notCare && !notInSA && <span class="chip chip--type">{typeLabel(facility.type)}</span>}
       {notCare && <span class="chip" style="background: #fdecea; color: #a4262c; font-weight: 600;">Not a clinic</span>}
-      {!notCare && facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">24 hours</span>}
+      {/* #1381 — same reasoning as #1368b applied to the country. A type chip reading
+          "Clinic" above a notice saying the clinic is in Lesotho is the top of the page
+          contradicting the correction, and a "24 hours" chip is an availability claim
+          about a facility a reader cannot reach without a passport. */}
+      {!notCare && notInSA && <span class="chip" style="background: #fdecea; color: #a4262c; font-weight: 600;">{OUTSIDE_SA_CHROME_EN.chip}</span>}
+      {!notCare && !notInSA && facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">24 hours</span>}
     </div>
 
     <p style="color: var(--text-muted); margin-bottom: 24px;">
@@ -221,6 +250,18 @@ const jsonLd = {
           <p style="font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px;">{notCare.what}</p>
           <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
             For medical care, see the <a href={`/clinics/${provinceSlug(facility.province)}`}>public clinics and hospitals in {facility.province}</a>.
+          </p>
+        </div>
+      </section>
+    )}
+
+    {notInSA && (
+      <section style="margin-bottom: 32px;">
+        <div style="background: #fdecea; border-left: 4px solid #a4262c; border-radius: var(--radius); padding: 14px 16px;">
+          <h2 style="font-size: 1rem; margin-bottom: 8px; color: #a4262c;">{OUTSIDE_SA_CHROME_EN.heading(notInSA.country)}</h2>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px;">{notInSA.what}</p>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
+            {OUTSIDE_SA_CHROME_EN.seeBefore}<a href={`/clinics/${provinceSlug(facility.province)}`}>{OUTSIDE_SA_CHROME_EN.linkText(facility.province)}</a>.
           </p>
         </div>
       </section>
@@ -242,7 +283,7 @@ const jsonLd = {
     </div>
 
 
-    {!notCare && (
+    {!notCare && !notInSA && (
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 12px;">Services available</h2>
       <div style="display: flex; flex-wrap: wrap; gap: 6px;">
@@ -265,7 +306,11 @@ const jsonLd = {
     </section>
     )}
 
-    {!notCare && (
+    {/* #1381 — the generated editorial is written for a South African public
+        facility: it talks about arriving early, bringing an ID book and clinic card,
+        and care being free at the point of use. None of that describes a clinic in
+        Maseru, so it is suppressed rather than restated wrongly. */}
+    {!notCare && !notInSA && (
     <section style="margin-bottom: 32px;">
       <h2 style="font-size: 1.1rem; margin-bottom: 12px;">About this facility</h2>
       <p style="font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px;" set:html={editorial.context} />

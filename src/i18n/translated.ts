@@ -1,5 +1,5 @@
 import type { Locale } from './config';
-import { provinceSlug, SERVICE_MAP, facilities } from '../data/helpers';
+import { provinceSlug, SERVICE_MAP, allFacilityRecords } from '../data/helpers';
 
 /**
  * Which pages exist in each locale.
@@ -186,7 +186,10 @@ export const COVERAGE: Record<Exclude<Locale, 'en'>, LocaleCoverage> = {
 };
 
 const FACILITY_PATHS = new Set(
-  facilities.map((f: any) => `/clinics/${provinceSlug(f.province)}/${f.slug}`)
+  // #1381 — every BUILT facility page, so the three outside-SA records keep their
+  // hreflang alternates and their language switcher. This set is about which pages
+  // exist, which is `allFacilityRecords`, not about what the directory contains.
+  allFacilityRecords.map((f: any) => `/clinics/${provinceSlug(f.province)}/${f.slug}`)
 );
 
 const SERVICE_PATH_TO_KEY = new Map<string, string>(
