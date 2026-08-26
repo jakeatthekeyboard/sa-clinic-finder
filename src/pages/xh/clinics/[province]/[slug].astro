@@ -28,6 +28,8 @@ import { localiseHtmlFor, localeHrefFor } from '../../../../i18n/links';
 import { careRole } from '../../../../data/care-role';
 import { outsideSouthAfrica } from '../../../../data/outside-sa';
 import { OUTSIDE_SA_CHROME_XH, outsideSaWhatXh } from '../../../../data/i18n/outside-sa.xh-zu';
+import { nameIsPlaceholder } from '../../../../data/unnamed';
+import { UNNAMED_CHROME_XH } from '../../../../data/i18n/unnamed.xh-zu';
 import {
   CARE_ROLE_CHROME_XH,
   careRoleWhatXh,
@@ -103,6 +105,10 @@ const notCareSummary = firstSentence(notCareWhat);
 // withholding a CORRECTION while publishing the false claim it corrects leaves this
 // reader worse off than the English one, not safer. Wording: outside-sa.xh-zu.ts.
 const notInSA = outsideSouthAfrica(facility.slug);
+// 2026-08-26 — see src/data/unnamed.ts. Same predicate, same position and same styling
+// as the English route, so the three locales cannot say different things about the
+// same record.
+const unnamed = !notCare && !notInSA && nameIsPlaceholder(facility.name);
 const notInSAWhat = notInSA ? outsideSaWhatXh(facility.slug) : null;
 const notInSASummary = firstSentence(notInSAWhat);
 const typeEditorial = isPrivate || notCare || notInSA ? null : getFacilityTypeEditorialXh(facility.type);
@@ -287,6 +293,7 @@ const jsonLd = {
           is the top of the page contradicting the correction below it. */}
       {!notCare && notInSA && <span class="chip" style="background: #fdecea; color: #a4262c; font-weight: 600;">{OUTSIDE_SA_CHROME_XH.chip}</span>}
       {!notCare && !notInSA && facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">iiyure ezingama-24</span>}
+      {unnamed && <span class="chip" style="background: #fff8e6; color: #856404; font-weight: 600;">{UNNAMED_CHROME_XH.chip}</span>}
     </div>
 
     <p style="color: var(--text-muted); margin-bottom: 24px;">
@@ -303,6 +310,18 @@ const jsonLd = {
           <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
             {CARE_ROLE_CHROME_XH.seeBefore}
             <a href={L(`/clinics/${facility.province.toLowerCase().replace(/\s+/g, '-')}`)}>{CARE_ROLE_CHROME_XH.linkText(facility.province)}</a>.
+          </p>
+        </div>
+      </section>
+    )}
+
+    {unnamed && (
+      <section style="margin-bottom: 32px;">
+        <div style="background: #fff8e6; border-left: 4px solid #b8860b; border-radius: var(--radius); padding: 14px 16px;">
+          <h2 style="font-size: 1rem; margin-bottom: 8px;">{UNNAMED_CHROME_XH.heading}</h2>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px;">{UNNAMED_CHROME_XH.body}</p>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
+            {UNNAMED_CHROME_XH.seeBefore}<a href={L(`/clinics/${facility.province.toLowerCase().replace(/\s+/g, '-')}`)}>{UNNAMED_CHROME_XH.linkText(facility.province)}</a>.
           </p>
         </div>
       </section>

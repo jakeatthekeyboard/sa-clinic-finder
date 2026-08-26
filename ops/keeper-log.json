@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-08-24T21:00:00+02:00",
+  "lastRun": "2026-08-26T21:00:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -424,6 +424,30 @@
       "task": "editorial",
       "result": "skip",
       "details": "No content work. Waterfall still exhausted: 9/9 provinces have editorial intros, all 6 planned guide topics covered by the 13 live guides, services is one dynamic [service].astro template already deep. The run's value was the data correction above."
+    },
+    {
+      "timestamp": "2026-08-26T21:02:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index.xml, robots.txt 200. Live sitemap 1,276 URLs, up from 1,028 on 2026-08-24 — commit e9bad09's 256 previously-undeclared ranking pages are now in the submitted sitemap and deployed. 5 random facility pages across en/xh/zu (mpumalanga/ha-grove-hospital-belfast-mpumalanga, gauteng/melvile-clinic-gauteng, xh/eastern-cape/cambridge-clinic-sprigg-street-clinic-eastern-cape, gauteng/doctortravel-clinic-gauteng, zu/gauteng/health-worx-medical-centre-centurion-mall-centurion) 200, 2 province pages (clinics/gauteng, clinics/limpopo) 200, guides hub + /guides/find-nearest-clinic + /search + /services 200. NOTE: /province/<name> is a 404 — the route is /clinics/<name>; earlier keeper-log entries spot-checked the wrong path."
+    },
+    {
+      "timestamp": "2026-08-26T21:08:00+02:00",
+      "task": "data-correction",
+      "result": "pass",
+      "details": "28 published records hold a GENERIC WORD in `name` where the facility name should be — 'health care' x17, 'Clinic' x4, 'Surgery' x2, one each of 'healthcare', 'clinic', 'CLINIC', 'Medical Centre', 'sick bay' — and 23 of the 28 carry no address, telephone, email, website, operator or opening hours either. The pages nonetheless spoke about that word as a name and did so confidently: /clinics/mpumalanga/health-care-limpopo-4 rendered <h1>health care</h1> plus editorial reading 'health care is a walk-in primary healthcare facility ... a well-equipped facility for comprehensive primary care'. Fixed as a RENDERING change, not a data change — there is no name to correct the field to, which is the finding itself. New src/data/unnamed.ts (exact-match predicate over `name`, never substring) + src/data/i18n/unnamed.xh-zu.ts (en/xh/zu chrome) + a 'Name not recorded' chip and a notice above the directions button on all three facility templates. facilities.json untouched; the records stay in `facilities` and in every count and listing, because unlike the outside-sa nine they ARE real South African facilities. Verified on built output: 84 pages carry the notice (28 en + 28 xh + 28 zu); melvile-clinic-gauteng and mseleni-hospital-kwazulu-natal do not, which is the false-positive direction tests/unnamed.test.ts guards. Build 3,360 pages, vitest 564/564, numeric-parity 2,240 translated pages OK."
+    },
+    {
+      "timestamp": "2026-08-26T21:09:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "Gate closed. data/capture/regulatory-scan/latest.json scan_date 2026-08-21T22:05+02:00 (5 days old, next_scan_due 2026-08-28) — inside the 7-day window. Portfolio-wide, once per week; another keeper ran it first this week."
+    },
+    {
+      "timestamp": "2026-08-26T21:09:00+02:00",
+      "task": "editorial",
+      "result": "skip",
+      "details": "No content work. Waterfall still exhausted: 9/9 provinces have editorial intros, all 6 planned guide topics covered by the 13 live guides, services is one dynamic [service].astro template already deep. ops/validate-province-by-coords.py: 0 province/coordinate mismatches across 1,076 facilities, 0 unadjudicated out-of-district records. The run's value was the unnamed-record correction above."
     }
   ]
 }

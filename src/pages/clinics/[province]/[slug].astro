@@ -6,6 +6,8 @@ import { generateFacilityEditorial } from '../../../data/facility-editorial';
 import { getFacilityTypeEditorial, REFERRAL_HIERARCHY } from '../../../data/facility-types-editorial';
 import { careRole } from '../../../data/care-role';
 import { outsideSouthAfrica } from '../../../data/outside-sa';
+import { nameIsPlaceholder } from '../../../data/unnamed';
+import { UNNAMED_CHROME_EN } from '../../../data/i18n/unnamed.xh-zu';
 import { OUTSIDE_SA_CHROME_EN } from '../../../data/i18n/outside-sa.xh-zu';
 import { emergencyIsInferred } from '../../../data/emergency-basis';
 
@@ -46,6 +48,17 @@ const notCare = careRole(facility.slug);
 // false about them is the country, so the suppressions below are the ones that assert
 // something South African, not the ones that assert treatment happens here.
 const notInSA = outsideSouthAfrica(facility.slug);
+// 2026-08-26 — 28 published records hold a GENERIC WORD in `name` where the facility's
+// name should be ("health care" x17, "Clinic" x4, "Surgery" x2, …), and 23 of those
+// carry no address, telephone or hours either. The page then speaks about that word as
+// though it were a name: <h1>health care</h1>, and editorial reading "health care is a
+// walk-in primary healthcare facility … a well-equipped facility for comprehensive
+// primary care". See src/data/unnamed.ts for why this is a rendering fix rather than a
+// data fix — there is no name to correct the field TO, which is the finding itself.
+// Deliberately NOT gated with notCare/notInSA: those two say the page is about
+// something other than treatment here, this one says the page is about a real facility
+// we cannot identify, so the services, the type and the editorial all still stand.
+const unnamed = !notCare && !notInSA && nameIsPlaceholder(facility.name);
 const typeEditorial = isPrivate || notCare || notInSA ? null : getFacilityTypeEditorial(facility.type);
 const activeServices = Object.entries(facility.services)
   .filter(([, v]) => v)
@@ -237,6 +250,7 @@ const jsonLd = {
           about a facility a reader cannot reach without a passport. */}
       {!notCare && notInSA && <span class="chip" style="background: #fdecea; color: #a4262c; font-weight: 600;">{OUTSIDE_SA_CHROME_EN.chip}</span>}
       {!notCare && !notInSA && facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">24 hours</span>}
+      {unnamed && <span class="chip" style="background: #fff8e6; color: #856404; font-weight: 600;">{UNNAMED_CHROME_EN.chip}</span>}
     </div>
 
     <p style="color: var(--text-muted); margin-bottom: 24px;">
@@ -250,6 +264,18 @@ const jsonLd = {
           <p style="font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px;">{notCare.what}</p>
           <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
             For medical care, see the <a href={`/clinics/${provinceSlug(facility.province)}`}>public clinics and hospitals in {facility.province}</a>.
+          </p>
+        </div>
+      </section>
+    )}
+
+    {unnamed && (
+      <section style="margin-bottom: 32px;">
+        <div style="background: #fff8e6; border-left: 4px solid #b8860b; border-radius: var(--radius); padding: 14px 16px;">
+          <h2 style="font-size: 1rem; margin-bottom: 8px;">{UNNAMED_CHROME_EN.heading}</h2>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px;">{UNNAMED_CHROME_EN.body}</p>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
+            {UNNAMED_CHROME_EN.seeBefore}<a href={`/clinics/${provinceSlug(facility.province)}`}>{UNNAMED_CHROME_EN.linkText(facility.province)}</a>.
           </p>
         </div>
       </section>
