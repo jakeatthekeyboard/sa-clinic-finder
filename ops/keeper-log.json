@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-08-26T21:00:00+02:00",
+  "lastRun": "2026-08-28T21:07:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -448,6 +448,30 @@
       "task": "editorial",
       "result": "skip",
       "details": "No content work. Waterfall still exhausted: 9/9 provinces have editorial intros, all 6 planned guide topics covered by the 13 live guides, services is one dynamic [service].astro template already deep. ops/validate-province-by-coords.py: 0 province/coordinate mismatches across 1,076 facilities, 0 unadjudicated out-of-district records. The run's value was the unnamed-record correction above."
+    },
+    {
+      "timestamp": "2026-08-28T21:01:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 9 checks pass. Homepage, sitemap-index.xml, robots.txt 200. Live sitemap 1,418 URLs, up from 1,276 on 2026-08-26 — commit 41dca7b's 145 previously-undeclared ranking pages are now in the submitted sitemap and deployed. 3 random facility pages (free-state/parys-district-hospital-parys, zu/western-cape/mcgregor-clinic-mcgregor, western-cape/optima-rustenvrede-western-cape) 200, province page /clinics/western-cape 200, guide /zu/guides/mental-health-services 200, service /services/tb 200."
+    },
+    {
+      "timestamp": "2026-08-28T21:07:00+02:00",
+      "task": "data-correction",
+      "result": "pass",
+      "details": "50 of the 582 facility records that carry a telephone number rendered a `tel:` link that cannot dial, because the sourced string went into the URI verbatim. 46 hold two or more numbers separated by `;` — the OSM multi-value separator and the RFC 3966 parameter separator — so the live page for citrusdal-hospital-citrusdal offered href=\"tel:+27 22 921 2153; +27 22 921 2154; +27 22 921 2155\" for a hospital with three switchboard lines. 4 hold an OSM `x` extension (gansbaai-clinic x3535, montagu-hospital x8100, prince-albert-hospital x1301, clanwilliam-hospital x07). The same string was emitted as schema.org `telephone` on all three language routes. New src/data/phone.ts segments the sourced string at its own `;`, builds each href from that segment's digits, and returns an ARRAY for schema.org when there is more than one number. Nothing in facilities.json is edited and the display text is unchanged character for character, extension included. tests/phone.test.ts (8 cases) + provenance note. 631 unit tests pass; build 3,360 pages."
+    },
+    {
+      "timestamp": "2026-08-28T21:07:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "Gate closed by 58 minutes. data/capture/regulatory-scan/latest.json scan_date 2026-08-21T22:05+02:00 is 6d23h old at 21:03 SAST, inside the 7-day window, though next_scan_due is today. The window opens at 22:05 tonight; the first portfolio keeper to run after that does the scan."
+    },
+    {
+      "timestamp": "2026-08-28T21:07:00+02:00",
+      "task": "editorial",
+      "result": "skip",
+      "details": "No content work. Waterfall still exhausted: 9/9 provinces have editorial intros, all 6 planned guide topics covered by the 13 live guides, services is one dynamic [service].astro template already deep. The run's value was the undialable-number correction above."
     }
   ]
 }
