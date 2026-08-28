@@ -1,0 +1,169 @@
+{
+  "captured_at": "2026-08-28T07:25:41.948365+00:00",
+  "records_checked": 1076,
+  "osm_objects_checked": 1073,
+  "osm_objects_returned": 1072,
+  "unparseable_facility_ids": [],
+  "move_threshold_metres": 500.0,
+  "counts": {
+    "MISSING": 2,
+    "MOVED": 0,
+    "NAME_CHANGED": 9,
+    "ENRICHABLE": 14
+  },
+  "findings": {
+    "MISSING": [
+      {
+        "slug": "covid-testing-drive-through-johannesburg",
+        "name": "COVID Testing - Drive-Through",
+        "osm": "node:8599351361",
+        "reason": "object no longer returned by Overpass"
+      },
+      {
+        "slug": "cambridge-clinic-sprigg-street-clinic-eastern-cape",
+        "name": "Cambridge Clinic (Sprigg Street Clinic)",
+        "osm": "way:1103021023",
+        "reason": "no longer tagged healthcare (amenity='social_facility')"
+      }
+    ],
+    "MOVED": [],
+    "NAME_CHANGED": [
+      {
+        "slug": "ha-grove-hospital-mpumalanga",
+        "ours": "Ha Grove Hospital",
+        "osm_name": "H.A. Grove Hospital"
+      },
+      {
+        "slug": "general-justice-gizenga-mpanza-regional-hospital-formerly-stanger-hospital-durba",
+        "ours": "General Justice Gizenga Mpanza Regional Hospital (formerly Stanger Hospital)",
+        "osm_name": "General Justice Gizenga Mpanza Regional Hospital"
+      },
+      {
+        "slug": "ladysmith-hospital-ladysmith",
+        "ours": "Ladysmith Hospital",
+        "osm_name": "uMnambithi Provincial Hospital"
+      },
+      {
+        "slug": "elliot-hospital-elliot",
+        "ours": "Elliot Hospital",
+        "osm_name": "Elliot Provincial Hospital"
+      },
+      {
+        "slug": "fort-beaufort-provincial-fort-beaufort-eastern-cape",
+        "ours": "Fort Beaufort Provincial Hospital",
+        "osm_name": "KwaMaqoma Provincial Hospital"
+      },
+      {
+        "slug": "temba-santa-hospital-grahamstown",
+        "ours": "Temba SANTA Hospital",
+        "osm_name": "Temba TB Hospital"
+      },
+      {
+        "slug": "santa-hospital-eastern-cape",
+        "ours": "Winterberg TB Hospital (formerly SANTA Hospital)",
+        "osm_name": "Winterberg TB Hospital"
+      },
+      {
+        "slug": "palm-ridge-clinic-gauteng",
+        "ours": "Palm Ridge Clinic",
+        "osm_name": "Palm Ridge Community Hall"
+      },
+      {
+        "slug": "queenstown-aids-training-information-and-counselling-centre-eastern-cape",
+        "ours": "Queenstown Aids Training, Information and Counselling Centre",
+        "osm_name": "ATICC"
+      }
+    ],
+    "ENRICHABLE": [
+      {
+        "slug": "wellvale-recovery-centre-kwazulu-natal",
+        "gains": [
+          "phone"
+        ]
+      },
+      {
+        "slug": "siga-home-based-care-north-west",
+        "gains": [
+          "opening_hours"
+        ]
+      },
+      {
+        "slug": "mafumahali-hospital-maseru",
+        "gains": [
+          "phone"
+        ]
+      },
+      {
+        "slug": "pretoria-north-eye-institute-pretoria",
+        "gains": [
+          "phone",
+          "opening_hours"
+        ]
+      },
+      {
+        "slug": "siga-clinic-north-west",
+        "gains": [
+          "opening_hours"
+        ]
+      },
+      {
+        "slug": "domiciliary-clinic-free-state",
+        "gains": [
+          "operator"
+        ]
+      },
+      {
+        "slug": "the-local-choice-pharmacy-bronberrik-centurion",
+        "gains": [
+          "phone"
+        ]
+      },
+      {
+        "slug": "ampath-krugersdorp-bell-street-krugersdorp",
+        "gains": [
+          "phone",
+          "opening_hours"
+        ]
+      },
+      {
+        "slug": "nelimahle-phamarcy-soshanguve",
+        "gains": [
+          "phone",
+          "opening_hours"
+        ]
+      },
+      {
+        "slug": "ha-grove-hospital-mpumalanga",
+        "gains": [
+          "phone",
+          "operator"
+        ]
+      },
+      {
+        "slug": "elliot-provincial-hospital-eastern-cape",
+        "gains": [
+          "phone",
+          "operator"
+        ]
+      },
+      {
+        "slug": "orania-kliniek-orania",
+        "gains": [
+          "opening_hours"
+        ]
+      },
+      {
+        "slug": "santa-hospital-eastern-cape",
+        "gains": [
+          "operator"
+        ]
+      },
+      {
+        "slug": "queenstown-aids-training-information-and-counselling-centre-eastern-cape",
+        "gains": [
+          "operator"
+        ]
+      }
+    ]
+  }
+}

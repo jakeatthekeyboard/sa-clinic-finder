@@ -162,6 +162,30 @@ export const CARE_ROLE_WHAT_XH: Record<string, string> = {
     'ayinikezi khathalelo lwempilo lokuqala. Ukuze ufumane unyango lukarhulumente eGeorge, yiya kwiGeorge ' +
     'Provincial Hospital eHeatherlands okanye kwiGeneva Clinic.',
 
+  // #1415 / #1416 — adjudicated 2026-08-28. A private house, a scout hall and a
+  // coronavirus testing site that has been removed.
+  'ali-is-siek-gauteng':
+    'Le yindlu yabucala kwisitalato sezindlu emantla ePretoria. Ayisiyo isibhedlele, akukho mntu unyangwa ' +
+    'apha, kwaye akukho candelo longxamiseko. Umntu owayifaka kwi-OpenStreetMap, umthombo wethu, uyakuxela ' +
+    'oku ngokwakhe kwinkcazelo yotshintsho lwakhe: yayilutshintsho lwakhe lokuqala, elwenza ngoxa ' +
+    'wayeqhuba isifundo sokuqala somhleli wemephu, kwaye wanika olo phawu lwesibhedlele nakwibraai ' +
+    'ekwelo gceke linye. Ukuze ufumane unyango lwesibhedlele sikarhulumente kule ndawo yaseTshwane, yiya ' +
+    'kwiTshwane District Hospital okanye kwiSteve Biko Academic Hospital, zombini ezisePretoria.',
+
+  'fairlands-scout-hall-gauteng':
+    'Le yiholo yeeSkauti eBerario, eRhawutini, ayiyiyo ikliniki. Kwi-OpenStreetMap, umthombo wethu, le ' +
+    'ndawo ibinegama leholo yeeSkauti iminyaka emininzi phambi kokuba kufakwe kuyo amaphawu ekliniki, ' +
+    'kwaye eli holo libhalwe kwakhona ngokwahlukileyo njengesakhiwo esibizwa ngokuba yiScout Hall. ' +
+    'Ikliniki karhulumente ekule sitalato yiBerario Clinic, eqhutywa liSebe lezeMpilo laseRhawutini, ' +
+    'emi kufuphi nje kwaye inalo elayo iphepha kule webhusayithi.',
+
+  'covid-testing-drive-through-johannesburg':
+    'Le yayiyindawo yokuhlolwa kwentsholongwane yekhorona ngemoto kuWinnie Mandela Drive eRhawutini, ' +
+    'eyayisekwe ngexesha lobhubhane. Ayisekho: akukho kuhlolwa nanyango olwenzeka apha, kwaye akukho ' +
+    'nto kule ndawo onokuza kuyo. Ukuze ufumane khathalelo lwempilo lukarhulumente kule ndawo ' +
+    'yaseRhawutini, yiya kwiGreenside Clinic eGreenside; nayiphi na ikliniki karhulumente iyakuhlola ' +
+    'i-HIV nesifo sephepha ngaphandle kwe-appointment.',
+
   'the-local-choice-pharmacy-plett-medicine-depot':
     'ILocal Choice Pharmacy Plett Medicine Depot yikhemisti ethengisayo ePlettenberg Bay, elinye lamasebe ' +
     'omzi weekhemisti osebenza kulo lonke elaseMzantsi Afrika. Ungathenga khona amayeza nezinto zempilo ' +
@@ -229,6 +253,31 @@ export const CARE_ROLE_WHAT_ZU: Record<string, string> = {
     'kahulumeni, akekho umuntu owelashwa lapha, futhi akukho ukunakekelwa kwezempilo kwamahhala ' +
     'kukahulumeni okunikezwayo. Umtholampilo kahulumeni osiza iPlettenberg Bay yiKwanokuthula Community ' +
     'Day Centre, eKwanokuthula.',
+
+  // #1415 / #1416 — adjudicated 2026-08-28. A private house, a scout hall and a
+  // coronavirus testing site that has been removed.
+  'ali-is-siek-gauteng':
+    'Lena yindlu yomuntu emgwaqweni wezindlu enyakatho yePretoria. Akulona isibhedlela, akekho umuntu ' +
+    'owelashwa lapha, futhi asikho isigaba sezimo eziphuthumayo. Umuntu owayifaka ku-OpenStreetMap, ' +
+    'umthombo wethu, ukusho lokhu ngokwakhe encazelweni yoshintsho lwakhe: kwakuwushintsho lwakhe ' +
+    'lokuqala, alwenza ngesikhathi eqhuba isifundo sokuqala somhleli wemephu, futhi wanikeza lolo phawu ' +
+    'lwesibhedlela nakubraai osegcekeni elilodwa. Ukuze uthole ukwelashwa esibhedlela sikahulumeni ' +
+    'kule ngxenye yaseTshwane, yiya eTshwane District Hospital noma eSteve Biko Academic Hospital, ' +
+    'zombili ezisePretoria.',
+
+  'fairlands-scout-hall-gauteng':
+    'Leli yihholo lamaScout eBerario, eGoli, akuwona umtholampilo. Ku-OpenStreetMap, umthombo wethu, ' +
+    'le ndawo ibinegama lehholo lamaScout iminyaka eminingi ngaphambi kokuba kufakwe kuyo izimpawu ' +
+    'zomtholampilo, futhi leli hholo libhaliwe futhi ngokwehlukene njengesakhiwo esibizwa ngokuthi ' +
+    'yiScout Hall. Umtholampilo kahulumeni okulo mgwaqo yiBerario Clinic, ophethwe uMnyango Wezempilo ' +
+    'waseGauteng, omi eduze nje futhi onalo elawo ikhasi kule webhusayithi.',
+
+  'covid-testing-drive-through-johannesburg':
+    'Lena kwakuyindawo yokuhlolwa kwegciwane lekhorona ngemoto kuWinnie Mandela Drive eGoli, ' +
+    'eyayisungulwe ngesikhathi sobhubhane. Ayisekho: akukho ukuhlolwa nokwelashwa okwenzeka lapha, ' +
+    'futhi akukho lutho kule ndawo ongeza kulo. Ukuze uthole ukunakekelwa kwempilo kahulumeni kule ' +
+    'ngxenye yaseGoli, yiya eGreenside Clinic eGreenside; noma yimuphi umtholampilo kahulumeni ' +
+    'uzokuhlola i-HIV nesifo sofuba ngaphandle kwe-appointment.',
 };
 
 /**

@@ -73,6 +73,49 @@
  *     "Clinics - Private" at Mulbarton Shopping Centre, 4 True North Road, with our
  *     record's exact telephone +27 11 432 2410. We publish it as `public`.
  *
+ * THE #1415 SIX, AND WHY ITS PROPOSED GATE CANNOT WORK (#1414/#1415/#1416, 2026-08-28)
+ * ------------------------------------------------------------------------------------
+ * #1415 named six records and asked for a gate on a signal "about the SUBJECT rather
+ * than the string" — specifically: require an OSM amenity/healthcare tag consistent
+ * with the assigned type, and hard-withhold on `amenity=veterinary`, on `disused:*` /
+ * `was:*` prefixes, and on shop/leisure tags. That gate was MEASURED against a fresh
+ * full-corpus Overpass tag capture on 2026-08-28
+ * (data/capture/osm-tags/2026-08-28.json, 1,073 objects, 1,072 returned) and it flags
+ * ZERO records — including zero of the six it was proposed for:
+ *
+ *   amenity=veterinary or healthcare=veterinary  0
+ *   disused: / was: / abandoned: prefixed keys   0
+ *   shop or leisure tag with no health tag       0
+ *   no healthcare key and no health amenity      0
+ *
+ * Panorama Animal Clinic is `amenity=hospital`, not `amenity=veterinary`. Old Welkom
+ * announces its disuse in its NAME, not in a `disused:` prefix. "Ali is siek" is
+ * `amenity=hospital` + `healthcare=hospital`. This re-measures, on today's data, the
+ * claim #1350 made on 2026-08-20, and reaches the same answer: a shopping centre and
+ * a district hospital are indistinguishable at the tag layer, so no build-time gate
+ * reading tags can separate them. The method that DOES work is the one this file
+ * already uses — scan NAMES, then adjudicate each candidate against the OSM object's
+ * own EDIT HISTORY and a sweep of what else is mapped within a couple of hundred
+ * metres — and that is a research procedure, not a gate. Do not re-propose the tag
+ * gate; the measurement is above and it is reproducible from the capture.
+ *
+ * THREE OF THE SIX WERE ALREADY HERE (#1002/#1350): mothibistad-shophhing-centre,
+ * panorama-animal-clinic and old-welkom-provincial. Two of the remaining three are
+ * added below. The sixth is not a care-role case:
+ *
+ *   tswane-ward-40-tswane  KEPT, AND IT IS REAL CARE. OpenStreetMap node 9057511617
+ *     carries operational_status=operational, dispensing=yes, wheelchair=yes,
+ *     electricity=generator, water_source=water_works,
+ *     healthcare:speciality=clinical_pathology;community, emergency=no (which agrees
+ *     with our own services.emergency_24h being false) and a full street address at
+ *     Thaga Street. That is a well-surveyed working public clinic. What is wrong with
+ *     it is its NAME: "Tswane ward 40" is a municipal ward reference, not a facility
+ *     name, and "Tswane" is a misspelling of Tshwane. That is the src/data/unnamed.ts
+ *     problem rather than this one — but unnamed.ts is deliberately an EXACT-MATCH set
+ *     of generic words for a KIND of facility, and a ward reference is neither generic
+ *     nor a kind, so it does not belong in that set either. Filed separately; nothing
+ *     here unpublishes a real clinic over a bad name.
+ *
  * STILL UNRESOLVED — do NOT add these without a second source, and do NOT unpublish
  * them either. "No source found" is not evidence that a place is not a clinic, and
  * removing a clinic that exists is the one error this humanitarian site cannot
@@ -223,6 +266,62 @@ export const NOT_WALK_IN_CARE: Record<string, CareRoleEntry> = {
       'Service is NOT part of SANBS. SANBS serves eight of the nine provinces and the Western Cape is served ' +
       'independently by WCBS; the 2025 joint donor-recruitment campaign between them is not a merger, and no merger ' +
       'source exists. Do not "correct" this entry to SANBS.',
+  },
+  'ali-is-siek-gauteng': {
+    what:
+      'This is a private house on a residential street north of Pretoria. It is not a hospital, nobody is ' +
+      'treated here and there is no emergency department. The person who put it on OpenStreetMap says so in ' +
+      'their own edit description: it was their first ever edit, made while working through the map ' +
+      'editor\'s tutorial, and they gave the same hospital label to the braai in the same yard. For public ' +
+      'hospital care in this part of Tshwane, go to Tshwane District Hospital or Steve Biko Academic ' +
+      'Hospital, both in Pretoria.',
+    source:
+      'OpenStreetMap node 13672144145, created 2026-03-23 16:20 UTC in changeset 180313578 by a first-time ' +
+      'account (changesets_count=1, ideditor:walkthrough_started=yes) whose own changeset comment reads "i ' +
+      'added my friends house to the map", and moved two hours later in changeset 180320016, comment "i ' +
+      'changed my friends house location". The node has never carried any name but "Ali is siek" (Afrikaans ' +
+      'for "Ali is sick") and has no address, telephone, operator or opening hours. The same account, in the ' +
+      'same changesets, created way 1491884321 "Ali house" (also amenity=hospital, healthcare=hospital) and ' +
+      'way 1491884322 "Ali braai" (amenity=restaurant) in the same yard. An Overpass query for every named ' +
+      'feature within 250 m returns only suburban streets (Gwarriebos, Dadelpalm, Dikbas, Driedoring, ' +
+      'Blinkblaar and Apiesdoring Avenue), a guest house, an estate agency and a one-person physiotherapy ' +
+      'practice — no hospital infrastructure of any kind. NOTE for the next OSM refresh: way 1491884321 is ' +
+      'the same mis-tagging and is NOT in our corpus only because it postdates the 2026-04-14 extract; if it ' +
+      'ever arrives, it belongs here too.',
+  },
+  'fairlands-scout-hall-gauteng': {
+    what:
+      'This is a scout hall in Berario, Johannesburg, not a clinic. Its OpenStreetMap entry carried the ' +
+      'name for years before anyone attached clinic labels to it, and the hall itself is recorded a second ' +
+      'time, as a building simply named Scout Hall. The public clinic in this street is Berario Clinic, run ' +
+      'by the Gauteng Department of Health, which stands a few doors away and has its own page on this site.',
+    source:
+      'OpenStreetMap node 3071850290 was created 2014-09-11 (changeset 25368350, user AmyWootton) carrying ' +
+      'name="Fairland\'s Scout Hall" and NO health tags of any kind; amenity=clinic and healthcare=clinic ' +
+      'were added on top of it more than seven years later, on 2022-01-13 (changeset 116091504, user ' +
+      'Khathucry). The name is therefore older than the clinic tags, which is the inverse of the ' +
+      'afm-steynville case below and is what settles this one. An Overpass query for every named feature ' +
+      'within 250 m returns way 302904029, a building named "Scout Hall", and — 58 m from our node — both ' +
+      'node 3071892811 "Berario Clinic" (amenity=clinic, healthcare=clinic, operator="Gauteng Department of ' +
+      'Health") and its building way 302904055 of the same name. Berario Clinic is already published here as ' +
+      'berario-clinic-randburg-johannesburg.',
+  },
+  'covid-testing-drive-through-johannesburg': {
+    what:
+      'This was a drive-through coronavirus testing site on Winnie Mandela Drive in Johannesburg, set up ' +
+      'during the pandemic. It is gone: no testing and no treatment happens here, and there is nothing at ' +
+      'this spot to travel to. For public health care in this part of Johannesburg, go to Greenside Clinic ' +
+      'in Greenside; any public clinic will test for HIV and TB without an appointment.',
+    source:
+      'OpenStreetMap node 8599351361 was created 2021-04-06 by user Biker69 as "COVID TESTING - ' +
+      'Drive-Through" with opening_hours "Mo-Fr 09:00-16:00" at 49 William Nicol Drive (later renamed Winnie ' +
+      'Mandela Drive), and was DELETED on 2026-08-23 08:52 UTC in changeset 187874964, a single-object ' +
+      'changeset whose comment is "Deleted a clinic", made with the field-survey app Every Door Android 6.0 ' +
+      '— i.e. by a mapper standing at the place, not a bulk edit and not vandalism. The OSM API answers HTTP ' +
+      '410 Gone for the node. An Overpass query for every named feature within 250 m returns a fuel station, ' +
+      'a fast-food outlet, a convenience store and George Lea Park, and no health facility at all. This is ' +
+      'the one genuine deletion in the 2026-08-28 full-corpus drift sweep (1,076 records over 1,073 OSM ' +
+      'objects; 1,072 returned).',
   },
   'the-local-choice-pharmacy-plett-medicine-depot': {
     what:
