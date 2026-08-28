@@ -90,6 +90,33 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 FACILITIES = REPO / "src" / "data" / "facilities.json"
 CAPTURE_DIR = REPO / "data" / "capture" / "osm-drift"
+# #1372 — captures are NAMED and STAMPED in SAST, not UTC.
+#
+# This ran on `datetime.now(timezone.utc)` and named the capture after the UTC date, so
+# the run at 2026-08-21 00:33 SAST was written to `2026-08-20.json` — a capture taken
+# today, filed under yesterday. Global CLAUDE.md is explicit that dates are YYYY-MM-DD
+# SAST everywhere, and the sibling sweep in data/capture/osm-tags/ already stamps
+# +02:00, so the two capture families in the same lane disagreed about what day it was.
+# It is a legibility defect rather than a wrong verdict: `captured_at` was always a
+# correct ISO-8601 instant and the age arithmetic below reads THAT, not the filename.
+# But #1351/#1363 was three measurements of one question that read as a contradiction
+# precisely because nobody could line up which capture was taken when, and a session
+# told "check the 2026-08-21 capture" finds no such file and concludes the run never
+# happened.
+#
+# `latest_capture()` picks `sorted(files)[-1]`, i.e. newest by NAME, so any renaming
+# scheme has to keep lexical order equal to chronological order. Switching to SAST does:
+# SAST is ahead of UTC, so for any instant the SAST name is >= the UTC name for the same
+# instant, and instants only move forward — a SAST-named capture can therefore never
+# sort BEFORE an earlier UTC-named one. `tools/tests/test_osm_drift_dates.py` asserts
+# exactly that, including against the real corpus on disk.
+#
+# The existing UTC-named captures are NOT renamed. 2026-08-20.json really was taken at
+# 2026-08-21 00:33 SAST and is the one misfiled file; 2026-08-19.json and
+# 2026-08-28.json fall on the same date under either rule. Renaming it would rewrite
+# history that #1351/#1363 and this repo's own commit messages cite by name. The
+# mixed corpus is recorded once, in data/capture/osm-drift/README.md, instead.
+SAST = timezone(timedelta(hours=2))
 BASELINE = REPO / "tools" / "osm-drift-baseline.json"
 # Two independent Overpass instances. The free tier hands out a small number of
 # query slots and answers an over-quota request with an HTML error PAGE, not JSON
@@ -348,7 +375,7 @@ def main():
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(SAST)  # #1372 — SAST for both the stamp and the filename.
     cap_path, cap = latest_capture()
 
     if cap and not args.force:

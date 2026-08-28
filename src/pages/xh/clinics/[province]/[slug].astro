@@ -29,7 +29,9 @@ import { careRole } from '../../../../data/care-role';
 import { outsideSouthAfrica } from '../../../../data/outside-sa';
 import { OUTSIDE_SA_CHROME_XH, outsideSaWhatXh } from '../../../../data/i18n/outside-sa.xh-zu';
 import { nameIsPlaceholder } from '../../../../data/unnamed';
+import { administrativeName } from '../../../../data/administrative-name';
 import { UNNAMED_CHROME_XH } from '../../../../data/i18n/unnamed.xh-zu';
+import { ADMIN_NAME_CHROME_XH, adminNameWhatXh } from '../../../../data/i18n/administrative-name.xh-zu';
 import {
   CARE_ROLE_CHROME_XH,
   careRoleWhatXh,
@@ -109,6 +111,10 @@ const notInSA = outsideSouthAfrica(facility.slug);
 // as the English route, so the three locales cannot say different things about the
 // same record.
 const unnamed = !notCare && !notInSA && nameIsPlaceholder(facility.name);
+// #1481 — see the English route for the full reasoning. Same predicate, same gating,
+// so the three locales cannot say different things about the same record.
+const adminName = !notCare && !notInSA ? administrativeName(facility.slug) : null;
+const adminNameWhat = adminName ? adminNameWhatXh(facility.slug) : null;
 const notInSAWhat = notInSA ? outsideSaWhatXh(facility.slug) : null;
 const notInSASummary = firstSentence(notInSAWhat);
 const typeEditorial = isPrivate || notCare || notInSA ? null : getFacilityTypeEditorialXh(facility.type);
@@ -294,6 +300,7 @@ const jsonLd = {
       {!notCare && notInSA && <span class="chip" style="background: #fdecea; color: #a4262c; font-weight: 600;">{OUTSIDE_SA_CHROME_XH.chip}</span>}
       {!notCare && !notInSA && facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">iiyure ezingama-24</span>}
       {unnamed && <span class="chip" style="background: #fff8e6; color: #856404; font-weight: 600;">{UNNAMED_CHROME_XH.chip}</span>}
+      {adminName && <span class="chip" style="background: #fff8e6; color: #856404; font-weight: 600;">{ADMIN_NAME_CHROME_XH.chip}</span>}
     </div>
 
     <p style="color: var(--text-muted); margin-bottom: 24px;">
@@ -322,6 +329,18 @@ const jsonLd = {
           <p style="font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px;">{UNNAMED_CHROME_XH.body}</p>
           <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
             {UNNAMED_CHROME_XH.seeBefore}<a href={L(`/clinics/${facility.province.toLowerCase().replace(/\s+/g, '-')}`)}>{UNNAMED_CHROME_XH.linkText(facility.province)}</a>.
+          </p>
+        </div>
+      </section>
+    )}
+
+    {adminName && (
+      <section style="margin-bottom: 32px;">
+        <div style="background: #fff8e6; border-left: 4px solid #b8860b; border-radius: var(--radius); padding: 14px 16px;">
+          <h2 style="font-size: 1rem; margin-bottom: 8px;">{ADMIN_NAME_CHROME_XH.heading}</h2>
+          {adminNameWhat && <p style="font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px;">{adminNameWhat}</p>}
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
+            {ADMIN_NAME_CHROME_XH.seeBefore}<a href={L(`/clinics/${facility.province.toLowerCase().replace(/\s+/g, '-')}`)}>{ADMIN_NAME_CHROME_XH.linkText(facility.province)}</a>.
           </p>
         </div>
       </section>

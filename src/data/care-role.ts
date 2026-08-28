@@ -147,12 +147,34 @@
  *
   * WHAT IT DELIBERATELY DOES NOT DO
  * --------------------------------
- * It does not delete a record, change a URL, touch the sitemap or set noindex.
- * Salt River Mortuary draws ~390 impressions/28d: people genuinely search for it
- * and land here, and the useful answer for them is a page that says plainly what
- * the place is and where to go for treatment instead — not a 404 and not a page
- * that has been hidden from Google. Removing the pages is the scope question
- * still open in #1002; this file is the correctness fix that is true either way.
+ * It does not delete a record and it does not change a URL. Nothing in this file is
+ * ever resolved by unpublishing: the page is where the correction is delivered, so
+ * removing the page removes the correction with it.
+ *
+ * AND WHETHER IT SHOULD ALSO LEAVE THE SITEMAP IS NOW DECIDED (#1482, 2026-08-28)
+ * ------------------------------------------------------------------------------
+ * #1002 left that scope question open and this file used to say so. It is closed, and
+ * the answer is SPLIT, on two different grounds:
+ *
+ *   DEFAULT — stay in the submitted sitemap, stay indexable. Measured over
+ *   2026-07-30..2026-08-26 the twelve records below earn 780 impressions and 10 clicks,
+ *   and three of them earn CLICKS: salt-river-mortuary 580 impressions / 7 clicks,
+ *   mattress-medi-centre 38/1, mothibistad-shophhing-centre 17/2. Those are people who
+ *   searched for a place by name and chose our page, which then told them what the
+ *   place actually is. That only happens because the page is indexed. (The ~390
+ *   impressions this file used to quote for Salt River was a 2026-08-20 reading; it is
+ *   580 today, which is why the figure now carries its window.)
+ *
+ *   EXCEPTION — a record whose SUBJECT is a private person's property is withheld from
+ *   the sitemap and marked noindex, and that is a privacy decision, not an SEO one. One
+ *   entry qualifies today, `ali-is-siek-gauteng`. The operative set, the reasoning and
+ *   the rule for adding to it live in `src/data/private-subject.mjs`; `withheldKeys` in
+ *   `facility-quality.mjs` applies it, so the sitemap and the noindex signal agree by
+ *   construction. The page still stays live and still carries its notice in all three
+ *   languages — we stop advertising it, we do not withdraw it.
+ *
+ * Do NOT re-decide the default on an impression threshold. Impressions move, and a
+ * threshold would silently re-run this question every month in both directions.
  *
  * Entries are hand-adjudicated one at a time, each carrying the source that
  * settled it. An entry is a claim about the world, so it needs the same evidence

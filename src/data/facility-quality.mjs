@@ -28,6 +28,8 @@
  * anything judged them.
  */
 
+import { isPrivateSubject } from './private-subject.mjs';
+
 // OSM `name` values that are a category, not a name. Compared case-insensitively.
 const GENERIC_NAMES = new Set([
   'clinic', 'clinics', 'hospital', 'health care', 'healthcare', 'health',
@@ -70,6 +72,21 @@ export function withheldKeys(facilities) {
   for (const f of facilities) {
     const r = junkNameReason(f.name);
     if (r) out.set(`${f.province}|${f.slug}`, r);
+  }
+
+  // #1482 — the ONE care-role class we stop volunteering, and it is decided on privacy
+  // rather than on performance. See src/data/private-subject.mjs for the full decision:
+  // the other eleven adjudicated non-facilities STAY in the sitemap and STAY indexable,
+  // because their pages are how the correction reaches the people searching for those
+  // places (580 impressions and 7 clicks on the Salt River mortuary page alone over
+  // 2026-07-30..08-26). A private person's house is the case where that argument does
+  // not apply: nobody searches for it, and it is not a public place. Withholding it is
+  // not a judgement about its traffic, so do NOT generalise this to low-impression
+  // pages — the predicate is a fact about the subject, not a threshold.
+  for (const f of facilities) {
+    if (isPrivateSubject(f.slug)) {
+      out.set(`${f.province}|${f.slug}`, 'private-subject');
+    }
   }
 
   // Records that resolve to the SAME OpenStreetMap object are the same facility —

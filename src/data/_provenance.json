@@ -1,6 +1,6 @@
 {
   "$comment": "Provenance manifest for clinicfinder.co.za data. Declares, per VALUE CLASS, where each value came from. Modelled on SDMX observation-status flags (Eurostat/IMF/FAO).",
-  "updated_at": "2026-08-26T21:05:00+02:00",
+  "updated_at": "2026-08-28T10:02:26+02:00",
   "levels": {
     "sourced": "Taken from a named third-party open-data source.",
     "derived": "Computed from other values in this dataset.",
@@ -45,6 +45,12 @@
       "*": "config"
     },
     "care-role.ts": {
+      "*": "ai_authored"
+    },
+    "administrative-name.ts": {
+      "*": "ai_authored"
+    },
+    "private-subject.mjs": {
       "*": "ai_authored"
     },
     "outside-sa.ts": {

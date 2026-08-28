@@ -7,7 +7,9 @@ import { getFacilityTypeEditorial, REFERRAL_HIERARCHY } from '../../../data/faci
 import { careRole } from '../../../data/care-role';
 import { outsideSouthAfrica } from '../../../data/outside-sa';
 import { nameIsPlaceholder } from '../../../data/unnamed';
+import { administrativeName } from '../../../data/administrative-name';
 import { UNNAMED_CHROME_EN } from '../../../data/i18n/unnamed.xh-zu';
+import { ADMIN_NAME_CHROME_EN } from '../../../data/i18n/administrative-name.xh-zu';
 import { OUTSIDE_SA_CHROME_EN } from '../../../data/i18n/outside-sa.xh-zu';
 import { emergencyIsInferred } from '../../../data/emergency-basis';
 
@@ -59,6 +61,15 @@ const notInSA = outsideSouthAfrica(facility.slug);
 // something other than treatment here, this one says the page is about a real facility
 // we cannot identify, so the services, the type and the editorial all still stand.
 const unnamed = !notCare && !notInSA && nameIsPlaceholder(facility.name);
+// #1481 — `tswane-ward-40-tswane` renders a City of Tshwane WARD REFERENCE as its
+// <h1>, and the editorial below speaks about that string as though it were a name. The
+// record is a real, surveyed, operational clinic, so nothing here unpublishes it and
+// nothing edits the sourced `name`; the page says what the value is. Deliberately NOT
+// merged into `unnamed`: that notice says we do not know whether the public can walk
+// in, which would be false here. Gated with !notCare && !notInSA for the same reason
+// `unnamed` is — two red notices about one record contradict each other.
+const adminName = !notCare && !notInSA ? administrativeName(facility.slug) : null;
+const adminNameWhat = adminName ? adminName.what : null;
 const typeEditorial = isPrivate || notCare || notInSA ? null : getFacilityTypeEditorial(facility.type);
 const activeServices = Object.entries(facility.services)
   .filter(([, v]) => v)
@@ -251,6 +262,7 @@ const jsonLd = {
       {!notCare && notInSA && <span class="chip" style="background: #fdecea; color: #a4262c; font-weight: 600;">{OUTSIDE_SA_CHROME_EN.chip}</span>}
       {!notCare && !notInSA && facility.operating_hours.is_24_hour && <span class="chip" style="background: #fef3cd; color: #856404;">24 hours</span>}
       {unnamed && <span class="chip" style="background: #fff8e6; color: #856404; font-weight: 600;">{UNNAMED_CHROME_EN.chip}</span>}
+      {adminName && <span class="chip" style="background: #fff8e6; color: #856404; font-weight: 600;">{ADMIN_NAME_CHROME_EN.chip}</span>}
     </div>
 
     <p style="color: var(--text-muted); margin-bottom: 24px;">
@@ -276,6 +288,18 @@ const jsonLd = {
           <p style="font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px;">{UNNAMED_CHROME_EN.body}</p>
           <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
             {UNNAMED_CHROME_EN.seeBefore}<a href={`/clinics/${provinceSlug(facility.province)}`}>{UNNAMED_CHROME_EN.linkText(facility.province)}</a>.
+          </p>
+        </div>
+      </section>
+    )}
+
+    {adminName && (
+      <section style="margin-bottom: 32px;">
+        <div style="background: #fff8e6; border-left: 4px solid #b8860b; border-radius: var(--radius); padding: 14px 16px;">
+          <h2 style="font-size: 1rem; margin-bottom: 8px;">{ADMIN_NAME_CHROME_EN.heading}</h2>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0 0 8px;">{adminNameWhat}</p>
+          <p style="font-size: 0.9rem; line-height: 1.7; margin: 0;">
+            {ADMIN_NAME_CHROME_EN.seeBefore}<a href={`/clinics/${provinceSlug(facility.province)}`}>{ADMIN_NAME_CHROME_EN.linkText(facility.province)}</a>.
           </p>
         </div>
       </section>
