@@ -33,7 +33,7 @@ import {
   firstSentence,
 } from '../../../../data/i18n/care-role.xh-zu';
 import { emergencyIsInferred } from '../../../../data/emergency-basis';
-import { parsePhones, telephoneSchemaValue } from '../../../../data/phone';
+import { renderablePhones, telephoneSchema } from '../../../../data/phone';
 
 export function getStaticPaths() {
   return facilitiesTranslated('zu') ? facilityPaths() : [];
@@ -212,7 +212,7 @@ const jsonLd = {
     longitude: facility.coordinates.lng,
   },
   url: `https://clinicfinder.co.za/zu${facility.url_path}`,
-  ...(telephoneSchemaValue(facility.contact.phone) ? { telephone: telephoneSchemaValue(facility.contact.phone) } : {}),
+  ...(telephoneSchema(facility) ? { telephone: telephoneSchema(facility) } : {}),
   ...(facility.contact.email && { email: facility.contact.email }),
   ...(facility.contact.website && { sameAs: [facility.contact.website] }),
   ...(facility.operating_hours.raw
@@ -445,11 +445,11 @@ const jsonLd = {
       </section>
     )}
 
-    {(facility.contact.phone || facility.contact.email || facility.contact.website) && (
+    {(renderablePhones(facility).length > 0 || facility.contact.email || facility.contact.website) && (
       <section style="margin-bottom: 32px;">
         <h2 style="font-size: 1.1rem; margin-bottom: 8px;">Ukuxhumana</h2>
         <div style="display: grid; gap: 6px; font-size: 0.9rem;">
-          {parsePhones(facility.contact.phone).map(p => (
+          {renderablePhones(facility).map(p => (
             <p><a href={`tel:${p.href}`}>{p.display}</a></p>
           ))}
           {facility.contact.email && (

@@ -62,6 +62,12 @@
     "phone.ts": {
       "*": "derived"
     },
+    "phone-defect.ts": {
+      "*": "ai_authored"
+    },
+    "duplicate-record.ts": {
+      "*": "ai_authored"
+    },
     "emergency-basis.json": {
       "osm_confirmed": "observed",
       "unevidenced": "observed",

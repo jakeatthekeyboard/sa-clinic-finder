@@ -1,6 +1,8 @@
 import facilitiesRaw from './facilities.json';
 import { careRole } from './care-role';
 import { outsideSouthAfrica } from './outside-sa';
+import { fieldFill } from './facility-quality.mjs';
+import { duplicateOf } from './duplicate-record';
 
 export interface Facility {
   facility_id: string;
@@ -60,8 +62,78 @@ export const allFacilityRecords: Facility[] = facilitiesRaw as Facility[];
  * variant of "not walk-in care", so it is a separate predicate from `careRole` — but
  * both narrow the same corpus, and `serviceCorpus` below applies them in series.
  */
+/**
+ * The records that describe a facility another record already describes (#1509).
+ *
+ * Six pairs in the corpus are one real hospital each, so a reader was shown the same
+ * hospital twice, the province total counted it twice, and — for the pairs that are two
+ * distinct OSM objects, which `nearbyFacilities`' own `facility_id` test cannot catch —
+ * the facility was offered as its own nearest neighbour 230 metres away.
+ *
+ * TWO GATES, AND NEITHER OF THEM IS A NAME.
+ *
+ * (1) IDENTITY. Two records carrying the same `facility_id` are the same OpenStreetMap
+ *     object; that is what an OSM id means, not a heuristic. Three pairs are this
+ *     (`zaf_way_218396423` Tower Psychiatric, `zaf_way_468966258` H.A. Grove,
+ *     `zaf_way_461683581` Elliot Provincial), and two of them are invisible to any name
+ *     rule — "Ha Grove Hospital"/"H.A. Grove Hospital" and "Elliot Provincial
+ *     Hospital"/"Elliot Hospital" are different strings for one building each. The
+ *     survivor is the record that tells the reader more, ranked exactly as
+ *     `facility-quality.mjs` ranks it so the sitemap and the directory cannot disagree
+ *     about which half is the duplicate.
+ *
+ * (2) ADJUDICATION. Two DIFFERENT OSM objects mapped over one facility. Nothing
+ *     mechanical decides that, so each pair is named and evidenced in
+ *     `duplicate-record.ts`.
+ *
+ * WHAT IS DELIBERATELY NOT USED HERE: `withheldKeys`' `duplicate` reason. It groups on
+ * NAME within a province, and on this corpus that is 20 records of which only 6 are
+ * duplicates — the other 14 are separate facilities sharing a name (kwamsane-clinic
+ * 41.8 km apart, phomolong-clinic 38.0 km, tayler-bequest-hospital 48.3 km, five "THINK
+ * site clinic" records). Withholding those from the SITEMAP is #929's deliberate
+ * conservatism; dropping them from the DIRECTORY would hide eleven real clinics from
+ * readers, which is the harm #226/#1228 forbid arriving as a side effect of a fix for
+ * something else. #1509 requires this to be distance-gated, never name-gated.
+ *
+ * The filter is applied HERE, at the one export ~35 page files import, for the reason
+ * #1381 gives for the outside-SA one: the three locales must agree on every published
+ * count or `tools/numeric-parity-check.py` fails, and a per-page filter is a per-page
+ * chance to forget one.
+ *
+ * Nothing here deletes a record or a page. `src/data/pages/paths.ts` builds routes from
+ * `allFacilityRecords`, so all twelve URLs stay live in all three languages with every
+ * sourced value intact.
+ */
+const identityDuplicateSlugs: Set<string> = (() => {
+  const byObject = new Map<string, Facility[]>();
+  for (const f of allFacilityRecords) {
+    const id = (f.facility_id || '').trim();
+    if (!id) continue;
+    if (!byObject.has(id)) byObject.set(id, []);
+    byObject.get(id)!.push(f);
+  }
+  const retired = new Set<string>();
+  for (const group of byObject.values()) {
+    if (group.length < 2) continue;
+    // Same ranking as facility-quality.mjs, so the sitemap and the directory retire the
+    // same half of every pair. Slug breaks ties, so the choice is stable across builds.
+    const ranked = [...group].sort(
+      (a, b) => fieldFill(b as any) - fieldFill(a as any)
+             || (b.data_quality_score || 0) - (a.data_quality_score || 0)
+             || String(a.slug).localeCompare(String(b.slug))
+    );
+    for (const f of ranked.slice(1)) retired.add(f.slug);
+  }
+  return retired;
+})();
+
+/** True when this record is the retired half of an adjudicated duplicate pair (#1509). */
+export function isDuplicateOfAnotherRecord(f: Facility): boolean {
+  return identityDuplicateSlugs.has(f.slug) || duplicateOf(f.slug) !== null;
+}
+
 export const facilities: Facility[] = allFacilityRecords.filter(
-  f => outsideSouthAfrica(f.slug) === null
+  f => outsideSouthAfrica(f.slug) === null && !isDuplicateOfAnotherRecord(f)
 );
 
 /**

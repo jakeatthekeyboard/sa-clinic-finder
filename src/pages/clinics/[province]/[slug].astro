@@ -12,7 +12,7 @@ import { UNNAMED_CHROME_EN } from '../../../data/i18n/unnamed.xh-zu';
 import { ADMIN_NAME_CHROME_EN } from '../../../data/i18n/administrative-name.xh-zu';
 import { OUTSIDE_SA_CHROME_EN } from '../../../data/i18n/outside-sa.xh-zu';
 import { emergencyIsInferred } from '../../../data/emergency-basis';
-import { parsePhones, telephoneSchemaValue } from '../../../data/phone';
+import { renderablePhones, telephoneSchema } from '../../../data/phone';
 
 export function getStaticPaths() {
   // #1239a — this route used to carry its OWN copy of the enumeration that
@@ -188,7 +188,7 @@ const jsonLd = {
     longitude: facility.coordinates.lng,
   },
   url: `https://clinicfinder.co.za${facility.url_path}`,
-  ...(telephoneSchemaValue(facility.contact.phone) ? { telephone: telephoneSchemaValue(facility.contact.phone) } : {}),
+  ...(telephoneSchema(facility) ? { telephone: telephoneSchema(facility) } : {}),
   ...(facility.contact.email && { email: facility.contact.email }),
   ...(facility.contact.website && { sameAs: [facility.contact.website] }),
   ...(facility.operating_hours.raw
@@ -410,11 +410,11 @@ const jsonLd = {
       </section>
     )}
 
-    {(facility.contact.phone || facility.contact.email || facility.contact.website) && (
+    {(renderablePhones(facility).length > 0 || facility.contact.email || facility.contact.website) && (
       <section style="margin-bottom: 32px;">
         <h2 style="font-size: 1.1rem; margin-bottom: 8px;">Contact</h2>
         <div style="display: grid; gap: 6px; font-size: 0.9rem;">
-          {parsePhones(facility.contact.phone).map(p => (
+          {renderablePhones(facility).map(p => (
             <p><a href={`tel:${p.href}`}>{p.display}</a></p>
           ))}
           {facility.contact.email && (

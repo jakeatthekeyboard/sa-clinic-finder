@@ -180,6 +180,18 @@ if ! python3 "$SITE_DIR/tools/numeric-parity-check.py"; then
     exit 1
 fi
 
+echo ""
+echo "▸ Running phone-format check (is every published number dialable?)..."
+if ! python3 "$SITE_DIR/tools/phone-format-check.py"; then
+    echo ""
+    echo "✗ PUSH BLOCKED — a published telephone number cannot be dialled."
+    echo "  Do NOT pad or truncate it to the right length: that publishes a plausible"
+    echo "  WRONG number, which is worse than an obviously broken one (#1510)."
+    echo "  Re-source it from the record's own OSM object, or withhold it in"
+    echo "  src/data/phone-defect.ts with the evidence."
+    exit 1
+fi
+
 # ── Guard unit tests ─────────────────────────────────────────────
 # The only proof the gates above can still go RED. A guard whose tests
 # never run is one refactor away from passing unconditionally.
