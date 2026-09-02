@@ -192,6 +192,28 @@ if ! python3 "$SITE_DIR/tools/phone-format-check.py"; then
     exit 1
 fi
 
+# ── Province scalar guard (#1562) ────────────────────────────────
+# A province page renders a COMPUTED total ("123 government health facilities")
+# two lines above the hand-written intro. Until #1562 all nine intros stated a
+# total of their own and all nine disagreed with the one directly above them, in
+# all three languages, with the wrong figure reaching the HowToStep JSON-LD too.
+# numeric-parity above cannot see it: the wrong number is faithfully translated,
+# so digit parity is perfect. The repair is to DELETE the hand copy, not to sync
+# it — the page already publishes the total, the type breakdown (the chips) and
+# the 24-hour count (FAQ 1) from the corpus, in every locale. So this asserts
+# there is NO count, never that a count is right.
+echo ""
+echo "▸ Running province-scalar check (hand-typed facility counts in intros)..."
+if ! python3 "$SITE_DIR/tools/province-scalar-check.py" --repo "$SITE_DIR"; then
+    echo ""
+    echo "✗ PUSH BLOCKED — a province intro states a facility count by hand."
+    echo "  Delete the figure; do NOT update it to match the corpus. Syncing the"
+    echo "  integer leaves the type breakdown contradicting its own new total, and"
+    echo "  in isiXhosa/isiZulu the numeral's concord prefix agrees with the"
+    echo "  numeral itself, so substituting a digit publishes broken grammar."
+    exit 1
+fi
+
 # ── Guard unit tests ─────────────────────────────────────────────
 # The only proof the gates above can still go RED. A guard whose tests
 # never run is one refactor away from passing unconditionally.
