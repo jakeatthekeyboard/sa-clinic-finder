@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-08-28T21:07:00+02:00",
+  "lastRun": "2026-09-02T21:15:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -472,6 +472,30 @@
       "task": "editorial",
       "result": "skip",
       "details": "No content work. Waterfall still exhausted: 9/9 provinces have editorial intros, all 6 planned guide topics covered by the 13 live guides, services is one dynamic [service].astro template already deep. The run's value was the undialable-number correction above."
+    },
+    {
+      "timestamp": "2026-09-02T21:15:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index.xml, robots.txt 200. Live sitemap 1,545 URLs, up from 1,418 on 2026-08-28. Spot-checked 3 facility pages (zu/limpopo/maphutha-malatji-hospital, northern-cape/springbok-hospital, northern-cape/hondeklipbaai-kliniek), 1 province page (kwazulu-natal) and 1 guide (zu/how-to-get-arvs) — all 200. Repo guards all green before the edit: phone-format, province-scalar, numeric-parity, emergency-basis, osm-drift, validate-province-by-coords."
+    },
+    {
+      "timestamp": "2026-09-02T21:15:00+02:00",
+      "task": "data-correction",
+      "result": "pass",
+      "details": "Eight private facilities were published as free public district hospitals. The private-operator sweeps of 2026-08-19 and #1002 filtered on type=='clinic', so the same private chains carried under type=='district_hospital' were never adjudicated — and district_hospital is the more harmful label (#1376). Found by cross-tabbing `type` against each record's own OSM tags in data/capture/osm-tags/2026-08-28.json. All eight rendered the district-hospital editorial, were titled '<name> - District Hospital in <province>' and emitted isAccessibleForFree:true. Worst: Life Westville Hospital, a 295-bed Life Healthcare PRIVATE acute hospital in Durban, whose own `operator` field already read 'Life Health Care'. Each adjudicated individually against the operator's own site or a Medpages/Netcare listing, matched on an exact phone or street address: life-westville, cure-day-hospitals-medkin, cure-day-hospitals-gauteng (Fourways), benoni-medicross, pathcare-wolmaransstad, intermed-medical-practice, clicks-pharmacy-mamelodi-crossing, rynpark-1-frailcare. operator_type DERIVED private on all 8; type DERIVED clinic on 6 (+wespark-itumeleng, type only) where the subject is not a hospital of any tier and OSM's primary `amenity` tag says clinic/doctors. Knock-on caught by tools/emergency-basis.py --check: the emergency editorial's hand-stated counts moved (447->446 district hospitals, 16->17 clinics, 458->457 hospitals, 40->41 primary) and were updated in EN, isiZulu and isiXhosa. 653 tests pass, build 3,360 pages, all six guards green."
+    },
+    {
+      "timestamp": "2026-09-02T21:15:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "Gate closed. data/capture/regulatory-scan/latest.json scan_date 2026-08-29T21:20+02:00 is 4 days old, inside the 7-day window (next_scan_due 2026-09-05). Portfolio-wide, once per week; another keeper already ran it."
+    },
+    {
+      "timestamp": "2026-09-02T21:15:00+02:00",
+      "task": "editorial",
+      "result": "skip",
+      "details": "No content work. Waterfall still exhausted: 9/9 provinces have editorial intros, all 6 planned guide topics covered by the 13 live guides, services is one dynamic [service].astro template. Run spent on data quality instead."
     }
   ]
 }

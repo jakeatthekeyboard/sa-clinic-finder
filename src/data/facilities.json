@@ -7569,7 +7569,7 @@
   {
     "facility_id": "zaf_node_8586832981",
     "name": "Clicks Pharmacy Mamelodi Crossing;Cicks pharmacy",
-    "type": "district_hospital",
+    "type": "clinic",
     "province": "Gauteng",
     "district": "City of Tshwane Metropolitan",
     "sub_district": "",
@@ -7606,7 +7606,7 @@
       "hiv_testing": false
     },
     "operator": "",
-    "operator_type": "unknown",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -8415,7 +8415,7 @@
   {
     "facility_id": "zaf_node_9038418318",
     "name": "Rynpark 1 Frailcare",
-    "type": "district_hospital",
+    "type": "clinic",
     "province": "Gauteng",
     "district": "Ekurhuleni Metropolitan",
     "sub_district": "",
@@ -8452,7 +8452,7 @@
       "hiv_testing": false
     },
     "operator": "",
-    "operator_type": "unknown",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -9261,7 +9261,7 @@
   {
     "facility_id": "zaf_node_9049616217",
     "name": "Intermed Medical Practice",
-    "type": "district_hospital",
+    "type": "clinic",
     "province": "Gauteng",
     "district": "City of Tshwane Metropolitan",
     "sub_district": "",
@@ -9298,7 +9298,7 @@
       "hiv_testing": true
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -9392,7 +9392,7 @@
       "hiv_testing": true
     },
     "operator": "Maria Mauoane",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -14901,7 +14901,7 @@
   {
     "facility_id": "zaf_node_10827324700",
     "name": "Pathcare",
-    "type": "district_hospital",
+    "type": "clinic",
     "province": "North West",
     "district": "Dr Kenneth Kaunda District",
     "sub_district": "",
@@ -14938,7 +14938,7 @@
       "hiv_testing": false
     },
     "operator": "",
-    "operator_type": "unknown",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -15737,7 +15737,7 @@
       "hiv_testing": false
     },
     "operator": "",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -29038,7 +29038,7 @@
       "hiv_testing": false
     },
     "operator": "Life Health Care",
-    "operator_type": "public",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -33983,7 +33983,7 @@
   {
     "facility_id": "zaf_way_791412595",
     "name": "Benoni Medicross",
-    "type": "district_hospital",
+    "type": "clinic",
     "province": "Gauteng",
     "district": "Ekurhuleni Metropolitan",
     "sub_district": "",
@@ -34020,7 +34020,7 @@
       "hiv_testing": false
     },
     "operator": "",
-    "operator_type": "unknown",
+    "operator_type": "private",
     "data_source": "overpass",
     "data_quality_score": 5,
     "last_verified": "2026-04-14",
@@ -46156,7 +46156,7 @@
   {
     "facility_id": "zaf_way_1327579225",
     "name": "Wespark Itumeleng Medical Centre",
-    "type": "district_hospital",
+    "type": "clinic",
     "province": "Gauteng",
     "district": "City of Tshwane Metropolitan",
     "sub_district": "",
