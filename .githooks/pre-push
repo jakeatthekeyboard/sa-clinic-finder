@@ -12,6 +12,62 @@ set -e
 
 SITE_DIR="$(git rev-parse --show-toplevel)"
 
+# ── Build serialisation (#1478 / #1493) ──────────────────────────
+# This checkout is shared: keeper crons, grind lanes and interactive sessions
+# all push from it, and every one of them runs `rm -rf dist && npx astro build`
+# in this hook. Two of them overlapping corrupt each other's dist, and the
+# resulting failure wears the uniform of a defect in your own change. That is
+# not hypothetical on this machine: on 2026-08-28 franchisevs lost two lanes to
+# it in one morning and daycarecostguide had three pushes blocked in a row
+# (ERR_MODULE_NOT_FOUND, ENOENT partway through `dist`, then a gate reporting a
+# page family as "not built" seconds after it existed). CF is the lowest-volume
+# of the four repos, which lowers the odds and does not change the mechanism:
+# its keeper, its regulatory scan and any interactive lane share this one dist.
+# MEASURED on this repo's own history (the retirement condition #1478's
+# baseline named): of the 78 consecutive commit gaps since 2026-08-01,
+# 38 (48%) are under 15 minutes and 25 under 5. This hook's window
+# overlaps the next push's window most of the time, exactly as on franchisevs.
+#
+# The lock is held on fd 9 by THIS shell for as long as this hook lives. flock
+# belongs to the open file description, not to a process, so the kernel
+# releases it when the hook dies by ANY means — SIGKILL and OOM included.
+# There is no stale-lock state, no staleness rule to get wrong and no live-PID
+# probe that could mis-decide. NOT a `trap ... EXIT`: #837 prototyped and
+# rejected that, because a bash trap cannot run on SIGKILL and an OOM kill IS
+# SIGKILL.
+#
+# HELD ON AN fd RATHER THAN WRAPPING THE HOOK, and that is not a style choice.
+# #1478's first version re-exec'd the whole hook under `build-serialize.py
+# lock`. tools/pre-push-gate-check.py proves gates execute by tracing this hook
+# with every external command NEUTERED, so a wrapper's shimmed `python3`
+# returns 0 and swallows everything after it — franchisevs' 11 declared gates
+# traced as 1, i.e. the fix would have disarmed an existing guard (#1116). An
+# fd lock wraps nothing: every gate below stays a direct command in the trace.
+#
+# Keyed on $SITE_DIR, so a linked worktree does NOT queue behind the main
+# checkout — it has its own dist. Only lanes sharing ONE checkout serialise,
+# which is the case that corrupts. The wait is BOUNDED and a timeout FAILS LOUD
+# rather than proceeding unlocked; proceeding unlocked would reinstate the race
+# silently, the #818 fail-open shape.
+#
+# The call is UNCONDITIONAL. Guarding it behind an existence test would make
+# pre-push-gate-check report GATE_DECLARED_BUT_NOT_EXECUTED, turning an
+# existing guard red (#1116).
+BS_LOCKFILE="/tmp/build-serialize$(printf '%s' "$SITE_DIR" | tr / -).lock"
+exec 9>"$BS_LOCKFILE"
+BS_LOCK_STATUS=0
+python3 /Users/jake/dev/product-pipeline-1/tools/build-serialize.py acquire --fd 9 --resource "astro-build:$SITE_DIR" --timeout 3600 || BS_LOCK_STATUS=$?
+if [ "$BS_LOCK_STATUS" -eq 75 ]; then
+    echo ""
+    echo "PUSH BLOCKED: another lane has been building in this checkout for"
+    echo "  longer than the bound. NOT proceeding unlocked. Do NOT clear dist/:"
+    echo "  that breaks the in-flight build's hook (#1478). Re-push when it ends."
+    exit 1
+elif [ "$BS_LOCK_STATUS" -ne 0 ]; then
+    echo "[WARN] build-serialize unavailable (exit $BS_LOCK_STATUS) — this build is"
+    echo "       NOT serialised against other lanes in this checkout (#1478)."
+fi
+
 echo "═══════════════════════════════════════════════════"
 echo "  ClinicFinder Pre-Push: Build + Link Verification"
 echo "═══════════════════════════════════════════════════"
@@ -28,6 +84,11 @@ if [ $? -ne 0 ]; then
     echo "✗ PUSH BLOCKED — astro build failed."
     exit 1
 fi
+
+# Record WHICH TREE and WHICH SOURCE STATE produced this dist (#1478). The
+# `verify` gate below reads it; without the stamp that gate can only answer
+# UNSTAMPED, which is "cannot vouch", never "fine".
+python3 /Users/jake/dev/product-pipeline-1/tools/build-serialize.py stamp --repo "$SITE_DIR" --output dist || true
 
 # ── Dead-link scan (static internal-link integrity) ──────────────
 # Reuses the dist just built above (no --build). Catches inline-editorial
@@ -57,6 +118,33 @@ fi
 #   python3 /Users/jake/dev/product-pipeline-1/tools/pre-push-gate-check.py --repo .
 # A declared gate is not a running gate (#1116).
 echo ""
+
+# ── Build provenance (#1478 / #1493) ─────────────────────────────
+# Every gate from here down reads dist/. If another lane rebuilt or cleared it
+# after the build above, those gates fail describing a symptom — a missing
+# sample page, a wrong meta description, a nav link that is not there — and
+# every one of those reads as a regression in YOUR change. On 2026-08-28 that
+# cost daycarecostguide two blocked pushes: 7 vitest failures naming
+# meta-descriptions and nav links, all dist-in-flux artifacts that passed
+# unchanged on re-run. CF runs 14 vitest suites plus numeric-parity off dist
+# here, and numeric-parity compares RENDERED text across 2,240 page pairs, so a
+# half-written dist reads as a translation dropping digits from clinical
+# figures — the most alarming false alarm this repo can produce. `verify` names
+# the cause instead: FOREIGN_TREE, STALE_SOURCE
+# or DIST_MISSING. Do NOT recover a hit by clearing dist — that destructive
+# recovery is the thing #1478 exists to retire. Rebuild by re-pushing.
+# Advisory-to-loud, never fail-open: exit 2 (UNSTAMPED) is reported and
+# allowed, exit 1 (FOREIGN_TREE / STALE_SOURCE / DIST_MISSING) blocks.
+BS_VERIFY_STATUS=0
+python3 /Users/jake/dev/product-pipeline-1/tools/build-serialize.py verify --repo "$SITE_DIR" || BS_VERIFY_STATUS=$?
+if [ "$BS_VERIFY_STATUS" -eq 1 ]; then
+    echo ""
+    echo "PUSH BLOCKED: the dist about to be tested is NOT this tree's current"
+    echo "  build (see the verdict above). A failure below would NOT be a"
+    echo "  regression in your change. Re-run the push; do NOT clear dist/."
+    exit 1
+fi
+
 echo "▸ Running vitest suites (14 files, data + dist)..."
 if ! npx vitest run < /dev/null; then
     echo ""
