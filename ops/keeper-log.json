@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-09-04T21:08:00+02:00",
+  "lastRun": "2026-09-07T21:02:00+02:00",
   "editorialLastRun": "2026-04-29T21:08:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -508,6 +508,30 @@
       "task": "service-page-depth",
       "result": "blocked",
       "details": "arv_treatment is the only one of 11 SERVICE_EDITORIAL entries with no deepDive, provincialNotes, myths or helplines (7,330 chars vs 15,715-21,862 for every sibling), and it is thin in the same shape in service-editorial.xh.ts (8,795) and .zu.ts (9,043). Wrote the four English sections; build 3360 pages and 653 tests passed, but the numeric-parity pre-push hook correctly blocked the push because the added figures do not exist on /xh/services/arvs and /zu/services/arvs. Deepening this page needs ~20,000 chars of isiXhosa and isiZulu clinical prose, which the keeper will not fabricate. English change reverted; draft parked at product-pipeline-1/drafts/clinicfinder/arv-service-deepening-en-2026-09-04.ts and queued as TODO #1600. No site output changed this run."
+    },
+    {
+      "timestamp": "2026-09-07T21:02:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 8 checks pass. Homepage, sitemap-index.xml and robots.txt 200. Live sitemap 2,299 URLs, up from 2,048 on 2026-09-04. Spot-checked 3 facility pages across all three locales (zu/clinics/kwazulu-natal/lomo-clinic-kwazulu-natal, xh/clinics/limpopo/hayani-psychiatric-hospital-limpopo, clinics/eastern-cape/elliotdale-community-health-centre-eastern-cape), 1 province listing (clinics/gauteng), 1 guide (guides/ccmdd-chronic-meds-pickup) and 1 service page (services/emergency) - all 200. Live sitemap URL set is byte-identical to the one this run's build produced (diff empty), so nothing has drifted since 8777a1d. All five repo guards green: phone-format (633 segments / 582 records), province-scalar (27 intros, 0 hand-typed counts), numeric-parity (2,240 translated pages), emergency-basis (498 24-hour claims), osm-drift. Build 3,360 pages, 653 tests pass."
+    },
+    {
+      "timestamp": "2026-09-07T21:02:00+02:00",
+      "task": "internal-linking-audit",
+      "result": "pass",
+      "details": "Section 5 run in full for the first time since the guides and service routes were translated; it was the only priority section not exercised in the last three runs. Method: built the site and walked the rendered link graph of all 3,360 pages in .vercel/output/static rather than grepping source, so locale routes and the dynamic [service]/[province] templates are covered as readers see them. Result: 0 orphan pages (every page has at least one inbound internal link) and 0 broken internal link targets. All three assertions in the skill hold. Province pages: each of the 9 English province listings carries 8 guide links (Gauteng 9), 8 service links and a /search link. Guides: all 13 link to all 9 province listings, to the /services hub AND to their own topically-matched service page (tb-treatment-what-to-expect -> /services/tb, how-to-get-arvs -> /services/arvs, ccmdd-chronic-meds-pickup -> /services/chronic-medication, and so on; mental-health-services links to two), plus 4-5 sibling guides. Service pages: all 11 link to all 9 provinces and to 4-5 guides. /services itself links to no province or guide, which is correct - it is the hub and links to all 11 service pages, the other hubs, /search and the xh/zu locale hubs. No edits needed; no commit beyond this log."
+    },
+    {
+      "timestamp": "2026-09-07T21:02:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "Gate closed. data/capture/regulatory-scan/latest.json scan_date 2026-09-05T21:59+02:00 is 2 days old, inside the 7-day window. Portfolio-wide once per week; the franchisevs keeper ran it on 2026-09-05."
+    },
+    {
+      "timestamp": "2026-09-07T21:02:00+02:00",
+      "task": "editorial",
+      "result": "skip",
+      "details": "No content work available. 9/9 provinces have editorial intros, all 6 planned guide topics are covered by the 13 live guides in 3 locales, and services is one dynamic [service].astro template. The one known thin page, /services/arvs, remains blocked on ~20,000 chars of isiXhosa and isiZulu clinical prose the keeper will not fabricate - unchanged since 2026-09-04, draft parked at product-pipeline-1/drafts/clinicfinder/arv-service-deepening-en-2026-09-04.ts, TODO #1600 still open. Run spent on the linking audit instead."
     }
   ]
 }
