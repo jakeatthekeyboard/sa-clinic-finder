@@ -1,6 +1,6 @@
 {
-  "lastRun": "2026-09-07T21:02:00+02:00",
-  "editorialLastRun": "2026-04-29T21:08:00+02:00",
+  "lastRun": "2026-09-16T21:15:00+02:00",
+  "editorialLastRun": "2026-09-16T21:15:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
   ],
@@ -532,6 +532,42 @@
       "task": "editorial",
       "result": "skip",
       "details": "No content work available. 9/9 provinces have editorial intros, all 6 planned guide topics are covered by the 13 live guides in 3 locales, and services is one dynamic [service].astro template. The one known thin page, /services/arvs, remains blocked on ~20,000 chars of isiXhosa and isiZulu clinical prose the keeper will not fabricate - unchanged since 2026-09-04, draft parked at product-pipeline-1/drafts/clinicfinder/arv-service-deepening-en-2026-09-04.ts, TODO #1600 still open. Run spent on the linking audit instead."
+    },
+    {
+      "timestamp": "2026-09-16T21:15:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All 6 checks pass on clinicfinder.co.za: / 200, /sitemap-index.xml 200, /robots.txt 200, three facility pages sampled from the live sitemap 200 (eastern-cape/grey-provincial-hospital-qonce, gauteng/tembisa-hospital-tembisa, western-cape/covid-testing-western-cape), /clinics/limpopo 200, /guides/find-nearest-clinic 200. Also checked /services and /search, both 200. Live sitemap carries 2,380 URLs across one child sitemap (sitemap-0.xml); the local build produces 3,360 pages in three locales."
+    },
+    {
+      "timestamp": "2026-09-16T21:15:00+02:00",
+      "task": "service-page-depth",
+      "result": "pass",
+      "details": "Section 4. Audited all 11 entries in src/data/service-editorial.ts by size and by which optional depth fields they carry. arv_treatment was the clear outlier: 7,329 chars against a 15,714-char next-thinnest (maternity_antenatal) and a 42,799-char deepest (chronic_medication), and it was the only service with none of deepDive, myths, helplines or provincialNotes - all four of which src/pages/services/[service].astro already renders (lines 234-280). Added all four to arv_treatment: three deepDive sections (U=U and what viral suppression means practically, what happens when TLD fails through second- and third-line review, and the prevention pathways dispensed at the same counter - PrEP, PEP's 72-hour window, and prevention of vertical transmission), four myths (treatment breaks after undetectability, organ-damage fears versus untreated HIV per START/SMART, confidentiality and queue visibility, and the documentation/nationality myth), four helplines (National AIDS Helpline 0800 012 322, TAC, Stop Stockouts, SECTION27), and a provincialNotes paragraph grounded in this site's own data - the per-province ARV facility counts computed from facilities.json (Gauteng 202 of 277, KZN 143, WC 114, EC 81, MP 66, NW 61, LP 60, FS 48, NC 36; 811 of 1,076 facilities flagged arv_treatment). Build passes: 3,360 pages, and /services/arvs/index.html grew from thin to 257,624 bytes, now level with the TB page's 258,999."
+    },
+    {
+      "timestamp": "2026-09-16T21:15:00+02:00",
+      "task": "internal-linking-audit",
+      "result": "pass",
+      "details": "Section 5 re-run against the fresh post-edit build, walking the rendered link graph of all 3,360 pages in .vercel/output/static. 0 broken internal link targets and 0 orphan pages, unchanged from the 2026-09-07 run. The arv_treatment addition introduced no new anchors, so the graph is identical by construction; the audit confirms the edit did not disturb it."
+    },
+    {
+      "timestamp": "2026-09-16T21:15:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "Gate closed. data/capture/regulatory-scan/latest.json has scan_date 2026-09-16T21:05+02:00 - today, about ten minutes before this run - with next_scan_due 2026-09-23 and 4 findings. Portfolio-wide once per week; another keeper already ran it tonight."
+    },
+    {
+      "timestamp": "2026-09-16T21:15:00+02:00",
+      "task": "province-editorial",
+      "result": "skip",
+      "details": "Section 2 gate closed: all 9 provinces in src/data/province-editorial.ts have an intro, and all 9 also carry a deepDive block. Nothing to write."
+    },
+    {
+      "timestamp": "2026-09-16T21:15:00+02:00",
+      "task": "guides",
+      "result": "skip",
+      "details": "Section 3: all 6 planned guide topics are covered by the 13 live guides in src/pages/guides/. No new topic to write; skill says skip when planned topics are covered."
     }
   ]
 }
