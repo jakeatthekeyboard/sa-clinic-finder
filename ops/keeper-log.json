@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-09-16T21:15:00+02:00",
+  "lastRun": "2026-09-18T21:00:00+02:00",
   "editorialLastRun": "2026-09-16T21:15:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -568,6 +568,18 @@
       "task": "guides",
       "result": "skip",
       "details": "Section 3: all 6 planned guide topics are covered by the 13 live guides in src/pages/guides/. No new topic to write; skill says skip when planned topics are covered."
+    },
+    {
+      "timestamp": "2026-09-18T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All checks pass. Homepage, sitemap-index, robots.txt all 200. 3 random facility pages (gauteng/mamelodi-west-primary-health-care-clinic, kwazulu-natal/imbalenhle-chc-unit-3, gauteng/ntlharhimed-clinic-tembisa) all 200. Province page (clinics/western-cape) 200. Guide page (mental-health-services) 200. Search page 200. One xh and one zu clinic page 200. 2533 sitemap URLs."
+    },
+    {
+      "timestamp": "2026-09-18T21:00:00+02:00",
+      "task": "content-audit",
+      "result": "noop",
+      "details": "No editorial work needed. All 9 provinces have intros. All 6 planned guide topics covered by the 13 existing guides. All 11 SERVICE_EDITORIAL entries carry deepDive, provincialNotes, helplines and myths (15k-43k chars each) - no thin service page. Internal linking complete: every guide has a Related Guides section and links to /services and /clinics. isiXhosa/isiZulu parity verified field-by-field across all 11 services (deepDive/faq/myth/helpline counts identical in en, xh, zu). Regulatory scan skipped - latest.json scan_date 2026-09-16, 2 days old, next due 2026-09-23."
     }
   ]
 }
