@@ -167,11 +167,27 @@ two weeks out, with nothing watching.
 repoint `latest.json` at it (`ln -sfn`, it is a symlink). A run that finds nothing new still writes
 the file with `findings: []` — that is what keeps the freshness check honest rather than silent.
 
-## End-of-run capture block (MANDATORY — the last thing you print)
+## End-of-run capture block (MANDATORY — emit it the moment your work is committed)
 
-The final thing printed to stdout must be a JSON object wrapped in `<capture>…</capture>`
-fences. Nothing after `</capture>` — no prose, no closing markdown fence. The human-readable
-summary above it stays exactly as it is; this block is the authoritative source that
+**PRINT IT AS SOON AS YOUR WORK IS COMMITTED — BEFORE the push, the deploy verification
+and any waiting on background tasks. Then, if anything changed after that, print an updated
+block again at the end.** Re-emitting is safe and is the intended use: `post-run.py` takes the
+LAST well-formed block in the run's stdout (#893), so a later block supersedes an earlier one
+and an earlier one survives when no later one arrives.
+
+**Why the ordering changed (#1697, and it cost three nights).** This section used to say "the
+final thing printed to stdout". That made the block the single most PREEMPTABLE output of the
+run: on 2026-09-03, 09-06 and 09-07 the DCG keeper finished its work, pushed, and a late
+harness notification about draining background tasks arrived — the final turn answered THAT
+instead of printing the block, and the run exited 0. The work landed every time (842d2783,
+9ec3b5fe) and `ops/keeper-log.json` was written; what died was the block, and with it
+`issues[]` — the run's judgement about what it found and consciously did not fix, which is the
+most expensive output of the night and is unrecoverable, because `cron-runner.sh` overwrites
+the stdout. Printing the block before the interruptible phase closes that window.
+
+A trailing sentence after `</capture>` no longer destroys the report, but still do not add
+one deliberately. The human-readable summary above the block stays exactly as it is; this
+block is the authoritative source that
 `/Users/jake/dev/product-pipeline-1/tools/capture/post-run.py` records into
 `data/capture/keeper-runs/clinicfinder/<date>.json`.
 
