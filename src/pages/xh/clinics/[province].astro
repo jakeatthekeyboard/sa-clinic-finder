@@ -279,7 +279,12 @@ const guideCards = [
       <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Iinkonzo zempilo e-{provinceName}</h2>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Fumana amaziko anikezela ngeenkonzo ezithile kweli phondo:</p>
       <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-        {serviceBreakdown.slice(0, 8).map(s => (
+        {/* Mirrors the English province template: every service with a non-zero count,
+            not the top 8. Kept in step deliberately — tools/numeric-parity-check compares
+            this page's figures against /clinics/<province>, so a cap here that the English
+            page does not have shows up as three service counts MISSING from the
+            translation and blocks the push. */}
+        {serviceBreakdown.map(s => (
           <a href={L(`/services/${SERVICE_MAP[s.key].slug}`)} style="display: inline-block; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; color: var(--text); text-decoration: none; transition: border-color 0.15s;">
             {s.label} <span style="color: var(--text-muted);">({s.count})</span>
           </a>

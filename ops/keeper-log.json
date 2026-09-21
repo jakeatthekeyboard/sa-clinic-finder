@@ -598,6 +598,12 @@
       "task": "regulatory-scan",
       "result": "skip",
       "details": "Gate closed: data/capture/regulatory-scan/latest.json scan_date 2026-09-16T21:05:00+02:00, 5 days old, within the 7-day portfolio-wide window. Scanned by the liquorlicensecost keeper this week."
+    },
+    {
+      "timestamp": "2026-09-21T21:04:00+02:00",
+      "task": "internal-linking-followup",
+      "result": "pass",
+      "details": "The English-only version of the service-chip change (5467e3f) was rejected by the pre-push numeric-parity hook: 46 numeric differences across 18 pages, every one of them the 3 extra service counts the English province page now renders and the xh/zu province pages did not. src/pages/xh/clinics/[province].astro and src/pages/zu/clinics/[province].astro carry their own copies of the block and still had slice(0, 8). Applied the same change to both. Rebuilt: 3360 pages, and English, xh and zu now agree per province (gauteng 11 service links each, mpumalanga 10 each). Parity check passes."
     }
   ]
 }
