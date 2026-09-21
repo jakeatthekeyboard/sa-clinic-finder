@@ -241,7 +241,17 @@ const howToLd = {
       <h2 style="font-size: 1.15rem; margin-bottom: 12px;">Health Services in {provinceName}</h2>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Find facilities offering specific services in this province:</p>
       <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-        {serviceBreakdown.slice(0, 8).map(s => (
+        {/* Every service with a non-zero count in this province, not the top 8.
+            serviceBreakdown already filters count > 0, so the list is at most the 11
+            entries in SERVICE_MAP and is usually shorter. The slice(0, 8) that used to
+            be here truncated dental, child health and mental health on every province
+            page: those three sit lowest by facility count nationally, so the cap always
+            removed the SAME three, and the only other place they appear on the page is
+            the collapsed "Services available in" block at line ~116, which renders plain
+            <span> chips and links nowhere. The three lowest-coverage service pages
+            therefore had no inbound link from any province page at all, which is the
+            opposite of what the cap should do for them. */}
+        {serviceBreakdown.map(s => (
           <a href={`/services/${SERVICE_MAP[s.key].slug}`} style="display: inline-block; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; color: var(--text); text-decoration: none; transition: border-color 0.15s;">
             {s.label} <span style="color: var(--text-muted);">({s.count})</span>
           </a>
