@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-09-21T21:02:00+02:00",
+  "lastRun": "2026-09-23T21:01:00+02:00",
   "editorialLastRun": "2026-09-16T21:15:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -604,6 +604,24 @@
       "task": "internal-linking-followup",
       "result": "pass",
       "details": "The English-only version of the service-chip change (5467e3f) was rejected by the pre-push numeric-parity hook: 46 numeric differences across 18 pages, every one of them the 3 extra service counts the English province page now renders and the xh/zu province pages did not. src/pages/xh/clinics/[province].astro and src/pages/zu/clinics/[province].astro carry their own copies of the block and still had slice(0, 8). Applied the same change to both. Rebuilt: 3360 pages, and English, xh and zu now agree per province (gauteng 11 service links each, mpumalanga 10 each). Parity check passes."
+    },
+    {
+      "timestamp": "2026-09-23T21:01:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All checks pass. Homepage, sitemap-index, robots.txt all 200. 3 facility pages (clinics/mpumalanga/waterval-boven-hospital-waterval-boven, clinics/gauteng/wespark-itumeleng-medical-centre-pretria, clinics/gauteng/lancet-labarotories-covid-19-testing-site-vereeniging) all 200. Province pages clinics/western-cape and zu/clinics/limpopo 200. Guides guides/medical-emergency-guide and xh/guides/dental-care-public-clinics 200. 2608 sitemap URLs (up from 2590 on 2026-09-21)."
+    },
+    {
+      "timestamp": "2026-09-23T21:01:00+02:00",
+      "task": "content-audit",
+      "result": "noop",
+      "details": "No editorial work needed. All 9 provinces have intros (section 2 closed). All 6 planned guide topics covered by the 13 guides in src/pages/guides/ (section 3 closed). All 11 SERVICE_EDITORIAL entries already carry deepDive/provincialNotes/helplines/myths per the 2026-09-18 audit; src/data/service-editorial.ts unchanged since. Internal linking last audited and fixed 2026-09-21 (province service links, en/xh/zu)."
+    },
+    {
+      "timestamp": "2026-09-23T21:01:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "Gate closed by ~4 minutes: latest.json scan_date 2026-09-16T21:05:00+02:00, run checked at 2026-09-23T21:00:31+02:00, so 6d23h55m old, still within the 7-day window. The next keeper to run after 21:05 tonight should open the gate."
     }
   ]
 }
