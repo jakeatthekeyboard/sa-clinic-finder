@@ -102,7 +102,10 @@ git diff --cached --name-only
 
 # 3. Message to a file, then -F. NEVER `git commit -m` — in zsh a double-quoted -m
 #    string runs backticks and expands $1, silently.
-cat > /tmp/keeper-commit-msg.txt <<'MSG'
+# PER-SITE filename, never one shared /tmp filename: all four keepers
+#    run at 21:00, and on 2026-09-23 the CF keeper overwrote that shared file between
+#    DCG's write and its commit, so DCG fc4b8b5d shipped CF's no-op message (#1718).
+cat > /tmp/keeper-commit-msg-cf.txt <<'MSG'
 Sitekeeper: <action> for clinicfinder.co.za (YYYY-MM-DD)
 
 <why this change was made>
@@ -110,7 +113,7 @@ Sitekeeper: <action> for clinicfinder.co.za (YYYY-MM-DD)
 Files: <the exact paths staged above>
 Revert: git revert this commit
 MSG
-git commit -F /tmp/keeper-commit-msg.txt -- <path> [<path> ...]
+git commit -F /tmp/keeper-commit-msg-cf.txt -- <path> [<path> ...]
 # The `-- <paths>` is NOT optional (#1272). `git commit` with no pathspec commits the
 # whole INDEX, and this checkout has one index shared by every session in it. An
 # unpathspecced commit therefore records whatever a concurrent grind session happened
