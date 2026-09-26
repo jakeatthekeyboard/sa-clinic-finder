@@ -170,13 +170,22 @@ two weeks out, with nothing watching.
 repoint `latest.json` at it (`ln -sfn`, it is a symlink). A run that finds nothing new still writes
 the file with `findings: []` — that is what keeps the freshness check honest rather than silent.
 
-## End-of-run capture block (MANDATORY — emit it the moment your work is committed)
+## End-of-run capture block (MANDATORY — the FULL block must END your FINAL message, every run)
 
-**PRINT IT AS SOON AS YOUR WORK IS COMMITTED — BEFORE the push, the deploy verification
-and any waiting on background tasks. Then, if anything changed after that, print an updated
-block again at the end.** Re-emitting is safe and is the intended use: `post-run.py` takes the
-LAST well-formed block in the run's stdout (#893), so a later block supersedes an earlier one
-and an earlier one survives when no later one arrives.
+**YOUR FINAL MESSAGE MUST END WITH THE COMPLETE `<capture>` BLOCK — EVERY RUN, EVEN IF YOU
+ALREADY PRINTED IT, AND EVEN IF THAT FINAL MESSAGE IS A REPLY TO A HARNESS/BACKGROUND-TASK
+NOTIFICATION.** Never write "the capture block is printed above": under cron the run is
+`claude --print --output-format json`, and **only the text of the FINAL assistant message
+reaches stdout**. A block printed in any earlier turn is discarded, and `post-run.py` then
+regex-scrapes the prose and banks zeros with `issues[]` lost for good. Printing it early when
+the work is committed is fine as a draft for yourself, but it protects nothing — only the copy
+at the end of the final message counts. `post-run.py` takes the LAST well-formed block (#893).
+
+**Correction 2026-09-26 (#1697).** The 2026-09-19 version of this section said "print it as
+soon as your work is committed … print an updated block again at the end *if anything
+changed*", on the premise that stdout holds every turn. It does not. Regex (block-lost)
+captures went from 3/43 (7%, DCG only) to 5/19 across ALL FOUR sites within a week of that
+wording — FVS 2026-09-23 and 2026-09-26 both ended "The capture block is printed above".
 
 **Why the ordering changed (#1697, and it cost three nights).** This section used to say "the
 final thing printed to stdout". That made the block the single most PREEMPTABLE output of the
