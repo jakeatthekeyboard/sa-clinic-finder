@@ -192,6 +192,16 @@ export const CARE_ROLE_WHAT_XH: Record<string, string> = {
     'ezithengiswa ngaphandle kwencwadi kagqirha, kodwa ayiyiyo ikliniki karhulumente, akukho mntu unyangwa ' +
     'apha, kwaye akukho khathalelo lwempilo lwasimahla lukarhulumente olunikezwayo. Ikliniki karhulumente ' +
     'enceda iPlettenberg Bay yiKwanokuthula Community Day Centre, eKwanokuthula.',
+
+  // #1745 — adjudicated 2026-09-28.
+  'mens-health-clinics-gauteng':
+    'IMen\'s Health Clinics ayisasebenzi kule ndawo esembindini wedolophu yaseRhawutini: eli shishini ' +
+    'lifudukele kuVanessa Street eBuccleuch, eSandton, kwaye akukho mntu unyangwa kwidilesi endala yaseFox ' +
+    'Street. Lishishini elizimeleyo elihlawulisayo, elithengisa amayeza endalo okunyanga ukungakwazi ' +
+    'ukuphakamisa, ukuphuma kwangaphambi kwexesha kunye nokunqongophala komnqweno wesondo. Ayiyiyo ikliniki ' +
+    'karhulumente, kwaye ayinikezeli ngovavanyo lwe-HIV, unyango lwe-ARV, unyango lwesifo sephepha okanye ' +
+    'ugonyo. Ukuze ufumane ezo nkonzo, nonyango lwasimahla lukarhulumente embindini wedolophu, yiya ' +
+    'kwiHillbrow Community Health Centre okanye kwi-Esselen Street Clinic, zombini eHillbrow.',
 };
 
 /** isiZulu rendering of each `NOT_WALK_IN_CARE[slug].what`. */
@@ -278,6 +288,17 @@ export const CARE_ROLE_WHAT_ZU: Record<string, string> = {
     'futhi akukho lutho kule ndawo ongeza kulo. Ukuze uthole ukunakekelwa kwempilo kahulumeni kule ' +
     'ngxenye yaseGoli, yiya eGreenside Clinic eGreenside; noma yimuphi umtholampilo kahulumeni ' +
     'uzokuhlola i-HIV nesifo sofuba ngaphandle kwe-appointment.',
+
+  // #1745 — adjudicated 2026-09-28.
+  'mens-health-clinics-gauteng':
+    'I-Men\'s Health Clinics ayisasebenzi kule ndawo esenkabeni yedolobha laseGoli: leli bhizinisi ' +
+    'lithuthele kuVanessa Street eBuccleuch, eSandton, futhi akekho umuntu owelashwa ekhelini elidala ' +
+    'laseFox Street. Yibhizinisi elizimele elikhokhelwayo, elithengisa imithi yemvelo yokwelapha ukungakwazi ' +
+    'ukuvusa isitho sangasese, ukuphuma kwesidoda ngaphambi kwesikhathi kanye nokuncipha kwesifiso ' +
+    'socansi. Akuwona umtholampilo kahulumeni, futhi alinikezi ngokuhlolwa kwe-HIV, ukwelashwa nge-ARV, ' +
+    'ukwelashwa kwesifo sofuba noma ukugoma. Ukuze uthole lezo zinsiza, nokunakekelwa kwamahhala ' +
+    'kukahulumeni enkabeni yedolobha, yiya eHillbrow Community Health Centre noma e-Esselen Street ' +
+    'Clinic, zombili eHillbrow.',
 };
 
 /**

@@ -237,7 +237,10 @@ const jsonLd = {
       : {}),
   // #1381 — not ours to answer for a facility in another country's health system.
   ...(notCare || notInSA ? {} : { isAccessibleForFree: !isPrivate }),
-  ...(activeServices.length ? { medicalSpecialty: activeServices.map(s => s.label) } : {}),
+  // #1745 — a care-role record's `services` are OSM import defaults about a place where nobody
+  // is treated; the visible services section is already suppressed, so the JSON-LD must not
+  // assert them to search engines either.
+  ...(!notCare && activeServices.length ? { medicalSpecialty: activeServices.map(s => s.label) } : {}),
 };
 ---
 <Base

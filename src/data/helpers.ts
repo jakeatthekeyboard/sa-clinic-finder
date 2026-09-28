@@ -275,11 +275,14 @@ export function mapsUrl(lat: number, lng: number, name: string): string {
 }
 
 export function whatsappShareUrl(facility: Facility): string {
-  const services = Object.entries(facility.services)
+  // #1745 — a care-role record is a place where nobody is treated, so its `services`
+  // flags are import defaults, not claims. Sharing "HIV / ARVs, TB treatment" for a
+  // mortuary or a moved private business sends the recipient there for care.
+  const services = careRole(facility.slug) ? '' : Object.entries(facility.services)
     .filter(([, v]) => v)
     .map(([k]) => SERVICE_MAP[k]?.plain || k)
     .slice(0, 4)
     .join(', ');
-  const text = `${facility.name} — ${services} — https://clinicfinder.co.za${facility.url_path}`;
+  const text = `${facility.name} — ${services ? `${services} — ` : ''}https://clinicfinder.co.za${facility.url_path}`;
   return `https://wa.me/?text=${encodeURIComponent(text)}`;
 }

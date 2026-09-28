@@ -359,6 +359,28 @@ export const NOT_WALK_IN_CARE: Record<string, CareRoleEntry> = {
       'a second line, not a different business). The Local Choice describes itself as "an aligned, like-minded group of ' +
       'independent pharmacists" with "more than 180 stores throughout South Africa".',
   },
+  // #1745 — adjudicated 2026-09-28. Moved away from this pin, and never a public clinic.
+  'mens-health-clinics-gauteng': {
+    what:
+      'Men\'s Health Clinics no longer operates at this spot in the Johannesburg city centre: the business has ' +
+      'moved to Vanessa Street in Buccleuch, Sandton, and nobody is treated at the old Fox Street address. It is ' +
+      'a private, fee-charging business that sells natural-medicine treatments for erectile dysfunction, premature ' +
+      'ejaculation and low libido. It is not a public clinic, and it does not offer HIV testing, ARV treatment, TB ' +
+      'treatment or immunisation. For those, and for free public care in the city centre, go to Hillbrow Community ' +
+      'Health Centre or Esselen Street Clinic, both in Hillbrow.',
+    source:
+      'The business\'s own website, https://menshealthclinics.co.za (read 2026-09-28), says: "Our Sandton clinic at ' +
+      '199 Vanessa Street, Buccleuch serves Gauteng in person", names no other walk-in site, lists telephone ' +
+      '+27 10 205 9855 alongside +27 81 823 1313, and describes its work as "erectile dysfunction (ED), premature ' +
+      'ejaculation, low libido, penis enlargement, weak erections and sexual health counselling. All treatments use ' +
+      'natural medicine with no injections and no surgery." OpenStreetMap node 7098962129 was re-addressed by the ' +
+      'account that maintains it (Frans132) on 2026-09-25 in changeset 189536874: 132 Fox Street, 2107 became ' +
+      '199 Vanessa Street, Buccleuch, Sandton, 2090, telephone +27102059855 — but the node\'s COORDINATES were NOT ' +
+      'moved and still sit in the city centre, which is why this is a notice and not an address correction in ' +
+      'facilities.json: copying the new address beside the old pin would publish a map and an address that ' +
+      'disagree. The record\'s services (ARV, TB, HIV testing, immunisation) and operator_type "public" are import ' +
+      'defaults, not claims from any source; this entry removes the record from every service listing.',
+  },
 };
 
 /** The adjudicated entry for a facility, or null if it is an ordinary facility. */
