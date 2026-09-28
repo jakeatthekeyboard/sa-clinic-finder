@@ -129,6 +129,20 @@ OVERPASS_ENDPOINTS = [
 RETRIES = 3
 BACKOFF_S = 45
 INTER_BATCH_S = 8
+# #1742 — A MIRROR CAN ANSWER FROM AN OLD DATABASE, and a stale answer reads as a
+# closure. Every Overpass reply carries `osm3s.timestamp_osm_base`, the instant its
+# database was last synced. The 2026-09-27 capture reported three NEW facilities
+# "gone"; two of them — way:1508956180 (4th Avenue Community Health Clinic, tagged
+# clinic 2026-06-05) and way:1532039331 (ATICC, created 2026-06-24) — were live on
+# the OSM API and on overpass-api.de at the time, and the pattern (the June objects
+# absent, 4th Avenue returned as its May `building=yes` v1) is exactly what a
+# database frozen between 2026-05-04 and 2026-06-05 returns. The fallback endpoint
+# is the only candidate, and nothing recorded which endpoint answered or how old its
+# data was, so a stale reply was indistinguishable from drift. A reply older than
+# this is now REJECTED and the next endpoint tried; if none is fresh the run is a
+# SoftSkip that re-reports the last capture, never a pass and never a finding.
+# A missing timestamp is rejected too: freshness that cannot be shown is not assumed.
+MAX_BASE_LAG = timedelta(days=2)
 
 # An object still counts as a healthcare facility if it carries any of these.
 HEALTHCARE_TAGS = {
@@ -231,15 +245,44 @@ def _one_query(q, timeout):
                 last = f"{url}: curl rc={out.returncode}"
                 continue
             try:
-                return json.loads(out.stdout)
+                payload = json.loads(out.stdout)
             except json.JSONDecodeError:
                 last = f"{url}: non-JSON reply (likely over quota): {out.stdout[:100]!r}"
+                continue
+            stale = base_staleness(payload)
+            if stale:
+                last = f"{url}: {stale}"
+                continue
+            return payload
         if attempt < RETRIES - 1:
             time.sleep(BACKOFF_S * (attempt + 1))
     raise SoftSkip(f"overpass unavailable after {RETRIES} rounds — {last}")
 
 
-def overpass_fetch(by_type, timeout, batch):
+def osm_base(payload):
+    """The instant the answering Overpass database was last synced, or None."""
+    raw = ((payload or {}).get("osm3s") or {}).get("timestamp_osm_base")
+    if not raw:
+        return None
+    try:
+        return datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def base_staleness(payload, now=None):
+    """Why this reply must not be used, or None if its database is fresh (#1742)."""
+    base = osm_base(payload)
+    if base is None:
+        return "reply carries no readable osm3s.timestamp_osm_base — freshness unprovable"
+    now = now or datetime.now(timezone.utc)
+    if now - base > MAX_BASE_LAG:
+        return (f"stale database (timestamp_osm_base {base.isoformat()}, "
+                f"{(now - base).days}d behind) — a stale mirror reads as closures")
+    return None
+
+
+def overpass_fetch(by_type, timeout, batch, bases=None):
     """Ask Overpass about our exact ids. Batched so one long URL cannot fail all."""
     found = {}
     for etype, records in by_type.items():
@@ -250,6 +293,8 @@ def overpass_fetch(by_type, timeout, batch):
                  f"{etype}(id:{','.join(str(x) for x in chunk)});"
                  f"out tags center;")
             payload = _one_query(q, timeout)
+            if bases is not None:
+                bases.append(osm_base(payload))
             for el in payload.get("elements", []):
                 lat = el.get("lat", (el.get("center") or {}).get("lat"))
                 lon = el.get("lon", (el.get("center") or {}).get("lon"))
@@ -391,7 +436,8 @@ def main():
     try:
         facilities = load_facilities()
         by_type, unparseable = parse_ids(facilities)
-        found = overpass_fetch(by_type, args.timeout, args.batch)
+        bases = []
+        found = overpass_fetch(by_type, args.timeout, args.batch, bases)
         findings = compare(by_type, found, args.move_metres)
     except SoftSkip as e:
         if cap:
@@ -409,6 +455,9 @@ def main():
         "records_checked": sum(len(rs) for v in by_type.values() for rs in v.values()),
         "osm_objects_checked": sum(len(v) for v in by_type.values()),
         "osm_objects_returned": len(found),
+        # #1742 — the OLDEST database any batch was answered from. Recorded so a
+        # capture's reading can be dated against OSM, not just against our clock.
+        "osm_base_oldest": min(b for b in bases if b).isoformat() if any(bases) else None,
         "unparseable_facility_ids": unparseable,
         "move_threshold_metres": args.move_metres,
         "counts": {k: len(v) for k, v in findings.items()},

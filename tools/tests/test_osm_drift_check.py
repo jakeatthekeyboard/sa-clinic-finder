@@ -388,3 +388,62 @@ def test_name_adjudication_does_not_accept_a_missing_finding(tmp_path, monkeypat
     _baseline_names(tmp_path, monkeypatch,
                     [{"key": odc.missing_key(GONE), "verdict": "not a suppression"}])
     assert odc.report(_capture([GONE]), Args(), fresh=True) == 1
+
+
+# ── stale-mirror replies (#1742) ──────────────────────────────────────────────
+#
+# The 2026-09-27 capture reported three NEW facilities gone; two were live on the
+# OSM API and on overpass-api.de, and the shape of the miss (June objects absent,
+# a May v1 returned) is a database frozen weeks behind. A reply is only usable if
+# its own osm3s.timestamp_osm_base says it is current.
+
+from datetime import datetime, timedelta, timezone  # noqa: E402
+
+NOW = datetime(2026, 9, 27, 7, 28, tzinfo=timezone.utc)
+
+
+def _payload(base):
+    return {"osm3s": {"timestamp_osm_base": base}, "elements": []}
+
+
+def test_fresh_base_is_accepted():
+    assert odc.base_staleness(_payload("2026-09-27T07:00:00Z"), NOW) is None
+
+
+def test_weeks_old_base_is_rejected():
+    why = odc.base_staleness(_payload("2026-05-20T00:00:00Z"), NOW)
+    assert why and "stale database" in why
+
+
+def test_missing_base_is_rejected_not_assumed_fresh():
+    assert odc.base_staleness({"elements": []}, NOW)
+    assert odc.base_staleness(_payload("not-a-date"), NOW)
+
+
+def test_lag_bound_is_days_not_weeks():
+    # Absolute bound, not the live constant: a stale mirror in the incident was
+    # ~4 months behind; anything past a few days must never be trusted.
+    assert odc.MAX_BASE_LAG <= timedelta(days=3)
+
+
+class _Out:
+    def __init__(self, stdout):
+        self.returncode, self.stdout = 0, stdout
+
+
+def test_stale_first_endpoint_falls_through_to_fresh_one(monkeypatch):
+    fresh = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    replies = iter([json.dumps(_payload("2026-05-20T00:00:00Z")),
+                    json.dumps({"osm3s": {"timestamp_osm_base": fresh},
+                                "elements": [{"type": "way", "id": 1, "tags": {}}]})])
+    monkeypatch.setattr(odc.subprocess, "run", lambda *a, **k: _Out(next(replies)))
+    got = odc._one_query("q", 10)
+    assert got["elements"][0]["id"] == 1
+
+
+def test_all_endpoints_stale_is_a_soft_skip_never_drift(monkeypatch):
+    stale = json.dumps(_payload("2026-05-20T00:00:00Z"))
+    monkeypatch.setattr(odc.subprocess, "run", lambda *a, **k: _Out(stale))
+    monkeypatch.setattr(odc.time, "sleep", lambda s: None)
+    with pytest.raises(odc.SoftSkip, match="stale database"):
+        odc._one_query("q", 10)
