@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-10-02T21:05:00+02:00",
+  "lastRun": "2026-10-05T21:05:00+02:00",
   "editorialLastRun": "2026-09-16T21:15:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -691,6 +691,24 @@
     },
     {
       "timestamp": "2026-10-02T21:05:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "latest.json scan_date 2026-09-30T22:13:00+02:00, within 7-day window."
+    },
+    {
+      "timestamp": "2026-10-05T21:05:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All checks pass. Homepage, sitemap-index, robots.txt 200. sitemap-0.xml 2769 URLs. Facility pages xh/clinics/gauteng/phomolong-clinic-saulsvillepretoria, zu/clinics/mpumalanga/temba-hospital-kabokweni-mpumalanga, clinics/eastern-cape/willowvale-hospital-willowvale 200. Province clinics/eastern-cape 200. Guide zu/guides/how-to-get-arvs 200."
+    },
+    {
+      "timestamp": "2026-10-05T21:05:00+02:00",
+      "task": "content-audit",
+      "result": "noop",
+      "details": "No editorial work needed. 9/9 province intros; all 6 planned guide topics covered; service pages audited 2026-09-18; internal linking done 2026-09-21. Only src change since last run: 2e5445e (sitemap-priority manifest)."
+    },
+    {
+      "timestamp": "2026-10-05T21:05:00+02:00",
       "task": "regulatory-scan",
       "result": "skip",
       "details": "latest.json scan_date 2026-09-30T22:13:00+02:00, within 7-day window."
