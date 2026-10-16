@@ -35,7 +35,7 @@ Quick non-destructive checks:
 4. Spot-check 3 random facility pages — expect 200
 5. Spot-check 1 province page and 1 guide page — expect 200
 
-If any fail, log the failure and stop. Do not attempt fixes — create a TODO item in the pipeline repo.
+If any fail, log the failure and stop. Do not attempt fixes — create a TODO item in the pipeline repo with `todo-claim-id.py --insert-file` (see "File it with the claim helper" below; never hand-pick an id).
 
 ### 2. Province Editorial Intros (if < 9 provinces have intros)
 
@@ -336,5 +336,5 @@ When this skill runs under cron (`CRON_JOB_ID` is set; `claude --print`, non-int
 
 1. Run every download, extraction, build, or verification step synchronously in the FOREGROUND. Do not launch background work and end the turn "waiting" for it — the completion notification will never arrive.
 2. NEVER end your turn while any batch, download, or poll is still pending.
-3. If the work genuinely cannot finish in this session, write the exact remaining steps to `/Users/jake/dev/product-pipeline-1/TODO.md` as a `[ ]` Jake's Queue item, then end with an explicit final report of what was done and what was deferred.
+3. If the work genuinely cannot finish in this session, file the exact remaining steps as a `[ ]` Jake's Queue item, then end with an explicit final report of what was done and what was deferred. **File it with the claim helper, never by hand** (CLAUDE.md rule #10, #1862): write the item body (`[ ] **Title** — …`, no number) to a temp file, then run `python3 /Users/jake/dev/product-pipeline-1/tools/todo-claim-id.py --insert-file <body-file> --section "Jake's Queue"`. It claims the id, bumps `<!-- next-id -->` and inserts the item in one locked step, and prints the id. **A non-zero exit means NO id was claimed and the item is NOT in TODO.md** — say so in your final report; never pick a number yourself and never edit the marker. The same applies to ANY item this run files, including findings from the regulatory scan. Why: on 2026-10-15 a keeper hand-wrote #1857 without bumping the marker, and every `todo-claim-id.py` call then refused (the #1602 guard) — failure-watch could file no finding of any kind for ~4h.
 4. End-of-turn check: your last paragraph must report completed work — never "waiting on…" / "will continue when…".
