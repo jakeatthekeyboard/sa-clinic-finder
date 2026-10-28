@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-10-26T21:00:00+02:00",
+  "lastRun": "2026-10-28T21:00:00+02:00",
   "editorialLastRun": "2026-09-16T21:15:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -871,6 +871,24 @@
     },
     {
       "timestamp": "2026-10-26T21:00:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "latest.json scan_date 2026-10-22T21:25:00+02:00, within 7-day window."
+    },
+    {
+      "timestamp": "2026-10-28T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All checks pass. Homepage, sitemap-index, robots.txt 200. sitemap-0.xml 2917 URLs. Facility pages clinics/gauteng/far-east-rand-hospital-new-state-areas-springs-johannesburg, clinics/kwazulu-natal/macabuzela-clinic-hluhluwekzn, clinics/northern-cape/afm-steynville-church-northern-cape 200. Province clinics/gauteng 200. Guide guides/tb-treatment-what-to-expect 200 (308 trailing-slash redirect)."
+    },
+    {
+      "timestamp": "2026-10-28T21:00:00+02:00",
+      "task": "content-audit",
+      "result": "noop",
+      "details": "No editorial work needed. 9/9 province intros; all 6 planned guide topics covered; service pages audited 2026-09-18; internal linking done 2026-09-21. Only src change since last run: 8cd8ac6 (sitemap-priority manifest)."
+    },
+    {
+      "timestamp": "2026-10-28T21:00:00+02:00",
       "task": "regulatory-scan",
       "result": "skip",
       "details": "latest.json scan_date 2026-10-22T21:25:00+02:00, within 7-day window."
