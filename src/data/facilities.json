@@ -1269,7 +1269,7 @@
     "url_path": "/clinics/eastern-cape/pefferville-clinic-east-london"
   },
   {
-    "facility_id": "zaf_node_2306374071",
+    "facility_id": "zaf_way_1563845610",
     "name": "Duncan Village Community Health Clinic",
     "type": "community_health_centre",
     "province": "Eastern Cape",
@@ -1282,8 +1282,8 @@
       "postal_code": ""
     },
     "coordinates": {
-      "lat": -33.0077351,
-      "lng": 27.8860945
+      "lat": -33.0078055,
+      "lng": 27.8858907
     },
     "contact": {
       "phone": "+27 43 742 4762",
@@ -1311,7 +1311,7 @@
     "operator_type": "public",
     "data_source": "overpass",
     "data_quality_score": 5,
-    "last_verified": "2026-04-14",
+    "last_verified": "2026-10-29",
     "slug": "duncan-village-community-health-clinic-east-london-eastern-cape",
     "url_path": "/clinics/eastern-cape/duncan-village-community-health-clinic-east-london-eastern-cape"
   },
