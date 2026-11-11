@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-10-28T21:00:00+02:00",
+  "lastRun": "2026-11-11T21:00:00+02:00",
   "editorialLastRun": "2026-09-16T21:15:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -892,6 +892,24 @@
       "task": "regulatory-scan",
       "result": "skip",
       "details": "latest.json scan_date 2026-10-22T21:25:00+02:00, within 7-day window."
+    },
+    {
+      "timestamp": "2026-11-11T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All checks pass. Homepage, sitemap-index, robots.txt 200. sitemap-0.xml 2930 URLs. Facility pages xh/clinics/kwazulu-natal/vryheid-hospital-vryheid, clinics/western-cape/matthew-goniwe-clinic-cape-town, clinics/gauteng/bmr-family-health-clinic-soshanguve 200. Province clinics/limpopo 200. Guide guides/mental-health-services 200 (308 trailing-slash redirect)."
+    },
+    {
+      "timestamp": "2026-11-11T21:00:00+02:00",
+      "task": "content-audit",
+      "result": "noop",
+      "details": "No editorial work needed. 9/9 province intros; all 6 planned guide topics covered; service pages audited 2026-09-18; internal linking done 2026-09-21. src changes since last run are data/manifest only (2b18432, 0e30669, 4ddd45d)."
+    },
+    {
+      "timestamp": "2026-11-11T21:00:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "latest.json scan_date 2026-11-07T21:20:00+02:00, within 7-day window."
     }
   ]
 }
