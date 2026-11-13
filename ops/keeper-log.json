@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-11-11T21:00:00+02:00",
+  "lastRun": "2026-11-13T21:00:00+02:00",
   "editorialLastRun": "2026-09-16T21:15:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -907,6 +907,24 @@
     },
     {
       "timestamp": "2026-11-11T21:00:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "latest.json scan_date 2026-11-07T21:20:00+02:00, within 7-day window."
+    },
+    {
+      "timestamp": "2026-11-13T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All checks pass. Homepage, sitemap-index, robots.txt 200. sitemap-0.xml 2971 URLs. Facility pages clinics/kwazulu-natal/baniyena-primary-health-care-clinic-kwazulu-natal, zu/clinics/kwazulu-natal/siloah-lutheran-mission-tb-hospital-e-l-c-dlomo-dlomo-farm-louwsburg-vryheid, clinics/eastern-cape/mgwalana-clinic-middledrift 200. Province xh/clinics/north-west 200. Guide xh/guides/chronic-medication-management 200."
+    },
+    {
+      "timestamp": "2026-11-13T21:00:00+02:00",
+      "task": "content-audit",
+      "result": "noop",
+      "details": "No editorial work needed. 9/9 province intros; all 6 planned guide topics covered (13 guides); service pages audited 2026-09-18; internal linking done 2026-09-21. src changes since last run are sitemap-priority manifest only (a55b45e, 27277f4)."
+    },
+    {
+      "timestamp": "2026-11-13T21:00:00+02:00",
       "task": "regulatory-scan",
       "result": "skip",
       "details": "latest.json scan_date 2026-11-07T21:20:00+02:00, within 7-day window."
