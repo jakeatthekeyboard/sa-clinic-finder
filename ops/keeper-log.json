@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-11-13T21:00:00+02:00",
+  "lastRun": "2026-11-16T21:00:00+02:00",
   "editorialLastRun": "2026-09-16T21:15:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -928,6 +928,24 @@
       "task": "regulatory-scan",
       "result": "skip",
       "details": "latest.json scan_date 2026-11-07T21:20:00+02:00, within 7-day window."
+    },
+    {
+      "timestamp": "2026-11-16T21:00:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "All checks pass. Homepage, sitemap-index, robots.txt 200. sitemap-0.xml 2981 URLs. Facility pages zu/clinics/gauteng/drs-reid-and-de-lange-eye-clinic-vanderbijlpark, clinics/limpopo/khensani-hospital-limpopo, clinics/mpumalanga/breyten-municipal-clinic-breyten 200. Province xh/clinics/mpumalanga 200. Guide zu/guides/how-to-get-arvs 200."
+    },
+    {
+      "timestamp": "2026-11-16T21:00:00+02:00",
+      "task": "content-audit",
+      "result": "noop",
+      "details": "No editorial work needed. 9/9 province intros; all 6 planned guide topics covered; service pages audited 2026-09-18; internal linking done 2026-09-21. src changes since last run are sitemap-priority manifest only (2c82a3b, f377eef)."
+    },
+    {
+      "timestamp": "2026-11-16T21:00:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "latest.json scan_date 2026-11-14T22:05:00+02:00, within 7-day window."
     }
   ]
 }
