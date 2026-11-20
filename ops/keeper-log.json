@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-11-18T21:00:00+02:00",
+  "lastRun": "2026-11-20T21:00:00+02:00",
   "editorialLastRun": "2026-09-16T21:15:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -955,6 +955,18 @@
     },
     {
       "timestamp": "2026-11-18T21:00:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "latest.json scan_date 2026-11-14T22:05:00+02:00, within 7-day window."
+    },
+    {
+      "timestamp": "2026-11-20T21:05:00+02:00",
+      "task": "health-check",
+      "result": "fail",
+      "details": "Homepage, sitemap-index.xml, robots.txt, /province/gauteng, /guides/find-nearest-clinic all HTTP 402, x-vercel-error DEPLOYMENT_DISABLED. Facility spot-checks not run (sitemap unreachable). Vercel team pause continues since 2026-11-18 01:28 SAST; tracked as TODO #2000 under #1619. No new TODO filed. Stopped per skill: no fixes, no editorial work."
+    },
+    {
+      "timestamp": "2026-11-20T21:05:00+02:00",
       "task": "regulatory-scan",
       "result": "skip",
       "details": "latest.json scan_date 2026-11-14T22:05:00+02:00, within 7-day window."
