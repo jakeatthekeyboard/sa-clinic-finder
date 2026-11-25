@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-11-20T21:00:00+02:00",
+  "lastRun": "2026-11-25T21:00:00+02:00",
   "editorialLastRun": "2026-09-16T21:15:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -970,6 +970,24 @@
       "task": "regulatory-scan",
       "result": "skip",
       "details": "latest.json scan_date 2026-11-14T22:05:00+02:00, within 7-day window."
+    },
+    {
+      "timestamp": "2026-11-25T21:05:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "Homepage, sitemap-index.xml, robots.txt 200; sitemap-0.xml 3002 URLs; 3 random facility pages, /clinics/gauteng and /xh/guides/hiv-testing-guide all 200. Vercel 402 pause (2026-11-18..2026-11-22) has cleared. Note: /province/<x> is not a route (404); province pages live at /clinics/<province>."
+    },
+    {
+      "timestamp": "2026-11-25T21:05:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "latest.json scan_date 2026-11-22T21:20:00+02:00, within 7-day window."
+    },
+    {
+      "timestamp": "2026-11-25T21:05:00+02:00",
+      "task": "editorial",
+      "result": "skip",
+      "details": "All 9 province intros and all 6 planned guide topics exist; CF is Settle autopilot, content grinding out of scope."
     }
   ]
 }
