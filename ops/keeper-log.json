@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-11-25T21:00:00+02:00",
+  "lastRun": "2026-11-27T21:00:00+02:00",
   "editorialLastRun": "2026-09-16T21:15:00+02:00",
   "guidesWritten": [
     "find-nearest-clinic"
@@ -985,6 +985,24 @@
     },
     {
       "timestamp": "2026-11-25T21:05:00+02:00",
+      "task": "editorial",
+      "result": "skip",
+      "details": "All 9 province intros and all 6 planned guide topics exist; CF is Settle autopilot, content grinding out of scope."
+    },
+    {
+      "timestamp": "2026-11-27T21:05:00+02:00",
+      "task": "health-check",
+      "result": "pass",
+      "details": "Homepage, sitemap-index.xml, robots.txt 200; sitemap-0.xml 3017 URLs; 3 random facility pages (/clinics/eastern-cape/duncan-village-..., /clinics/mpumalanga/allemansdrift-chc-..., /clinics/mpumalanga/leeufontein-clinic-...), /clinics/gauteng and /xh/guides/ccmdd-chronic-meds-pickup all 200."
+    },
+    {
+      "timestamp": "2026-11-27T21:05:00+02:00",
+      "task": "regulatory-scan",
+      "result": "skip",
+      "details": "latest.json scan_date 2026-11-22T21:20:00+02:00, within 7-day window."
+    },
+    {
+      "timestamp": "2026-11-27T21:05:00+02:00",
       "task": "editorial",
       "result": "skip",
       "details": "All 9 province intros and all 6 planned guide topics exist; CF is Settle autopilot, content grinding out of scope."
